@@ -25,3 +25,6 @@ bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionChec
 脚本使用过程中出现bug欢迎提交issue
 
 你亦可直接添加[TG群组](https://t.me/gameaccelerate)分享你的建议
+
+## 特别鸣谢
+特别鸣谢[柠檬大佬](https://t.me/ilemonrain),目前市面的流媒体解锁检测脚本都是从[Lemonbench](https://github.com/LemonBench/LemonBench)演化而来
