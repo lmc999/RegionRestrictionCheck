@@ -135,7 +135,7 @@ function MediaUnlockTest_BilibiliTW() {
 function MediaUnlockTest_AbemaTV_IPTest() {
     echo -n -e " Abema.TV:\t\t\t\t->\c";
     #
-    local result=$(curl --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --max-time 30 "https://api.abema.io/v1/ip/check?device=android");
+    local result=$(curl --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --max-time 30 "https://api.abema.io/v1/ip/check?device=android" 2>&1);
     if [[ "$result" == "000" ]]; then
         echo -n -e "\r Abema.TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
@@ -303,7 +303,7 @@ function MediaUnlockTest_DisneyPlus() {
 
 function MediaUnlockTest_Dazn() {
     echo -n -e " Dazn:\t\t\t\t\t->\c";
-    local result=$(curl -s -${1} --max-time 30 -X POST -H "Content-Type: application/json" -d '{"LandingPageKey":"generic","Languages":"zh-CN,zh,en","Platform":"web","PlatformAttributes":{},"Manufacturer":"","PromoCode":"","Version":"2"}' https://startup.core.indazn.com/misl/v5/Startup  | python -m json.tool 2> /dev/null | grep GeolocatedCountryName | awk '{print $2}' | cut -f2 -d'"');
+    local result=$(curl -${1} -s --max-time 30 -X POST -H "Content-Type: application/json" -d '{"LandingPageKey":"generic","Languages":"zh-CN,zh,en","Platform":"web","PlatformAttributes":{},"Manufacturer":"","PromoCode":"","Version":"2"}' https://startup.core.indazn.com/misl/v5/Startup  | python -m json.tool 2> /dev/null | grep GeolocatedCountryName | awk '{print $2}' | cut -f2 -d'"');
     
 	if [[ "$result" == "curl"* ]];then
         	echo -n -e "\r Dazn:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -360,6 +360,26 @@ function MediaUnlockTest_MyTVSuper() {
 
 }
 
+function MediaUnlockTest_NowE() {
+    echo -n -e " Now E:\t\t\t\t\t->\c";
+    local result=$(curl -${1} -s --max-time 30 -X POST -H "Content-Type: application/json" -d '{"contentId":"202105121370235","contentType":"Vod","pin":"","deviceId":"W-60b8d30a-9294-d251-617b-c12f9d0c","deviceType":"WEB"}' "https://webtvapi.nowe.com/16/1/getVodURL" | python -m json.tool | grep 'responseCode' | awk '{print $2}' | cut -f2 -d'"' 2>&1);
+    
+    if [[ "$result" == "SUCCESS" ]]; then
+		echo -n -e "\r Now E:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [[ "$result" == "GEO_CHECK_FAIL" ]]; then
+		echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    else
+        echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+	return;
+    fi
+	
+	echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	return;
+
+}
+
 function MediaUnlockTest() {
 	echo ""	
 	echo "=============欧美地区解锁============= "
@@ -368,6 +388,7 @@ function MediaUnlockTest() {
 	echo "======================================="
 	echo "============大中华地区解锁============= "
 	MediaUnlockTest_MyTVSuper ${1};
+	MediaUnlockTest_NowE ${1};
 	MediaUnlockTest_BahamutAnime ${1};
 	MediaUnlockTest_BilibiliChinaMainland ${1};
 	MediaUnlockTest_BilibiliHKMCTW ${1};
