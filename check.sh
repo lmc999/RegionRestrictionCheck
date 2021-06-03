@@ -364,18 +364,38 @@ function MediaUnlockTest_NowE() {
     echo -n -e " Now E:\t\t\t\t\t->\c";
     local result=$(curl -${1} -s --max-time 30 -X POST -H "Content-Type: application/json" -d '{"contentId":"202105121370235","contentType":"Vod","pin":"","deviceId":"W-60b8d30a-9294-d251-617b-c12f9d0c","deviceType":"WEB"}' "https://webtvapi.nowe.com/16/1/getVodURL" | python -m json.tool | grep 'responseCode' | awk '{print $2}' | cut -f2 -d'"' 2>&1);
     
-    if [[ "$result" == "SUCCESS" ]]; then
+	if [[ "$result" == "SUCCESS" ]]; then
 		echo -n -e "\r Now E:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;
     elif [[ "$result" == "GEO_CHECK_FAIL" ]]; then
 		echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
-    else
+	else
         echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
-	return;
-    fi
+		return;
+	fi
 	
 	echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	return;
+
+}
+
+function MediaUnlockTest_ViuTV() {
+    echo -n -e " Viu.TV:\t\t\t\t->\c";
+    local result=$(curl -${1} -s --max-time 30 -X POST -H "Content-Type: application/json" -d '{"callerReferenceNo":"20210603233037","productId":"202009041154906","contentId":"202009041154906","contentType":"Vod","mode":"prod","PIN":"password","cookie":"3c2c4eafe3b0d644b8","deviceId":"U5f1bf2bd8ff2ee000","deviceType":"ANDROID_WEB","format":"HLS"}' "https://api.viu.now.com/p8/3/getVodURL" | python -m json.tool | grep 'responseCode' | awk '{print $2}' | cut -f2 -d'"' 2>&1);
+    
+	if [[ "$result" == "SUCCESS" ]]; then
+		echo -n -e "\r Viu.TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [[ "$result" == "GEO_CHECK_FAIL" ]]; then
+		echo -n -e "\r Viu.TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	else
+        echo -n -e "\r Viu.TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r Viu.TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 	return;
 
 }
@@ -389,6 +409,7 @@ function MediaUnlockTest() {
 	echo "============大中华地区解锁============= "
 	MediaUnlockTest_MyTVSuper ${1};
 	MediaUnlockTest_NowE ${1};
+	MediaUnlockTest_ViuTV ${1};
 	MediaUnlockTest_BahamutAnime ${1};
 	MediaUnlockTest_BilibiliChinaMainland ${1};
 	MediaUnlockTest_BilibiliHKMCTW ${1};
