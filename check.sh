@@ -449,7 +449,7 @@ fi
 
 echo ""
 
-check6=`ping6 240c::6666 -c 1 2>&1`;
+check6=`ping6 240c::6666 -c 5 -w 5 2>&1`;
 if [[ "$check6" != *"unreachable"* ]] && [[ "$check6" != *"Unreachable"* ]];then
 	echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
     MediaUnlockTest 6;
