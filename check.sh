@@ -400,6 +400,30 @@ function MediaUnlockTest_ViuTV() {
 
 }
 
+function MediaUnlockTest_unext() {
+    echo -n -e " U-NEXT:\t\t\t\t->\c";
+    local result=$(curl -${1} -s --max-time 30 "https://video-api.unext.jp/api/1/player?entity%5B%5D=playlist_url&episode_code=ED00148814&title_code=SID0028118&keyonly_flg=0&play_mode=caption&bitrate_low=1500" | python -m json.tool 2> /dev/null | grep 'result_status' | awk '{print $2}' | cut -d ',' -f1);
+    if [ -n "$result" ]; then 
+		if [[ "$result" == "475" ]]; then
+			echo -n -e "\r U-NEXT:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+			return;
+		elif [[ "$result" == "200" ]]; then
+			echo -n -e "\r U-NEXT:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+			return;	
+		elif [[ "$result" == "467" ]]; then
+			echo -n -e "\r Now E:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			return;
+		else
+			echo -n -e "\r U-NEXT:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+			return;
+		fi	
+	else
+		echo -n -e "\r U-NEXT:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+
+}
+
 function MediaUnlockTest() {
 	echo ""	
 	echo "=============欧美地区解锁============= "
@@ -417,6 +441,7 @@ function MediaUnlockTest() {
 	echo "======================================="
 	echo "============日本地区解锁=============== "	
 	MediaUnlockTest_AbemaTV_IPTest ${1};
+	MediaUnlockTest_unext ${1};
 	MediaUnlockTest_HuluJP ${1};
 	MediaUnlockTest_PCRJP ${1};
 	MediaUnlockTest_UMAJP ${1};
@@ -449,7 +474,7 @@ fi
 
 echo ""
 
-check6=`ping6 240c::6666 -c 5 -w 5 2>&1`;
+check6=`ping6 240c::6666 -c 3 -w 3 2>&1`;
 if [[ "$check6" != *"unreachable"* ]] && [[ "$check6" != *"Unreachable"* ]];then
 	echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
     MediaUnlockTest 6;
