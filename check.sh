@@ -411,7 +411,7 @@ function MediaUnlockTest_unext() {
 			echo -n -e "\r U-NEXT:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 			return;	
 		elif [[ "$result" == "467" ]]; then
-			echo -n -e "\r Now E:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			echo -n -e "\r U-NEXT:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 			return;
 		else
 			echo -n -e "\r U-NEXT:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
@@ -419,6 +419,33 @@ function MediaUnlockTest_unext() {
 		fi	
 	else
 		echo -n -e "\r U-NEXT:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+
+}
+
+function MediaUnlockTest_Paravi() {
+    echo -n -e " Paravi:\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} -s --max-time 30 -H "Content-Type: application/json" -d '{"meta_id":71885,"vuid":"3b64a775a4e38d90cc43ea4c7214702b","device_code":1,"app_id":1}' https://api.paravi.jp/api/v1/playback/auth | python -m json.tool 2> /dev/null);
+	
+	if [[ "$tmpresult" == "curl"* ]];then
+        	echo -n -e "\r Paravi:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        	return;
+    fi
+	
+	checkiffaild=$(echo $tmpresult | grep code | awk '{print $2}' | cut -d ',' -f1)
+    if [[ "$checkiffaild" == "2055" ]]; then
+		echo -n -e "\r Paravi:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo ${tmpresult} | grep 'playback_validity_end_at' >/dev/null 2>&1
+	
+	if [[ "$?" -eq 0 ]]; then
+		echo -n -e "\r Paravi:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r Paravi:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
 	fi
 
@@ -441,6 +468,7 @@ function MediaUnlockTest() {
 	echo "======================================="
 	echo "============日本地区解锁=============== "	
 	MediaUnlockTest_AbemaTV_IPTest ${1};
+	MediaUnlockTest_Paravi ${1};
 	MediaUnlockTest_unext ${1};
 	MediaUnlockTest_HuluJP ${1};
 	MediaUnlockTest_PCRJP ${1};
