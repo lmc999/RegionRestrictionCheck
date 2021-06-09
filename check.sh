@@ -13,6 +13,15 @@ Font_SkyBlue="\033[36m";
 Font_White="\033[37m";
 Font_Suffix="\033[0m";
 
+local_ipv4=$(curl -4 -s --max-time 20 ip.sb)
+local_ipv6=$(curl -6 -s --max-time 20 ip.sb)
+if [ -n "$local_ipv4" ]
+	then
+		local_isp=$(curl -s -4 https://api.ip.sb/geoip/${local_ipv4} | cut -f1 -d"," | cut -f4 -d '"')
+	else
+		local_isp=$(curl -s -6 https://api.ip.sb/geoip/${local_ipv6} | cut -f1 -d"," | cut -f4 -d '"')
+fi		
+
 clear;
 echo -e "流媒体平台及游戏区域限制测试";
 echo ""
@@ -135,16 +144,21 @@ function MediaUnlockTest_BilibiliTW() {
 function MediaUnlockTest_AbemaTV_IPTest() {
     echo -n -e " Abema.TV:\t\t\t\t->\c";
     #
-    local result=$(curl --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --max-time 30 "https://api.abema.io/v1/ip/check?device=android" 2>&1);
-    if [[ "$result" == "000" ]]; then
+    local tempresult=$(curl --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --max-time 30 "https://api.abema.io/v1/ip/check?device=android" 2>&1);
+    if [[ "$tempresult" == "000" ]]; then
         echo -n -e "\r Abema.TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
     fi
 	
-    curl --user-agent "${UA_Dalvik}" -${1} -fsL --max-time 30 "https://api.abema.io/v1/ip/check?device=android" | grep akamaized >/dev/null 2>&1
-    if [[ "$?" -eq 0 ]]; then
-        echo -n -e "\r Abema.TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-    else
+    result=$(curl --user-agent "${UA_Dalvik}" -${1} -fsL --max-time 30 "https://api.abema.io/v1/ip/check?device=android" | python -m json.tool 2> /dev/null | grep isoCountryCode | awk '{print $2}' | cut -f2 -d'"')
+	if [ -n "$result" ]; then
+		if [[ "$result" == "JP" ]]
+			then
+				echo -n -e "\r Abema.TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+			else
+				echo -n -e "\r Abema.TV:\t\t\t\t${Font_Yellow}Oversea Only${Font_Suffix}\n"
+		fi		
+	else
         echo -n -e "\r Abema.TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     fi
 }
@@ -275,6 +289,13 @@ function MediaUnlockTest_DisneyPlus() {
         echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
     fi
+	
+	previewcheck=$(curl -s -o /dev/null -L --max-time 30 -w '%{url_effective}\n' "https://disneyplus.com" | grep preview)
+	if [ -n "$previewcheck" ];then
+		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	fi	
+		
     
 	curl -${1} -s --user-agent "$UA_Browser" -H "Content-Type: application/x-www-form-urlencoded" -H "$disneyheader" -d ''${disneyauth}'' -X POST  "https://global.edge.bamgrid.com/token" | python -m json.tool 2> /dev/null | grep 'access_token' >/dev/null 2>&1
 
@@ -289,8 +310,10 @@ function MediaUnlockTest_DisneyPlus() {
 				if [[ "${website}" == "https://disneyplus.disney.co.jp/" ]]
 					then
 						echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Green}Yes(Region: JP)${Font_Suffix}\n"
+						return;
 					else
 						echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+						return;
 				fi
 		fi		
 	else
@@ -328,7 +351,7 @@ function MediaUnlockTest_Dazn() {
 
 function MediaUnlockTest_HuluJP() {
     echo -n -e " Hulu Japan:\t\t\t\t->\c";
-    local result=$(curl  -s -${1} -o /dev/null -L --max-time 30 -w '%{url_effective}\n' https://id.hulu.jp | grep login);
+    local result=$(curl -${1} -s -o /dev/null -L --max-time 30 -w '%{url_effective}\n' "https://id.hulu.jp" | grep login);
     
 	if [ -n "$result" ]; then
 		echo -n -e "\r Hulu Japan:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
@@ -493,6 +516,7 @@ fi
 
 echo -e " ${Font_SkyBlue}** 正在测试IPv4解锁情况${Font_Suffix} "
 echo "--------------------------------"
+echo -e " ${Font_SkyBlue}** 您的IPS/IDC为: ${local_isp}${Font_Suffix} "
 check4=`ping 1.1.1.1 -c 1 2>&1`;
 if [[ "$check4" != *"unreachable"* ]] && [[ "$check4" != *"Unreachable"* ]];then
     MediaUnlockTest 4;
@@ -505,6 +529,7 @@ echo ""
 check6=`ping6 240c::6666 -c 3 -w 3 2>&1`;
 if [[ "$check6" != *"unreachable"* ]] && [[ "$check6" != *"Unreachable"* ]];then
 	echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
+	echo -e " ${Font_SkyBlue}** 您的IPS/IDC为: ${local_isp}${Font_Suffix} "
     MediaUnlockTest 6;
 else
     echo -e "${Font_SkyBlue}当前主机不支持IPv6,跳过...${Font_Suffix}"
