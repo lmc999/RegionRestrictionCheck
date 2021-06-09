@@ -31,6 +31,12 @@
 bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh)
 ````
 
+**或者直接运行以下Docker命令**
+````docker
+docker run --rm --net=host lmc999/regioncheck
+````
+
+
 ## 交流
 脚本使用过程中出现bug欢迎提交issue
 
