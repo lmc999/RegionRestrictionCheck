@@ -338,7 +338,7 @@ function MediaUnlockTest_Dazn() {
 			echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 			return;
         else
-			echo -n -e "\r Dazn:\t\t\t\t\t${Font_Green}Yes [${result}]${Font_Suffix}\n"
+			echo -n -e "\r Dazn:\t\t\t\t\t${Font_Green}Yes (Region: ${result})${Font_Suffix}\n"
 			return;
 		fi
 	else
