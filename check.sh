@@ -3,6 +3,8 @@ UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 UA_Dalvik="Dalvik/2.1.0 (Linux; U; Android 9; ALP-AL00 Build/HUAWEIALP-AL00)";
 disneyauth="grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Atoken-exchange&latitude=0&longitude=0&platform=browser&subject_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiNDAzMjU0NS0yYmE2LTRiZGMtOGFlOS04ZWI3YTY2NzBjMTIiLCJhdWQiOiJ1cm46YmFtdGVjaDpzZXJ2aWNlOnRva2VuIiwibmJmIjoxNjIyNjM3OTE2LCJpc3MiOiJ1cm46YmFtdGVjaDpzZXJ2aWNlOmRldmljZSIsImV4cCI6MjQ4NjYzNzkxNiwiaWF0IjoxNjIyNjM3OTE2LCJqdGkiOiI0ZDUzMTIxMS0zMDJmLTQyNDctOWQ0ZC1lNDQ3MTFmMzNlZjkifQ.g-QUcXNzMJ8DwC9JqZbbkYUSKkB1p4JGW77OON5IwNUcTGTNRLyVIiR8mO6HFyShovsR38HRQGVa51b15iAmXg&subject_token_type=urn%3Abamtech%3Aparams%3Aoauth%3Atoken-type%3Adevice"
 disneyheader="authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84"
+WOWOW_Cookie=$(curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies | awk 'NR==3')
+TVer_Cookie="Accept: application/json;pk=BCpkADawqM3ZdH8iYjCnmIpuIRqzCn12gVrtpk_qOePK3J9B6h7MuqOw5T_qIqdzpLvuvb_hTvu7hs-7NsvXnPTYKd9Cgw7YiwI9kFfOOCDDEr20WDEYMjGiLptzWouXXdfE996WWM8myP3Z"
 Font_Black="\033[30m";
 Font_Red="\033[31m";
 Font_Green="\033[32m";
@@ -271,7 +273,7 @@ function MediaUnlockTest_Netflix() {
     if [[ ! -n "$region" ]];then
         region="US";
     fi
-    echo -n -e "\r Netflix:\t\t\t\t${Font_Green}Yes(Region: ${region})${Font_Suffix}\n"
+    echo -n -e "\r Netflix:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
     return;
 }
 
@@ -351,6 +353,7 @@ function MediaUnlockTest_Dazn() {
 			echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 			return;
         else
+			result=$(echo $result | tr [:lower:] [:upper:])
 			echo -n -e "\r Dazn:\t\t\t\t\t${Font_Green}Yes (Region: ${result})${Font_Suffix}\n"
 			return;
 		fi
@@ -460,7 +463,7 @@ function MediaUnlockTest_unext() {
 
 }
 
-function MediaUnlockTest_Paravi() {
+function MediaUnlockTest_Paravi(){
     echo -n -e " Paravi:\t\t\t\t->\c";
     local tmpresult=$(curl -${1} -s --max-time 30 -H "Content-Type: application/json" -d '{"meta_id":71885,"vuid":"3b64a775a4e38d90cc43ea4c7214702b","device_code":1,"app_id":1}' https://api.paravi.jp/api/v1/playback/auth | python -m json.tool 2> /dev/null);
 	
@@ -487,6 +490,53 @@ function MediaUnlockTest_Paravi() {
 
 }
 
+function MediaUnlockTest_wowow(){
+    echo -n -e " WOWOW:\t\t\t\t\t->\c";
+    local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} -s --max-time 30 -b "${WOWOW_Cookie}" -H "x-wod-app-version: 91.0.4472.106" -H "x-wod-model: Chrome" -H "x-wod-os: Windows" -H "x-wod-os-version: 10" -H "x-wod-platform: Windows"  "https://wod.wowow.co.jp/api/streaming/url?contentId=&channel=Live");
+	if [[ "$tmpresult" == "curl"* ]];then
+        	echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        	return;
+    fi
+	
+	checkfailed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep code | cut -f4 -d'"')
+    if [[ "$checkfailed" == "E0004" ]]; then
+		echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	elif [[ "$checkfailed" == "E5101" ]]; then	
+		echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		return;
+	fi
+
+}
+
+function MediaUnlockTest_TVer(){
+    echo -n -e " TVer:\t\t\t\t\t->\c";
+    local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} -s --max-time 30 -H "${TVer_Cookie}" "https://edge.api.brightcove.com/playback/v1/accounts/5102072603001/videos/ref%3Afree_episode_code_8121");
+	if [[ "$tmpresult" == "curl"* ]];then
+        	echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        	return;
+    fi
+	
+	checkfailed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'error_code' |  cut -f4 -d'"')
+    if [[ "$checkfailed" == "ACCESS_DENIED" ]]; then
+		echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;	
+	fi
+	
+	checksuccess=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep '"id":' |  cut -f4 -d'"' | awk 'NR==1')
+	if [ -n "$checksuccess" ]; then
+		echo -n -e "\r TVer:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		return;
+	fi
+
+}
+
 function MediaUnlockTest() {
 	echo ""	
 	echo "=============欧美地区解锁============= "
@@ -507,6 +557,8 @@ function MediaUnlockTest() {
 	MediaUnlockTest_Paravi ${1};
 	MediaUnlockTest_unext ${1};
 	MediaUnlockTest_HuluJP ${1};
+	MediaUnlockTest_TVer ${1};
+	MediaUnlockTest_wowow ${1};
 	MediaUnlockTest_PCRJP ${1};
 	MediaUnlockTest_UMAJP ${1};
 	MediaUnlockTest_Kancolle ${1};
