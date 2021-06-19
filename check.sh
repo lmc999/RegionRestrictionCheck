@@ -559,30 +559,45 @@ function MediaUnlockTest_HamiVideo(){
 }
 
 function MediaUnlockTest_4GTV(){
-    echo -n -e " 4GTV:\t\t\t\t\t->\c";
+    echo -n -e " 4GTV.TV:\t\t\t\t->\c";
     local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -s --max-time 30 -X POST -d 'value=D33jXJ0JVFkBqV%2BZSi1mhPltbejAbPYbDnyI9hmfqjKaQwRQdj7ZKZRAdb16%2FRUrE8vGXLFfNKBLKJv%2BfDSiD%2BZJlUa5Msps2P4IWuTrUP1%2BCnS255YfRadf%2BKLUhIPj' "https://api2.4gtv.tv//Vod/GetVodUrl3");
 	if [[ "$tmpresult" == "curl"* ]];then
-        	echo -n -e "\r 4GTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        	echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         	return;
     fi
 	
 	checkfailed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'Success' |  awk '{print $2}')
     if [[ "$checkfailed" == "false" ]]; then
-		echo -n -e "\r 4GTV:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;	
 	elif [[ "$checkfailed" == "true" ]]; then
-		echo -n -e "\r 4GTV:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;
 	else
-		echo -n -e "\r 4GTV:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 		return;
 	fi
+}
+
+function MediaUnlockTest_SlingTV() {
+    echo -n -e " Sling TV:\t\t\t\t->\c";
+    local result=`curl --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 30 https://www.sling.com/`;
+    if [ "$result" = "000" ]; then
+        echo -n -e "\r Sling TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        elif [ "$result" = "200" ]; then
+        echo -n -e "\r Sling TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        elif [ "$result" = "403" ]; then
+        echo -n -e "\r Sling TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r Sling TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+    fi
 }
 
 function MediaUnlockTest() {
 	echo ""	
 	echo "=============欧美地区解锁============= "
 	MediaUnlockTest_HBONow ${1};
+	MediaUnlockTest_SlingTV ${1};
 	MediaUnlockTest_BBC ${1};
 	echo "======================================="
 	echo "============大中华地区解锁============= "
