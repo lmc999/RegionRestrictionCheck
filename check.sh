@@ -584,12 +584,16 @@ function MediaUnlockTest_SlingTV() {
     local result=`curl --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 30 https://www.sling.com/`;
     if [ "$result" = "000" ]; then
         echo -n -e "\r Sling TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        elif [ "$result" = "200" ]; then
+		return;
+    elif [ "$result" = "200" ]; then
         echo -n -e "\r Sling TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-        elif [ "$result" = "403" ]; then
+		return;
+    elif [ "$result" = "403" ]; then
         echo -n -e "\r Sling TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
     else
         echo -n -e "\r Sling TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+		return;
     fi
 }
 
@@ -627,6 +631,42 @@ function MediaUnlockTest_HBOMax() {
 
 }
 
+function MediaUnlockTest_Channel4() {
+    echo -n -e " Channel 4:\t\t\t\t->\c";
+    local result=$(curl -${1} ${ssll} -s --max-time 30 "https://ais.channel4.com/simulcast/C4?client=c4" | grep 'status' |  cut -f2 -d'"');
+    
+	if [[ "$result" == "ERROR" ]]; then
+		echo -n -e "\r Channel 4:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    elif [[ "$result" == "OK" ]]; then
+		echo -n -e "\r Channel 4:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r Channel 4:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	return;
+
+}
+
+function MediaUnlockTest_ITVHUB() {
+    echo -n -e " ITV Hub:\t\t\t\t->\c";
+    local result=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 30 "https://simulcast.itv.com/playlist/itvonline/ITV");
+    if [ "$result" = "000" ]; then
+		echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "404" ]; then
+        echo -n -e "\r ITV Hub:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    else
+        echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
 function MediaUnlockTest() {
 	echo ""	
 	echo "=============欧美地区解锁============= "
@@ -635,6 +675,8 @@ function MediaUnlockTest() {
 	MediaUnlockTest_SlingTV ${1};
 	MediaUnlockTest_PlutoTV ${1};
 	MediaUnlockTest_BBC ${1};
+	MediaUnlockTest_ITVHUB ${1};
+	MediaUnlockTest_Channel4 ${1};
 	echo "======================================="
 	echo "============大中华地区解锁============= "
 	MediaUnlockTest_MyTVSuper ${1};
