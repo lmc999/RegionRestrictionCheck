@@ -538,22 +538,22 @@ function MediaUnlockTest_TVer(){
 }
 
 function MediaUnlockTest_HamiVideo(){
-    echo -n -e " HamiVideo:\t\t\t\t->\c";
+    echo -n -e " Hami Video:\t\t\t\t->\c";
     local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -s --max-time 30 "https://hamivideo.hinet.net/api/play.do?id=OTT_VOD_0000249064&freeProduct=1");
 	if [[ "$tmpresult" == "curl"* ]];then
-        	echo -n -e "\r HamiVideo:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        	echo -n -e "\r Hami Video:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         	return;
     fi
 	
 	checkfailed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'code' |  cut -f4 -d'"')
     if [[ "$checkfailed" == "06001-106" ]]; then
-		echo -n -e "\r HamiVideo:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		echo -n -e "\r Hami Video:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;	
 	elif [[ "$checkfailed" == "06001-107" ]]; then
-		echo -n -e "\r HamiVideo:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		echo -n -e "\r Hami Video:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;
 	else
-		echo -n -e "\r HamiVideo:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		echo -n -e "\r Hami Video:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 		return;
 	fi
 }
@@ -589,9 +589,9 @@ function MediaUnlockTest() {
 	MediaUnlockTest_MyTVSuper ${1};
 	MediaUnlockTest_NowE ${1};
 	MediaUnlockTest_ViuTV ${1};
-	MediaUnlockTest_BahamutAnime ${1};
-	MediaUnlockTest_HamiVideo ${1};
 	 MediaUnlockTest_4GTV ${1};
+	MediaUnlockTest_HamiVideo ${1};
+	MediaUnlockTest_BahamutAnime ${1};
 	MediaUnlockTest_BilibiliChinaMainland ${1};
 	MediaUnlockTest_BilibiliHKMCTW ${1};
 	MediaUnlockTest_BilibiliTW ${1};
