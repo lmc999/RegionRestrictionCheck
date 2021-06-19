@@ -593,11 +593,29 @@ function MediaUnlockTest_SlingTV() {
     fi
 }
 
+function MediaUnlockTest_PlutoTV() {
+    echo -n -e " Pluto TV:\t\t\t\t->\c";
+    local result=$(curl -${1} -s -o /dev/null -L --max-time 30 -w '%{url_effective}\n' "https://pluto.tv/" | grep 'thanks-for-watching');
+    
+	if [ -n "$result" ]; then
+		echo -n -e "\r Pluto TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+     else
+		echo -n -e "\r Pluto TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r Pluto TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	return;
+
+}
+
 function MediaUnlockTest() {
 	echo ""	
 	echo "=============欧美地区解锁============= "
 	MediaUnlockTest_HBONow ${1};
 	MediaUnlockTest_SlingTV ${1};
+	MediaUnlockTest_PlutoTV ${1};
 	MediaUnlockTest_BBC ${1};
 	echo "======================================="
 	echo "============大中华地区解锁============= "
