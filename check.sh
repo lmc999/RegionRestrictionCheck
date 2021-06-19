@@ -640,7 +640,7 @@ fi
 
 echo -e " ${Font_SkyBlue}** 正在测试IPv4解锁情况${Font_Suffix} "
 echo "--------------------------------"
-echo -e " ${Font_SkyBlue}** 您的ISP/IDC为: ${local_isp}${Font_Suffix} "
+echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp}${Font_Suffix} "
 check4=`ping 1.1.1.1 -c 1 2>&1`;
 if [[ "$check4" != *"unreachable"* ]] && [[ "$check4" != *"Unreachable"* ]];then
     MediaUnlockTest 4;
@@ -653,7 +653,7 @@ echo ""
 check6=`ping6 240c::6666 -c 3 -w 3 2>&1`;
 if [[ "$check6" != *"unreachable"* ]] && [[ "$check6" != *"Unreachable"* ]];then
 	echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
-	echo -e " ${Font_SkyBlue}** 您的ISP/IDC为: ${local_isp}${Font_Suffix} "
+	echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp}${Font_Suffix} "
     MediaUnlockTest 6;
 else
     echo -e "${Font_SkyBlue}当前主机不支持IPv6,跳过...${Font_Suffix}"
