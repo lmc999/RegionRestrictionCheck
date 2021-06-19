@@ -610,10 +610,28 @@ function MediaUnlockTest_PlutoTV() {
 
 }
 
+function MediaUnlockTest_HBOMax() {
+    echo -n -e " HBO Max:\t\t\t\t->\c";
+    local result=$(curl -${1} -s -o /dev/null -L --max-time 30 -w '%{url_effective}\n' "https://www.hbomax.com/" | grep 'geo-availability');
+    
+	if [ -n "$result" ]; then
+		echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+     else
+		echo -n -e "\r HBO Max:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	return;
+
+}
+
 function MediaUnlockTest() {
 	echo ""	
 	echo "=============欧美地区解锁============= "
 	MediaUnlockTest_HBONow ${1};
+	MediaUnlockTest_HBOMax ${1};
 	MediaUnlockTest_SlingTV ${1};
 	MediaUnlockTest_PlutoTV ${1};
 	MediaUnlockTest_BBC ${1};
