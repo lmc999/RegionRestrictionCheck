@@ -292,7 +292,7 @@ function MediaUnlockTest_YouTube_Region() {
         return;
     fi
     
-    echo -n -e "\r YouTube Region:\t\t\t${Font_Red}No${Font_Suffix}\n"
+    echo -n -e "\r YouTube Region:\t\t\t${Font_Green}US${Font_Suffix}\n"
     return;
 }
 
@@ -667,6 +667,35 @@ function MediaUnlockTest_ITVHUB() {
 
 }
 
+function MediaUnlockTest_iQYI_Region(){
+    echo -n -e " iQyi Region:\t\t\t\t->\c";
+    curl -${1} -s -I "https://www.iq.com/" > /tmp/iqiyi
+    
+    if [ $? -eq 1 ];then
+        echo -n -e "\r iQyi Region:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+    fi
+    
+    result=$(cat /tmp/iqiyi | grep 'mod=' | awk '{print $2}' | cut -f2 -d'=' | cut -f1 -d';')
+    if [ -n "$result" ]; then
+		if [[ "$result" == "ntw" ]]; then
+			result=TW 
+			echo -n -e "\r iQyi Region:\t\t\t\t${Font_Green}${result}${Font_Suffix}\n"
+			rm /tmp/iqiyi >/dev/null 2>&1
+			return;
+		else
+			result=$(echo $result | tr [:lower:] [:upper:]) 
+			echo -n -e "\r iQyi Region:\t\t\t\t${Font_Green}${result}${Font_Suffix}\n"
+			rm /tmp/iqiyi >/dev/null 2>&1
+			return;
+		fi	
+    else
+		echo -n -e "\r iQyi Region:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		rm /tmp/iqiyi >/dev/null 2>&1
+		return;
+	fi	
+}		
+
 function MediaUnlockTest() {
 	echo ""	
 	echo "=============欧美地区解锁============= "
@@ -682,7 +711,7 @@ function MediaUnlockTest() {
 	MediaUnlockTest_MyTVSuper ${1};
 	MediaUnlockTest_NowE ${1};
 	MediaUnlockTest_ViuTV ${1};
-	 MediaUnlockTest_4GTV ${1};
+	MediaUnlockTest_4GTV ${1};
 	MediaUnlockTest_HamiVideo ${1};
 	MediaUnlockTest_BahamutAnime ${1};
 	MediaUnlockTest_BilibiliChinaMainland ${1};
@@ -703,8 +732,9 @@ function MediaUnlockTest() {
 	echo "============全球性平台解锁============= "	
 	MediaUnlockTest_Dazn ${1};
 	MediaUnlockTest_Netflix ${1};
-	MediaUnlockTest_YouTube_Region ${1};
 	MediaUnlockTest_DisneyPlus ${1};
+	MediaUnlockTest_iQYI_Region ${1};
+	MediaUnlockTest_YouTube_Region ${1};
 	GameTest_Steam ${1};
 	echo "======================================="	
 }
