@@ -672,11 +672,11 @@ function MediaUnlockTest_ITVHUB() {
 }
 
 function MediaUnlockTest_iQYI_Region(){
-    echo -n -e " iQyi Region:\t\t\t\t->\c";
+    echo -n -e " iQyi Oversea Region:\t\t\t->\c";
     curl -${1} -s -I "https://www.iq.com/" > /tmp/iqiyi
     
     if [ $? -eq 1 ];then
-        echo -n -e "\r iQyi Region:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
     fi
     
@@ -684,17 +684,17 @@ function MediaUnlockTest_iQYI_Region(){
     if [ -n "$result" ]; then
 		if [[ "$result" == "ntw" ]]; then
 			result=TW 
-			echo -n -e "\r iQyi Region:\t\t\t\t${Font_Green}${result}${Font_Suffix}\n"
+			echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Green}${result}${Font_Suffix}\n"
 			rm /tmp/iqiyi >/dev/null 2>&1
 			return;
 		else
 			result=$(echo $result | tr [:lower:] [:upper:]) 
-			echo -n -e "\r iQyi Region:\t\t\t\t${Font_Green}${result}${Font_Suffix}\n"
+			echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Green}${result}${Font_Suffix}\n"
 			rm /tmp/iqiyi >/dev/null 2>&1
 			return;
 		fi	
     else
-		echo -n -e "\r iQyi Region:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 		rm /tmp/iqiyi >/dev/null 2>&1
 		return;
 	fi	
@@ -791,8 +791,8 @@ function MediaUnlockTest() {
 	MediaUnlockTest_Dazn ${1};
 	MediaUnlockTest_Netflix ${1};
 	MediaUnlockTest_DisneyPlus ${1};
-	MediaUnlockTest_iQYI_Region ${1};
 	MediaUnlockTest_YouTube_Region ${1};
+	MediaUnlockTest_iQYI_Region ${1};
 	GameTest_Steam ${1};
 	echo "======================================="	
 }
