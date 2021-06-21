@@ -708,8 +708,8 @@ function MediaUnlockTest_HuluUS(){
         	return;
     fi
 	
-	echo $tmpresult | python -m json.tool 2> /dev/null | grep 'Anonymous Proxy' > /dev/null 2>&1
-    if [ $? -eq 0 ];then
+	checkfailed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep '"code":' | cut -f4 -d'"')
+	if [[ "$checkfailed" == "BYA-403-013" ]];then
 		echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;	
 	fi
