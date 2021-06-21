@@ -712,6 +712,9 @@ function MediaUnlockTest_HuluUS(){
 	if [[ "$checkfailed" == "BYA-403-013" ]];then
 		echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;	
+	elif [[ "$checkfailed" == "BYA-403-011" ]];then
+		echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;	 	
 	fi
 	
 	echo $tmpresult | python -m json.tool 2> /dev/null | grep 'play.hulu.com' > /dev/null 2>&1
