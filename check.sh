@@ -721,11 +721,11 @@ function MediaUnlockTest_HuluUS(){
 	if [ $? -eq 0 ];then
 		echo -n -e "\r Hulu:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;	
+	else
+		echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		return;	
 	fi
 
-	echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
-	return;		
-	
 }
 
 function MediaUnlockTest_encoreTVB() {
