@@ -800,7 +800,32 @@ function MediaUnlockTest_LineTV.TW() {
     fi
 
 }
+
+function MediaUnlockTest_Viu.com() {
+    echo -n -e " Viu.com:\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -s -o /dev/null -L --max-time 30 -w '%{url_effective}\n' "https://www.viu.com/");
+    if [ "$tmpresult" = "000" ]; then
+		echo -n -e "\r Viu.com:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi	
 	
+	result=$(echo $tmpresult | cut -f5 -d"/")
+	if [ -n "$result" ]; then
+		if [[ "$result" == "no-service" ]]; then
+			echo -n -e "\r Viu.com:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			return;
+		else
+			result=$(echo $result | tr [:lower:] [:upper:])
+			echo -n -e "\r Viu.com:\t\t\t\t${Font_Green}Yes (Region: ${result})${Font_Suffix}\n"
+			return;
+		fi
+		
+    else
+		echo -n -e "\r Viu.com:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		return;
+	fi
+}
+
 
 function MediaUnlockTest() {
 	echo ""	
@@ -844,6 +869,7 @@ function MediaUnlockTest() {
 	MediaUnlockTest_Netflix ${1};
 	MediaUnlockTest_DisneyPlus ${1};
 	MediaUnlockTest_YouTube_Region ${1};
+	MediaUnlockTest_Viu.com ${1};
 	MediaUnlockTest_iQYI_Region ${1};
 	GameTest_Steam ${1};
 	echo "======================================="	
