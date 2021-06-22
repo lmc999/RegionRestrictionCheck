@@ -839,7 +839,7 @@ function MediaUnlockTest() {
 	MediaUnlockTest_BBC ${1};
 	MediaUnlockTest_ITVHUB ${1};
 	MediaUnlockTest_Channel4 ${1};
-	MediaUnlockTest_Molotov ${1};
+	#MediaUnlockTest_Molotov ${1};
 	echo "======================================="
 	echo "============大中华地区解锁============= "
 	MediaUnlockTest_MyTVSuper ${1};
