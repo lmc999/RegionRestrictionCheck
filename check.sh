@@ -7,7 +7,7 @@ disneyheader="authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5Ni
 WOWOW_Cookie=$(curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies | awk 'NR==3')
 TVer_Cookie="Accept: application/json;pk=BCpkADawqM3ZdH8iYjCnmIpuIRqzCn12gVrtpk_qOePK3J9B6h7MuqOw5T_qIqdzpLvuvb_hTvu7hs-7NsvXnPTYKd9Cgw7YiwI9kFfOOCDDEr20WDEYMjGiLptzWouXXdfE996WWM8myP3Z"
 Hulu_Content=$(curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies | awk 'NR==5')
-Hulu_Cookie="_h_csrf_id=7409960e2a4c5cacdf4ad0b40d02f1f419ec19a5cf5efde88838f56154d36dab; guid=051BDA2EDE200DE1E7C1E48FBE9BE703; bm_mi=CC4903B817B8A6BBB764FDDF03464DD4~QSe5RkMjVQcQ3Gk30GAdnAcq+WKZczjpje5IReqWJVWsusJeVi83VlqWc22cpl25+D0KMZ6a+IrNf+hP+QnqGpIqEIYDPVnD5+HAZn0eKbXt6No2cda6QdGcWCqibH0vDi9I4n3+3mmnScxrBGSgI5nnK7lGsXMyNFN07cI4n2mtpM5EhdRBbFdSUiAu0vKopIC2bDeBXtCZt0hgxKgNwsctYjcHXOFFSI1+8pcrBig2L0kBFDatwU561Eive9MW1vL2vX9A+otzcQYZp+rJ2g==; ak_bmsc=6BC1553C98D6A20C1DAE2223BA074E8B~000000000000000000000000000000~YAAQF84zuGGo4+p5AQAA93rwLgzKZTx97e5QLxGVVrUA94/EShh6fJSqEpiU5yyZUOFXLsd7QJGjFRPMPT5YYC1EMffKv2K7OiDYl09Zk6GgqZQtEL3qaVESfJjDMFfkLqbP2DfUz7L+leXzP6ZIvgxKVvpc9v3+/D7QVwZVyTq/aFHLlF1LajSLzi9v5Gr7zZeFajzM0Ffiu7Fuj79URE1TEx345RoG9F5okf8rH/6NEOcdx4PrJWjw92lBomGR7+kQk1uk50eFXzlxElfqjhaSboVbs5YHjF6F5f5rKeS/oM1P0Ojz5PV5YR5aqbGvE+jCp00xMelybn53V62UpHcGd7vJ27Rh3BDVf1XOUHzIlVYBT1ePkhIpBFOVCyjyhp4Asc61swNAn/y6YFBlQ7la; _hulu_pgid=8396803; _hulu_uid=167194477; _hulu_e_id=iHI6sUwC0ZDJRQ218Yat7g; _hulu_bluekai_hashed_uid=0aaed4eecfceebd118abc89c11678718; _hulu_assignments=eyJ2MSI6W3siZSI6OTc5LCJ0IjoyNjk2LCJuIjoiaHVsdV8xMzU3OF93ZWxjb21lX2NvbnRyb2wifV19; _p_edit_token=fT1iCnNwizTnn2K5Sxjlwg; _hulu_dt=rbzP5Uut010u2uUOQPzfZN9uZ4E-Hnb%2FiLbt8bKy%2FlZ%2FZWURwA--LSb50Ugbbfj1aqtVr6gI4kOAt4yQIEJ5rVviZXcXGiMNxi1WR7wL9yaHCk_a2PItBw7E6Y41XD1n%2F6_MITSQnArxYlgcnOUpmjnvU_bwMTk2dz7o3VizUpfmwa06R1XUYKJNMXt42yNKFYPrHJTaHD5SS42oMpYgYn4VlsQ%2F4HU_ida5TyH1_jiK3LjfWjgFKO3wTHnY0eHA__4dmty7GpTs3UVJRtg7MAIOk4Nfz4sglEvSh9rMP_QOh2IxbGtyfdeznY0w26pjv98NlS1xHeltOiDHuGGRPYhjtaxn0fyr4%2FVvTANXFkok8rLCuJfsquNOTrpsOek2UKVMDJ%2FsmZGh64qCmifHCaILWFj8doffHh7JRavfRBJrriyBy93v6emTsEZWg5E8PGDl7QR1Ohzjcdt8wakxP6JlbaWeQ%2FrmucOBxMLMSclgVt%2FJg214At1ck%2FXsNm3YwlA1dXLqOYpFR0aJpHUyLeTAu9jim%2FXRGtqJv6C7xpy6Z5EYt%2FdW%2FN5_LLqPLyZ2JEN47Y2dxHTD9Jo_w6PlhHvSN2XQ5jHBkJHaV3EvV7xOcxqnSP9QhEeNYa78t_hl2CEutzz6d5KXj5aiZlpu4yRLTxwgccmQuJXhViI0F1KSr4Y_uS5RS67a52kAHUXJ6Xqne_6TWfvVdxNwVUTFkjHGYd020hzDyOyX5Fj%2FiePu2a5VxC3X8xxOh0JJ%2FLntX2KQE91rgJQAFoNuxK7%2F4GZE3qtjsF9bDpJdruFI9ni8Ys4tf%2FU09EbxwqYAXhnWoOjy_ZSDth8umUUXperAdkFx4_H1UroJV8tJpyW5nvr4YcnR1l4bU%2FCNdkJqPQtyUgvI6reX0%2FprdGxIEknVf0kR8Mj2KHk-; XSRF-TOKEN=14cc2b4d-65e6-46be-8902-1a5cdd0f8c17; _hulu_session=8y52dptNXR0LwOqsLc7cACXkD0w-S7Tu1h0N1pLvzfVB5R35%2FQ--gXB3%2FCcC%2FGFjSd11cBxVD2bs4Hlq5xV_ddMZBMB5v7R3HwzyAS9cJ9%2FlCl_HOQZRssm6qeD6_W3%2F4cwOtmn4bI7wVnRyB5Y0FrEGCbwYTOFfK9%2F1O2UZeQN97VXpsq3dh0PdJz6qN9T7IrUpa_QsNcGl7OgIVLIr6Yoeu4v1_f4rYKvpsZ6yQh%2Fd1_exA7IOgLrUP3wz4rAHzFzshM8gvgWv2U9IJjcwYJUt%2FrTHKbZHL9Y8mtCE0jSxEhPM6PSaZ_62%2FN6jJfnJB3JIRqSJh%2FskyTg4cvXcEMF6vFcU661d4TfzMvoVB9XL_f6xQAeuszqnXB2FKghabL0d9GJKAeBDKCmzUoE1nEn1mtmdKLh0Fb44lDhTrcxsF8MSLvZJcIBEnayglpSCOB5crBnqPaIpkPZU7UOi5ziduQVF_5zOiKBdyZGDW8BxC1nM8FzBhP58gcpAD8Iwcabq5XpIsUifM054m5Vn2tJH_ag3IEqrg2QNa0xM7CKvykoQjwkOt0sIhBUdkv0VuqB1oy9v0wRaz2%2FWcsolzdadZOxnSPQb8SilMAJ4M_ged%2FDvKw1d1f76L1JwoEIrWJv%2FXODh5OGVcYT4r8tOlSWI8wPCsqFrOqtaWNg2KjQ069_PRezvt1JrAoF72%2FmQweBusM31dwoNnuxLvCLDEBxM3UCq6I26_sOoTWfP1S5bWJ3HBtGvS60u67w0sj2h4IpYITsm__Vc1IHnXHBWSjsbjoqX7NqYnGH0WjNMhlOFr_u4qByty8PSHplE78%2FY4Br_pnxoNxICOIOZ8Io10oifwMu8nJdcgAPc%2F06RwFfHpmVdYxOUJktrUt6DkHt7h0oeIhcy7V3Sm22N3GMVONiRBILoeutlactmCxUxwRU5_6BKIk_i9aoFcPEY9LuOKMENqeQNWKrqmTc3r1cnqlfKatv1YGEm2Xy35ZSie%2Fh2muMD_jS1MFmB2XLOS1O1Y5oqupZUYaOd13MYVkhpWvaQTVxSIC_Jv6DYsC4pVQZOkqPkCuq7D3dXNtq01h_QJvinR5ZOGWA8eTApGOByr76rnChVu7I-; _hulu_pid=167194477; _hulu_pname=Joshua; _hulu_is_p_kids=0; AMCVS_0A19F13A598372E90A495D62%40AdobeOrg=1; AMCV_0A19F13A598372E90A495D62%40AdobeOrg=-408604571%7CMCIDTS%7C18800%7CMCMID%7C36139018937945279231460478984942967124%7CMCAID%7CNONE%7CMCOPTOUT-1624292509s%7CNONE%7CvVersion%7C4.6.0; _hulu_metrics_context_v1_=%7B%22cookie_session_guid%22%3A%2247648e0d7cb7d9137c78e607353553a2%22%2C%22referrer_url%22%3A%22%22%2C%22curr_page_uri%22%3A%22app%3Awatch%22%2C%22primary_ref_page_uri%22%3A%22urn%3Ahulu%3Ahub%3Ahome%22%2C%22secondary_ref_page_uri%22%3A%22www.hulu.com%2Fwelcome%22%2C%22curr_page_type%22%3A%22watch%22%2C%22primary_ref_page_type%22%3A%22home%22%2C%22secondary_ref_page_type%22%3A%22landing%22%2C%22secondary_ref_click%22%3Anull%2C%22primary_ref_click%22%3A%22Marvel's%20Cloak%20%26%20Dagger%22%2C%22primary_ref_collection%22%3A%22282%22%2C%22secondary_ref_collection%22%3Anull%2C%22primary_ref_collection_source%22%3A%22heimdall%22%2C%22secondary_ref_collection_source%22%3Anull%2C%22ref_collection_position%22%3A5%7D; metrics_tracker_session_manager=%7B%22session_id%22%3A%22051BDA2EDE200DE1E7C1E48FBE9BE703-66a19139-b54a-4ca2-af44-2ddef0d7ca6b%22%2C%22creation_time%22%3A1624285123861%2C%22visit_count%22%3A1%2C%22session_seq%22%3A29%2C%22idle_time%22%3A1624285311262%7D; bm_sv=4FD52508451655CA50843D2E5E7A33D4~N/A5+NRTGFvUkDHpKDDTu+eDOWZz5xf+hPeKnIZ4V5Wh1L3N6kvCw5n1o7ota/9OUM/73ILWCDwqdPdjSjPIjC4MYM4FLr28lxkxEBtOrSh7HuuwVKbeLfNGklumysJprhnIa/4kwBOdnLVDBswbuA=="
+Hulu_Cookie="guid=2B3BACF5B121715649E5D667D863612E; _h_csrf_id=457b2280eef19f28fbcb2992d1de37048e4b4097e257f63f155ed929b6e53687; bm_mi=98A12BB1579032B9CA81C4F41FCC4D76~8E5oFWEIhwYwpkQpyPS1kX2U8y73BXeruxG9ASpoLZMdsQTjtyvfB1JhzX6EEHnxuU7yAvzvS/GGeb6ZjWEC8QZwI+q7HqHXsjXrYMBfn36Kk5ccNrl4B1YRqfvt5Ne/d5ihpUBHiwCMhr5edO7F4rApRIexCkrWrfDQ3XfKyM1UBumyKvHSsQuSjhTI6oQksn57PKxWOtzzHtgsPU4vJJ+X9Mu+9q86xiIwbdCPNsmyn8lPZHgAQz4gYe14IZ5e+VAG9Zz5JlVbr6HdFHoT4Q==; ak_bmsc=C2D69241DC5D57588DE0B838E9BE6AED~000000000000000000000000000000~YAAQffEoF6CLqhd6AQAAqZOHMQy4YgG0qd2B4Ad0YCo7mpExC/lcivnH22KbDsY2jOmj43C3KecGZZINVqaIxynHJ66Pvt9jWAi1pZ/v8Uu/hPeTYbw1JWamCd1vwOP0NDDb6CjL4Dd4wtJ5Y62l29fJGGH90cpQN75MEh4tt4OIEi0g0HR6Q5PnesgQ/V+ZrgaX2kNRyxw/Yj+BNvqapCY646d0toe9LZucyLM0qXhwzbnbVP/9aY7NAcGJOUFCBx91FT0gBKY6V9X2tCuvgr10A5FilTSAqfc/7nCIBaFoIjSwHZH7JVQfeyzIkbKBUd6X5SL0BYo9CaM4B3TMYNbyCE4N3rRgWDJVkeeE4t3PX3ZvfTvg+lgnhsoa88GDl7mKzq6qPQTfkuYb77Lm74/Q; __utma=155684772.15046934.1624328687.1624328687.1624328687.1; __utmc=155684772; __utmz=155684772.1624328687.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmt=1; __utmb=155684772.1.10.1624328687; _ga=GA1.2.15046934.1624328687; _gid=GA1.2.898989183.1624328688; _uetsid=bbdaffc0d30011ebae3b83ed1d284d15; _uetvid=6c0fb310c8d711eba91e7f00bc7b8c6c; _gcl_au=1.1.1445813666.1624328688; stc115168=tsa:1624328688867.701667577.3067198.6769165591537141.1:20210622025448|env:1%7C20210723022448%7C20210622025448%7C1%7C1047148:20220622022448|uid:1624328688866.27138477.980460644.115168.64013158.5:20220622022448|srchist:1047148%3A1%3A20210723022448:20220622022448; _scid=cbb3a569-173c-46dc-ad94-1217690c0480; _sctr=1|1624291200000; _hulu_pgid=119005187; _hulu_uid=27700158; _hulu_e_id=t7hpWpSXllhMLLFtQgwj6Q; _hulu_bluekai_hashed_uid=b01118dc5ca5a6c3ff2d52da58521763; _hulu_assignments=eyJ2MSI6W3siZSI6OTc3LCJ0IjoyNjkzLCJuIjoiaHVsdV8xMzU4M19saXZldHZfbmV0d29ya3NfY3RhIn1dfQ%3D%3D; _p_edit_token=QG15y0eX1JM8Rca0ipSwbg; _hulu_dt=_NfpcTpR6vmlL3iaiWUHjQSkK5c-8tLIXduBD%2F1lt6ABDRyCLg--ZajrNgYeVcAdpLYdy1UcOCku%2FakNRRxTuAo%2FM76B4ZKTRipMZame4CRUQHtpG5CquWpxC231nPBtkFC5k3lh%2Frp4MR8dcXyXkXiTqGf89EsmoK3FZtO_NTY72%2FG%2Fzm_sDyoMbFHTlMFd2z2Yx2Hx0UejA6kzbc_cwNH%2FccXBVVXm93_nMSTpN9VNxUpFJ2mk_p%2FvtWShFFvfTeXj_mt1DV8shzxLXdMELXpw2Dsa66YkhwEiUnuVvX2xqZXfnIcpmw6hS2Pbe_wDA%2FATJBNae94_qOC%2FblP_f_BaoJ17kubZ3BOB_vnsN9FVg2_b49mUj1Xl5VwnhBLKj2dNADHwBJmU7fqQ4GFVia92Rc%2FxvdZ6CMQCiBWp5B%2F6qVQFhsE3HEyPVqGiaVGofNLdUz%2Fz7y28ZSvfeMsq%2Fx63d5oRBcaOehRpiS3W2BObYFTjpBlWgU5wmYofOrT9oxZn9FI9in1Z9swfYcAFSGWXZZIzcUaUPwW7PI64zOEcASdVXL9al3VGkEMFzBbu1J3%2FhaWFaL2ZAdIQlYeTX64HYduiBtGYF3wVTx7DVxsJdIEve2T%2Ft5EGo11Ho02zbRQGFZlwWAozpeXv4iHCFcNu23nzebNvE1rKMOF2ejx%2Fe2U8K23vbrpxfhjglivVhH_9fhWjJYbaLCvjQXxkUYM_qZgINJEIQ_dUUh5dKEHOpK4YS%2F3Zk%2F5pngd13CC39hh7JsJcnF5P%2Fy3bsbi8YdkALtax72ExQ5jKNjhWowx_bTL_jquaJSi%2Fo4woznfPJCqeTixOkrPKnr4sxyUinFMvU2U5hMxT1dldkg3g4CZcOFETgs1lDpYJl0pFRW3QnV1BqZErZicVWQz7Zu9RL3EdBzXYdZs-; _persisted_HEM=1c7283eff64c1af675275a5257f759263507e69cfcfc4cfda46566d19d771fbc; _gat_hulu1=1; XSRF-TOKEN=c50fde0e-13af-41aa-9227-58b84c7f7ad3; geo=23.1192247%26113.2199658%261624328812537; _hulu_session=chkaxXQj_Wgz77zpprc0dqaAc8k-dS6p06DtW0oeFDNsl4LlaQ--njaMgp6HPG6CpHGtN2zJeaGM6lzNHBYbUp%2FImohbo_0ceuuaYwRKW4sfYPGRWIv7OaV5NzFO4Kj_Ryc35OBM6ASnpt6L_S5AFFJhfUNgBanXiby%2FqowtGDDtKm97jSX2EJmgXWBXeczD5T7MbY6Uq56ExELiEHLZRfBnLic%2Fc2CKmTgXfW%2F1NCZ7YcPQSaJ6ek4IwolV3mOEpC_pK6IPUW4kVDHaspg6j4S4dIbyAhts53ZQOmoJChAZqR2vep8ajJMSdukGdDYBmV1h9%2Fsz2Z_hXeSKHlDmn_fyBhwiwKIB9t_CMVqsydkgNUGwqQMUk3cTY7a3XKVaoMPtjUj93RL%2FYdVG6_q_S710kv1UA14K3InJ9hCf2DIf61UrPm8e4ODw7f7crsEKftYrEURIL314tzHj_BIv_o8zU5jAX1zjuePh2jUVMmKRTK5YMkn9azDdCECk94MDK2g%2F6364MUw4Qr4Ef1mUaSZm1t%2FOTo%2Fp8x_A_QJcHDVibrHs%2Fnagp%2FzjSAMLKDhvV7xHP0r1MFCg5F3h8qlElhH2OW_hu7unuLcMDeqIQJBSJwDHXUwauB_enFn2rL0VR2DKbEBB0LnndRsus4WbccMjGpn72J5uO8Ygv7uC8jog1P3VGo%2F78lBcX1tXb4kpUiAU8CCfAn_OnIyH7SsgskEXv7HYC9bl7%2FZ3RJdsQ8oK7HRX1HyVfLvV7vX0ez9wLT0pnlpGQRHMSHI6d90Isc0E2ayFHThWNSC4H3RaU6DqjkNTSzLEMwakLxF1iyZxwEdrUSoTBqpBSPlb%2Fu5bk74wgtqAdbBWdpEsWTpSN_MNGwYb4IeMY70URvFF9GMPuCB45bptcC1DUS1U%2F_IPiWhXcxNKm9G14nKzofA18A1kusG65ufvgpHaGD%2Fw_hGnorZV_gie4GDWYNAp9LTkweQ5eRhmYCPIX8gRprzDv1yEYo__sIi%2FygPI4KWagtafxTmAuXKKTTLkLplq_lLp2dy4od5PhcCR7NxJxovjzc91IYqJBltjw2JSToLHweKGeGm8%2FqgFLzHkwSKXRcpPTbQf5EQAMEc-; _hulu_pid=27700158; _hulu_pname=Main; _hulu_is_p_kids=0; bm_sv=9A544DD97C5AC8609E896D599E7CCB54~kOV8lDWbANrCvHq0EeByqil2DGdG+32wj7h4iKbbCi2S2OKABBaakQGYNWf92LQj3ve/A1Y1kzP0s5DiQPGBzqheVtUTUa1NLVlXN9KjRSpl+uhSkUnEF2zq3P8TImPQTeHmG996TDm9rRWzTlsXF2zBiO1iksOjLnpUC/7vW90=; AMCVS_0A19F13A598372E90A495D62%40AdobeOrg=1; AMCV_0A19F13A598372E90A495D62%40AdobeOrg=-408604571%7CMCIDTS%7C18801%7CMCMID%7C57413330304479553574529114000647347829%7CMCAAMLH-1624933633%7C11%7CMCAAMB-1624933633%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCCIDH%7C-1857806863%7CMCOPTOUT-1624336033s%7CNONE%7CMCAID%7CNONE%7CvVersion%7C4.6.0; _hulu_metrics_context_v1_=%7B%22cookie_session_guid%22%3A%22c3718e4141e5313dfcafe08d9dbf03fe%22%2C%22referrer_url%22%3A%22https%3A%2F%2Fwww.hulu.com%2Fhub%2Fhome%22%2C%22curr_page_uri%22%3A%22app%3Awatch%22%2C%22primary_ref_page_uri%22%3A%22urn%3Ahulu%3Ahub%3Ahome%22%2C%22secondary_ref_page_uri%22%3A%22www.hulu.com%2Fwelcome%22%2C%22curr_page_type%22%3A%22watch%22%2C%22primary_ref_page_type%22%3A%22home%22%2C%22secondary_ref_page_type%22%3A%22landing%22%2C%22secondary_ref_click%22%3Anull%2C%22primary_ref_click%22%3A%22High%20School%20DxD%22%2C%22primary_ref_collection%22%3A%22282%22%2C%22secondary_ref_collection%22%3Anull%2C%22primary_ref_collection_source%22%3A%22heimdall%22%2C%22secondary_ref_collection_source%22%3Anull%2C%22ref_collection_position%22%3A3%7D; utag_main=v_id:017a3188cbb100021414281ab47e03073001c06b00bd0$_sn:1$_ss:0$_st:1624330646379$ses_id:1624328686514%3Bexp-session$_pn:4%3Bexp-session$device_category:desktop%3Bexp-session$_prevpage:%2Fwatch%2Fad8d966d-82be-4bfd-99fd-f19a724b404a%3Bexp-1624332446388$k_sync_ran:1%3Bexp-session$krux_sync_session:1624328686514%3Bexp-session$g_sync_ran:1%3Bexp-session$dc_visit:1$dc_event:1%3Bexp-session$dc_region:ap-east-1%3Bexp-session$hhid:1da4f9109b4714b9cf4206d9cb9d4bb041024a0b5d2d08230e95b67cfabd8523%3Bexp-session; metrics_tracker_session_manager=%7B%22idle_time%22%3A1624328846431%2C%22session_seq%22%3A46%2C%22session_id%22%3A%222B3BACF5B121715649E5D667D863612E-770a97c3-aea5-44df-a21d-4d47ceb4ce52%22%2C%22creation_time%22%3A1624328684490%2C%22visit_count%22%3A1%7D"
 
 Font_Black="\033[30m";
 Font_Red="\033[31m";
@@ -585,7 +585,7 @@ function MediaUnlockTest_4GTV(){
 
 function MediaUnlockTest_SlingTV() {
     echo -n -e " Sling TV:\t\t\t\t->\c";
-    local result=`curl --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 30 https://www.sling.com/`;
+    local result=`curl --user-agent "${UA_Dalvik}" -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 30 https://www.sling.com/`;
     if [ "$result" = "000" ]; then
         echo -n -e "\r Sling TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
@@ -603,7 +603,7 @@ function MediaUnlockTest_SlingTV() {
 
 function MediaUnlockTest_PlutoTV() {
     echo -n -e " Pluto TV:\t\t\t\t->\c";
-    local result=$(curl -${1} -s -o /dev/null -L --max-time 30 -w '%{url_effective}\n' "https://pluto.tv/" | grep 'thanks-for-watching');
+    local result=$(curl -${1} ${ssll} -s -o /dev/null -L --max-time 30 -w '%{url_effective}\n' "https://pluto.tv/" | grep 'thanks-for-watching');
     
 	if [ -n "$result" ]; then
 		echo -n -e "\r Pluto TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -620,7 +620,7 @@ function MediaUnlockTest_PlutoTV() {
 
 function MediaUnlockTest_HBOMax() {
     echo -n -e " HBO Max:\t\t\t\t->\c";
-    local result=$(curl -${1} -s -o /dev/null -L --max-time 30 -w '%{url_effective}\n' "https://www.hbomax.com/" | grep 'geo-availability');
+    local result=$(curl -${1} ${ssll} -s -o /dev/null -L --max-time 30 -w '%{url_effective}\n' "https://www.hbomax.com/" | grep 'geo-availability');
     
 	if [ -n "$result" ]; then
 		echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -654,7 +654,7 @@ function MediaUnlockTest_Channel4() {
 
 function MediaUnlockTest_ITVHUB() {
     echo -n -e " ITV Hub:\t\t\t\t->\c";
-    local result=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 30 "https://simulcast.itv.com/playlist/itvonline/ITV");
+    local result=$(curl -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 30 "https://simulcast.itv.com/playlist/itvonline/ITV");
     if [ "$result" = "000" ]; then
 		echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
@@ -673,7 +673,7 @@ function MediaUnlockTest_ITVHUB() {
 
 function MediaUnlockTest_iQYI_Region(){
     echo -n -e " iQyi Oversea Region:\t\t\t->\c";
-    curl -${1} -s -I "https://www.iq.com/" > /tmp/iqiyi
+    curl -${1} ${ssll} -s -I "https://www.iq.com/" > /tmp/iqiyi
     
     if [ $? -eq 1 ];then
         echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -777,6 +777,29 @@ function MediaUnlockTest_Molotov(){
 	fi
 
 }
+
+function MediaUnlockTest_LineTV.TW() {
+    echo -n -e " LineTV.TW:\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://www.linetv.tw/api/part/11829/eps/1/part?chocomemberId=");
+    if [ "$tmpresult" = "000" ]; then
+		echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi	
+	result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'countryCode' |awk '{print $2}' | cut -f1 -d',')	
+    if [ -n "$result" ];then
+		if [ "$result" = "228" ]; then
+			echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+			return;
+		else
+			echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			return;
+		fi	
+    else
+        echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+		return;
+    fi
+
+}
 	
 
 function MediaUnlockTest() {
@@ -799,6 +822,7 @@ function MediaUnlockTest() {
 	MediaUnlockTest_ViuTV ${1};
 	MediaUnlockTest_4GTV ${1};
 	MediaUnlockTest_HamiVideo ${1};
+	MediaUnlockTest_LineTV.TW ${1};
 	MediaUnlockTest_BahamutAnime ${1};
 	MediaUnlockTest_BilibiliChinaMainland ${1};
 	MediaUnlockTest_BilibiliHKMCTW ${1};
