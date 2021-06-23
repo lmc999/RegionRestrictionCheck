@@ -816,6 +816,23 @@ function MediaUnlockTest_Viu.com() {
 	fi
 }
 
+function MediaUnlockTest_Niconico() {
+    echo -n -e " Niconico:\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://www.nicovideo.jp/watch/so23017073");
+    if [ "$tmpresult" = "000" ]; then
+		echo -n -e "\r Niconico:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi	
+	echo $tmpresult | grep '同じ地域' > /dev/null 2>&1 
+     if [[ "$?" -eq 0 ]]; then
+			echo -n -e "\r Niconico:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			return;
+		else
+			echo -n -e "\r Niconico:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+			return;
+    fi
+
+}
 
 function US_UnlockTest() {
 	echo "=============美国地区解锁============="
@@ -852,8 +869,9 @@ function HKTW_UnlockTest() {
 }
 	
 function JP_UnlockTest() {	
-	echo "============日本地区解锁============"	
+	echo "=============日本地区解锁============="	
 	MediaUnlockTest_AbemaTV_IPTest ${1};
+	MediaUnlockTest_Niconico ${1};
 	MediaUnlockTest_Paravi ${1};
 	MediaUnlockTest_unext ${1};
 	MediaUnlockTest_HuluJP ${1};
@@ -867,7 +885,7 @@ function JP_UnlockTest() {
 
 function Global_UnlockTest() {		
 	echo ""		
-	echo "============跨国平台解锁============"	
+	echo "=============跨国平台解锁============="	
 	MediaUnlockTest_Dazn ${1};
 	MediaUnlockTest_Netflix ${1};
 	MediaUnlockTest_DisneyPlus ${1};
