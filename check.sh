@@ -877,9 +877,9 @@ function JP_UnlockTest() {
 	MediaUnlockTest_HuluJP ${1};
 	MediaUnlockTest_TVer ${1};
 	MediaUnlockTest_wowow ${1};
-	MediaUnlockTest_PCRJP ${1};
-	MediaUnlockTest_UMAJP ${1};
 	MediaUnlockTest_Kancolle ${1};
+	MediaUnlockTest_UMAJP ${1};
+	MediaUnlockTest_PCRJP ${1};
 	echo "======================================="
 }	
 
