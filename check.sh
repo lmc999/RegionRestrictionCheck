@@ -834,11 +834,29 @@ function MediaUnlockTest_Niconico() {
 
 }
 
+function MediaUnlockTest_ParamountPlus() {
+    echo -n -e " Paramount+:\t\t\t\t->\c";
+    local result=$(curl -${1} ${ssll} -s -o /dev/null -L --max-time 30 -w '%{url_effective}\n' "https://www.paramountplus.com/" | grep 'intl');
+    
+	if [ -n "$result" ]; then
+		echo -n -e "\r Paramount+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+     else
+		echo -n -e "\r Paramount+:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r Paramount+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	return;
+
+}
+
 function US_UnlockTest() {
 	echo "=============美国地区解锁============="
 	MediaUnlockTest_HuluUS ${1};
 	MediaUnlockTest_HBONow ${1};
 	MediaUnlockTest_HBOMax ${1};
+	MediaUnlockTest_ParamountPlus ${1};
 	MediaUnlockTest_SlingTV ${1};
 	MediaUnlockTest_PlutoTV ${1};
 	MediaUnlockTest_encoreTVB ${1};
