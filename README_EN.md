@@ -66,7 +66,7 @@ This script was modified based on [CoiaPrant/MediaUnlock_Test](https://github.co
 **Make sure you have curl and python installed**
 
 ````bash
-bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh)
+bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check_e.sh)
 ````
 
 **Or run in docker**
