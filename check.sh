@@ -887,6 +887,24 @@ function MediaUnlockTest_PeacockTV() {
 
 }
 
+function MediaUnlockTest_FOD() {
+	echo -n -e " FOD(Fuji TV):\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -s "https://geocontrol1.stream.ne.jp/fod-geo/check.xml?time=1624504256");
+	if [ "$tmpresult" = "000" ]; then
+		echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi	
+	
+    echo $tmpresult | grep 'true' > /dev/null 2>&1
+	if [[ "$?" -eq 0 ]]; then
+		echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    else
+		echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	fi
+}
+
 function US_UnlockTest() {
 	echo "=============美国地区解锁============="
 	MediaUnlockTest_HuluUS ${1};
@@ -938,6 +956,7 @@ function JP_UnlockTest() {
 	MediaUnlockTest_HuluJP ${1};
 	MediaUnlockTest_TVer ${1};
 	MediaUnlockTest_wowow ${1};
+	MediaUnlockTest_FOD ${1};
 	MediaUnlockTest_Kancolle ${1};
 	MediaUnlockTest_UMAJP ${1};
 	MediaUnlockTest_PCRJP ${1};
