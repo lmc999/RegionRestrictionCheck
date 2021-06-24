@@ -1,3 +1,6 @@
+## For English user please see
+### [Introduction](https://github.com/lmc999/RegionRestrictionCheck/blob/main/README_EN.md)
+
 ## 脚本介绍
 本脚本基于[CoiaPrant/MediaUnlock_Test](https://github.com/CoiaPrant/MediaUnlock_Test)代码进行修改
 
