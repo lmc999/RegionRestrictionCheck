@@ -217,18 +217,19 @@ function MediaUnlockTest_Kancolle() {
     fi
 }
 
-function MediaUnlockTest_BBC() {
-    echo -n -e " BBC:\t\t\t\t\t->\c";
-    local result=`curl --user-agent "${UA_Browser}" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 30 http://ve-dash-uk.live.cf.md.bbci.co.uk/`;
-    if [ "${result}" = "000" ]; then
-        echo -n -e "\r BBC:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        elif [ "${result}" = "403" ]; then
-        echo -n -e "\r BBC:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-        elif [ "${result}" = "404" ]; then
-        echo -n -e "\r BBC:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+function MediaUnlockTest_BBCiPLAYER() {
+    echo -n -e " BBC iPLAYER:\t\t\t\t->\c";
+    local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -fsL --max-time 30 https://open.live.bbc.co.uk/mediaselector/6/select/version/2.0/mediaset/pc/vpid/bbc_one_london/format/json/jsfunc/JS_callbacks0)
+    if [ "${tmpresult}" = "000" ]; then
+        echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	fi
+
+	result=$(echo $tmpresult | grep 'geolocation')	
+    if [ -n "$result" ]; then
+		echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     else
-        echo -n -e "\r BBC:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
-    fi
+		echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+	fi
 }
 
 function MediaUnlockTest_Netflix() {
@@ -851,6 +852,24 @@ function MediaUnlockTest_ParamountPlus() {
 
 }
 
+function MediaUnlockTest_KKTV() {
+    echo -n -e " KKTV:\t\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://api.kktv.me/v3/ipcheck");
+    if [ "$tmpresult" = "000" ]; then
+		echo -n -e "\r KKTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi	
+	result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'country' | cut -f4 -d'"')	
+    if [[ "$result" == "TW" ]];then
+		echo -n -e "\r KKTV:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;	
+    else
+        echo -n -e "\r KKTV:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
 function US_UnlockTest() {
 	echo "=============美国地区解锁============="
 	MediaUnlockTest_HuluUS ${1};
@@ -865,29 +884,35 @@ function US_UnlockTest() {
 
 function EU_UnlockTest() {
 	echo "=============欧洲地区解锁============="
-	MediaUnlockTest_BBC ${1};
+	MediaUnlockTest_BBCiPLAYER ${1};
 	MediaUnlockTest_ITVHUB ${1};
 	MediaUnlockTest_Channel4 ${1};
 	#MediaUnlockTest_Molotov ${1};
 	echo "======================================="
 }	
 	
-function HKTW_UnlockTest() {	
-	echo "=============港台地区解锁============="
+function HK_UnlockTest(){	
+	echo "=============香港地区解锁============="
 	MediaUnlockTest_MyTVSuper ${1};
 	MediaUnlockTest_NowE ${1};
 	MediaUnlockTest_ViuTV ${1};
+	MediaUnlockTest_BilibiliHKMCTW ${1};
+	echo "======================================="
+}
+
+function TW_UnlockTest(){	
+	echo "=============台湾地区解锁============="
 	MediaUnlockTest_4GTV ${1};
+	MediaUnlockTest_KKTV ${1};
 	MediaUnlockTest_HamiVideo ${1};
 	MediaUnlockTest_LineTV.TW ${1};
 	MediaUnlockTest_BahamutAnime ${1};
-	MediaUnlockTest_BilibiliHKMCTW ${1};
 	MediaUnlockTest_BilibiliTW ${1};
 	echo "======================================="
 }
 	
 function JP_UnlockTest() {	
-	echo "=============日本地区解锁============="	
+	echo "==============日本地区解锁============="	
 	MediaUnlockTest_AbemaTV_IPTest ${1};
 	MediaUnlockTest_Niconico ${1};
 	MediaUnlockTest_Paravi ${1};
@@ -966,9 +991,10 @@ function Start(){
 echo -e "${Font_Blue}请选择检测项目，直接按回车将进行全区域检测${Font_Suffix}"
 echo -e "${Font_SkyBlue}输入数字【1】：【跨国平台+美国平台】检测${Font_Suffix}"
 echo -e "${Font_SkyBlue}输入数字【2】：【跨国平台+日本平台】检测${Font_Suffix}"
-echo -e "${Font_SkyBlue}输入数字【3】：【跨国平台+港台平台】检测${Font_Suffix}"
-echo -e "${Font_SkyBlue}输入数字【4】：【跨国平台+欧洲平台】检测${Font_Suffix}"
-echo -e "${Font_SkyBlue}输入数字【5】：【  只进行跨国平台 】检测${Font_Suffix}"
+echo -e "${Font_SkyBlue}输入数字【3】：【跨国平台+香港平台】检测${Font_Suffix}"
+echo -e "${Font_SkyBlue}输入数字【4】：【跨国平台+台湾平台】检测${Font_Suffix}"
+echo -e "${Font_SkyBlue}输入数字【5】：【跨国平台+欧洲平台】检测${Font_Suffix}"
+echo -e "${Font_SkyBlue}输入数字【6】：【  只进行跨国平台 】检测${Font_Suffix}"
 read -p "请输入正确数字或直接按回车:" num
 }
 Start
@@ -1011,16 +1037,31 @@ function RunScript(){
 			CheckV4
 			if [[ "$isv4" -eq 1 ]];then
 				Global_UnlockTest 4
-				HKTW_UnlockTest 4
+				HK_UnlockTest 4
 			fi
 			CheckV6
 			if 	[[ "$isv6" -eq 1 ]];then
 				Global_UnlockTest 6
-				HKTW_UnlockTest 6
+				HK_UnlockTest 6
 			fi	
 			Goodbye
 			
 		elif [[ "$num" -eq 4 ]]; then
+			clear
+			ScriptTitle
+			CheckV4
+			if [[ "$isv4" -eq 1 ]];then
+				Global_UnlockTest 4
+				TW_UnlockTest 4
+			fi
+			CheckV6
+			if 	[[ "$isv6" -eq 1 ]];then
+				Global_UnlockTest 6
+				TW_UnlockTest 6
+			fi	
+			Goodbye
+			
+		elif [[ "$num" -eq 5 ]]; then
 			clear
 			ScriptTitle
 			CheckV4
@@ -1035,7 +1076,7 @@ function RunScript(){
 			fi	
 			Goodbye
 			
-		elif [[ "$num" -eq 5 ]]; then
+		elif [[ "$num" -eq 6 ]]; then
 			clear
 			ScriptTitle
 			CheckV4
@@ -1060,7 +1101,8 @@ function RunScript(){
 			Global_UnlockTest 4
 			US_UnlockTest 4	
 			JP_UnlockTest 4
-			HKTW_UnlockTest 4
+			HK_UnlockTest 4
+			TW_UnlockTest 4
 			EU_UnlockTest 4
 		fi	
 		CheckV6
@@ -1068,7 +1110,8 @@ function RunScript(){
 			Global_UnlockTest 6
 			US_UnlockTest 6	
 			JP_UnlockTest 6
-			HKTW_UnlockTest 6
+			HK_UnlockTest 6
+			TW_UnlockTest 6
 			EU_UnlockTest 6	
 		fi
 		Goodbye	
