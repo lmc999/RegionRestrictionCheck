@@ -925,6 +925,39 @@ function MediaUnlockTest_Tiktok_Region(){
     
 }
 
+function MediaUnlockTest_YouTube_Premium() {
+    echo -n -e " YouTube Premium:\t\t\t->\c";
+    local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} -s -H "Accept-Language: en" "https://www.youtube.com/premium")
+    local region=$(curl --user-agent "${UA_Browser}" -${1} -sL "https://www.youtube.com/red" | sed 's/,/\n/g' | grep "countryCode" | cut -d '"' -f4)
+	if [ -n "$region" ]; then
+        sleep 0
+	else
+		region=US
+	fi	
+	
+    if [[ "$tmpresult" == "curl"* ]];then
+        echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+    fi
+    
+    local result=$(echo $tmpresult | grep 'Premium is not available in your country')
+    if [ -n "$result" ]; then
+        echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}No (Region: $region)${Font_Suffix} \n"
+        return;
+		
+    fi
+    local result=$(echo $tmpresult | grep 'YouTube and YouTube Music ad-free')
+    if [ -n "$result" ]; then
+        echo -n -e "\r YouTube Premium:\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
+        return;
+	else
+		echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		
+    fi	
+	
+    
+}
+
 function US_UnlockTest() {
 	echo "=============美国地区解锁============="
 	MediaUnlockTest_HuluUS ${1};
@@ -989,7 +1022,8 @@ function Global_UnlockTest() {
 	MediaUnlockTest_Dazn ${1};
 	MediaUnlockTest_Netflix ${1};
 	MediaUnlockTest_DisneyPlus ${1};
-	MediaUnlockTest_YouTube_Region ${1};
+	#MediaUnlockTest_YouTube_Region ${1};
+	MediaUnlockTest_YouTube_Premium ${1};
 	MediaUnlockTest_Tiktok_Region ${1};
 	MediaUnlockTest_Viu.com ${1};
 	MediaUnlockTest_iQYI_Region ${1};
