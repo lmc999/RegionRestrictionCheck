@@ -222,13 +222,19 @@ function MediaUnlockTest_BBCiPLAYER() {
     local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -fsL --max-time 30 https://open.live.bbc.co.uk/mediaselector/6/select/version/2.0/mediaset/pc/vpid/bbc_one_london/format/json/jsfunc/JS_callbacks0)
     if [ "${tmpresult}" = "000" ]; then
         echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return
+		
 	fi
-
-	result=$(echo $tmpresult | grep 'geolocation')	
-    if [ -n "$result" ]; then
-		echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-    else
-		echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+	
+	if [ -n "$tmpresult" ]; then
+		result=$(echo $tmpresult | grep 'geolocation')	
+		if [ -n "$result" ]; then
+			echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		else
+			echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		fi
+	else
+		echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 	fi
 }
 
@@ -942,7 +948,7 @@ function MediaUnlockTest_YouTube_Premium() {
     
     local result=$(echo $tmpresult | grep 'Premium is not available in your country')
     if [ -n "$result" ]; then
-        echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}No (Region: $region)${Font_Suffix} \n"
+        echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}No${Font_Suffix} ${Font_Green}(Region: $region)${Font_Suffix} \n"
         return;
 		
     fi
@@ -1209,4 +1215,4 @@ function RunScript(){
 		Goodbye	
 	fi
 }	
-RunScript	
+RunScript
