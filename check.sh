@@ -933,7 +933,7 @@ function MediaUnlockTest_Tiktok_Region(){
 
 function MediaUnlockTest_YouTube_Premium() {
     echo -n -e " YouTube Premium:\t\t\t->\c";
-    local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} -s -H "Accept-Language: en" "https://www.youtube.com/premium")
+    local tmpresult=$(curl -${1} -s -H "Accept-Language: en" "https://www.youtube.com/premium")
     local region=$(curl --user-agent "${UA_Browser}" -${1} -sL "https://www.youtube.com/red" | sed 's/,/\n/g' | grep "countryCode" | cut -d '"' -f4)
 	if [ -n "$region" ]; then
         sleep 0
