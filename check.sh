@@ -981,6 +981,26 @@ function MediaUnlockTest_BritBox() {
 
 }
 
+function MediaUnlockTest_PrimeVideo_Region(){
+    echo -n -e " Amazon Prime Video:\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s "https://www.primevideo.com")
+	
+	if [ "$tmpresult" = "000" ]; then
+		echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi	
+    
+	local result=$(echo $tmpresult | grep '"currentTerritory":' | sed 's/.*"currentTerritory//' | cut -f3 -d'"' | head -n 1)
+    if [ -n "$result" ];then
+        echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Green}Yes (Region: $result)${Font_Suffix}\n"
+        return;
+	else
+		echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}Unsupported${Font_Suffix}\n"
+		return;
+    fi
+    
+}
+
 function US_UnlockTest() {
 	echo "=============美国地区解锁============="
 	MediaUnlockTest_HuluUS ${1};
@@ -1048,9 +1068,10 @@ function Global_UnlockTest() {
 	MediaUnlockTest_DisneyPlus ${1};
 	#MediaUnlockTest_YouTube_Region ${1};
 	MediaUnlockTest_YouTube_Premium ${1};
+	MediaUnlockTest_PrimeVideo_Region ${1};
 	MediaUnlockTest_Tiktok_Region ${1};
-	MediaUnlockTest_Viu.com ${1};
 	MediaUnlockTest_iQYI_Region ${1};
+	MediaUnlockTest_Viu.com ${1};
 	GameTest_Steam ${1};
 	echo "======================================="	
 }
