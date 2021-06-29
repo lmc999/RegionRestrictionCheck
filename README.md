@@ -68,6 +68,8 @@
 
 + 优化YouTube判断增加Premium是否可用判断
 
++ 新增BritBox解锁判断
+
 ## 使用方法
 
 **使用脚本前请确认curl已安装**
