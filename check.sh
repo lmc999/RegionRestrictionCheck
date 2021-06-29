@@ -964,6 +964,23 @@ function MediaUnlockTest_YouTube_Premium() {
     
 }
 
+function MediaUnlockTest_BritBox() {
+    echo -n -e " BritBox:\t\t\t\t->\c";
+    local result=$(curl -${1} ${ssll} -s -o /dev/null -L --max-time 30 -w '%{url_effective}\n' "https://www.britbox.com/" | grep 'locationnotsupported');
+    
+	if [ -n "$result" ]; then
+		echo -n -e "\r BritBox:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+     else
+		echo -n -e "\r BritBox:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r BritBox:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	return;
+
+}
+
 function US_UnlockTest() {
 	echo "=============美国地区解锁============="
 	MediaUnlockTest_HuluUS ${1};
@@ -979,9 +996,10 @@ function US_UnlockTest() {
 
 function EU_UnlockTest() {
 	echo "=============欧洲地区解锁============="
-	MediaUnlockTest_BBCiPLAYER ${1};
+	MediaUnlockTest_BritBox ${1};
 	MediaUnlockTest_ITVHUB ${1};
 	MediaUnlockTest_Channel4 ${1};
+	MediaUnlockTest_BBCiPLAYER ${1};
 	#MediaUnlockTest_Molotov ${1};
 	echo "======================================="
 }	
