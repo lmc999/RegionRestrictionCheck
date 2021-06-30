@@ -752,19 +752,19 @@ function MediaUnlockTest_encoreTVB() {
 
 function MediaUnlockTest_Molotov(){
     echo -n -e " Molotov:\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 curl "https://fapi.molotov.tv/v2/me/assets?id=19&nocwatch=true&trkCp=program&trkCs=ca-commence-aujourdhui&trkOcr=2&trkOp=home&trkOs=on-tv&type=channel&position=NaN&start_over=false&embedded=false&skip_dialogs=false&access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiMTUyNDUwODUiLCJhbGxvd2VkX2NpZHJzIjpbIjAuMC4wLjAvMCJdLCJleHBpcmVzIjoxNjI0MjkwMzY2LCJwcm9maWxlX2lkIjoiMTUyMzMzMDciLCJzY29wZXMiOm51bGwsInVzZXJfaWQiOiIxNTI0NTA4NSIsInYiOjF9.cjaB8b-16KW0waE0teSgeLlgKzJPzbUm5Z_B8Feuxjk" -H 'X-Molotov-Agent: {"app_id":"electron_app","app_build":3,"app_version_name":"4.4.2","type":"desktop","os_version":"Windows 10","electron_version":"11.0.0","os":"Windows","manufacturer":"Microsoft","serial":"4C4C4544-0043-4410-804B-C4C04F384633","model":"Alienware Aurora R12","brand":"Microsoft","api_version":8,"inner_app_version_name":"3.68.5","qa":false,"features_supported":["social","new_button_conversion","paywall","channel_separator","empty_view_v2","store_offer_v2","player_mplus_teasing","embedded_player","channels_classification","new-post-registration","appstart-d0-full-image","download_to_go","download_to_go_lot_2"]}');
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://fapi.molotov.tv/v1/open-europe/is-france");
 	if [[ "$tmpresult" == "curl"* ]];then
         	echo -n -e "\r Molotov:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         	return;
     fi
 	
-	echo $tmpresult | python -m json.tool 2> /dev/null | grep 'User with user country code' > /dev/null 2>&1
+	echo $tmpresult | python -m json.tool 2> /dev/null | grep 'false' > /dev/null 2>&1
 	if [ $? -eq 0 ];then
 		echo -n -e "\r Molotov:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;	
 	fi
 	
-	echo $tmpresult | python -m json.tool 2> /dev/null | grep '"asset_id"' > /dev/null 2>&1
+	echo $tmpresult | python -m json.tool 2> /dev/null | grep '"true"' > /dev/null 2>&1
 	if [ $? -eq 0 ];then
 		echo -n -e "\r Molotov:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;	
@@ -948,7 +948,7 @@ function MediaUnlockTest_YouTube_Premium() {
     
     local result=$(echo $tmpresult | grep 'Premium is not available in your country')
     if [ -n "$result" ]; then
-        echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}No${Font_Suffix} ${Font_Green}(Region: $region)${Font_Suffix} \n"
+        echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}No${Font_Suffix} ${Font_Green} (Region: $region)${Font_Suffix} \n"
         return;
 		
     fi
@@ -1020,7 +1020,7 @@ function EU_UnlockTest() {
 	MediaUnlockTest_ITVHUB ${1};
 	MediaUnlockTest_Channel4 ${1};
 	MediaUnlockTest_BBCiPLAYER ${1};
-	#MediaUnlockTest_Molotov ${1};
+	MediaUnlockTest_Molotov ${1};
 	echo "======================================="
 }	
 	
