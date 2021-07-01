@@ -32,7 +32,7 @@ checkos(){
 }
 checkos	
 
-local_ipv4=$(curl -4 -s --max-time 20 ip.sb)
+local_ipv4=$(curl -4 -s --max-time 20 ifconfig.me)
 local_ipv6=$(curl -6 -s --max-time 20 ip.sb)
 if [ -n "$local_ipv4" ]
 	then
