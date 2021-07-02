@@ -35,29 +35,37 @@ checkos(){
 checkos	
 
 check_dependencies(){
+
+	os_detail=$(cat /etc/os-release)
+	f_debian=$(echo $os_detail | grep 'ebian')
+	if_redhat=$(echo $os_detail | grep 'rhel')
+	local os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
+	
 	python -V > /dev/null 2>&1
 		if [ $? -ne 0 ];then
-			os_detail=$(cat /etc/os-release)
-			if_debian=$(echo $os_detail | grep 'ebian')
-			if_redhat=$(echo $os_detail | grep 'rhel')
-			if [ -n "$if_debian" ];then
-				echo -e "${Font_Green}正在安装依赖${Font_Suffix}" 
-				apt update  > /dev/null 2>&1
-				apt install python -y  > /dev/null 2>&1
-				
-			elif [ -n "$if_redhat" ];then
-				local os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
-				echo -e "${Font_Green}正在安装依赖${Font_Suffix}"
-				if [[ "$os_version" -gt 7 ]];then
-					dnf install python2 -y > /dev/null 2>&1
-					ln -s /usr/bin/python2 /usr/bin/python
-				else
-					yum install python -y > /dev/null 2>&1
-				fi	
-				
-				
-			fi
-		fi	
+			python3 -V > /dev/null 2>&1
+			if [ $? -eq 0 ];then
+				python3_patch=$(which python3)
+				ln -s $python3_patch /usr/bin/python
+			else
+				if [ -n "$if_debian" ];then
+					echo -e "${Font_Green}正在安装python${Font_Suffix}" 
+					apt update  > /dev/null 2>&1
+					apt install python -y  > /dev/null 2>&1
+					
+				elif [ -n "$if_redhat" ];then
+					echo -e "${Font_Green}正在安装python${Font_Suffix}"
+					if [[ "$os_version" -gt 7 ]];then
+						dnf install python2 -y > /dev/null 2>&1
+						ln -s /usr/bin/python2 /usr/bin/python
+					else
+						yum install python -y > /dev/null 2>&1
+					fi	
+					
+					
+				fi
+			fi	
+		fi
 }		
 check_dependencies
 
