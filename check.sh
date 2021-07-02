@@ -316,7 +316,7 @@ function MediaUnlockTest_DisneyPlus() {
 	curl -${1} -s --user-agent "$UA_Browser" -H "Content-Type: application/x-www-form-urlencoded" -H "$disneyheader" -d ''${disneyauth}'' -X POST  "https://global.edge.bamgrid.com/token" | python -m json.tool 2> /dev/null | grep 'access_token' >/dev/null 2>&1
 
     if [[ "$?" -eq 0 ]]; then
-		region=$(curl -${1} -s https://www.disneyplus.com | grep 'region: ' | awk '{print $2}')
+		region=$(curl -${1} -s https://www.disneyplus.com | grep '"regionCode"' | sed 's/.*"regionCode//' | cut -f3 -d'"')
 		if [ -n "$region" ]
 			then
 				echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
@@ -1002,7 +1002,7 @@ function MediaUnlockTest_PrimeVideo_Region(){
 }
 
 function US_UnlockTest() {
-	echo "=============美国地区解锁============="
+	echo "=============美国地区解锁=============="
 	MediaUnlockTest_HuluUS ${1};
 	MediaUnlockTest_HBONow ${1};
 	MediaUnlockTest_HBOMax ${1};
@@ -1015,7 +1015,7 @@ function US_UnlockTest() {
 }	
 
 function EU_UnlockTest() {
-	echo "=============欧洲地区解锁============="
+	echo "=============欧洲地区解锁=============="
 	MediaUnlockTest_BritBox ${1};
 	MediaUnlockTest_ITVHUB ${1};
 	MediaUnlockTest_Channel4 ${1};
@@ -1025,7 +1025,7 @@ function EU_UnlockTest() {
 }	
 	
 function HK_UnlockTest(){	
-	echo "=============香港地区解锁============="
+	echo "=============香港地区解锁=============="
 	MediaUnlockTest_MyTVSuper ${1};
 	MediaUnlockTest_NowE ${1};
 	MediaUnlockTest_ViuTV ${1};
@@ -1034,9 +1034,9 @@ function HK_UnlockTest(){
 }
 
 function TW_UnlockTest(){	
-	echo "=============台湾地区解锁============="
-	MediaUnlockTest_4GTV ${1};
+	echo "=============台湾地区解锁=============="
 	MediaUnlockTest_KKTV ${1};
+	MediaUnlockTest_4GTV ${1};
 	MediaUnlockTest_HamiVideo ${1};
 	MediaUnlockTest_LineTV.TW ${1};
 	MediaUnlockTest_BahamutAnime ${1};
@@ -1062,7 +1062,7 @@ function JP_UnlockTest() {
 
 function Global_UnlockTest() {		
 	echo ""		
-	echo "=============跨国平台解锁============="	
+	echo "=============跨国平台解锁=============="	
 	MediaUnlockTest_Dazn ${1};
 	MediaUnlockTest_Netflix ${1};
 	MediaUnlockTest_DisneyPlus ${1};
