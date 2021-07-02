@@ -37,7 +37,7 @@ checkos
 check_dependencies(){
 
 	os_detail=$(cat /etc/os-release)
-	f_debian=$(echo $os_detail | grep 'ebian')
+	if_debian=$(echo $os_detail | grep 'ebian')
 	if_redhat=$(echo $os_detail | grep 'rhel')
 	local os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
 	
