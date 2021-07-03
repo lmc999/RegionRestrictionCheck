@@ -21,12 +21,10 @@ Font_Suffix="\033[0m";
 
 checkos(){
 
-	local os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
+	os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
 	if [[ "$os_version" == "2004" ]];then
 		ssll="-k --ciphers DEFAULT@SECLEVEL=1"
 	elif [[ "$os_version" == "10" ]];then	
-		ssll="-k --ciphers DEFAULT@SECLEVEL=1"
-	elif [[ -f /etc/redhat-release ]] && [[ "$os_version" == "8" ]];then	
 		ssll="-k --ciphers DEFAULT@SECLEVEL=1"
 	else
 		ssll=""
@@ -34,42 +32,7 @@ checkos(){
 }
 checkos	
 
-check_dependencies(){
-
-	os_detail=$(cat /etc/os-release)
-	if_debian=$(echo $os_detail | grep 'ebian')
-	if_redhat=$(echo $os_detail | grep 'rhel')
-	local os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
-	
-	python -V > /dev/null 2>&1
-		if [ $? -ne 0 ];then
-			python3 -V > /dev/null 2>&1
-			if [ $? -eq 0 ];then
-				python3_patch=$(which python3)
-				ln -s $python3_patch /usr/bin/python
-			else
-				if [ -n "$if_debian" ];then
-					echo -e "${Font_Green}正在安装python${Font_Suffix}" 
-					apt update  > /dev/null 2>&1
-					apt install python -y  > /dev/null 2>&1
-					
-				elif [ -n "$if_redhat" ];then
-					echo -e "${Font_Green}正在安装python${Font_Suffix}"
-					if [[ "$os_version" -gt 7 ]];then
-						dnf install python2 -y > /dev/null 2>&1
-						ln -s /usr/bin/python2 /usr/bin/python
-					else
-						yum install python -y > /dev/null 2>&1
-					fi	
-					
-					
-				fi
-			fi	
-		fi
-}		
-check_dependencies
-
-local_ipv4=$(curl -4 -s --max-time 20 ifconfig.me)
+local_ipv4=$(curl -4 -s --max-time 20 ip.sb)
 local_ipv6=$(curl -6 -s --max-time 20 ip.sb)
 if [ -n "$local_ipv4" ]
 	then
@@ -353,7 +316,7 @@ function MediaUnlockTest_DisneyPlus() {
 	curl -${1} -s --user-agent "$UA_Browser" -H "Content-Type: application/x-www-form-urlencoded" -H "$disneyheader" -d ''${disneyauth}'' -X POST  "https://global.edge.bamgrid.com/token" | python -m json.tool 2> /dev/null | grep 'access_token' >/dev/null 2>&1
 
     if [[ "$?" -eq 0 ]]; then
-		region=$(curl -${1} -s https://www.disneyplus.com | grep '"regionCode"' | sed 's/.*"regionCode//' | cut -f3 -d'"')
+		region=$(curl -${1} -s https://www.disneyplus.com | grep 'region: ' | awk '{print $2}')
 		if [ -n "$region" ]
 			then
 				echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
@@ -950,7 +913,7 @@ function MediaUnlockTest_FOD() {
 
 function MediaUnlockTest_Tiktok_Region(){
     echo -n -e " Tiktok Region:\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} -s "https://www.tiktok.com/")
+    local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -s "https://www.tiktok.com/")
 	
 	if [ "$tmpresult" = "000" ]; then
 		echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1039,7 +1002,7 @@ function MediaUnlockTest_PrimeVideo_Region(){
 }
 
 function US_UnlockTest() {
-	echo "=============美国地区解锁=============="
+	echo "=============美国地区解锁============="
 	MediaUnlockTest_HuluUS ${1};
 	MediaUnlockTest_HBONow ${1};
 	MediaUnlockTest_HBOMax ${1};
@@ -1052,7 +1015,7 @@ function US_UnlockTest() {
 }	
 
 function EU_UnlockTest() {
-	echo "=============欧洲地区解锁=============="
+	echo "=============欧洲地区解锁============="
 	MediaUnlockTest_BritBox ${1};
 	MediaUnlockTest_ITVHUB ${1};
 	MediaUnlockTest_Channel4 ${1};
@@ -1062,7 +1025,7 @@ function EU_UnlockTest() {
 }	
 	
 function HK_UnlockTest(){	
-	echo "=============香港地区解锁=============="
+	echo "=============香港地区解锁============="
 	MediaUnlockTest_MyTVSuper ${1};
 	MediaUnlockTest_NowE ${1};
 	MediaUnlockTest_ViuTV ${1};
@@ -1071,9 +1034,9 @@ function HK_UnlockTest(){
 }
 
 function TW_UnlockTest(){	
-	echo "=============台湾地区解锁=============="
-	MediaUnlockTest_KKTV ${1};
+	echo "=============台湾地区解锁============="
 	MediaUnlockTest_4GTV ${1};
+	MediaUnlockTest_KKTV ${1};
 	MediaUnlockTest_HamiVideo ${1};
 	MediaUnlockTest_LineTV.TW ${1};
 	MediaUnlockTest_BahamutAnime ${1};
@@ -1099,7 +1062,7 @@ function JP_UnlockTest() {
 
 function Global_UnlockTest() {		
 	echo ""		
-	echo "=============跨国平台解锁=============="	
+	echo "=============跨国平台解锁============="	
 	MediaUnlockTest_Dazn ${1};
 	MediaUnlockTest_Netflix ${1};
 	MediaUnlockTest_DisneyPlus ${1};
