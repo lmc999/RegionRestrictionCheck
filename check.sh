@@ -54,8 +54,9 @@ check_dependencies(){
 				elif [ -n "$if_redhat" ];then
 					echo -e "${Font_Green}正在安装python${Font_Suffix}"
 					if [[ "$os_version" -gt 7 ]];then
-						dnf install python2 -y > /dev/null 2>&1
-						ln -s /usr/bin/python2 /usr/bin/python
+						dnf install python3 -y > /dev/null 2>&1
+						python3_patch=$(which python3)
+						ln -s $python3_patch /usr/bin/python
 					else
 						yum install python -y > /dev/null 2>&1
 					fi	
