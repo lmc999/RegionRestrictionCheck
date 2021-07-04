@@ -1037,6 +1037,60 @@ function MediaUnlockTest_PrimeVideo_Region(){
     
 }
 
+function MediaUnlockTest_Radiko(){
+    echo -n -e " Radiko:\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s "https://radiko.jp/area?_=1625406539531")
+	
+	if [ "$tmpresult" = "000" ]; then
+		echo -n -e "\r Radiko:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi	
+    
+	local checkfailed=$(echo $tmpresult | grep 'class="OUT"')
+    if [ -n "$checkfailed" ];then
+		echo -n -e "\r Radiko:\t\t\t\t${Font_Red}NO${Font_Suffix}\n"
+		return;
+	fi
+	
+	local checksuccess=$(echo $tmpresult | grep 'JAPAN')
+	if [ -n "$checksuccess" ];then
+		area=$(echo $tmpresult | awk '{print $2}' | sed 's/.*>//')
+        echo -n -e "\r Radiko:\t\t\t\t${Font_Green}Yes (Area: $area)${Font_Suffix}\n"
+		return;
+    else
+		echo -n -e "\r Radiko:\t\t\t\t${Font_Red}Unsupported${Font_Suffix}\n"
+		return;
+    fi
+    
+}
+
+function MediaUnlockTest_DMM(){
+    echo -n -e " DMM:\t\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s -X POST "https://api-p.videomarket.jp/v3/api/play/keyissue" -d 'fullStoryId=300G77001&playChromeCastFlag=false&loginFlag=0&playToken=04ee3e70e17e4a540505666cdd0a8301e656da53241447f83eb911a23355bd07&userId=undefined' -H "X-Authorization: S17mxcdRK3agC6UVIyDTdk7YFkQ29CzDwQrctjus")
+	
+	if [ "$tmpresult" = "000" ]; then
+		echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi	
+    
+	local checkfailed=$(echo $tmpresult | grep 'Access is denied')
+    if [ -n "$checkfailed" ];then
+		echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}NO${Font_Suffix}\n"
+		return;
+	fi
+	
+	local checksuccess=$(echo $tmpresult | grep 'PlayToken has failed')
+	if [ -n "$checksuccess" ];then
+		echo -n -e "\r DMM:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    else
+		echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}Unsupported${Font_Suffix}\n"
+		return;
+    fi
+    
+}
+
+
 function US_UnlockTest() {
 	echo "=============美国地区解锁============="
 	MediaUnlockTest_HuluUS ${1};
@@ -1082,6 +1136,7 @@ function TW_UnlockTest(){
 	
 function JP_UnlockTest() {	
 	echo "==============日本地区解锁============="	
+	MediaUnlockTest_DMM ${1};
 	MediaUnlockTest_AbemaTV_IPTest ${1};
 	MediaUnlockTest_Niconico ${1};
 	MediaUnlockTest_Paravi ${1};
@@ -1090,6 +1145,7 @@ function JP_UnlockTest() {
 	MediaUnlockTest_TVer ${1};
 	MediaUnlockTest_wowow ${1};
 	MediaUnlockTest_FOD ${1};
+	MediaUnlockTest_Radiko ${1};
 	MediaUnlockTest_Kancolle ${1};
 	MediaUnlockTest_UMAJP ${1};
 	MediaUnlockTest_PCRJP ${1};
