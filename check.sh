@@ -1066,7 +1066,7 @@ function MediaUnlockTest_Radiko(){
 
 function MediaUnlockTest_DMM(){
     echo -n -e " DMM:\t\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s -X POST "https://api-p.videomarket.jp/v3/api/play/keyissue" -d 'fullStoryId=300G77001&playChromeCastFlag=false&loginFlag=0&playToken=04ee3e70e17e4a540505666cdd0a8301e656da53241447f83eb911a23355bd07&userId=undefined' -H "X-Authorization: S17mxcdRK3agC6UVIyDTdk7YFkQ29CzDwQrctjus")
+    local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s "https://api-p.videomarket.jp/v3/api/play/keyauth?playKey=4c9e93baa7ca1fc0b63ccf418275afc2&deviceType=3&bitRate=0&loginFlag=0&connType=" -H "X-Authorization: 2bCf81eLJWOnHuqg6nNaPZJWfnuniPTKz9GXv5IS")
 	
 	if [ "$tmpresult" = "000" ]; then
 		echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1079,7 +1079,7 @@ function MediaUnlockTest_DMM(){
 		return;
 	fi
 	
-	local checksuccess=$(echo $tmpresult | grep 'PlayToken has failed')
+	local checksuccess=$(echo $tmpresult | grep 'PlayKey has expired')
 	if [ -n "$checksuccess" ];then
 		echo -n -e "\r DMM:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;
