@@ -1048,14 +1048,14 @@ function MediaUnlockTest_Radiko(){
     
 	local checkfailed=$(echo $tmpresult | grep 'class="OUT"')
     if [ -n "$checkfailed" ];then
-		echo -n -e "\r Radiko:\t\t\t\t${Font_Red}NO${Font_Suffix}\n"
+		echo -n -e "\r Radiko:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
 	fi
 	
 	local checksuccess=$(echo $tmpresult | grep 'JAPAN')
 	if [ -n "$checksuccess" ];then
 		area=$(echo $tmpresult | awk '{print $2}' | sed 's/.*>//')
-        echo -n -e "\r Radiko:\t\t\t\t${Font_Green}Yes (Area: $area)${Font_Suffix}\n"
+        echo -n -e "\r Radiko:\t\t\t\t${Font_Green}Yes (City: $area)${Font_Suffix}\n"
 		return;
     else
 		echo -n -e "\r Radiko:\t\t\t\t${Font_Red}Unsupported${Font_Suffix}\n"
@@ -1075,7 +1075,7 @@ function MediaUnlockTest_DMM(){
     
 	local checkfailed=$(echo $tmpresult | grep 'Access is denied')
     if [ -n "$checkfailed" ];then
-		echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}NO${Font_Suffix}\n"
+		echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
 	fi
 	
