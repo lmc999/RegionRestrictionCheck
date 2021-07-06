@@ -814,7 +814,7 @@ function MediaUnlockTest_Molotov(){
 function MediaUnlockTest_LineTV.TW() {
     echo -n -e " LineTV.TW:\t\t\t\t->\c";
     local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://www.linetv.tw/api/part/11829/eps/1/part?chocomemberId=");
-    if [ "$tmpresult" = "000" ]; then
+    if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -862,7 +862,7 @@ function MediaUnlockTest_Viu.com() {
 function MediaUnlockTest_Niconico() {
     echo -n -e " Niconico:\t\t\t\t->\c";
     local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://www.nicovideo.jp/watch/so23017073");
-    if [ "$tmpresult" = "000" ]; then
+    if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r Niconico:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -897,7 +897,7 @@ function MediaUnlockTest_ParamountPlus() {
 function MediaUnlockTest_KKTV() {
     echo -n -e " KKTV:\t\t\t\t\t->\c";
     local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://api.kktv.me/v3/ipcheck");
-    if [ "$tmpresult" = "000" ]; then
+    if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r KKTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -932,7 +932,7 @@ function MediaUnlockTest_PeacockTV() {
 function MediaUnlockTest_FOD() {
 	echo -n -e " FOD(Fuji TV):\t\t\t\t->\c";
     local tmpresult=$(curl -${1} ${ssll} -s "https://geocontrol1.stream.ne.jp/fod-geo/check.xml?time=1624504256");
-	if [ "$tmpresult" = "000" ]; then
+	if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -951,7 +951,7 @@ function MediaUnlockTest_Tiktok_Region(){
     echo -n -e " Tiktok Region:\t\t\t\t->\c";
     local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -s "https://www.tiktok.com/")
 	
-	if [ "$tmpresult" = "000" ]; then
+	if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1021,7 +1021,7 @@ function MediaUnlockTest_PrimeVideo_Region(){
     echo -n -e " Amazon Prime Video:\t\t\t->\c";
     local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s "https://www.primevideo.com")
 	
-	if [ "$tmpresult" = "000" ]; then
+	if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1041,7 +1041,7 @@ function MediaUnlockTest_Radiko(){
     echo -n -e " Radiko:\t\t\t\t->\c";
     local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s "https://radiko.jp/area?_=1625406539531")
 	
-	if [ "$tmpresult" = "000" ]; then
+	if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r Radiko:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1068,7 +1068,7 @@ function MediaUnlockTest_DMM(){
     echo -n -e " DMM:\t\t\t\t\t->\c";
     local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s "https://api-p.videomarket.jp/v3/api/play/keyauth?playKey=4c9e93baa7ca1fc0b63ccf418275afc2&deviceType=3&bitRate=0&loginFlag=0&connType=" -H "X-Authorization: 2bCf81eLJWOnHuqg6nNaPZJWfnuniPTKz9GXv5IS")
 	
-	if [ "$tmpresult" = "000" ]; then
+	if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1093,7 +1093,7 @@ function MediaUnlockTest_DMM(){
 function MediaUnlockTest_Catchplay() {
     echo -n -e " CatchPlay+:\t\t\t\t->\c";
     local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://sunapi.catchplay.com/geo" -H "authorization: Basic NTQ3MzM0NDgtYTU3Yi00MjU2LWE4MTEtMzdlYzNkNjJmM2E0Ok90QzR3elJRR2hLQ01sSDc2VEoy");
-    if [ "$tmpresult" = "000" ]; then
+    if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1116,6 +1116,29 @@ function MediaUnlockTest_Catchplay() {
 
 }
 
+function MediaUnlockTest_HotStar() {
+    echo -n -e " HotStar:\t\t\t\t->\c";
+    local result=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 30 "https://api.hotstar.com/o/v1/page/1557?offset=0&size=20&tao=0&tas=20")
+    if [ "$result" = "000" ]; then
+		echo -n -e "\r HotStar:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	elif [ "$result" = "401" ]; then
+		local region=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -sI "https://www.hotstar.com" | grep 'geo=' | sed 's/.*geo=//' | cut -f1 -d",")
+		if [ -n "$region" ];then
+			echo -n -e "\r HotStar:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"	
+			return;
+		else
+			echo -n -e "\r HotStar:\t\t\t\t${Font_Red}No${Font_Suffix}\n"	
+			return;
+		fi	
+	elif [ "$result" = "475" ]; then	
+		echo -n -e "\r HotStar:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r HotStar:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+	fi
+
+}
 
 function US_UnlockTest() {
 	echo "=============美国地区解锁=============="
@@ -1185,6 +1208,7 @@ function Global_UnlockTest() {
 	MediaUnlockTest_Dazn ${1};
 	MediaUnlockTest_Netflix ${1};
 	MediaUnlockTest_DisneyPlus ${1};
+	MediaUnlockTest_HotStar ${1};
 	#MediaUnlockTest_YouTube_Region ${1};
 	MediaUnlockTest_YouTube_Premium ${1};
 	MediaUnlockTest_PrimeVideo_Region ${1};
