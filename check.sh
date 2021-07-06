@@ -1090,9 +1090,35 @@ function MediaUnlockTest_DMM(){
     
 }
 
+function MediaUnlockTest_Catchplay() {
+    echo -n -e " CatchPlay+:\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://sunapi.catchplay.com/geo" -H "authorization: Basic NTQ3MzM0NDgtYTU3Yi00MjU2LWE4MTEtMzdlYzNkNjJmM2E0Ok90QzR3elJRR2hLQ01sSDc2VEoy");
+    if [ "$tmpresult" = "000" ]; then
+		echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi	
+	result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'code' |awk '{print $2}' | cut -f2 -d'"')	
+    if [ -n "$result" ];then
+		if [ "$result" = "0" ]; then
+			echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+			return;
+		elif [ "$result" = "100016" ]; then
+			echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			return;
+		else
+			echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+			return;
+		fi	
+	else
+		echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
 
 function US_UnlockTest() {
-	echo "=============美国地区解锁============="
+	echo "=============美国地区解锁=============="
 	MediaUnlockTest_HuluUS ${1};
 	MediaUnlockTest_HBONow ${1};
 	MediaUnlockTest_HBOMax ${1};
@@ -1105,7 +1131,7 @@ function US_UnlockTest() {
 }	
 
 function EU_UnlockTest() {
-	echo "=============欧洲地区解锁============="
+	echo "=============欧洲地区解锁=============="
 	MediaUnlockTest_BritBox ${1};
 	MediaUnlockTest_ITVHUB ${1};
 	MediaUnlockTest_Channel4 ${1};
@@ -1115,7 +1141,7 @@ function EU_UnlockTest() {
 }	
 	
 function HK_UnlockTest(){	
-	echo "=============香港地区解锁============="
+	echo "=============香港地区解锁=============="
 	MediaUnlockTest_MyTVSuper ${1};
 	MediaUnlockTest_NowE ${1};
 	MediaUnlockTest_ViuTV ${1};
@@ -1124,11 +1150,12 @@ function HK_UnlockTest(){
 }
 
 function TW_UnlockTest(){	
-	echo "=============台湾地区解锁============="
-	MediaUnlockTest_4GTV ${1};
+	echo "=============台湾地区解锁=============="
 	MediaUnlockTest_KKTV ${1};
-	MediaUnlockTest_HamiVideo ${1};
+	MediaUnlockTest_4GTV ${1};
 	MediaUnlockTest_LineTV.TW ${1};
+	MediaUnlockTest_HamiVideo ${1};
+	MediaUnlockTest_Catchplay ${1};
 	MediaUnlockTest_BahamutAnime ${1};
 	MediaUnlockTest_BilibiliTW ${1};
 	echo "======================================="
@@ -1154,7 +1181,7 @@ function JP_UnlockTest() {
 
 function Global_UnlockTest() {		
 	echo ""		
-	echo "=============跨国平台解锁============="	
+	echo "=============跨国平台解锁=============="	
 	MediaUnlockTest_Dazn ${1};
 	MediaUnlockTest_Netflix ${1};
 	MediaUnlockTest_DisneyPlus ${1};
