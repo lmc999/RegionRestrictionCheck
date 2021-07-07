@@ -1124,7 +1124,8 @@ function MediaUnlockTest_HotStar() {
 		return;
 	elif [ "$result" = "401" ]; then
 		local region=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -sI "https://www.hotstar.com" | grep 'geo=' | sed 's/.*geo=//' | cut -f1 -d",")
-		if [ -n "$region" ];then
+		local site_region=$(curl -${1} ${ssll} -s -o /dev/null -L --max-time 30 -w '%{url_effective}\n' "https://www.hotstar.com" | sed 's\.*com/\\' | tr [:lower:] [:upper:] )
+		if [ -n "$region" ] && [ "$region" = "$site_region" ];then
 			echo -n -e "\r HotStar:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"	
 			return;
 		else
