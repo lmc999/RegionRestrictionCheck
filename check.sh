@@ -276,22 +276,16 @@ function MediaUnlockTest_BBCiPLAYER() {
 
 function MediaUnlockTest_Netflix() {
     echo -n -e " Netflix:\t\t\t\t->\c";
-    local result=$(curl -${1} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 30 "https://www.netflix.com" 2>&1)
-    if [ "$result" == "403" ];then
-        echo -n -e "\r Netflix:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-        return;
-    fi
-    
-    if [[ "$result" == "curl"* ]];then
-        echo -n -e "\r Netflix:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        return;
-    fi
-    
     local result1=$(curl -${1} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 30 "https://www.netflix.com/title/81215567" 2>&1)
-    
+	
     if [[ "$result1" == "404" ]];then
         echo -n -e "\r Netflix:\t\t\t\t${Font_Yellow}[N] Mark Only${Font_Suffix}\n"
         return;
+		
+	elif  [[ "$result1" == "403" ]];then
+        echo -n -e "\r Netflix:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return;
+		
 	elif [[ "$result1" == "200" ]];then
 		local region=`tr [:lower:] [:upper:] <<< $(curl -${1} --user-agent "${UA_Browser}" -fs --write-out %{redirect_url} --output /dev/null "https://www.netflix.com/title/80018499" | cut -d '/' -f4 | cut -d '-' -f1)` ;
 		if [[ ! -n "$region" ]];then
@@ -299,6 +293,10 @@ function MediaUnlockTest_Netflix() {
 		fi
 		echo -n -e "\r Netflix:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
 		return;
+		
+	elif  [[ "$result1" == "000" ]];then
+		echo -n -e "\r Netflix:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
     fi   
 }
 
