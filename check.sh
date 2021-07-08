@@ -1127,6 +1127,30 @@ function MediaUnlockTest_HotStar() {
 
 }
 
+
+function MediaUnlockTest_LiTV() {
+    echo -n -e " LiTV:\t\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 -X POST "https://www.LiTV.tv/vod/ajax/getUrl" -d '{"type":"noauth","assetId":"vod44868-010001M001_800K","puid":"6bc49a81-aad2-425c-8124-5b16e9e01337"}'  -H "Content-Type: application/json");
+    if [ "$tmpresult" = "curl"* ]; then
+		echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi	
+	result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'errorMessage' | awk '{print $2}' | cut -f1 -d"," | cut -f2 -d'"')	
+    if [ -n "$result" ];then
+		if [ "$result" = "null" ]; then
+			echo -n -e "\r LiTV:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+			return;
+		elif [ "$result" = "vod.error.outsideregionerror" ]; then
+			echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			return;
+		fi	
+	else
+		echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
 function US_UnlockTest() {
 	echo "=============美国地区解锁=============="
 	MediaUnlockTest_HuluUS ${1};
@@ -1162,6 +1186,7 @@ function HK_UnlockTest(){
 function TW_UnlockTest(){	
 	echo "=============台湾地区解锁=============="
 	MediaUnlockTest_KKTV ${1};
+	MediaUnlockTest_LiTV ${1};
 	MediaUnlockTest_4GTV ${1};
 	MediaUnlockTest_LineTV.TW ${1};
 	MediaUnlockTest_HamiVideo ${1};
