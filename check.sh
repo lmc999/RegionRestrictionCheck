@@ -68,13 +68,13 @@ check_dependencies(){
 }		
 check_dependencies
 
-local_ipv4=$(curl -4 -s --max-time 20 ip.sb)
+local_ipv4=$(curl -4 -s --max-time 30 ip.sb)
 local_ipv6=$(curl -6 -s --max-time 20 ip.sb)
 if [ -n "$local_ipv4" ]
 	then
-		local_isp=$(curl -s -4 https://api.ip.sb/geoip/${local_ipv4} | cut -f1 -d"," | cut -f4 -d '"')
+		local_isp=$(curl -s -4 --max-time 30 https://api.ip.sb/geoip/${local_ipv4} | cut -f1 -d"," | cut -f4 -d '"')
 	else
-		local_isp=$(curl -s -6 https://api.ip.sb/geoip/${local_ipv6} | cut -f1 -d"," | cut -f4 -d '"')
+		local_isp=$(curl -s -6 --max-time 30 https://api.ip.sb/geoip/${local_ipv6} | cut -f1 -d"," | cut -f4 -d '"')
 fi		
 
 
@@ -287,7 +287,7 @@ function MediaUnlockTest_Netflix() {
         return;
 		
 	elif [[ "$result1" == "200" ]];then
-		local region=`tr [:lower:] [:upper:] <<< $(curl -${1} --user-agent "${UA_Browser}" -fs --write-out %{redirect_url} --output /dev/null "https://www.netflix.com/title/80018499" | cut -d '/' -f4 | cut -d '-' -f1)` ;
+		local region=`tr [:lower:] [:upper:] <<< $(curl -${1} --user-agent "${UA_Browser}" -fs --max-time 30 --write-out %{redirect_url} --output /dev/null "https://www.netflix.com/title/80018499" | cut -d '/' -f4 | cut -d '-' -f1)` ;
 		if [[ ! -n "$region" ]];then
 			region="US";
 		fi
@@ -302,14 +302,14 @@ function MediaUnlockTest_Netflix() {
 
 function MediaUnlockTest_YouTube_Region() {
     echo -n -e " YouTube Region:\t\t\t->\c";
-    local result=`curl --user-agent "${UA_Browser}" -${1} -sSL "https://www.youtube.com/" 2>&1`;
+    local result=`curl --user-agent "${UA_Browser}" -${1} -sSL --max-time 30 "https://www.youtube.com/" 2>&1`;
     
     if [[ "$result" == "curl"* ]];then
         echo -n -e "\r YouTube Region:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
     fi
     
-    local result=`curl --user-agent "${UA_Browser}" -${1} -sL "https://www.youtube.com/red" | sed 's/,/\n/g' | grep "countryCode" | cut -d '"' -f4`;
+    local result=`curl --user-agent "${UA_Browser}" -${1} -sL --max-time 30 "https://www.youtube.com/red" | sed 's/,/\n/g' | grep "countryCode" | cut -d '"' -f4`;
     if [ -n "$result" ]; then
         echo -n -e "\r YouTube Region:\t\t\t${Font_Green}${result}${Font_Suffix}\n"
         return;
@@ -321,7 +321,7 @@ function MediaUnlockTest_YouTube_Region() {
 
 function MediaUnlockTest_DisneyPlus() {
     echo -n -e " DisneyPlus:\t\t\t\t->\c";
-    local result=`curl -${1} --user-agent "${UA_Browser}" -sSL "https://global.edge.bamgrid.com/token" 2>&1`;
+    local result=`curl -${1} --user-agent "${UA_Browser}" -sSL --max-time 30 "https://global.edge.bamgrid.com/token" 2>&1`;
     
     if [[ "$result" == "curl"* ]];then
         echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -338,13 +338,13 @@ function MediaUnlockTest_DisneyPlus() {
 	curl -${1} -s --user-agent "$UA_Browser" -H "Content-Type: application/x-www-form-urlencoded" -H "$disneyheader" -d ''${disneyauth}'' -X POST  "https://global.edge.bamgrid.com/token" | python -m json.tool 2> /dev/null | grep 'access_token' >/dev/null 2>&1
 
     if [[ "$?" -eq 0 ]]; then
-		region=$(curl -${1} -s https://www.disneyplus.com | grep 'region: ' | awk '{print $2}')
+		region=$(curl -${1} -s --max-time 30 https://www.disneyplus.com | grep 'region: ' | awk '{print $2}')
 		if [ -n "$region" ]
 			then
 				echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
 				return;
 			else
-				website=$(curl -${1} --user-agent "${UA_Browser}" -fs --write-out '%{redirect_url}\n' --output /dev/null "https://www.disneyplus.com")
+				website=$(curl -${1} --user-agent "${UA_Browser}" -fs --max-time 30 --write-out '%{redirect_url}\n' --output /dev/null "https://www.disneyplus.com")
 				if [[ "${website}" == "https://disneyplus.disney.co.jp/" ]]
 					then
 						echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Green}Yes (Region: JP)${Font_Suffix}\n"
@@ -692,7 +692,7 @@ function MediaUnlockTest_ITVHUB() {
 
 function MediaUnlockTest_iQYI_Region(){
     echo -n -e " iQyi Oversea Region:\t\t\t->\c";
-    curl -${1} ${ssll} -s -I "https://www.iq.com/" > /tmp/iqiyi
+    curl -${1} ${ssll} -s -I --max-time 30 "https://www.iq.com/" > /tmp/iqiyi
     
     if [ $? -eq 1 ];then
         echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -917,7 +917,7 @@ function MediaUnlockTest_PeacockTV() {
 
 function MediaUnlockTest_FOD() {
 	echo -n -e " FOD(Fuji TV):\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} -s "https://geocontrol1.stream.ne.jp/fod-geo/check.xml?time=1624504256");
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://geocontrol1.stream.ne.jp/fod-geo/check.xml?time=1624504256");
 	if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
@@ -935,7 +935,7 @@ function MediaUnlockTest_FOD() {
 
 function MediaUnlockTest_Tiktok_Region(){
     echo -n -e " Tiktok Region:\t\t\t\t->\c";
-    local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -s "https://www.tiktok.com/")
+    local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -s --max-time 30 "https://www.tiktok.com/")
 	
 	if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -956,7 +956,7 @@ function MediaUnlockTest_Tiktok_Region(){
 function MediaUnlockTest_YouTube_Premium() {
     echo -n -e " YouTube Premium:\t\t\t->\c";
     local tmpresult=$(curl -${1} -s -H "Accept-Language: en" "https://www.youtube.com/premium")
-    local region=$(curl --user-agent "${UA_Browser}" -${1} -sL "https://www.youtube.com/red" | sed 's/,/\n/g' | grep "countryCode" | cut -d '"' -f4)
+    local region=$(curl --user-agent "${UA_Browser}" -${1} -sL --max-time 30 "https://www.youtube.com/red" | sed 's/,/\n/g' | grep "countryCode" | cut -d '"' -f4)
 	if [ -n "$region" ]; then
         sleep 0
 	else
@@ -1005,7 +1005,7 @@ function MediaUnlockTest_BritBox() {
 
 function MediaUnlockTest_PrimeVideo_Region(){
     echo -n -e " Amazon Prime Video:\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s "https://www.primevideo.com")
+    local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 30 "https://www.primevideo.com")
 	
 	if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1025,7 +1025,7 @@ function MediaUnlockTest_PrimeVideo_Region(){
 
 function MediaUnlockTest_Radiko(){
     echo -n -e " Radiko:\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s "https://radiko.jp/area?_=1625406539531")
+    local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 30 "https://radiko.jp/area?_=1625406539531")
 	
 	if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r Radiko:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1052,7 +1052,7 @@ function MediaUnlockTest_Radiko(){
 
 function MediaUnlockTest_DMM(){
     echo -n -e " DMM:\t\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s "https://api-p.videomarket.jp/v3/api/play/keyauth?playKey=4c9e93baa7ca1fc0b63ccf418275afc2&deviceType=3&bitRate=0&loginFlag=0&connType=" -H "X-Authorization: 2bCf81eLJWOnHuqg6nNaPZJWfnuniPTKz9GXv5IS")
+    local tmpresult=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 30 "https://api-p.videomarket.jp/v3/api/play/keyauth?playKey=4c9e93baa7ca1fc0b63ccf418275afc2&deviceType=3&bitRate=0&loginFlag=0&connType=" -H "X-Authorization: 2bCf81eLJWOnHuqg6nNaPZJWfnuniPTKz9GXv5IS")
 	
 	if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
