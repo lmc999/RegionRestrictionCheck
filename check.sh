@@ -338,7 +338,7 @@ function MediaUnlockTest_DisneyPlus() {
 	curl -${1} -s --user-agent "$UA_Browser" -H "Content-Type: application/x-www-form-urlencoded" -H "$disneyheader" -d ''${disneyauth}'' -X POST  "https://global.edge.bamgrid.com/token" | python -m json.tool 2> /dev/null | grep 'access_token' >/dev/null 2>&1
 
     if [[ "$?" -eq 0 ]]; then
-		region=$(curl -${1} -s --max-time 30 https://www.disneyplus.com | grep 'region: ' | awk '{print $2}')
+		region=$(curl -${1} -s --max-time 30 https://www.disneyplus.com | grep '"regionCode":' | sed 's/.*"regionCode"://' | cut -f2 -d'"')
 		if [ -n "$region" ]
 			then
 				echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
@@ -1247,8 +1247,8 @@ function CheckV4() {
 }
 
 function CheckV6() {
-check6=`ping6 240c::6666 -c 3 -w 3 2>&1`;
-if [[ "$check6" != *"unreachable"* ]] && [[ "$check6" != *"Unreachable"* ]];then
+check6=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 30 ipv6.google.com)
+if [[ "$check6" -eq "200" ]];then
 	echo ""
 	echo ""
 	echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
@@ -1257,7 +1257,7 @@ if [[ "$check6" != *"unreachable"* ]] && [[ "$check6" != *"Unreachable"* ]];then
     isv6=1
 else
     echo -e "${Font_SkyBlue}当前主机不支持IPv6,跳过...${Font_Suffix}"
-	ipv6=0
+	isv6=0
 fi
 echo -e "";
 }
