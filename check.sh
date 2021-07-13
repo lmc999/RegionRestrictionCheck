@@ -40,9 +40,9 @@ check_dependencies(){
 	local os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
 	
 	python -V > /dev/null 2>&1
-		if [ $? -ne 0 ];then
+		if [[ "$?" -ne "0" ]];then
 			python3 -V > /dev/null 2>&1
-			if [ $? -eq 0 ];then
+			if [[ "$?" -ne "0" ]];then
 				python3_patch=$(which python3)
 				ln -s $python3_patch /usr/bin/python
 			else
