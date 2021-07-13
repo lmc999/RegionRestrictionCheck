@@ -960,7 +960,12 @@ function MediaUnlockTest_YouTube_Premium() {
 	if [ -n "$region" ]; then
         sleep 0
 	else
-		region=US
+		isCN=$(echo $tmpresult | grep 'www.google.cn')
+		if [ -n "$isCN" ]; then
+			region=CN
+		else	
+			region=US
+		fi	
 	fi	
 	
     if [[ "$tmpresult" == "curl"* ]];then
