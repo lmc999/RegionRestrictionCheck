@@ -1017,7 +1017,7 @@ function MediaUnlockTest_PrimeVideo_Region(){
 		return;
 	fi	
     
-	local result=$(echo $tmpresult | grep '"currentTerritory":' | sed 's/.*"currentTerritory//' | cut -f3 -d'"' | head -n 1)
+	local result=$(echo $tmpresult | grep '"currentTerritory":' | sed 's/.*currentTerritory//' | cut -f3 -d'"' | head -n 1)
     if [ -n "$result" ];then
         echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Green}Yes (Region: $result)${Font_Suffix}\n"
         return;
