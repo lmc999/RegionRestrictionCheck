@@ -92,7 +92,7 @@
 bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh)
 ````
 
-**或者直接运行以下Docker命令**
+**或者直接运行以下Docker命令** (ARM架构建议使用Docker版)
 ````docker
 docker run --rm --net=host lmc999/regioncheck
 ````
