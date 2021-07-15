@@ -1156,14 +1156,53 @@ function MediaUnlockTest_LiTV() {
 
 }
 
+function MediaUnlockTest_FuboTV() {
+    echo -n -e " Fubo TV:\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://www.fubo.tv/welcome" | gunzip 2> /dev/null)
+    
+	local result=$(echo $tmpresult | grep 'countryCode' | sed 's/.*countryCode//' | cut -f3 -d'"')
+    if [ -n "$result" ]; then
+		if [[ "$result" == "USA" ]];then
+			echo -n -e "\r Fubo TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+			return;
+		else
+			echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			return;
+		fi	
+	else
+		echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
+function MediaUnlockTest_Fox() {
+    echo -n -e " Fox:\t\t\t\t\t->\c";
+    # 测试，连续请求两次 (单独请求一次可能会返回35, 第二次开始变成0)
+    local result=$(curl -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 30 "https://foxvideo.akamaized.net/pulsar-test/p-2mb.png?t=y9t0kj")
+    if [ "$result" = "000" ]; then
+        echo -n -e "\r FOX:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r FOX:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r FOX:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r FOX:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+    fi
+}
+
+
+
 function US_UnlockTest() {
 	echo "=============美国地区解锁=============="
+	MediaUnlockTest_Fox ${1};
 	MediaUnlockTest_HuluUS ${1};
 	MediaUnlockTest_HBONow ${1};
 	MediaUnlockTest_HBOMax ${1};
 	MediaUnlockTest_ParamountPlus ${1};
 	MediaUnlockTest_PeacockTV ${1};
 	MediaUnlockTest_SlingTV ${1};
+	MediaUnlockTest_FuboTV ${1};
 	MediaUnlockTest_PlutoTV ${1};
 	MediaUnlockTest_encoreTVB ${1};
 	echo "======================================="
