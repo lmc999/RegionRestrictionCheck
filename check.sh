@@ -847,8 +847,8 @@ function MediaUnlockTest_Viu.com() {
 
 function MediaUnlockTest_Niconico() {
     echo -n -e " Niconico:\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://www.nicovideo.jp/watch/so23017073");
-    if [ "$tmpresult" = "curl"* ]; then
+    local tmpresult=$(curl -${1} ${ssll} -sSL --max-time 30 "https://www.nicovideo.jp/watch/so23017073" 2>&1);
+    if [[ "$tmpresult" == "curl"* ]]; then
 		echo -n -e "\r Niconico:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
