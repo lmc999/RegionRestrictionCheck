@@ -11,4 +11,4 @@ FROM python:2.7-alpine
 COPY --from=builder /go/src/RegionRestrictionCheck/RegionRestrictionCheck /check
 RUN chmod +x /check && \
     apk add --no-cache curl wget bash
-ENTRYPOINT ["/check"]
+ENTRYPOINT ["/bin/bash", "-l", "-c", "/check.sh"]
