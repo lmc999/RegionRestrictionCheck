@@ -7,6 +7,8 @@ disneyheader="authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5Ni
 WOWOW_Cookie=$(curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies | awk 'NR==3')
 TVer_Cookie="Accept: application/json;pk=BCpkADawqM3ZdH8iYjCnmIpuIRqzCn12gVrtpk_qOePK3J9B6h7MuqOw5T_qIqdzpLvuvb_hTvu7hs-7NsvXnPTYKd9Cgw7YiwI9kFfOOCDDEr20WDEYMjGiLptzWouXXdfE996WWM8myP3Z"
 
+
+
 Font_Black="\033[30m";
 Font_Red="\033[31m";
 Font_Green="\033[32m";
@@ -30,6 +32,18 @@ checkos(){
 }
 checkos	
 
+checkCPU(){
+	CPUArch=$(uname -m)
+	if [[ "$CPUArch" == "aarch64" ]];then
+		arch=_arm64
+	elif [[ "$CPUArch" == "i686" ]];then
+		arch=_i686
+	elif [[ "$CPUArch" == "arm" ]];then
+		arch=_arm	
+	fi
+}	
+checkCPU
+
 check_dependencies(){
 
 	os_detail=$(cat /etc/os-release)
@@ -42,7 +56,7 @@ check_dependencies(){
 			python3 -V > /dev/null 2>&1
 			if [[ "$?" -ne "0" ]];then
 				python3_patch=$(which python3)
-				ln -s $python3_patch /usr/bin/python
+				ln -s $python3_patch /usr/bin/python > /dev/null 2>&1
 			else
 				if [ -n "$if_debian" ];then
 					echo -e "${Font_Green}正在安装python${Font_Suffix}" 
@@ -719,11 +733,11 @@ function MediaUnlockTest_iQYI_Region(){
 
 function MediaUnlockTest_HuluUS(){
     if [[ "$1" == "4" ]];then
-		wget ./Hulu4.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu4.sh.x  > /dev/null 2>&1
+		wget -O ./Hulu4.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu4${arch}.sh.x  > /dev/null 2>&1
 		chmod +x ./Hulu4.sh.x
 		./Hulu4.sh.x > /dev/null 2>&1
 	elif [[ "$1" == "6" ]];then	
-		wget ./Hulu6.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu6.sh.x  > /dev/null 2>&1
+		wget -O ./Hulu6.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu6${arch}.sh.x  > /dev/null 2>&1
 		chmod +x ./Hulu6.sh.x
 		./Hulu6.sh.x > /dev/null 2>&1
 	fi
@@ -1004,6 +1018,40 @@ function MediaUnlockTest_YouTube_Premium() {
     fi	
 	
     
+}
+
+function MediaUnlockTest_YouTube_CDN() {
+    echo -n -e " YouTube CDN:\t\t\t\t->\c";
+	local tmpresult=$(curl -${1} ${ssll} -s https://redirector.googlevideo.com/report_mapping 2>&1)
+    
+    if [[ "$tmpresult" == "curl"* ]];then
+        echo -n -e "\r YouTube Region:\t\t\t${Font_Red}Check Failed (Network Connection)${Font_Suffix}\n"
+        return;
+    fi
+	
+	iata=$(echo $tmpresult | grep router | cut -f2 -d'"' | cut -f2 -d"." | sed 's/.\{2\}$//' | tr [:lower:] [:upper:])
+	checkfailed=$(echo $tmpresult | grep "=>")
+	if [ -z "$iata" ] && [ -n "$checkfailed" ];then
+		CDN_ISP=$(echo $checkfailed | awk '{print $3}' | cut -f1 -d"-" | tr [:lower:] [:upper:])
+		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Yellow}Associated with $CDN_ISP${Font_Suffix}\n"
+		return;
+	fi	
+		
+    
+	curl -s "https://www.iata.org/AirportCodesSearch/Search?currentBlock=314384&currentPage=12572&airport.search=${iata}" > /tmp/iata.txt
+	local line=$(cat /tmp/iata.txt | grep -n "<td>"$iata | awk '{print $1}' | cut -f1 -d":")
+	local nline=$(expr $line - 2)
+	local location=$(cat /tmp/iata.txt | awk NR==${nline} | sed 's/.*<td>//' | cut -f1 -d"<")
+    
+	if [ -n "$location" ]; then
+		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Green}$location${Font_Suffix}\n"
+		return;
+    else
+		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Undetectable${Font_Suffix}\n"
+		return;
+	fi
+	
+	rm /tmp/iata.txt
 }
 
 function MediaUnlockTest_BritBox() {
@@ -1287,6 +1335,7 @@ function Global_UnlockTest() {
 	MediaUnlockTest_Tiktok_Region ${1};
 	MediaUnlockTest_iQYI_Region ${1};
 	MediaUnlockTest_Viu.com ${1};
+	MediaUnlockTest_YouTube_CDN ${1};
 	GameTest_Steam ${1};
 	echo "======================================="	
 }
