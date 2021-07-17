@@ -7,6 +7,8 @@ disneyheader="authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5Ni
 WOWOW_Cookie=$(curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies | awk 'NR==3')
 TVer_Cookie="Accept: application/json;pk=BCpkADawqM3ZdH8iYjCnmIpuIRqzCn12gVrtpk_qOePK3J9B6h7MuqOw5T_qIqdzpLvuvb_hTvu7hs-7NsvXnPTYKd9Cgw7YiwI9kFfOOCDDEr20WDEYMjGiLptzWouXXdfE996WWM8myP3Z"
 
+
+
 Font_Black="\033[30m";
 Font_Red="\033[31m";
 Font_Green="\033[32m";
@@ -29,6 +31,14 @@ checkos(){
 	fi
 }
 checkos	
+
+checkCPU(){
+	CPUArch=$(uname -m)
+	if [[ "$CPUArch" == "aarch64" ]];then
+		arch=_arm64
+	fi
+}	
+checkCPU
 
 check_dependencies(){
 
@@ -719,11 +729,11 @@ function MediaUnlockTest_iQYI_Region(){
 
 function MediaUnlockTest_HuluUS(){
     if [[ "$1" == "4" ]];then
-		wget ./Hulu4.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu4.sh.x  > /dev/null 2>&1
+		wget ./Hulu4${arch}.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu4.sh.x  > /dev/null 2>&1
 		chmod +x ./Hulu4.sh.x
 		./Hulu4.sh.x > /dev/null 2>&1
 	elif [[ "$1" == "6" ]];then	
-		wget ./Hulu6.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu6.sh.x  > /dev/null 2>&1
+		wget ./Hulu6${arch}.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu6.sh.x  > /dev/null 2>&1
 		chmod +x ./Hulu6.sh.x
 		./Hulu6.sh.x > /dev/null 2>&1
 	fi
