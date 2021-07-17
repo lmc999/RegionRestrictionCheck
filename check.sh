@@ -36,6 +36,10 @@ checkCPU(){
 	CPUArch=$(uname -m)
 	if [[ "$CPUArch" == "aarch64" ]];then
 		arch=_arm64
+	elif [[ "$CPUArch" == "i686" ]];then
+		arch=_i686
+	elif [[ "$CPUArch" == "arm" ]];then
+		arch=_arm	
 	fi
 }	
 checkCPU
@@ -52,7 +56,7 @@ check_dependencies(){
 			python3 -V > /dev/null 2>&1
 			if [[ "$?" -ne "0" ]];then
 				python3_patch=$(which python3)
-				ln -s $python3_patch /usr/bin/python
+				ln -s $python3_patch /usr/bin/python > /dev/null 2>&1
 			else
 				if [ -n "$if_debian" ];then
 					echo -e "${Font_Green}正在安装python${Font_Suffix}" 
@@ -729,11 +733,11 @@ function MediaUnlockTest_iQYI_Region(){
 
 function MediaUnlockTest_HuluUS(){
     if [[ "$1" == "4" ]];then
-		wget ./Hulu4.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu4${arch}.sh.x  > /dev/null 2>&1
+		wget -O ./Hulu4.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu4${arch}.sh.x  > /dev/null 2>&1
 		chmod +x ./Hulu4.sh.x
 		./Hulu4.sh.x > /dev/null 2>&1
 	elif [[ "$1" == "6" ]];then	
-		wget ./Hulu6.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu6${arch}.sh.x  > /dev/null 2>&1
+		wget -O ./Hulu6.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu6${arch}.sh.x  > /dev/null 2>&1
 		chmod +x ./Hulu6.sh.x
 		./Hulu6.sh.x > /dev/null 2>&1
 	fi
