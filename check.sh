@@ -729,11 +729,11 @@ function MediaUnlockTest_iQYI_Region(){
 
 function MediaUnlockTest_HuluUS(){
     if [[ "$1" == "4" ]];then
-		wget ./Hulu4${arch}.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu4.sh.x  > /dev/null 2>&1
+		wget ./Hulu4${arch}.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu4${arch}.sh.x  > /dev/null 2>&1
 		chmod +x ./Hulu4.sh.x
 		./Hulu4.sh.x > /dev/null 2>&1
 	elif [[ "$1" == "6" ]];then	
-		wget ./Hulu6${arch}.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu6.sh.x  > /dev/null 2>&1
+		wget ./Hulu6${arch}.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu6${arch}.sh.x  > /dev/null 2>&1
 		chmod +x ./Hulu6.sh.x
 		./Hulu6.sh.x > /dev/null 2>&1
 	fi
