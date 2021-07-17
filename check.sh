@@ -999,6 +999,23 @@ function MediaUnlockTest_YouTube_Premium() {
     
 }
 
+function MediaUnlockTest_YouTube_CDN() {
+    echo -n -e " YouTube CDN:\t\t\t\t->\c";
+    iata=$(curl -${1} ${ssll} -s https://redirector.googlevideo.com/report_mapping | grep router | cut -f2 -d'"' | cut -f2 -d"." | awk '{sub(/.{2}$/," ")}1' | tr [:lower:] [:upper:])
+	curl -s "https://www.iata.org/AirportCodesSearch/Search?currentBlock=314384&currentPage=12572&airport.search=${iata}" > /tmp/iata.txt
+	local line=$(cat /tmp/iata.txt | grep -n "<td>"$iata | awk '{print $1}' | cut -f1 -d":")
+	local nline=$(expr $line - 2)
+	local location=$(cat /tmp/iata.txt | awk NR==${nline} | sed 's/.*<td>//' | cut -f1 -d"<")
+    
+	if [ -n "$location" ]; then
+		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Green}$location${Font_Suffix}\n"
+		return;
+    else
+		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Undetectable${Font_Suffix}\n"
+		return;
+	fi
+}
+
 function MediaUnlockTest_BritBox() {
     echo -n -e " BritBox:\t\t\t\t->\c";
     local result=$(curl -${1} ${ssll} -s -o /dev/null -L --max-time 30 -w '%{url_effective}\n' "https://www.britbox.com/" | grep 'locationnotsupported');
@@ -1279,6 +1296,7 @@ function Global_UnlockTest() {
 	MediaUnlockTest_Tiktok_Region ${1};
 	MediaUnlockTest_iQYI_Region ${1};
 	MediaUnlockTest_Viu.com ${1};
+	MediaUnlockTest_YouTube_CDN ${1};
 	GameTest_Steam ${1};
 	echo "======================================="	
 }
