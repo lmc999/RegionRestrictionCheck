@@ -1001,7 +1001,22 @@ function MediaUnlockTest_YouTube_Premium() {
 
 function MediaUnlockTest_YouTube_CDN() {
     echo -n -e " YouTube CDN:\t\t\t\t->\c";
-    iata=$(curl -${1} ${ssll} -s https://redirector.googlevideo.com/report_mapping | grep router | cut -f2 -d'"' | cut -f2 -d"." | awk '{sub(/.{2}$/," ")}1' | tr [:lower:] [:upper:])
+	local tmpresult=$(curl -${1} ${ssll} -s https://redirector.googlevideo.com/report_mapping 2>&1)
+    
+    if [[ "$tmpresult" == "curl"* ]];then
+        echo -n -e "\r YouTube Region:\t\t\t${Font_Red}Check Failed (Network Connection)${Font_Suffix}\n"
+        return;
+    fi
+	
+	iata=$(echo $tmpresult | grep router | cut -f2 -d'"' | cut -f2 -d"." | sed 's/.\{2\}$//' | tr [:lower:] [:upper:])
+	checkfailed=$(echo $tmpresult | grep "=>")
+	if [ -z "$iata" ] && [ -n "$checkfailed" ];then
+		CDN_ISP=$(echo $checkfailed | awk '{print $3}' | cut -f1 -d"-" | tr [:lower:] [:upper:])
+		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Yellow}Associated with $CDN_ISP${Font_Suffix}\n"
+		return;
+	fi	
+		
+    
 	curl -s "https://www.iata.org/AirportCodesSearch/Search?currentBlock=314384&currentPage=12572&airport.search=${iata}" > /tmp/iata.txt
 	local line=$(cat /tmp/iata.txt | grep -n "<td>"$iata | awk '{print $1}' | cut -f1 -d":")
 	local nline=$(expr $line - 2)
@@ -1014,6 +1029,8 @@ function MediaUnlockTest_YouTube_CDN() {
 		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Undetectable${Font_Suffix}\n"
 		return;
 	fi
+	
+	rm /tmp/iata.txt
 }
 
 function MediaUnlockTest_BritBox() {
