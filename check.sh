@@ -1022,7 +1022,7 @@ function MediaUnlockTest_YouTube_Premium() {
 
 function MediaUnlockTest_YouTube_CDN() {
     echo -n -e " YouTube CDN:\t\t\t\t->\c";
-	local tmpresult=$(curl -${1} ${ssll} -s https://redirector.googlevideo.com/report_mapping 2>&1)
+	local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 https://redirector.googlevideo.com/report_mapping 2>&1)
     
     if [[ "$tmpresult" == "curl"* ]];then
         echo -n -e "\r YouTube Region:\t\t\t${Font_Red}Check Failed (Network Connection)${Font_Suffix}\n"
