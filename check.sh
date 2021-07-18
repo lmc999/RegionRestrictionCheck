@@ -805,6 +805,27 @@ function MediaUnlockTest_Molotov(){
 
 }
 
+function MediaUnlockTest_Salto(){
+    echo -n -e " Salto:\t\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://geo.salto.fr/v1/geoInfo/");
+    if [[ "$tmpresult" == "curl"* ]];then
+            echo -n -e "\r Salto:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+            return;
+    fi
+
+    echo $tmpresult | python -m json.tool 2> /dev/null | grep asn | awk -F\" '{print $4}' | grep -E '\w+' > /dev/null 2>&1
+    if [ $? -eq 0 ];then
+        echo $tmpresult | python -m json.tool 2> /dev/null | grep country_code | awk -F\" '{print $4}' | grep -E '\w+' > /dev/null 2>&1
+        if [ $? -eq 0 ];then
+            echo -n -e "\r Salto:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        else
+            echo -n -e "\r Salto:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        fi
+    else
+        echo -n -e "\r Salto:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    fi
+}
+
 function MediaUnlockTest_LineTV.TW() {
     echo -n -e " LineTV.TW:\t\t\t\t->\c";
     local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://www.linetv.tw/api/part/11829/eps/1/part?chocomemberId=");
@@ -1257,6 +1278,7 @@ function EU_UnlockTest() {
 	MediaUnlockTest_Channel4 ${1};
 	MediaUnlockTest_BBCiPLAYER ${1};
 	MediaUnlockTest_Molotov ${1};
+	MediaUnlockTest_Salto ${1};
 	echo "======================================="
 }	
 	
