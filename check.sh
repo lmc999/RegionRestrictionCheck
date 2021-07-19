@@ -1035,18 +1035,14 @@ function MediaUnlockTest_YouTube_CDN() {
 		CDN_ISP=$(echo $checkfailed | awk '{print $3}' | cut -f1 -d"-" | tr [:lower:] [:upper:])
 		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Yellow}Associated with $CDN_ISP${Font_Suffix}\n"
 		return;
-	fi	
-		
-    
-	curl -s --max-time 30 "https://www.iata.org/AirportCodesSearch/Search?currentBlock=314384&currentPage=12572&airport.search=${iata}" > /tmp/iata.txt
-	local line=$(cat /tmp/iata.txt | grep -n "<td>"$iata | awk '{print $1}' | cut -f1 -d":")
-	local nline=$(expr $line - 2)
-	local location=$(cat /tmp/iata.txt | awk NR==${nline} 2> /dev/null | sed 's/.*<td>//' | cut -f1 -d"<")
-    
-	if [ -n "$location" ]; then
+	elif [ -n "$iata" ];then
+		curl -s --max-time 30 "https://www.iata.org/AirportCodesSearch/Search?currentBlock=314384&currentPage=12572&airport.search=${iata}" > /tmp/iata.txt
+		local line=$(cat /tmp/iata.txt | grep -n "<td>"$iata | awk '{print $1}' | cut -f1 -d":")
+		local nline=$(expr $line - 2)
+		local location=$(cat /tmp/iata.txt | awk NR==${nline} | sed 's/.*<td>//' | cut -f1 -d"<")
 		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Green}$location${Font_Suffix}\n"
 		return;
-    else
+	else
 		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Undetectable${Font_Suffix}\n"
 		return;
 	fi
