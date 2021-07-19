@@ -794,7 +794,7 @@ function MediaUnlockTest_Molotov(){
 		return;	
 	fi
 	
-	echo $tmpresult | python -m json.tool 2> /dev/null | grep '"true"' > /dev/null 2>&1
+	echo $tmpresult | python -m json.tool 2> /dev/null | grep 'true' > /dev/null 2>&1
 	if [ $? -eq 0 ];then
 		echo -n -e "\r Molotov:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;	
