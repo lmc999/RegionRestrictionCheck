@@ -379,28 +379,27 @@ function MediaUnlockTest_DisneyPlus() {
 
 function MediaUnlockTest_Dazn() {
     echo -n -e " Dazn:\t\t\t\t\t->\c";
-    local result=$(curl -${1} -s --max-time 30 -X POST -H "Content-Type: application/json" -d '{"LandingPageKey":"generic","Languages":"zh-CN,zh,en","Platform":"web","PlatformAttributes":{},"Manufacturer":"","PromoCode":"","Version":"2"}' https://startup.core.indazn.com/misl/v5/Startup  | python -m json.tool 2> /dev/null | grep '"GeolocatedCountry":' | awk '{print $2}' | cut -f2 -d'"');
+    local tmpresult=$(curl -${1} -s --max-time 30 -X POST -H "Content-Type: application/json" -d '{"LandingPageKey":"generic","Languages":"zh-CN,zh,en","Platform":"web","PlatformAttributes":{},"Manufacturer":"","PromoCode":"","Version":"2"}' https://startup.core.indazn.com/misl/v5/Startup);
     
 	if [[ "$result" == "curl"* ]];then
         	echo -n -e "\r Dazn:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         	return;
     	fi
+	isAllowed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'isAllowed' | awk '{print $2}' | cut -f1 -d',')
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep '"GeolocatedCountry":' | awk '{print $2}' | cut -f2 -d'"')
 	
-	if [ -n "$result" ]; then
-		if [[ "$result" == "null," ]];then
-			echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-			return;
-        else
-			result=$(echo $result | tr [:lower:] [:upper:])
-			echo -n -e "\r Dazn:\t\t\t\t\t${Font_Green}Yes (Region: ${result})${Font_Suffix}\n"
-			return;
-		fi
-	else
+	if [[ "$isAllowed" == "true" ]]; then
+		local CountryCode=$(echo $result | tr [:lower:] [:upper:])
+		echo -n -e "\r Dazn:\t\t\t\t\t${Font_Green}Yes (Region: ${CountryCode})${Font_Suffix}\n"
+		return;
+	elif [[ "$isAllowed" == "false" ]]; then
+		echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    else
 		echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}Unsupport${Font_Suffix}\n"
 		return;
 
     fi
-    return;
 }
 
 function MediaUnlockTest_HuluJP() {
