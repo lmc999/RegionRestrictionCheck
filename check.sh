@@ -89,6 +89,9 @@ if [ -n "$local_ipv4" ]
 		local_isp=$(curl -s -6 --max-time 30 https://api.ip.sb/geoip/${local_ipv6} | cut -f1 -d"," | cut -f4 -d '"')
 fi		
 
+ShowRegion(){
+	echo -e "${Font_Yellow}---${1}---${Font_Suffix}"
+}	
 
 function GameTest_Steam(){
     echo -n -e " Steam Currency:\t\t\t->\c";
@@ -376,27 +379,28 @@ function MediaUnlockTest_DisneyPlus() {
 
 function MediaUnlockTest_Dazn() {
     echo -n -e " Dazn:\t\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} -s --max-time 30 -X POST -H "Content-Type: application/json" -d '{"LandingPageKey":"generic","Languages":"zh-CN,zh,en","Platform":"web","PlatformAttributes":{},"Manufacturer":"","PromoCode":"","Version":"2"}' https://startup.core.indazn.com/misl/v5/Startup);
+    local result=$(curl -${1} -s --max-time 30 -X POST -H "Content-Type: application/json" -d '{"LandingPageKey":"generic","Languages":"zh-CN,zh,en","Platform":"web","PlatformAttributes":{},"Manufacturer":"","PromoCode":"","Version":"2"}' https://startup.core.indazn.com/misl/v5/Startup  | python -m json.tool 2> /dev/null | grep '"GeolocatedCountry":' | awk '{print $2}' | cut -f2 -d'"');
     
 	if [[ "$result" == "curl"* ]];then
         	echo -n -e "\r Dazn:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         	return;
     	fi
-	isAllowed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'isAllowed' | awk '{print $2}' | cut -f1 -d',')
-	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep '"GeolocatedCountry":' | awk '{print $2}' | cut -f2 -d'"')
 	
-	if [[ "$isAllowed" == "true" ]]; then
-		local CountryCode=$(echo $result | tr [:lower:] [:upper:])
-		echo -n -e "\r Dazn:\t\t\t\t\t${Font_Green}Yes (Region: ${CountryCode})${Font_Suffix}\n"
-		return;
-	elif [[ "$isAllowed" == "false" ]]; then
-		echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-		return;
-    else
+	if [ -n "$result" ]; then
+		if [[ "$result" == "null," ]];then
+			echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			return;
+        else
+			result=$(echo $result | tr [:lower:] [:upper:])
+			echo -n -e "\r Dazn:\t\t\t\t\t${Font_Green}Yes (Region: ${result})${Font_Suffix}\n"
+			return;
+		fi
+	else
 		echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}Unsupport${Font_Suffix}\n"
 		return;
 
     fi
+    return;
 }
 
 function MediaUnlockTest_HuluJP() {
@@ -806,22 +810,22 @@ function MediaUnlockTest_Molotov(){
 
 function MediaUnlockTest_Salto(){
     echo -n -e " Salto:\t\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://geo.salto.fr/v1/geoInfo/");
+    local tmpresult=$(curl -${1} ${ssll} -sS --max-time 30 "https://geo.salto.fr/v1/geoInfo/");
     if [[ "$tmpresult" == "curl"* ]];then
             echo -n -e "\r Salto:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
             return;
     fi
 
-    echo $tmpresult | python -m json.tool 2> /dev/null | grep asn | awk -F\" '{print $4}' | grep -E '\w+' > /dev/null 2>&1
+    local CountryCode=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'country_code' | cut -f4 -d'"')
+	local AllowedCode="FR,GP,MQ,GF,RE,YT,PM,BL,MF,WF,PF,NC"
+	echo ${AllowedCode} | grep ${CountryCode} > /dev/null 2>&1
+	
     if [ $? -eq 0 ];then
-        echo $tmpresult | python -m json.tool 2> /dev/null | grep country_code | awk -F\" '{print $4}' | grep -E '\w+' > /dev/null 2>&1
-        if [ $? -eq 0 ];then
-            echo -n -e "\r Salto:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-        else
-            echo -n -e "\r Salto:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-        fi
+        echo -n -e "\r Salto:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        return;
     else
         echo -n -e "\r Salto:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return;
     fi
 }
 
@@ -1193,7 +1197,7 @@ function MediaUnlockTest_HotStar() {
 
 function MediaUnlockTest_LiTV() {
     echo -n -e " LiTV:\t\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 -X POST "https://www.LiTV.tv/vod/ajax/getUrl" -d '{"type":"noauth","assetId":"vod44868-010001M001_800K","puid":"6bc49a81-aad2-425c-8124-5b16e9e01337"}'  -H "Content-Type: application/json");
+    local tmpresult=$(curl -${1} ${ssll} -sS --max-time 30 -X POST "https://www.LiTV.tv/vod/ajax/getUrl" -d '{"type":"noauth","assetId":"vod44868-010001M001_800K","puid":"6bc49a81-aad2-425c-8124-5b16e9e01337"}'  -H "Content-Type: application/json");
     if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
@@ -1249,6 +1253,66 @@ function MediaUnlockTest_Fox() {
     fi
 }
 
+function MediaUnlockTest_Joyn() {
+    echo -n -e " Joyn:\t\t\t\t\t->\c";
+    local tmpauth=$(curl -${1} ${ssll} -s --max-time 30 -X POST "https://auth.joyn.de/auth/anonymous" -H "Content-Type: application/json" -d '{"client_id":"b74b9f27-a994-4c45-b7eb-5b81b1c856e7","client_name":"web","anon_device_id":"b74b9f27-a994-4c45-b7eb-5b81b1c856e7"}');
+    if [ -z "$tmpauth" ]; then
+		echo -n -e "\r Joyn:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi	
+	auth=$(echo $tmpauth | python -m json.tool 2> /dev/null | grep access_token | awk '{print $2}' | cut -f2 -d'"')	
+	local result=$(curl -s "https://api.joyn.de/content/entitlement-token" -H "x-api-key: 36lp1t4wto5uu2i2nk57ywy9on1ns5yg" -H "content-type: application/json" -d '{"content_id":"daserste-de-hd","content_type":"LIVE"}' -H "authorization: Bearer $auth")
+    if [ -n "$result" ];then
+		isBlock=$(echo $result | python -m json.tool 2> /dev/null | grep 'code' | awk '{print $2}' | cut -f2 -d'"')
+		if [[ "$isBlock" == "ENT_AssetNotAvailableInCountry" ]]; then
+			echo -n -e "\r Joyn:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			return;
+		else
+			echo -n -e "\r Joyn:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+			return;
+		fi	
+	else
+		echo -n -e "\r Joyn:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
+function MediaUnlockTest_SKY_DE() {
+    echo -n -e " Sky:\t\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://edge.api.brightcove.com/playback/v1/accounts/1050888051001/videos/6247131490001" -H "Accept: application/json;pk=BCpkADawqM0OXCLe4eIkpyuir8Ssf3kIQAM62a1KMa4-1_vTOWQIxoHHD4-oL-dPmlp-rLoS-WIAcaAMKuZVMR57QY4uLAmP4Ov3V416hHbqr0GNNtzVXamJ6d4-rA3Xi98W-8wtypdEyjGEZNepUCt3D7UdMthbsG-Ean3V4cafT4nZX03st5HlyK1chp51SfA-vKcAOhHZ4_Oa9TTN61tEH6YqML9PWGyKrbuN5myICcGsFzP3R2aOF8c5rPCHT2ZAiG7MoavHx8WMjhfB0QdBr2fphX24CSpUKlcjEnQJnBiA1AdLg9iyReWrAdQylX4Eyhw5OwKiCGJznfgY6BDtbUmeq1I9r9RfmhP5bfxVGjILSEFZgXbMqGOvYdrdare0aW2fTCxeHdHt0vyKOWTC6CS1lrGJF2sFPKn1T1csjVR8s4MODqCBY1PTbHY4A9aZ-2MDJUVJDkOK52hGej6aXE5b9N9_xOT2B9wbXL1B1ZB4JLjeAdBuVtaUOJ44N0aCd8Ns0o02E1APxucQqrjnEociLFNB0Bobe1nkGt3PS74IQcs-eBvWYSpolldMH6TKLu8JqgdnM4WIp3FZtTWJRADgAmvF9tVDUG9pcJoRx_CZ4im-rn-AzN3FeOQrM4rTlU3Q8YhSmyEIoxYYqsFDwbFlhsAcvqQkgaElYtuciCL5i3U8N4W9rIhPhQJzsPafmLdWxBP_FXicyek25GHFdQzCiT8nf1o860Jv2cHQ4xUNcnP-9blIkLy9JmuB2RgUXOHzWsrLGGW6hq9wLUtqwEoxcEAAcNJgmoC0k8HE-Ga-NHXng6EFWnqiOg_mZ_MDd7gmHrrKLkQV" -H "Origin: https://www.sky.de");
+    if [ -z "$tmpresult" ]; then
+		echo -n -e "\r Sky:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+	
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep error_subcode | cut -f4 -d'"')	
+	    if [[ "$result" == "CLIENT_GEO" ]];then
+			echo -n -e "\r Sky:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			return;
+		elif [ -z "$result" ] && [ -n "$tmpresult" ];then
+			echo -n -e "\r Sky:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+			return;
+		else
+			echo -n -e "\r Sky:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		fi
+
+}
+
+function MediaUnlockTest_ZDF() {
+    echo -n -e " ZDF: \t\t\t\t\t->\c";
+    # 测试，连续请求两次 (单独请求一次可能会返回35, 第二次开始变成0)
+    local result=$(curl --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 30 https://ssl.zdf.de/geo/de/geo.txt/)
+    if [ "$result" = "000" ]; then
+        echo -n -e "\r ZDF: \t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        elif [ "$result" = "404" ]; then
+        echo -n -e "\r ZDF: \t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        elif [ "$result" = "403" ]; then
+        echo -n -e "\r ZDF: \t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r ZDF: \t\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+    fi
+}
 
 
 function US_UnlockTest() {
@@ -1268,12 +1332,18 @@ function US_UnlockTest() {
 
 function EU_UnlockTest() {
 	echo "=============欧洲地区解锁=============="
+	ShowRegion GB
 	MediaUnlockTest_BritBox ${1};
 	MediaUnlockTest_ITVHUB ${1};
 	MediaUnlockTest_Channel4 ${1};
 	MediaUnlockTest_BBCiPLAYER ${1};
+	ShowRegion FR	
 	MediaUnlockTest_Molotov ${1};
 	MediaUnlockTest_Salto ${1};
+	ShowRegion DE		
+	MediaUnlockTest_Joyn ${1};
+	MediaUnlockTest_SKY_DE ${1};
+	MediaUnlockTest_ZDF ${1};
 	echo "======================================="
 }	
 	
