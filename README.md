@@ -84,6 +84,20 @@
 
 + 新增Litv解锁判断
 
++ 新增Fubo TV解锁判断
+
++ 新增Fox解锁判断
+
++ 新增Joyn解锁判断
+
++ 新增Sky Germany解锁判断
+
++ 新增ZDF解锁判断
+
++ 新增HBO GO Asia解锁判断
+
++ 新增HBO GO Europe解锁判断
+
 ## 使用方法
 
 **使用脚本前请确认curl已安装**
