@@ -1313,6 +1313,64 @@ function MediaUnlockTest_ZDF() {
     fi
 }
 
+function MediaUnlockTest_HBOGO_ASIA() {
+    echo -n -e " HBO GO Asia:\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://api2.hbogoasia.com/v1/geog?lang=undefined&version=0&bundleId=www.hbogoasia.com");
+    if [ -z "$tmpresult" ]; then
+		echo -n -e "\r HBO GO Asia:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+	
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep territory)	
+	    if [ -z "$result" ];then
+			echo -n -e "\r HBO GO Asia:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			return;
+		elif [ -n "$result" ];then
+			local CountryCode=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep country | cut -f4 -d'"')
+			echo -n -e "\r HBO GO Asia:\t\t\t\t${Font_Green}Yes (Region: $CountryCode)${Font_Suffix}\n"
+			return;
+		else
+			echo -n -e "\r HBO GO Asia:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		fi
+
+}
+
+function MediaUnlockTest_HBOGO_EUROPE() {
+    echo -n -e " HBO GO Europe:\t\t\t\t->\c";
+	curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/HBO_GO_EU_REGION > /tmp/HBO_GO_EU_REGION
+	
+	
+	while read -r line || [[ -n $line ]];do
+	HBORegion=$(echo $line)
+	tmpresult=$(curl -fsL --write-out '%{http_code}\n' --output /dev/null --max-time 30 "https://api.ugw.hbogo.eu/v3.0/GeoCheck/json/HUN")
+	
+    OutCome=$(curl -${1} ${ssll} -s --max-time 30 "https://api.ugw.hbogo.eu/v3.0/GeoCheck/json/$HBORegion")
+	if [ -z "$OutCome" ];then
+		echo -n -e "\r HBO GO Europe:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		statuscode=1
+		return
+	fi
+	
+	is406=$(echo $OutCome | grep 'Not Acceptable')
+	isGeoBlocked=$(echo $OutCome | grep 'DENY_NET_LOCATION')
+	if [ -n "$is406" ];then
+		echo -n -e "\r HBO GO Europe:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	
+	elif [ -z "$isGeoBlocked" ] && [ -z "$is406" ];then
+		CountryCode=$(curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/CountryCode.csv | grep $HBORegion | cut -f1 -d",")
+		echo -n -e "\r HBO GO Europe:\t\t\t\t${Font_Green}Yes (Region: $CountryCode)${Font_Suffix}\n"
+		statuscode=0
+		return
+	fi	
+	done < /tmp/HBO_GO_EU_REGION
+	
+	if [[ "$statuscode" != "3" ]];then
+		echo -n -e "\r HBO GO Europe:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	fi
+}
+
 
 function US_UnlockTest() {
 	echo "=============美国地区解锁=============="
@@ -1331,6 +1389,7 @@ function US_UnlockTest() {
 
 function EU_UnlockTest() {
 	echo "=============欧洲地区解锁=============="
+	MediaUnlockTest_HBOGO_EUROPE ${1};
 	ShowRegion GB
 	MediaUnlockTest_BritBox ${1};
 	MediaUnlockTest_ITVHUB ${1};
@@ -1390,9 +1449,10 @@ function Global_UnlockTest() {
 	echo ""		
 	echo "=============跨国平台解锁=============="	
 	MediaUnlockTest_Dazn ${1};
+	MediaUnlockTest_HotStar ${1};
 	MediaUnlockTest_Netflix ${1};
 	MediaUnlockTest_DisneyPlus ${1};
-	MediaUnlockTest_HotStar ${1};
+	MediaUnlockTest_HBOGO_ASIA ${1};
 	#MediaUnlockTest_YouTube_Region ${1};
 	MediaUnlockTest_YouTube_Premium ${1};
 	MediaUnlockTest_PrimeVideo_Region ${1};
