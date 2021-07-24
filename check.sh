@@ -1371,10 +1371,33 @@ function MediaUnlockTest_HBOGO_EUROPE() {
 	fi
 }
 
+function MediaUnlockTest_EPIX() {
+    echo -n -e " Epix:\t\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -X POST -s --max-time 30 "https://api.epix.com/v2/movies/16921/play" -d '{}' -H "X-Session-Token: eyJraWQiOiI5YjFjYjViZDYxZGNmMWU3ZmJkMWM2YjRmOGNhOTgzNmFkZmY5YjViNjYwMDQ5ZDIzMWZlZjBmMDllMTkwMmFmIiwiYWxnIjoiUlMyNTYifQ.eyJndWlkIjoiZDExOTg2N2UtZmIwYS00NjAyLWE2NmUtYjRhNmY3OTJiMGM5IiwidGVuYW50IjoiZXBpeCIsImV4cCI6MTYyNzIyNjg1OH0.rFxD8RdL4rOeNWwmlV1phE2h-aoz1WpVP4iYhvc-Sy7834PbrzK2gjMcebrTcBi61ndZDlCmr5iAeaNmKrylPVWRCJ3kIIxCovMW7wBV7TgGyJAb2xo5kVz1CTIW4frzj-JzSWHUBYgam1nZ9U1liuNAz58CDs62By58ohT1XEojOp3Nv5sCwBVF-hNSUJTNJ1fxQXOBBR9FLhd0YDvNJBAzC8vHJSgfmtkBdO35PbESYlR6_XZ8tHNOGQr2KKlp9ejsQA-KWdmxUTsexMmH1kCBXZ4n6i7Ijb-W7GR3rSUmsnfeHh5XgYf1VRVoTHjmJ7ce0CdrgUgBOvjWAv_0Kw");
+    if [ -z "$tmpresult" ]; then
+		echo -n -e "\r Epix:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+	
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep status | cut -f4 -d'"')	
+	if [[ "$result" == "PROXY_DETECTED" ]];then
+		echo -n -e "\r Epix:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	elif [[ "$result" == "GEO_BLOCKED" ]];then
+		echo -n -e "\r Epix:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;	
+	else
+		echo -n -e "\r Epix:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	fi
+
+}
+
 
 function US_UnlockTest() {
 	echo "=============美国地区解锁=============="
 	MediaUnlockTest_Fox ${1};
+	MediaUnlockTest_EPIX ${1};
 	MediaUnlockTest_HuluUS ${1};
 	MediaUnlockTest_HBONow ${1};
 	MediaUnlockTest_HBOMax ${1};
