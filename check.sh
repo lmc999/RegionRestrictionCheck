@@ -51,6 +51,22 @@ check_dependencies(){
 	if_redhat=$(echo $os_detail | grep 'rhel')
 	local os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
 	
+	curl --version > /dev/null 2>&1
+            if [[ "$?" -ne "0" ]];then
+                if [ -n "$if_debian" ];then
+                    echo -e "${Font_Green}正在安装curl${Font_Suffix}"
+                    apt install curl -y  > /dev/null 2>&1
+		    
+                elif [ -n "$if_redhat" ];then
+                    echo -e "${Font_Green}正在安装curl${Font_Suffix}"
+                    if [[ "$os_version" -gt 7 ]];then
+                        dnf install curl -y > /dev/null 2>&1
+                    else
+                        yum install curl -y > /dev/null 2>&1
+                    fi
+                fi
+            fi
+	
 	python -V > /dev/null 2>&1
 		if [[ "$?" -ne "0" ]];then
 			python3 -V > /dev/null 2>&1
