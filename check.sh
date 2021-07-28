@@ -1352,38 +1352,24 @@ function MediaUnlockTest_HBOGO_ASIA() {
 
 function MediaUnlockTest_HBOGO_EUROPE() {
     echo -n -e " HBO GO Europe:\t\t\t\t->\c";
-	curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/HBO_GO_EU_REGION > /tmp/HBO_GO_EU_REGION
-	
-	
-	while read -r line || [[ -n $line ]];do
-	HBORegion=$(echo $line)
-	tmpresult=$(curl -fsL --write-out '%{http_code}\n' --output /dev/null --max-time 30 "https://api.ugw.hbogo.eu/v3.0/GeoCheck/json/HUN")
-	
-    OutCome=$(curl -${1} ${ssll} -s --max-time 30 "https://api.ugw.hbogo.eu/v3.0/GeoCheck/json/$HBORegion")
-	if [ -z "$OutCome" ];then
+	local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://api.ugw.hbogo.eu/v3.0/GeoCheck/json/HUN")
+	if [ -z "$tmpresult" ];then
 		echo -n -e "\r HBO GO Europe:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-		statuscode=1
 		return
 	fi
 	
-	is406=$(echo $OutCome | grep 'Not Acceptable')
-	isGeoBlocked=$(echo $OutCome | grep 'DENY_NET_LOCATION')
-	if [ -n "$is406" ];then
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep allow | awk '{print $2}')
+	if [[ "$result" == "1" ]];then
+		echo -n -e "\r HBO GO Europe:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	elif [[ "$result" == "0" ]];then
 		echo -n -e "\r HBO GO Europe:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
-	
-	elif [ -z "$isGeoBlocked" ] && [ -z "$is406" ];then
-		CountryCode=$(curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/CountryCode.csv | grep $HBORegion | cut -f1 -d",")
-		echo -n -e "\r HBO GO Europe:\t\t\t\t${Font_Green}Yes (Region: $CountryCode)${Font_Suffix}\n"
-		statuscode=0
-		return
+	else
+		echo -n -e "\r HBO GO Europe:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		return;
 	fi	
-	done < /tmp/HBO_GO_EU_REGION
 	
-	if [[ "$statuscode" != "3" ]];then
-		echo -n -e "\r HBO GO Europe:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-		return;
-	fi
 }
 
 function MediaUnlockTest_EPIX() {
