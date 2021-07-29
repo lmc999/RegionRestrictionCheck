@@ -382,7 +382,7 @@ function MediaUnlockTest_Dazn() {
     local tmpresult=$(curl -${1} -sS --max-time 30 -X POST -H "Content-Type: application/json" -d '{"LandingPageKey":"generic","Languages":"zh-CN,zh,en","Platform":"web","PlatformAttributes":{},"Manufacturer":"","PromoCode":"","Version":"2"}' https://startup.core.indazn.com/misl/v5/Startup 2>&1);
     
 	if [[ "$tmpresult" == "curl"* ]];then
-        	echo -n -e "\r Dazn:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        	echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         	return;
     	fi
 	isAllowed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'isAllowed' | awk '{print $2}' | cut -f1 -d',')
@@ -396,7 +396,7 @@ function MediaUnlockTest_Dazn() {
 		echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
     else
-		echo -n -e "\r Dazn:\t\t\t\t${Font_Red}Unsupport${Font_Suffix}\n"
+		echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}Unsupport${Font_Suffix}\n"
 		return;
 
     fi
@@ -1678,12 +1678,13 @@ function US_UnlockTest() {
 	MediaUnlockTest_HuluUS ${1};
 	MediaUnlockTest_HBONow ${1};
 	MediaUnlockTest_HBOMax ${1};
-	MediaUnlockTest_ParamountPlus ${1};
-	MediaUnlockTest_PeacockTV ${1};
+	MediaUnlockTest_BritBox ${1};
 	MediaUnlockTest_SlingTV ${1};
 	MediaUnlockTest_FuboTV ${1};
 	MediaUnlockTest_PlutoTV ${1};
 	MediaUnlockTest_encoreTVB ${1};
+	MediaUnlockTest_ParamountPlus ${1};
+	MediaUnlockTest_PeacockTV ${1};
 	ShowRegion CA
 	MediaUnlockTest_CBCGem ${1};
 	MediaUnlockTest_AcornTV ${1};
