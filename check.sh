@@ -396,7 +396,7 @@ function MediaUnlockTest_Dazn() {
 		echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
     else
-		echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}Unsupport${Font_Suffix}\n"
+		echo -n -e "\r Dazn:\t\t\t\t${Font_Red}Unsupport${Font_Suffix}\n"
 		return;
 
     fi
@@ -1358,7 +1358,7 @@ function MediaUnlockTest_HBOGO_EUROPE() {
 		return
 	fi
 	
-	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep allow | awk '{print $2}')
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep allow | awk '{print $2}' | cut -f1 -d",")
 	if [[ "$result" == "1" ]];then
 		echo -n -e "\r HBO GO Europe:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;
