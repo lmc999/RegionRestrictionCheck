@@ -1671,6 +1671,27 @@ function MediaUnlockTest_RaiPlay() {
 
 }
 
+function MediaUnlockTest_TVBAnywhere() {
+    echo -n -e " TVBAnywhere+:\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -X POST -s --max-time 30 "https://uapisfm.tvbanywhere.com.sg/video/v2/checkout" -H "authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Mjc2NTUzNTAsImV4cCI6MTYyNzczODE1MCwibmJmIjoxNjI3NjU1MzUwLCJkZXZpY2VfaWQiOiIxMTg2ODMzNjgiLCJkZXZpY2Vfb3MiOiJhbmRyb2lkIiwiZGV2aWNlX3JvbGUiOm51bGwsInBsYXRmb3JtIjoiYXBwIiwiZGV2aWNlX2xhbmd1YWdlIjoiaGsiLCJkcm1faWQiOiIiLCJhcHBfdHlwZSI6InNnIiwibGlmZXRpbWVfaWQiOiIyMzQ0MTBiMDA0ZmQ1MzY1IiwiZGV2aWNlX3R5cGUiOiJQcm9kdWN0aW9uIiwidHZiX2FjY291bnRfaWQiOiI0MTAzMzI4IiwidXNlcl9pZCI6IjU0OTMzNiIsInVzZXJfbmlja25hbWUiOiJyZWlkLnRoaiIsInVzZXJfdGh1bWJuYWlsX2ltYWdlIjoiIiwidXNlcl9iYWNrZ3JvdW5kX2ltYWdlIjoiIiwidXNlcl9sZXZlbCI6IiIsInVzZXJfYmFkZ2UiOiIiLCJtX3Rva2VuIjoiIiwib3ZlcnJpZGVfY291bnRyeV9jb2RlIjoiIn0.yUe95BeNumO_OBKRuqxewCRCQrFsU0dkK0MMYK57EHY" -d '{"platform":"android","quality":"auto","video_id":608461}');
+    if [ -z "$tmpresult" ]; then
+		echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+	
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'code' | cut -f4 -d'"')	
+	if [ -z "$result" ] && [ -n "$tmpresult" ];then
+		echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	elif [[ "$result" == "S_00001011" ]];then
+		echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+	fi
+
+}
+
 function US_UnlockTest() {
 	echo "=============美加地区解锁=============="
 	MediaUnlockTest_Fox ${1};
@@ -1775,6 +1796,7 @@ function Global_UnlockTest() {
 	MediaUnlockTest_DisneyPlus ${1};
 	MediaUnlockTest_YouTube_Premium ${1};
 	MediaUnlockTest_PrimeVideo_Region ${1};
+	MediaUnlockTest_TVBAnywhere ${1};
 	MediaUnlockTest_Tiktok_Region ${1};
 	MediaUnlockTest_iQYI_Region ${1};
 	MediaUnlockTest_Viu.com ${1};
