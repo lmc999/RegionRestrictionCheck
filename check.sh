@@ -1680,7 +1680,7 @@ function MediaUnlockTest_TVBAnywhere() {
 	fi
 	
 	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'allow_in_this_country' | awk '{print $2}' | cut -f1 -d",")	
-	if [[ "$result" == "true" ]]
+	if [[ "$result" == "true" ]];then
 		echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;
 	elif [[ "$result" == "false" ]];then
