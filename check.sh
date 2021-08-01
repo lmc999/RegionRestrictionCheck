@@ -1673,23 +1673,37 @@ function MediaUnlockTest_RaiPlay() {
 
 function MediaUnlockTest_TVBAnywhere() {
     echo -n -e " TVBAnywhere+:\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} -X POST -s --max-time 30 "https://uapisfm.tvbanywhere.com.sg/video/v2/checkout" -H "authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Mjc2NTUzNTAsImV4cCI6MTYyNzczODE1MCwibmJmIjoxNjI3NjU1MzUwLCJkZXZpY2VfaWQiOiIxMTg2ODMzNjgiLCJkZXZpY2Vfb3MiOiJhbmRyb2lkIiwiZGV2aWNlX3JvbGUiOm51bGwsInBsYXRmb3JtIjoiYXBwIiwiZGV2aWNlX2xhbmd1YWdlIjoiaGsiLCJkcm1faWQiOiIiLCJhcHBfdHlwZSI6InNnIiwibGlmZXRpbWVfaWQiOiIyMzQ0MTBiMDA0ZmQ1MzY1IiwiZGV2aWNlX3R5cGUiOiJQcm9kdWN0aW9uIiwidHZiX2FjY291bnRfaWQiOiI0MTAzMzI4IiwidXNlcl9pZCI6IjU0OTMzNiIsInVzZXJfbmlja25hbWUiOiJyZWlkLnRoaiIsInVzZXJfdGh1bWJuYWlsX2ltYWdlIjoiIiwidXNlcl9iYWNrZ3JvdW5kX2ltYWdlIjoiIiwidXNlcl9sZXZlbCI6IiIsInVzZXJfYmFkZ2UiOiIiLCJtX3Rva2VuIjoiIiwib3ZlcnJpZGVfY291bnRyeV9jb2RlIjoiIn0.yUe95BeNumO_OBKRuqxewCRCQrFsU0dkK0MMYK57EHY" -d '{"platform":"android","quality":"auto","video_id":608461}');
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://uapisfm.tvbanywhere.com.sg/geoip/check/platform/android");
     if [ -z "$tmpresult" ]; then
 		echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi
 	
-	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'code' | cut -f4 -d'"')	
-	if [ -z "$result" ] && [ -n "$tmpresult" ];then
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'allow_in_this_country' | awk '{print $2}' | cut -f1 -d",")	
+	if [[ "$result" == "true" ]]
 		echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;
-	elif [[ "$result" == "S_00001011" ]];then
+	elif [[ "$result" == "false" ]];then
 		echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
 	else
 		echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 	fi
 
+}
+
+function MediaUnlockTest_ProjectSekai() {
+    echo -n -e " Project Sekai: Colorful Stage:\t\t->\c";
+    local result=$(curl --user-agent "User-Agent: pjsekai/48 CFNetwork/1240.0.4 Darwin/20.6.0" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 30 "https://game-version.sekai.colorfulpalette.org/1.8.1/3ed70b6a-8352-4532-b819-108837926ff5")
+    if [ "$result" = "000" ]; then
+        echo -n -e "\r Project Sekai: Colorful Stage:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        elif [ "$result" = "200" ]; then
+        echo -n -e "\r Project Sekai: Colorful Stage:\t\t${Font_Green}Yes${Font_Suffix}\n"
+        elif [ "$result" = "403" ]; then
+        echo -n -e "\r Project Sekai: Colorful Stage:\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r Project Sekai: Colorful Stage:\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+    fi
 }
 
 function US_UnlockTest() {
@@ -1784,6 +1798,7 @@ function JP_UnlockTest() {
 	MediaUnlockTest_Kancolle ${1};
 	MediaUnlockTest_UMAJP ${1};
 	MediaUnlockTest_PCRJP ${1};
+	MediaUnlockTest_ProjectSekai ${1};
 	echo "======================================="
 }	
 
