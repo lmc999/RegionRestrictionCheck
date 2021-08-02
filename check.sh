@@ -1706,6 +1706,20 @@ function MediaUnlockTest_ProjectSekai() {
     fi
 }
 
+function MediaUnlockTest_KonosubaFD() {
+    echo -n -e " Konosuba Fantastic Days:\t\t->\c";
+    local result=$(curl --user-agent "User-Agent: pj0007/212 CFNetwork/1240.0.4 Darwin/20.6.0" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 30 "https://api.konosubafd.jp/api/masterlist")
+    if [ "$result" = "000" ]; then
+        echo -n -e "\r Konosuba Fantastic Days:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        elif [ "$result" = "500" ]; then
+        echo -n -e "\r Konosuba Fantastic Days:\t\t${Font_Green}Yes${Font_Suffix}\n"
+        elif [ "$result" = "403" ]; then
+        echo -n -e "\r Konosuba Fantastic Days:\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r Konosuba Fantastic Days:\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+    fi
+}
+
 function US_UnlockTest() {
 	echo "=============美加地区解锁=============="
 	MediaUnlockTest_Fox ${1};
@@ -1797,6 +1811,7 @@ function JP_UnlockTest() {
 	MediaUnlockTest_Radiko ${1};
 	MediaUnlockTest_Kancolle ${1};
 	MediaUnlockTest_UMAJP ${1};
+	MediaUnlockTest_KonosubaFD ${1};
 	MediaUnlockTest_PCRJP ${1};
 	MediaUnlockTest_ProjectSekai ${1};
 	echo "======================================="
