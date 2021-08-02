@@ -118,4 +118,6 @@ docker run --rm --net=host lmc999/regioncheck
 你亦可直接添加[TG群组](https://t.me/gameaccelerate)分享你的建议
 
 ## 特别鸣谢
-特别鸣谢[柠檬大佬](https://t.me/ilemonrain),目前市面的流媒体解锁检测脚本都是从[Lemonbench](https://github.com/LemonBench/LemonBench)演化而来
+[柠檬大佬](https://t.me/ilemonrain),目前市面的流媒体解锁检测脚本都是从[Lemonbench](https://github.com/LemonBench/LemonBench)演化而来
+
+[onoc1yn](https://github.com/onoc1yn) 提供多架构docker解决方案及Hulu Cookies加密方案
