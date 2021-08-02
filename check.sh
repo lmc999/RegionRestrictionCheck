@@ -90,7 +90,7 @@ if [ -n "$local_ipv4" ]
 fi		
 
 ShowRegion(){
-	echo -e "${Font_Yellow}---${1}---${Font_Suffix}"
+	echo -e "${Font_Yellow} ---${1}---${Font_Suffix}"
 }	
 
 function GameTest_Steam(){
@@ -1809,6 +1809,7 @@ function JP_UnlockTest() {
 	MediaUnlockTest_wowow ${1};
 	MediaUnlockTest_FOD ${1};
 	MediaUnlockTest_Radiko ${1};
+	ShowRegion Game
 	MediaUnlockTest_Kancolle ${1};
 	MediaUnlockTest_UMAJP ${1};
 	MediaUnlockTest_KonosubaFD ${1};
