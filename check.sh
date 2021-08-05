@@ -80,8 +80,8 @@ check_dependencies(){
 }		
 check_dependencies
 
-local_ipv4=$(curl -4 -s --max-time 30 ip.sb)
-local_ipv6=$(curl -6 -s --max-time 20 ip.sb)
+local_ipv4=$(curl -4 -s --max-time 30 api64.ipify.org)
+local_ipv6=$(curl -6 -s --max-time 20 api64.ipify.org)
 if [ -n "$local_ipv4" ]
 	then
 		local_isp=$(curl -s -4 --max-time 30 https://api.ip.sb/geoip/${local_ipv4} | cut -f1 -d"," | cut -f4 -d '"')
