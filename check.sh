@@ -1869,8 +1869,9 @@ echo -e "";
 
 function Goodbye(){
 echo -e "${Font_Green}本次测试已结束，感谢使用此脚本 ${Font_Suffix}";
-echo -e "${Font_Blue}【其他检测脚本推荐】： ${Font_Suffix}"
-echo -e "${Font_Yellow}游戏延迟检测脚本： bash <(curl -L -s https://raw.githubusercontent.com/lmc999/GamePing/main/GamePing.sh) ${Font_Suffix}"
+echo -e ""
+echo -e "${Font_Yellow}正如古语有云：我可以不看Netflix，但不能看不了Netflix${Font_Suffix}"
+echo -e "${Font_Yellow}笔者祝大家解锁运昌隆！${Font_Suffix}"
 }
 
 clear;
