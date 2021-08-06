@@ -82,12 +82,9 @@ check_dependencies
 
 local_ipv4=$(curl -4 -s --max-time 30 api64.ipify.org)
 local_ipv6=$(curl -6 -s --max-time 20 api64.ipify.org)
-if [ -n "$local_ipv4" ]
-	then
-		local_isp=$(curl -s -4 --max-time 30 https://api.ip.sb/geoip/${local_ipv4} | cut -f1 -d"," | cut -f4 -d '"')
-	else
-		local_isp=$(curl -s -6 --max-time 30 https://api.ip.sb/geoip/${local_ipv6} | cut -f1 -d"," | cut -f4 -d '"')
-fi		
+local_isp4=$(curl -s -4 --max-time 30 https://api.ip.sb/geoip/${local_ipv4} | cut -f1 -d"," | cut -f4 -d '"')
+local_isp6=$(curl -s -6 --max-time 30 https://api.ip.sb/geoip/${local_ipv6} | cut -f1 -d"," | cut -f4 -d '"')
+		
 
 ShowRegion(){
 	echo -e "${Font_Yellow} ---${1}---${Font_Suffix}"
@@ -1839,7 +1836,7 @@ function Global_UnlockTest() {
 function CheckV4() {
 	echo -e " ${Font_SkyBlue}** 正在测试IPv4解锁情况${Font_Suffix} "
 	echo "--------------------------------"
-	echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp}${Font_Suffix} "
+	echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp4}${Font_Suffix} "
 	check4=`ping 1.1.1.1 -c 1 2>&1`;
 	if [[ "$check4" != *"unreachable"* ]] && [[ "$check4" != *"Unreachable"* ]];then
 		isv4=1
@@ -1858,7 +1855,7 @@ if [[ "$check6" -eq "200" ]];then
 	echo ""
 	echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
 	echo "--------------------------------"
-	echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp}${Font_Suffix} "
+	echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp6}${Font_Suffix} "
     isv6=1
 else
     echo -e "${Font_SkyBlue}当前主机不支持IPv6,跳过...${Font_Suffix}"
