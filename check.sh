@@ -1867,8 +1867,8 @@ echo -e "";
 function Goodbye(){
 echo -e "${Font_Green}本次测试已结束，感谢使用此脚本 ${Font_Suffix}";
 echo -e ""
-echo -e "${Font_Yellow}正如古语有云：我可以不看Netflix，但不能看不了Netflix${Font_Suffix}"
-echo -e "${Font_Yellow}笔者祝大家解锁运昌隆！${Font_Suffix}"
+echo -e "${Font_Yellow}正如古语有云：Netflix就是逊啦！${Font_Suffix}"
+echo -e "${Font_Yellow}大家躺平听点音乐休息一下吧：https://www.youtube.com/watch?v=Wbk4gZz2weQ${Font_Suffix}"
 }
 
 clear;
