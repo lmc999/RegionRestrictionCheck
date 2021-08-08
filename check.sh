@@ -1371,11 +1371,16 @@ function MediaUnlockTest_HBOGO_EUROPE() {
 
 function MediaUnlockTest_EPIX() {
     echo -n -e " Epix:\t\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} -X POST -s --max-time 30 "https://api.epix.com/v2/movies/16921/play" -d '{}' -H "X-Session-Token: eyJraWQiOiI5YjFjYjViZDYxZGNmMWU3ZmJkMWM2YjRmOGNhOTgzNmFkZmY5YjViNjYwMDQ5ZDIzMWZlZjBmMDllMTkwMmFmIiwiYWxnIjoiUlMyNTYifQ.eyJndWlkIjoiZDExOTg2N2UtZmIwYS00NjAyLWE2NmUtYjRhNmY3OTJiMGM5IiwidGVuYW50IjoiZXBpeCIsImV4cCI6MTYyNzIyNjg1OH0.rFxD8RdL4rOeNWwmlV1phE2h-aoz1WpVP4iYhvc-Sy7834PbrzK2gjMcebrTcBi61ndZDlCmr5iAeaNmKrylPVWRCJ3kIIxCovMW7wBV7TgGyJAb2xo5kVz1CTIW4frzj-JzSWHUBYgam1nZ9U1liuNAz58CDs62By58ohT1XEojOp3Nv5sCwBVF-hNSUJTNJ1fxQXOBBR9FLhd0YDvNJBAzC8vHJSgfmtkBdO35PbESYlR6_XZ8tHNOGQr2KKlp9ejsQA-KWdmxUTsexMmH1kCBXZ4n6i7Ijb-W7GR3rSUmsnfeHh5XgYf1VRVoTHjmJ7ce0CdrgUgBOvjWAv_0Kw");
-    if [ -z "$tmpresult" ]; then
+	tmpToken=$(curl -${1} ${ssll} -s -X POST "https://api.epix.com/v2/sessions" -H "Content-Type: application/json" -d '{"device":{"guid":"e2add88e-2d92-4392-9724-326c2336013b","format":"console","os":"web","app_version":"1.0.2","model":"browser","manufacturer":"google"},"apikey":"f07debfcdf0f442bab197b517a5126ec","oauth":{"token":null}}')
+	if [ -z "$tmpToken" ];then
 		echo -n -e "\r Epix:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	elif [[ "$tmpToken" == "error code"* ]];then
+		echo -n -e "\r Epix:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
-	fi
+	fi	
+	
+	EpixToken=$(echo $tmpToken | python -m json.tool 2> /dev/null | grep 'session_token' | cut -f4 -d'"')
+	local tmpresult=$(curl -${1} ${ssll} -X POST -s --max-time 30 "https://api.epix.com/v2/movies/16921/play" -d '{}' -H "X-Session-Token: $EpixToken");
 	
 	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep status | cut -f4 -d'"')	
 	if [[ "$result" == "PROXY_DETECTED" ]];then
@@ -1384,8 +1389,11 @@ function MediaUnlockTest_EPIX() {
 	elif [[ "$result" == "GEO_BLOCKED" ]];then
 		echo -n -e "\r Epix:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;	
-	else
+	elif [[ "$result" == "NOT_SUBSCRIBED" ]];then
 		echo -n -e "\r Epix:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r Epix:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 		return;
 	fi
 
@@ -1720,7 +1728,7 @@ function MediaUnlockTest_KonosubaFD() {
 function US_UnlockTest() {
 	echo "=============美加地区解锁=============="
 	MediaUnlockTest_Fox ${1};
-	#MediaUnlockTest_EPIX ${1};
+	MediaUnlockTest_EPIX ${1};
 	MediaUnlockTest_HuluUS ${1};
 	MediaUnlockTest_HBONow ${1};
 	MediaUnlockTest_HBOMax ${1};
@@ -1765,7 +1773,7 @@ function EU_UnlockTest() {
 	ShowRegion IT
 	MediaUnlockTest_RaiPlay ${1};
 	ShowRegion RU
-	MediaUnlockTest_MegogoTV ${1};
+	#MediaUnlockTest_MegogoTV ${1};
 	MediaUnlockTest_Amediateka ${1};
 	echo "======================================="
 }	
