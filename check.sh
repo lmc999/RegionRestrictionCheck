@@ -1208,7 +1208,7 @@ function MediaUnlockTest_HotStar() {
 
 function MediaUnlockTest_LiTV() {
     echo -n -e " LiTV:\t\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} -sS --max-time 30 -X POST "https://www.LiTV.tv/vod/ajax/getUrl" -d '{"type":"noauth","assetId":"vod44868-010001M001_800K","puid":"6bc49a81-aad2-425c-8124-5b16e9e01337"}'  -H "Content-Type: application/json" 2>&1);
+    local tmpresult=$(curl -${1} ${ssll} -sS --max-time 30 -X POST "https://www.litv.tv/vod/ajax/getUrl" -d '{"type":"noauth","assetId":"vod44868-010001M001_800K","puid":"6bc49a81-aad2-425c-8124-5b16e9e01337"}'  -H "Content-Type: application/json" 2>&1);
     if [ "$tmpresult" = "curl"* ]; then
 		echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
