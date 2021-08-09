@@ -291,7 +291,7 @@ function MediaUnlockTest_Netflix() {
     local result1=$(curl -${1} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 30 "https://www.netflix.com/title/81215567" 2>&1)
 	
     if [[ "$result1" == "404" ]];then
-        echo -n -e "\r Netflix:\t\t\t\t${Font_Yellow}Netflix Original Programs Only${Font_Suffix}\n"
+        echo -n -e "\r Netflix:\t\t\t\t${Font_Yellow}Original Programs Only${Font_Suffix}\n"
         return;
 		
 	elif  [[ "$result1" == "403" ]];then
