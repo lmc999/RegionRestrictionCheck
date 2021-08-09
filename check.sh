@@ -1515,7 +1515,8 @@ function MediaUnlockTest_HBO_Spain() {
 
 function MediaUnlockTest_PANTAYA() {
     echo -n -e " PANTAYA:\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://auth.pantaya.com/api/v4/User/geolocation" -H "AuthTokenAuthorization: PLAYAUTH1.0 x=nonce=EM4kj2xL, apikey=B9FFD1A3BC9E42A893A4D09644389344, signature_method=SHA256, requesttime=2021-07-25T12:23:00.293Z, deviceid=ec0d0994f7ec4cca9e090b9d4bd05171, AllowAuthNOnly=true, platformtype=HTML5, platformversion=Chrome, platformostype=Windows, platformosversion=10, signature=kquBKo2kySXumR5j3hpmO/TnnLEEcZFNx7kMdQhGE9g=");
+	local authorization=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 30 https://www.pantaya.com/sapi/header/v1/pantaya/us/735a16260c2b450686e68532ccd7f742 -H "Referer: https://www.pantaya.com/es/")
+	local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://auth.pantaya.com/api/v4/User/geolocation" -H "AuthTokenAuthorization: $authorization");
     if [ -z "$tmpresult" ]; then
 		echo -n -e "\r PANTAYA:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
@@ -1769,7 +1770,7 @@ function EU_UnlockTest() {
 	MediaUnlockTest_NPO_Start_Plus ${1};
 	ShowRegion ES
 	MediaUnlockTest_HBO_Spain ${1};
-	#MediaUnlockTest_PANTAYA ${1};
+	MediaUnlockTest_PANTAYA ${1};
 	ShowRegion IT
 	MediaUnlockTest_RaiPlay ${1};
 	ShowRegion RU
