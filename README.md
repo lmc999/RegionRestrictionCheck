@@ -106,6 +106,16 @@
 bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh)
 ````
 
+##### 只检测IPv4结果：
+````bash
+bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) 4
+````
+
+##### 只检测IPv6结果：
+````bash
+bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) 6
+````
+
 **或者直接运行以下Docker命令** (兼容ARM架构)
 ````docker
 docker run --rm -ti --net=host lmc999/regioncheck
