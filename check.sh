@@ -1753,6 +1753,25 @@ function MediaUnlockTest_KonosubaFD() {
     fi
 }
 
+function MediaUnlockTest_SHOWTIME() {
+    echo -n -e " SHOWTIME:\t\t\t\t->\c";
+    local result=$(curl -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 30 "https://www.showtime.com/");
+    if [ "$result" = "000" ]; then
+		echo -n -e "\r SHOWTIME:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r SHOWTIME:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r SHOWTIME:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    else
+        echo -n -e "\r SHOWTIME:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
 function US_UnlockTest() {
 	echo "=============美加地区解锁=============="
 	MediaUnlockTest_Fox ${1};
@@ -1765,6 +1784,7 @@ function US_UnlockTest() {
 	MediaUnlockTest_FuboTV ${1};
 	MediaUnlockTest_SlingTV ${1};
 	MediaUnlockTest_PlutoTV ${1};
+	MediaUnlockTest_SHOWTIME ${1};
 	MediaUnlockTest_encoreTVB ${1};
 	MediaUnlockTest_ParamountPlus ${1};
 	MediaUnlockTest_PeacockTV ${1};
