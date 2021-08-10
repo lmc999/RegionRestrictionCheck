@@ -1806,6 +1806,22 @@ function MediaUnlockTest_ATTNOW() {
 
 }
 
+function MediaUnlockTest_CineMax() {
+    echo -n -e " CineMax Go:\t\t\t\t->\c";
+    local result=$(curl -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 30 "https://play.maxgo.com/");
+    if [ "$result" = "000" ]; then
+		echo -n -e "\r CineMax Go:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r CineMax Go:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r CineMax Go:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
 function US_UnlockTest() {
 	echo "=============美加地区解锁=============="
 	MediaUnlockTest_Fox ${1};
@@ -1822,6 +1838,7 @@ function US_UnlockTest() {
 	MediaUnlockTest_SHOWTIME ${1};
 	MediaUnlockTest_ATTNOW ${1};
 	MediaUnlockTest_encoreTVB ${1};
+	MediaUnlockTest_CineMax ${1};
 	MediaUnlockTest_ParamountPlus ${1};
 	MediaUnlockTest_PeacockTV ${1};
 	ShowRegion CA
