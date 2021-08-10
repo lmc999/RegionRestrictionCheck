@@ -1,4 +1,5 @@
 #!/bin/bash
+NetworkType=$1
 UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36";
 UA_Dalvik="Dalvik/2.1.0 (Linux; U; Android 9; ALP-AL00 Build/HUAWEIALP-AL00)";
 
@@ -1944,34 +1945,45 @@ function Global_UnlockTest() {
 }
 
 function CheckV4() {
-	echo -e " ${Font_SkyBlue}** 正在测试IPv4解锁情况${Font_Suffix} "
-	echo "--------------------------------"
-	echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp4}${Font_Suffix} "
-	check4=`ping 1.1.1.1 -c 1 2>&1`;
-	if [[ "$check4" != *"unreachable"* ]] && [[ "$check4" != *"Unreachable"* ]];then
-		isv4=1
-	else
-		echo -e "${Font_SkyBlue}当前主机不支持IPv4,跳过...${Font_Suffix}"
+	if [[ "$NetworkType" == "6" ]];then
 		isv4=0
-	fi
+		echo -e "${Font_SkyBlue}用户选择只检测IPv6结果，跳过IPv4检测...${Font_Suffix}"
+		
+	else
+		echo -e " ${Font_SkyBlue}** 正在测试IPv4解锁情况${Font_Suffix} "
+		echo "--------------------------------"
+		echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp4}${Font_Suffix} "
+		check4=`ping 1.1.1.1 -c 1 2>&1`;
+		if [[ "$check4" != *"unreachable"* ]] && [[ "$check4" != *"Unreachable"* ]];then
+			isv4=1
+		else
+			echo -e "${Font_SkyBlue}当前主机不支持IPv4,跳过...${Font_Suffix}"
+			isv4=0
+		fi
 
-	echo ""
+		echo ""
+	fi	
 }
 
 function CheckV6() {
-check6=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 30 ipv6.google.com)
-if [[ "$check6" -eq "200" ]];then
-	echo ""
-	echo ""
-	echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
-	echo "--------------------------------"
-	echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp6}${Font_Suffix} "
-    isv6=1
-else
-    echo -e "${Font_SkyBlue}当前主机不支持IPv6,跳过...${Font_Suffix}"
-	isv6=0
-fi
-echo -e "";
+	if [[ "$NetworkType" == "4" ]];then
+		isv6=0
+		echo -e "${Font_SkyBlue}用户选择只检测IPv4结果，跳过IPv6检测...${Font_Suffix}"
+	else	
+		check6=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 30 ipv6.google.com)
+		if [[ "$check6" -eq "200" ]];then
+			echo ""
+			echo ""
+			echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
+			echo "--------------------------------"
+			echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp6}${Font_Suffix} "
+			isv6=1
+		else
+			echo -e "${Font_SkyBlue}当前主机不支持IPv6,跳过...${Font_Suffix}"
+			isv6=0
+		fi
+		echo -e "";
+	fi	
 }
 
 function Goodbye(){
