@@ -1515,7 +1515,7 @@ function MediaUnlockTest_HBO_Spain() {
 
 function MediaUnlockTest_PANTAYA() {
     echo -n -e " PANTAYA:\t\t\t\t->\c";
-	local authorization=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 30 https://www.pantaya.com/sapi/header/v1/pantaya/us/735a16260c2b450686e68532ccd7f742 -H "Referer: https://www.pantaya.com/es/")
+	local authorization=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 30 "https://www.pantaya.com/sapi/header/v1/pantaya/us/735a16260c2b450686e68532ccd7f742" -H "Referer: https://www.pantaya.com/es/")
 	local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://auth.pantaya.com/api/v4/User/geolocation" -H "AuthTokenAuthorization: $authorization");
     if [ -z "$tmpresult" ]; then
 		echo -n -e "\r PANTAYA:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1536,6 +1536,33 @@ function MediaUnlockTest_PANTAYA() {
 		return;
 	else
 		echo -n -e "\r PANTAYA:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+	fi
+
+}
+
+function MediaUnlockTest_Starz() {
+    echo -n -e " Starz:\t\t\t\t\t->\c";
+	local authorization=$(curl -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 30 "https://www.starz.com/sapi/header/v1/starz/us/09b397fc9eb64d5080687fc8a218775b" -H "Referer: https://www.starz.com/us/en/")
+	local tmpresult=$(curl -${1} ${ssll} -s --max-time 30 "https://auth.starz.com/api/v4/User/geolocation" -H "AuthTokenAuthorization: $authorization");
+    if [ -z "$tmpresult" ]; then
+		echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+	
+	local isAllowedAccess=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep isAllowedAccess | awk '{print $2}' | cut -f1 -d",")
+	local isAllowedCountry=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep isAllowedCountry | awk '{print $2}' | cut -f1 -d",")
+	local isKnownProxy=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep isKnownProxy | awk '{print $2}' | cut -f1 -d",")
+	if [[ "$isAllowedAccess" == "true" ]] && [[ "$isAllowedCountry" == "true" ]] && [[ "$isKnownProxy" == "false" ]];then
+		echo -n -e "\r Starz:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	elif [[ "$isAllowedAccess" == "false" ]];then
+		echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	elif [[ "$isKnownProxy" == "false" ]];then	
+		echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 	fi
 
 }
@@ -1729,13 +1756,14 @@ function MediaUnlockTest_KonosubaFD() {
 function US_UnlockTest() {
 	echo "=============美加地区解锁=============="
 	MediaUnlockTest_Fox ${1};
-	MediaUnlockTest_EPIX ${1};
 	MediaUnlockTest_HuluUS ${1};
+	MediaUnlockTest_EPIX ${1};
+	MediaUnlockTest_Starz ${1};
 	MediaUnlockTest_HBONow ${1};
 	MediaUnlockTest_HBOMax ${1};
 	MediaUnlockTest_BritBox ${1};
-	MediaUnlockTest_SlingTV ${1};
 	MediaUnlockTest_FuboTV ${1};
+	MediaUnlockTest_SlingTV ${1};
 	MediaUnlockTest_PlutoTV ${1};
 	MediaUnlockTest_encoreTVB ${1};
 	MediaUnlockTest_ParamountPlus ${1};
