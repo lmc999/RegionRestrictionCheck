@@ -1861,8 +1861,9 @@ function MediaUnlockTest_NetflixCDN(){
 	elif [ -n "$location" ] && [[ "$CDN_ISP" != "Netflix Streaming Services" ]];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Yellow}Associated with [$CDN_ISP] in [$location]${Font_Suffix}\n"
 		return
-	elif [ -n "$location" ] && [ -z "$CDN_ISP" ]	
+	elif [ -n "$location" ] && [ -z "$CDN_ISP" ];then	
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}No ISP Info Founded${Font_Suffix}\n"
+		return
 	fi
 }	
 
