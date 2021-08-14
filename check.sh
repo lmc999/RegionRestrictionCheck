@@ -2015,8 +2015,8 @@ function CheckV6() {
 		isv6=0
 		echo -e "${Font_SkyBlue}用户选择只检测IPv4结果，跳过IPv6检测...${Font_Suffix}"
 	else	
-		check6=`ping6 2001:4860:4860::8844 -c 1 2>&1`;
-		if [[ "$check6" != *"unreachable"* ]] && [[ "$check6" != *"Unreachable"* ]];then
+		check6=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 10 ipv6.google.com)
+		if [[ "$check6" -eq "200" ]];then
 			echo ""
 			echo ""
 			echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
