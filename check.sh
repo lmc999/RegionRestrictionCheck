@@ -1861,7 +1861,8 @@ function MediaUnlockTest_NetflixCDN(){
 	elif [ -n "$location" ] && [[ "$CDN_ISP" != "Netflix Streaming Services" ]];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Yellow}Associated with [$CDN_ISP] in [$location]${Font_Suffix}\n"
 		return
-		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+	elif [ -n "$location" ] && [ -z "$CDN_ISP" ]	
+		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}No ISP Info Founded${Font_Suffix}\n"
 	fi
 }	
 
@@ -2013,8 +2014,8 @@ function CheckV6() {
 		isv6=0
 		echo -e "${Font_SkyBlue}用户选择只检测IPv4结果，跳过IPv6检测...${Font_Suffix}"
 	else	
-		check6=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 10 ipv6.google.com)
-		if [[ "$check6" -eq "200" ]];then
+		check6=`ping6 2001:4860:4860::8844 -c 1 2>&1`;
+		if [[ "$check6" != *"unreachable"* ]] && [[ "$check6" != *"Unreachable"* ]];then
 			echo ""
 			echo ""
 			echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
