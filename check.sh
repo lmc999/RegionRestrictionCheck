@@ -1867,6 +1867,66 @@ function MediaUnlockTest_NetflixCDN(){
 	fi
 }	
 
+function MediaUnlockTest_HBO_Nordic() {
+    echo -n -e " HBO Nordic:\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 10 "https://api-discovery.hbo.eu/v1/discover/hbo?language=null&product=hbon" -H "X-Client-Name: web");
+    if [ -z "$tmpresult" ]; then
+		echo -n -e "\r HBO Nordic:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+	
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep signupAllowed | awk '{print $2}' | cut -f1 -d",")	
+	if [[ "$result" == "true" ]];then
+		echo -n -e "\r HBO Nordic:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	elif [[ "$result" == "false" ]];then
+		echo -n -e "\r HBO Nordic:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r HBO Nordic:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+	fi
+
+}
+
+function MediaUnlockTest_HBO_Portugal() {
+    echo -n -e " HBO Portugal:\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 10 "https://api.ugw.hbogo.eu/v3.0/GeoCheck/json/PRT");
+    if [ -z "$tmpresult" ]; then
+		echo -n -e "\r HBO Portugal:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+	
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep allow | awk '{print $2}' | cut -f1 -d",")	
+	if [[ "$result" == "1" ]];then
+		echo -n -e "\r HBO Portugal:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	elif [[ "$result" == "0" ]];then
+		echo -n -e "\r HBO Portugal:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r HBO Portugal:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+	fi
+
+}
+
+function MediaUnlockTest_SkyGo() {
+    echo -n -e " Sky Go:\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -sL --max-time 10 "https://skyid.sky.com/authorise/skygo?response_type=token&client_id=sky&appearance=compact&redirect_uri=skygo://auth");
+    if [ -z "$tmpresult" ]; then
+		echo -n -e "\r Sky Go:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+	
+	local result=$(echo $tmpresult | grep "You don't have permission to access")	
+	if [ -z "$result" ];then
+		echo -n -e "\r Sky Go:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r Sky Go:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+	fi
+
+}
+
 function US_UnlockTest() {
 	echo "=============美加地区解锁=============="
 	MediaUnlockTest_Fox ${1};
@@ -1896,8 +1956,10 @@ function US_UnlockTest() {
 function EU_UnlockTest() {
 	echo "=============欧洲地区解锁=============="
 	MediaUnlockTest_RakutenTV ${1};
+	MediaUnlockTest_HBO_Nordic ${1};
 	MediaUnlockTest_HBOGO_EUROPE ${1};
 	ShowRegion GB
+	MediaUnlockTest_SkyGo ${1};
 	MediaUnlockTest_BritBox ${1};
 	MediaUnlockTest_ITVHUB ${1};
 	MediaUnlockTest_Channel4 ${1};
@@ -1922,6 +1984,8 @@ function EU_UnlockTest() {
 	ShowRegion RU
 	#MediaUnlockTest_MegogoTV ${1};
 	MediaUnlockTest_Amediateka ${1};
+	ShowRegion PT
+	MediaUnlockTest_HBO_Portugal ${1};
 	echo "======================================="
 }	
 	
