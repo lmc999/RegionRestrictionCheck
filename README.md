@@ -1,3 +1,7 @@
+<p align="center">
+<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Flmc999%2FRegionRestrictionCheck&count_bg=%230AC995&title_bg=%23004BF9&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false"/></a>
+</p>
+
 ## For English user please see
 ### [Introduction](https://github.com/lmc999/RegionRestrictionCheck/blob/main/README_EN.md)
 
