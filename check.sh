@@ -53,25 +53,38 @@ check_dependencies(){
 	os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
 	if [ -n "$if_debian" ];then
 		InstallMethod="apt install"
-	elif [ -n "$if_redhat" ];then
-		if [[ "$os_version" -gt 7 ]];then
-			InstallMethod="dnf install"
-		else
-			InstallMethod="yum install"
-		fi
+	elif [ -n "$if_redhat" ] && [[ "$os_version" -gt 7 ]];then
+		InstallMethod="dnf install"
+	elif [ -n "$if_redhat" ] && [[ "$os_version" -lt 8 ]];then
+		InstallMethod="yum install"
 	fi
 	
 	python -V > /dev/null 2>&1
-	if [[ "$?" -ne "0" ]];then
-		python3 -V > /dev/null 2>&1
 		if [[ "$?" -ne "0" ]];then
-			python3_patch=$(which python3)
-			ln -s $python3_patch /usr/bin/python > /dev/null 2>&1
-		else
-			echo -e "${Font_Green}正在安装python${Font_Suffix}" 
-			$InstallMethod python -y  > /dev/null 2>&1
-		fi	
-	fi
+			python3 -V > /dev/null 2>&1
+			if [[ "$?" -ne "0" ]];then
+				python3_patch=$(which python3)
+				ln -s $python3_patch /usr/bin/python > /dev/null 2>&1
+			else
+				if [ -n "$if_debian" ];then
+					echo -e "${Font_Green}正在安装python${Font_Suffix}" 
+					apt update  > /dev/null 2>&1
+					apt install python -y  > /dev/null 2>&1
+					
+				elif [ -n "$if_redhat" ];then
+					echo -e "${Font_Green}正在安装python${Font_Suffix}"
+					if [[ "$os_version" -gt 7 ]];then
+						dnf install python3 -y > /dev/null 2>&1
+						python3_patch=$(which python3)
+						ln -s $python3_patch /usr/bin/python
+					else
+						yum install python -y > /dev/null 2>&1
+					fi	
+					
+					
+				fi
+			fi	
+		fi
 	
 	dig -v  > /dev/null 2>&1
 	if [[ "$?" -ne "0" ]];then
