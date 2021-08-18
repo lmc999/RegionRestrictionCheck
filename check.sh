@@ -1835,7 +1835,7 @@ function MediaUnlockTest_CineMax() {
 
 function MediaUnlockTest_NetflixCDN(){
 	echo -n -e " Netflix Preferred CDN:\t\t\t->\c"
-	local tmpresult=$(curl -${1} ${ssll} -s --max-time 10 "https://api.fast.com/netflix/speedtest/v2?https=true&token=YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm&urlCount=5")
+	local tmpresult=$(curl -${1} ${ssll} -s --max-time 10 "https://api.fast.com/netflix/speedtest/v2?https=true&token=YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm&urlCount=1")
 	if [ -z "$tmpresult" ];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 		return
@@ -1844,7 +1844,7 @@ function MediaUnlockTest_NetflixCDN(){
 		return
 	fi
 	
-	local CDNAddr=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'name' | head -n 1 | cut -f3 -d"/")
+	local CDNAddr=$(echo $tmpresult | sed 's/.*"url":"//' | cut -f3 -d"/")
 	if [[ "$1" == "6" ]];then
 		CDNIP=$(nslookup -q=AAAA $CDNAddr | grep 'AAAA address' | awk '{print $NF}')
 	else
