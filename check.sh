@@ -507,29 +507,21 @@ function MediaUnlockTest_unext() {
 
 function MediaUnlockTest_Paravi(){
     echo -n -e " Paravi:\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} -Ss --max-time 10 -H "Content-Type: application/json" -d '{"meta_id":71885,"vuid":"3b64a775a4e38d90cc43ea4c7214702b","device_code":1,"app_id":1}' https://api.paravi.jp/api/v1/playback/auth  2>&1 | python -m json.tool 2> /dev/null);
+    local tmpresult=$(curl -${1} -Ss --max-time 10 -H "Content-Type: application/json" -d '{"meta_id":17414,"vuid":"3b64a775a4e38d90cc43ea4c7214702b","device_code":1,"app_id":1}' "https://api.paravi.jp/api/v1/playback/auth" 2>&1);
 	
 	if [[ "$tmpresult" == "curl"* ]];then
         	echo -n -e "\r Paravi:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         	return;
     fi
 	
-	checkiffaild=$(echo $tmpresult | grep code | awk '{print $2}' | cut -d ',' -f1)
-    if [[ "$checkiffaild" == "2055" ]]; then
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep type | awk '{print $2}' | cut -f2 -d'"')
+    if [[ "$result" == "Forbidden" ]]; then
 		echo -n -e "\r Paravi:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
-	fi
-	
-	echo ${tmpresult} | grep 'playback_validity_end_at' >/dev/null 2>&1
-	
-	if [[ "$?" -eq 0 ]]; then
+	elif [[ "$result" == "Unauthorized" ]]; then
 		echo -n -e "\r Paravi:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;
-	else
-		echo -n -e "\r Paravi:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-		return;
 	fi
-
 }
 
 function MediaUnlockTest_wowow(){
@@ -1833,6 +1825,9 @@ function MediaUnlockTest_NetflixCDN(){
 	local tmpresult=$(curl -${1} ${ssll} -s --max-time 10 "https://api.fast.com/netflix/speedtest/v2?https=true&token=YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm&urlCount=5")
 	if [ -z "$tmpresult" ];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		return
+	elif [ -n "$(echo $tmpresult | grep 403)" ];then
+		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (IP Banned By Netflix)${Font_Suffix}\n"
 		return
 	fi
 	
