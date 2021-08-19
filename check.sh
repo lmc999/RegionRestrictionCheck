@@ -21,7 +21,7 @@ Font_White="\033[37m";
 Font_Suffix="\033[0m";
 
 CountRunTimes(){
-curl -s --max-time 10 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Flmc999%2FRegionRestrictionCheck%2Fmain%2Fcheck.sh&count_bg=%2379C83D&title_bg=%2300B1FF&icon=&icon_color=%23E7E7E7&title=script+run+times&edge_flat=false" > /dev/null 2>&1
+TodayRunTimes=$(curl -s --max-time 10 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Flmc999%2FRegionRestrictionCheck%2Fmain%2Fcheck.sh&count_bg=%2379C83D&title_bg=%2300B1FF&icon=&icon_color=%23E7E7E7&title=script+run+times&edge_flat=false" | tac | sed -n '3p' | awk '{print $6}' 2> /dev/null)
 
 }
 CountRunTimes
@@ -2112,14 +2112,7 @@ function CheckV6() {
 function Goodbye(){
 echo -e "${Font_Green}本次测试已结束，感谢使用此脚本 ${Font_Suffix}";
 echo -e ""
-echo -e "${Font_Yellow}【Tiktok检测实验征集】
-目前Tiktok的检测出现一个比较奇怪的现象：
-家宽及小部分idc的机器可以检测出结果。
-但是大部分热门idc的机器检测都是出现failded的情况。
-我想验证一下Tiktok这个变化对视频播放量是否有影响。
-有做Tiktok的用户请测试一下：
-在结果为【failed】的机器上和【成功检测结果】的机器上（两台机器最好同一个地区）
-发布同一个视频，观察一下播放量是否有明显差异？结果欢迎进群反馈${Font_Suffix}"
+echo -e "${Font_Yellow}检测脚本当天运行次数：$TodayRunTimes ${Font_Suffix}"
 }
 
 clear;
