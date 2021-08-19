@@ -1839,7 +1839,7 @@ function MediaUnlockTest_NetflixCDN(){
 	if [ -z "$tmpresult" ];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 		return
-	elif [ -n "$(echo $tmpresult | grep 403)" ];then
+	elif [ -n "$(echo $tmpresult | grep '>403<')" ];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (IP Banned By Netflix)${Font_Suffix}\n"
 		return
 	fi
