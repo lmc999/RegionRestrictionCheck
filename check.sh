@@ -313,7 +313,7 @@ function MediaUnlockTest_Netflix() {
     local result1=$(curl -${1} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/81215567" 2>&1)
 	
     if [[ "$result1" == "404" ]];then
-        echo -n -e "\r Netflix:\t\t\t\t${Font_Yellow}Original Programs Only${Font_Suffix}\n"
+        echo -n -e "\r Netflix:\t\t\t\t${Font_Yellow}Originals Only${Font_Suffix}\n"
         return;
 		
 	elif  [[ "$result1" == "403" ]];then
@@ -363,13 +363,21 @@ function MediaUnlockTest_DisneyPlus() {
         return;
     fi
 	
+	local previewcheck=$(curl -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://disneyplus.com" | grep preview)
 	local isAllowed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'countryCode' | cut -f4 -d'"')
 	local isBanned=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'forbidden-location')
 	local is403=$(echo $tmpresult | grep '403 ERROR')
 
-    if [ -n "$isAllowed" ];then
+    if [[ "$isAllowed" == "JP" ]];then
+		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Green}Yes (Region: JP)${Font_Suffix}\n"
+		return;
+	elif [ -n "$isAllowed" ] && [ -z "$previewcheck" ];then
 		local region=$isAllowed
 		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
+		return;
+	elif [ -n "$isAllowed" ] && [ -n "$previewcheck" ];then	
+		local region=$isAllowed
+		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Yellow}Will Be Available For Disney+ $region Soon${Font_Suffix}\n"
 		return;
 	elif [ -n "$isBanned" ];then
 		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
