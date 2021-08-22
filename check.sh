@@ -377,7 +377,7 @@ function MediaUnlockTest_DisneyPlus() {
 		return;
 	elif [ -n "$isAllowed" ] && [ -n "$previewcheck" ];then	
 		local region=$isAllowed
-		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Yellow}Will Be Available For Disney+ $region Soon${Font_Suffix}\n"
+		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Yellow}Available For [Disney+ $region] Soon${Font_Suffix}\n"
 		return;
 	elif [ -n "$isBanned" ];then
 		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -1935,6 +1935,24 @@ function MediaUnlockTest_SkyGo() {
 
 }
 
+function MediaUnlockTest_ElevenSportsTW() {
+    echo -n -e " Eleven Sports TW:\t\t\t->\c";
+    local result=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://dv8n4jja5ycl3.cloudfront.net/tsft/ch01/playlist.m3u8?st=1629563333112&qq=YTllMWIxZjkzYjNkODUyZDQzMjQyZGM5ZDgxZGMyYzk4ZGU3MTdhMQ")
+    if [ "$result" = "000" ]; then
+        echo -n -e "\r Eleven Sports TW:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r Eleven Sports TW:\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r Eleven Sports TW:\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    else
+        echo -n -e "\r Eleven Sports TW:\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+		return;
+    fi
+}
+
 function US_UnlockTest() {
 	echo "=============美加地区解锁=============="
 	MediaUnlockTest_Fox ${1};
@@ -2017,6 +2035,7 @@ function TW_UnlockTest(){
 	MediaUnlockTest_Catchplay ${1};
 	MediaUnlockTest_HBOGO_ASIA ${1};
 	MediaUnlockTest_BahamutAnime ${1};
+	MediaUnlockTest_ElevenSportsTW ${1};
 	MediaUnlockTest_BilibiliTW ${1};
 	echo "======================================="
 }
