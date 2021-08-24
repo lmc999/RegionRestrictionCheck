@@ -82,12 +82,12 @@ check_dependencies(){
 				ln -s $python3_patch /usr/bin/python > /dev/null 2>&1
 			else
 				if [ -n "$if_debian" ];then
-					echo -e "${Font_Green}正在安装python${Font_Suffix}" 
+					echo -e "${Font_Green}Installing python${Font_Suffix}" 
 					apt update  > /dev/null 2>&1
 					apt install python -y  > /dev/null 2>&1
 					
 				elif [ -n "$if_redhat" ];then
-					echo -e "${Font_Green}正在安装python${Font_Suffix}"
+					echo -e "${Font_Green}Installing python${Font_Suffix}"
 					if [[ "$os_version" -gt 7 ]];then
 						dnf install python3 -y > /dev/null 2>&1
 						python3_patch=$(which python3)
@@ -104,10 +104,10 @@ check_dependencies(){
 	dig -v  > /dev/null 2>&1
 	if [[ "$?" -ne "0" ]];then
 		if [[ "$InstallMethod" == "apt install" ]];then
-			echo -e "${Font_Green}正在安装dnsutils${Font_Suffix}"
+			echo -e "${Font_Green}Installing dnsutils${Font_Suffix}"
 			$InstallMethod dnsutils -y > /dev/null 2>&1
 		else
-			echo -e "${Font_Green}正在安装bind-utils${Font_Suffix}"
+			echo -e "${Font_Green}Installing bind-utils${Font_Suffix}"
 			$InstallMethod bind-utils -y > /dev/null 2>&1
 		fi
 	fi	
