@@ -1,5 +1,17 @@
 #!/bin/bash
-NetworkType=$1
+
+if [ -n "$(echo $1| sed -n "/^[0-9]\+$/p")" ] && [[ "$2" == "e" ]];then 
+	NetworkType=$1
+	language=English
+elif [ -n "$(echo $2| sed -n "/^[0-9]\+$/p")" ] && [[ "$1" == "e" ]];then
+	NetworkType=$2
+	language=English
+elif [ -n "$(echo $1| sed -n "/^[0-9]\+$/p")" ] && [ -z "$2" ];then
+	NetworkType=$1
+elif [[ "$1" == "e" ]] && [ -z "$2" ];then
+	language=English
+fi
+
 UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36";
 UA_Dalvik="Dalvik/2.1.0 (Linux; U; Android 9; ALP-AL00 Build/HUAWEIALP-AL00)";
 WOWOW_Cookie=$(curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies | awk 'NR==3')
@@ -1954,7 +1966,7 @@ function MediaUnlockTest_ElevenSportsTW() {
 }
 
 function US_UnlockTest() {
-	echo "=============美加地区解锁=============="
+	echo "===========[ North America ]==========="
 	MediaUnlockTest_Fox ${1};
 	MediaUnlockTest_HuluUS ${1};
 	MediaUnlockTest_EPIX ${1};
@@ -1980,7 +1992,7 @@ function US_UnlockTest() {
 }	
 
 function EU_UnlockTest() {
-	echo "=============欧洲地区解锁=============="
+	echo "===============[ Europe ]=============="
 	MediaUnlockTest_RakutenTV ${1};
 	MediaUnlockTest_HBO_Nordic ${1};
 	MediaUnlockTest_HBOGO_EUROPE ${1};
@@ -2016,7 +2028,7 @@ function EU_UnlockTest() {
 }	
 	
 function HK_UnlockTest(){	
-	echo "=============香港地区解锁=============="
+	echo "=============[ Hong Kong ]============="
 	MediaUnlockTest_NowE ${1};
 	MediaUnlockTest_ViuTV ${1};
 	MediaUnlockTest_MyTVSuper ${1};
@@ -2026,7 +2038,7 @@ function HK_UnlockTest(){
 }
 
 function TW_UnlockTest(){	
-	echo "=============台湾地区解锁=============="
+	echo "==============[ Taiwan ]==============="
 	MediaUnlockTest_KKTV ${1};
 	MediaUnlockTest_LiTV ${1};
 	MediaUnlockTest_4GTV ${1};
@@ -2041,7 +2053,7 @@ function TW_UnlockTest(){
 }
 	
 function JP_UnlockTest() {	
-	echo "==============日本地区解锁============="	
+	echo "===============[ Japan ]==============="	
 	MediaUnlockTest_DMM ${1};
 	MediaUnlockTest_AbemaTV_IPTest ${1};
 	MediaUnlockTest_Niconico ${1};
@@ -2063,7 +2075,7 @@ function JP_UnlockTest() {
 
 function Global_UnlockTest() {		
 	echo ""		
-	echo "=============跨国平台解锁=============="	
+	echo "============[ Multination ]============"	
 	MediaUnlockTest_Dazn ${1};
 	MediaUnlockTest_HotStar ${1};
 	MediaUnlockTest_Netflix ${1};
@@ -2081,75 +2093,147 @@ function Global_UnlockTest() {
 }
 
 function CheckV4() {
-	if [[ "$NetworkType" == "6" ]];then
-		isv4=0
-		echo -e "${Font_SkyBlue}用户选择只检测IPv6结果，跳过IPv4检测...${Font_Suffix}"
-		
-	else
-		echo -e " ${Font_SkyBlue}** 正在测试IPv4解锁情况${Font_Suffix} "
-		echo "--------------------------------"
-		echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp4}${Font_Suffix} "
-		check4=`ping 1.1.1.1 -c 1 2>&1`;
-		if [[ "$check4" != *"unreachable"* ]] && [[ "$check4" != *"Unreachable"* ]];then
-			isv4=1
-		else
-			echo -e "${Font_SkyBlue}当前主机不支持IPv4,跳过...${Font_Suffix}"
+	if [[ "$language" == "English" ]];then
+		if [[ "$NetworkType" == "6" ]];then
 			isv4=0
-		fi
+			echo -e "${Font_SkyBlue}User Choose to Test Only IPv6 Results, Skipping IPv4 Testing...${Font_Suffix}"
+			
+		else
+			echo -e " ${Font_SkyBlue}** Checking Results Under IPv4${Font_Suffix} "
+			echo "--------------------------------"
+			echo -e " ${Font_SkyBlue}** Your Network Provider: ${local_isp4}${Font_Suffix} "
+			check4=`ping 1.1.1.1 -c 1 2>&1`;
+			if [[ "$check4" != *"unreachable"* ]] && [[ "$check4" != *"Unreachable"* ]];then
+				isv4=1
+			else
+				echo -e "${Font_SkyBlue}No IPv4 Connectivity Found, Abort IPv4 Testing...${Font_Suffix}"
+				isv4=0
+			fi
 
-		echo ""
+			echo ""
+		fi	
+	else
+		if [[ "$NetworkType" == "6" ]];then
+			isv4=0
+			echo -e "${Font_SkyBlue}用户选择只检测IPv6结果，跳过IPv4检测...${Font_Suffix}"
+			
+		else
+			echo -e " ${Font_SkyBlue}** 正在测试IPv4解锁情况${Font_Suffix} "
+			echo "--------------------------------"
+			echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp4}${Font_Suffix} "
+			check4=`ping 1.1.1.1 -c 1 2>&1`;
+			if [[ "$check4" != *"unreachable"* ]] && [[ "$check4" != *"Unreachable"* ]];then
+				isv4=1
+			else
+				echo -e "${Font_SkyBlue}当前主机不支持IPv4,跳过...${Font_Suffix}"
+				isv4=0
+			fi
+
+			echo ""
+		fi	
 	fi	
 }
 
 function CheckV6() {
-	if [[ "$NetworkType" == "4" ]];then
-		isv6=0
-		echo -e "${Font_SkyBlue}用户选择只检测IPv4结果，跳过IPv6检测...${Font_Suffix}"
-	else	
-		check6=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 10 ipv6.google.com)
-		if [[ "$check6" -ne "000" ]];then
-			echo ""
-			echo ""
-			echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
-			echo "--------------------------------"
-			echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp6}${Font_Suffix} "
-			isv6=1
-		else
-			echo -e "${Font_SkyBlue}当前主机不支持IPv6,跳过...${Font_Suffix}"
+	if [[ "$language" == "English" ]];then
+		if [[ "$NetworkType" == "4" ]];then
 			isv6=0
-		fi
-		echo -e "";
+			echo -e "${Font_SkyBlue}User Choose to Test Only IPv4 Results, Skipping IPv6 Testing...${Font_Suffix}"
+		else	
+			check6=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 10 ipv6.google.com)
+			if [[ "$check6" -ne "000" ]];then
+				echo ""
+				echo ""
+				echo -e " ${Font_SkyBlue}** Checking Results Under IPv6${Font_Suffix} "
+				echo "--------------------------------"
+				echo -e " ${Font_SkyBlue}** Your Network Provider: ${local_isp6}${Font_Suffix} "
+				isv6=1
+			else
+				echo -e "${Font_SkyBlue}No IPv6 Connectivity Found, Abort IPv6 Testing...${Font_Suffix}"
+				isv6=0
+			fi
+			echo -e "";
+		fi	
+
+	else
+	
+		if [[ "$NetworkType" == "4" ]];then
+			isv6=0
+			echo -e "${Font_SkyBlue}用户选择只检测IPv4结果，跳过IPv6检测...${Font_Suffix}"
+		else	
+			check6=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 10 ipv6.google.com)
+			if [[ "$check6" -ne "000" ]];then
+				echo ""
+				echo ""
+				echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
+				echo "--------------------------------"
+				echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp6}${Font_Suffix} "
+				isv6=1
+			else
+				echo -e "${Font_SkyBlue}当前主机不支持IPv6,跳过...${Font_Suffix}"
+				isv6=0
+			fi
+			echo -e "";
+		fi	
 	fi	
 }
 
 function Goodbye(){
-echo -e "${Font_Green}本次测试已结束，感谢使用此脚本 ${Font_Suffix}";
-echo -e ""
-echo -e "${Font_Yellow}检测脚本当天运行次数：$TodayRunTimes ${Font_Suffix}"
+
+	if [[ "$language" == "English" ]];then
+		echo -e "${Font_Green}Testing Done! Thanks for Using This Script! ${Font_Suffix}";
+		echo -e ""
+		echo -e "${Font_Yellow}Number of Script Runs for Today：$TodayRunTimes ${Font_Suffix}"
+	else	
+		echo -e "${Font_Green}本次测试已结束，感谢使用此脚本 ${Font_Suffix}";
+		echo -e ""
+		echo -e "${Font_Yellow}检测脚本当天运行次数：$TodayRunTimes ${Font_Suffix}"
+	fi	
 }
 
 clear;
 
 function ScriptTitle(){
-echo -e "流媒体平台及游戏区域限制测试";
-echo ""
-echo -e "${Font_Green}项目地址${Font_Suffix} ${Font_Yellow}https://github.com/lmc999/RegionRestrictionCheck ${Font_Suffix}";
-echo -e "${Font_Green}BUG反馈或使用交流可加TG群组${Font_Suffix} ${Font_Yellow}https://t.me/gameaccelerate ${Font_Suffix}";
-echo ""
-echo -e " ** 测试时间: $(date)";
-echo ""
+	if [[ "$language" == "English" ]];then
+		echo -e "【Stream Platform & Game Region Restriction Test】";
+		echo ""
+		echo -e "${Font_Green}Github Repository:${Font_Suffix} ${Font_Yellow} https://github.com/lmc999/RegionRestrictionCheck ${Font_Suffix}";
+		echo -e "${Font_Green}Telegram Discussion Group:${Font_Suffix} ${Font_Yellow} https://t.me/gameaccelerate ${Font_Suffix}";
+		echo ""
+		echo -e " ** Test Starts At: $(date)";
+		echo ""
+	else
+		echo -e "【流媒体平台及游戏区域限制测试】";
+		echo ""
+		echo -e "${Font_Green}项目地址${Font_Suffix} ${Font_Yellow}https://github.com/lmc999/RegionRestrictionCheck ${Font_Suffix}";
+		echo -e "${Font_Green}BUG反馈或使用交流可加TG群组${Font_Suffix} ${Font_Yellow}https://t.me/gameaccelerate ${Font_Suffix}";
+		echo ""
+		echo -e " ** 测试时间: $(date)";
+		echo ""
+	fi
 }
 ScriptTitle
 
 function Start(){
-echo -e "${Font_Blue}请选择检测项目，直接按回车将进行全区域检测${Font_Suffix}"
-echo -e "${Font_SkyBlue}输入数字【1】：【跨国平台+台湾平台】检测${Font_Suffix}"
-echo -e "${Font_SkyBlue}输入数字【2】：【跨国平台+日本平台】检测${Font_Suffix}"
-echo -e "${Font_SkyBlue}输入数字【3】：【跨国平台+香港平台】检测${Font_Suffix}"
-echo -e "${Font_SkyBlue}输入数字【4】：【跨国平台+美加平台】检测${Font_Suffix}"
-echo -e "${Font_SkyBlue}输入数字【5】：【跨国平台+欧洲平台】检测${Font_Suffix}"
-echo -e "${Font_SkyBlue}输入数字【6】：【  只进行跨国平台 】检测${Font_Suffix}"
-read -p "请输入正确数字或直接按回车:" num
+	if [[ "$language" == "English" ]];then
+		echo -e "${Font_Blue}Please Select Test Region or Press ENTER to Test All Regions${Font_Suffix}"
+		echo -e "${Font_SkyBlue}Input Number【1】：【 Multination + Taiwan 】${Font_Suffix}"
+		echo -e "${Font_SkyBlue}Input Number【2】：【 Multination + Japan 】${Font_Suffix}"
+		echo -e "${Font_SkyBlue}Input Number【3】：【 Multination + Hong Kong 】${Font_Suffix}"
+		echo -e "${Font_SkyBlue}Input Number【4】：【 Multination + North America 】${Font_Suffix}"
+		echo -e "${Font_SkyBlue}Input Number【5】：【 Multination + Europe 】${Font_Suffix}"
+		echo -e "${Font_SkyBlue}Input Number【6】：【 Multination Only 】${Font_Suffix}" 
+		read -p "Please Input the Correct Number or Press ENTER:" num
+	else
+		echo -e "${Font_Blue}请选择检测项目，直接按回车将进行全区域检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【1】：【跨国平台+台湾平台】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【2】：【跨国平台+日本平台】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【3】：【跨国平台+香港平台】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【4】：【跨国平台+美加平台】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【5】：【跨国平台+欧洲平台】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【6】：【  只进行跨国平台 】检测${Font_Suffix}"
+		read -p "请输入正确数字或直接按回车:" num
+	fi	
 }
 Start
 
@@ -2245,6 +2329,7 @@ function RunScript(){
 				
 		else
 			echo -e "${Font_Red}请重新执行脚本并输入正确号码${Font_Suffix}"
+			echo -e "${Font_Red}Please Re-run the Script with Correct Number Input${Font_Suffix}"
 			return
 		fi
 	else
@@ -2270,5 +2355,6 @@ function RunScript(){
 		fi
 		Goodbye	
 	fi
-}	
+}
+
 RunScript
