@@ -66,12 +66,12 @@ This script was modified based on [CoiaPrant/MediaUnlock_Test](https://github.co
 **Make sure you have curl and python installed**
 
 ````bash
-bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check_e.sh)
+bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) e
 ````
 
 **Or run in docker**
 ````docker
-docker run --rm --net=host lmc999/regioncheck
+docker run --rm -ti --net=host lmc999/regioncheck && docker rmi lmc999/regioncheck
 ````
 
 
