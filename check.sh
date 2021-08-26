@@ -1001,18 +1001,25 @@ function MediaUnlockTest_FOD() {
 
 function MediaUnlockTest_Tiktok_Region(){
     echo -n -e " Tiktok Region:\t\t\t\t->\c";
-    local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -s --max-time 10 "https://www.tiktok.com/")
+    local Ftmpresult=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -s --max-time 10 "https://www.tiktok.com/")
 	
-	if [ "$tmpresult" = "curl"* ]; then
+	if [ "$Ftmpresult" = "curl"* ]; then
 		echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
     
-	local result=$(echo $tmpresult | grep '"$region":"' | sed 's/.*"$region//' | cut -f3 -d'"')
-    if [ -n "$result" ];then
-        echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Green}${result}${Font_Suffix}\n"
+	local FRegion=$(echo $Ftmpresult | grep '"$region":"' | sed 's/.*"$region//' | cut -f3 -d'"')
+    if [ -n "$FRegion" ];then
+        echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Green}${FRegion}${Font_Suffix}\n"
         return;
-	else
+	fi
+	
+	local STmpresult=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -s --max-time 10 "https://www.tiktok.com/" -b "s_v_web_id=verify_57c6380f8e4c609135d2afc9894e35ca; tt_csrf_token=73Z-2VskmVwMX0PyUtin6WWI; MONITOR_WEB_ID=verify_57c6380f8e4c609135d2afc9894e35ca")
+	local SRegion=$(echo $STmpresult | grep '"$region":"' | sed 's/.*"$region//' | cut -f3 -d'"')
+	if [ -n "$SRegion" ];then
+        echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Yellow}${SRegion} (Using IDC IP)${Font_Suffix}\n"
+        return;
+	else	
 		echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 		return;
     fi
