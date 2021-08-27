@@ -1285,8 +1285,14 @@ function MediaUnlockTest_FuboTV() {
 
 function MediaUnlockTest_Fox() {
     echo -n -e " Fox:\t\t\t\t\t->\c";
-    # 测试，连续请求两次 (单独请求一次可能会返回35, 第二次开始变成0)
-    local result=$(curl -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://foxvideo.akamaized.net/pulsar-test/p-2mb.png?t=y9t0kj")
+    local tmpresult=$(curl -${1} ${ssll} -s --max-time 10 -X POST "https://api3.fox.com/v2.0//watch" -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg5REEwNkVEMjAxOCIsInR5cCI6IkpXVCJ9.eyJwaWQiOiJ3ZWIxZGQ4MjBlMC0yZDNmLTRkMzItYTEzOS02NjI5ZGYyM2MyMGEiLCJ1aWQiOiJkMlZpTVdSa09ESXdaVEF0TW1RelppMDBaRE15TFdFeE16a3ROall5T1dSbU1qTmpNakJoIiwic2lkIjoiMDlkYmRlMzItMjI4NS00NjRhLThiY2YtODViMDI1OTgyOGY5Iiwic2RjIjoidXMtZWFzdC0xIiwiYXR5cGUiOiJhbm9ueW1vdXMiLCJkdHlwZSI6IndlYiIsInV0eXBlIjoiZGV2aWNlSWQiLCJkaWQiOiIxZGQ4MjBlMC0yZDNmLTRkMzItYTEzOS02NjI5ZGYyM2MyMGEiLCJtdnBkaWQiOiIiLCJ2ZXIiOjIsImVudCI6e30sImV4cCI6MTY2MTU3MzMzOCwianRpIjoiZjMwN2MwY2YtMmQxNi00MGRlLThlYjYtYzNjYzljZDBhMTI5IiwiaWF0IjoxNjMwMDM3MzM4fQ.KSyhlYbZ2_c3tZKuRNDVZ5TwS5K5FIn1f2L5A40CcqebLDCy7AX94OidUMEUBbAUIBZ9kBxecRHA9nrFZxBjigXslOsvD1bEhvq-iNRgmwDrixZz7bR8mdW8tPS00B10E8_zDBYMzrkhrgCyCBdj4L8e2xndT3DoMU00-N0nxi2OqJrod5hr1Dd7jrydyojkglrwv0fAVOZbbWVPxLBUGPUjhIjnVlmn6Rah00jpXRSVaVpYtSxe5ngRugOrEpvAKNDmVN41AnNBt4TCveQ8sr-O4K3i9pt_d4RL-AGQqLaN2kaQx2SPjAbowyvZ3nFz8b5lsor4WwYEUbKcmj02ng" -d '{"capabilities":["fsdk/yo"],"deviceWidth":1834,"deviceHeight":920,"maxRes":"720p","os":"windows","osv":"","provider":{"freewheel":{"did":"1dd820e0-2d3f-4d32-a139-6629df23c20a"},"dmp":{"kuid":"","seg":""}},"playlist":"","privacy":{"us":"1---"},"siteSection":"","streamType":"live","streamId":"465912358749"}' -H "X-Api-Key: 6E9S4bmcoNnZwVLOHywOv8PJEdu76cM9")
+    if [ -z "$tmpresult" ]; then
+        echo -n -e "\r FOX:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return
+	fi
+	
+	local API_URL=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'link.theplatform.com' | awk '{print $2}' | cut -f2 -d'"')
+	local result=$(curl -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "$API_URL")
     if [ "$result" = "000" ]; then
         echo -n -e "\r FOX:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
     elif [ "$result" = "200" ]; then
