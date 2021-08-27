@@ -366,9 +366,20 @@ function MediaUnlockTest_YouTube_Region() {
 }
 
 function MediaUnlockTest_DisneyPlus() {
-	disneycontent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '7p')
-    echo -n -e " DisneyPlus:\t\t\t\t->\c";
-    local tmpresult=$(curl -${1} -X POST --user-agent "${UA_Browser}" -sSL --max-time 10 "https://disney.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -d "$disneycontent" 2>&1)
+	echo -n -e " DisneyPlus:\t\t\t\t->\c";
+    local fakecontent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '8p')
+	local disneycookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '1p')
+	local TokenContent=$(curl -${1} -s --max-time 10 -X POST "https://global.edge.bamgrid.com/token" -H "authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -d "$disneycookie")
+	local isBanned=$(echo $TokenContent | python -m json.tool 2> /dev/null | grep 'forbidden-location')
+	
+	if [ -n "$isBanned" ];then
+		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	fi
+	
+	local refreshToken=$(echo $TokenContent | python -m json.tool 2> /dev/null | grep 'refresh_token' | awk '{print $2}' | cut -f2 -d'"')
+    local disneycontent=$(echo $fakecontent | sed "s/ILOVEDISNEY/${refreshToken}/g")
+	local tmpresult=$(curl -${1} -X POST --user-agent "${UA_Browser}" -sSL --max-time 10 "https://disney.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -d "$disneycontent" 2>&1)
     
     if [[ "$tmpresult" == "curl"* ]];then
         echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -378,7 +389,6 @@ function MediaUnlockTest_DisneyPlus() {
 	local previewcheck=$(curl -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://disneyplus.com" | grep preview)
 	local isUnabailable=$(echo $previewcheck | grep 'unavailable')
 	local isAllowed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'countryCode' | cut -f4 -d'"')
-	local isBanned=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'forbidden-location')
 	local is403=$(echo $tmpresult | grep '403 ERROR')
 
     if [[ "$isAllowed" == "JP" ]];then
@@ -393,9 +403,6 @@ function MediaUnlockTest_DisneyPlus() {
 		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Yellow}Available For [Disney+ $region] Soon${Font_Suffix}\n"
 		return;	
 	elif [ -n "$isAllowed" ] && [ -n "$previewcheck" ] && [ -n "$isUnabailable" ];then
-		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-		return;	
-	elif [ -n "$isBanned" ];then
 		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
 	elif [ -n "$is403" ];then
