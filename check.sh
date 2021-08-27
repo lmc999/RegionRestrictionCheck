@@ -386,24 +386,12 @@ function MediaUnlockTest_DisneyPlus() {
         return;
     fi
 	
-	local previewcheck=$(curl -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://disneyplus.com" | grep preview)
-	local isUnabailable=$(echo $previewcheck | grep 'unavailable')
 	local isAllowed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'countryCode' | cut -f4 -d'"')
 	local is403=$(echo $tmpresult | grep '403 ERROR')
 
-    if [[ "$isAllowed" == "JP" ]];then
-		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Green}Yes (Region: JP)${Font_Suffix}\n"
-		return;
-	elif [ -n "$isAllowed" ] && [ -z "$previewcheck" ];then
+    if [ -n "$isAllowed" ];then
 		local region=$isAllowed
 		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
-		return;
-	elif [ -n "$isAllowed" ] && [ -n "$previewcheck" ] && [ -z "$isUnabailable" ];then
-		local region=$isAllowed
-		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Yellow}Available For [Disney+ $region] Soon${Font_Suffix}\n"
-		return;	
-	elif [ -n "$isAllowed" ] && [ -n "$previewcheck" ] && [ -n "$isUnabailable" ];then
-		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
 	elif [ -n "$is403" ];then
 		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
