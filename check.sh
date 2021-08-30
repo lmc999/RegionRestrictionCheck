@@ -2151,8 +2151,9 @@ function CheckV6() {
 			isv6=0
 			echo -e "${Font_SkyBlue}User Choose to Test Only IPv4 Results, Skipping IPv6 Testing...${Font_Suffix}"
 		else	
-			check6=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 10 ipv6.google.com)
-			if [[ "$check6" -ne "000" ]];then
+			check6_1=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 10 ipv6.google.com)
+			check6_2=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 10 ipv6.ip.sb)
+			if [[ "$check6_1" -ne "000" ]] || [[ "$check6_2" -ne "000" ]];then
 				echo ""
 				echo ""
 				echo -e " ${Font_SkyBlue}** Checking Results Under IPv6${Font_Suffix} "
