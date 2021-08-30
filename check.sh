@@ -30,8 +30,10 @@ Font_White="\033[37m";
 Font_Suffix="\033[0m";
 
 CountRunTimes(){
-TodayRunTimes=$(curl -s --max-time 10 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Flmc999%2FRegionRestrictionCheck%2Fmain%2Fcheck.sh&count_bg=%2379C83D&title_bg=%2300B1FF&icon=&icon_color=%23E7E7E7&title=script+run+times&edge_flat=false" | tac | sed -n '3p' | awk '{print $6}' 2> /dev/null)
-
+RunTimes=$(curl -s --max-time 10 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Flmc999%2FRegionRestrictionCheck%2Fmain%2Fcheck.sh&count_bg=%2379C83D&title_bg=%2300B1FF&icon=&icon_color=%23E7E7E7&title=script+run+times&edge_flat=false" > /tmp/couting.txt)
+TodayRunTimes=$(cat /tmp/couting.txt | tac | sed -n '3p' | awk '{print $6}')
+TotalRunTimes=$(cat /tmp/couting.txt | tac | sed -n '3p' | awk '{print $8}')
+rm -rf /tmp/couting.txt
 }
 CountRunTimes
 
@@ -2192,11 +2194,11 @@ function Goodbye(){
 	if [[ "$language" == "English" ]];then
 		echo -e "${Font_Green}Testing Done! Thanks for Using This Script! ${Font_Suffix}";
 		echo -e ""
-		echo -e "${Font_Yellow}Number of Script Runs for Today：$TodayRunTimes ${Font_Suffix}"
+		echo -e "${Font_Yellow}Number of Script Runs for Today：${TodayRunTimes}; Total Number of Script Runs: ${TotalRunTimes} ${Font_Suffix}"
 	else	
 		echo -e "${Font_Green}本次测试已结束，感谢使用此脚本 ${Font_Suffix}";
 		echo -e ""
-		echo -e "${Font_Yellow}检测脚本当天运行次数：$TodayRunTimes ${Font_Suffix}"
+		echo -e "${Font_Yellow}检测脚本当天运行次数：${TodayRunTimes}; 共计运行次数：${TotalRunTimes} ${Font_Suffix}"
 	fi	
 }
 
