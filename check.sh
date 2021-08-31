@@ -40,12 +40,8 @@ CountRunTimes
 checkos(){
 
 	os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
-	if [[ "$os_version" == "2004" ]];then
+	if [[ "$os_version" == "2004" ]] || [[ "$os_version" == "10" ]] || [[ "$os_version" == "11" ]];then
 		ssll="-k --ciphers DEFAULT@SECLEVEL=1"
-	elif [[ "$os_version" == "10" ]];then	
-		ssll="-k --ciphers DEFAULT@SECLEVEL=1"
-	else
-		ssll=""
 	fi
 }
 checkos	
@@ -67,7 +63,6 @@ check_dependencies(){
 	os_detail=$(cat /etc/os-release)
 	if_debian=$(echo $os_detail | grep 'ebian')
 	if_redhat=$(echo $os_detail | grep 'rhel')
-	os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
 	if [ -n "$if_debian" ];then
 		InstallMethod="apt install"
 	elif [ -n "$if_redhat" ] && [[ "$os_version" -gt 7 ]];then
@@ -476,6 +471,9 @@ function MediaUnlockTest_NowE() {
 	if [[ "$result" == "SUCCESS" ]]; then
 		echo -n -e "\r Now E:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;
+	elif [[ "$result" == "PRODUCT_INFORMATION_INCOMPLETE" ]]; then
+		echo -n -e "\r Now E:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;	
     elif [[ "$result" == "GEO_CHECK_FAIL" ]]; then
 		echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
