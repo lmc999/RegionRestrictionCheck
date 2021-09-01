@@ -2032,15 +2032,15 @@ function MediaUnlockTest_DirecTVGO() {
 	fi
 	local isForbidden=$(echo $tmpresult | grep 'proximamente')
 	local region=$(echo $tmpresult | cut -f4 -d"/" | tr [:lower:] [:upper:])
-	if [ -n "$result" ]; then
+	if [ -n "$isForbidden" ]; then
 		echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
-    else
+    elif [ -z "$isForbidden" ] && [ -n "$region" ];then
 		echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Green}Yes (Region:$region)${Font_Suffix}\n"
 		return;
 	fi
 	
-	echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Red}Failed ${Font_Suffix}\n"
 	return;
 
 }
