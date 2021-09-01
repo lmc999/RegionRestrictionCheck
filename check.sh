@@ -363,14 +363,14 @@ function MediaUnlockTest_YouTube_Region() {
 }
 
 function MediaUnlockTest_DisneyPlus() {
-	echo -n -e " DisneyPlus:\t\t\t\t->\c";
+	echo -n -e " Disney+:\t\t\t\t->\c";
     local disneycookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '1p')
 	local TokenContent=$(curl -${1} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://global.edge.bamgrid.com/token" -H "authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -d "$disneycookie")
 	local isBanned=$(echo $TokenContent | python -m json.tool 2> /dev/null | grep 'forbidden-location')
 	local is403=$(echo $TokenContent | grep '403 ERROR')
 	
 	if [ -n "$isBanned" ] || [ -n "$is403" ];then
-		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		echo -n -e "\r Disney+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
 	fi
 	
@@ -382,23 +382,23 @@ function MediaUnlockTest_DisneyPlus() {
 	local isUnabailable=$(echo $previewcheck | grep 'unavailable')	
     
     if [[ "$tmpresult" == "curl"* ]];then
-        echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r Disney+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
     fi
 	
 	local region=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'countryCode' | cut -f4 -d'"')
 
     if [ -n "$region" ] && [ -n "$previewcheck" ] && [ -z "$isUnabailable" ];then
-		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Yellow}Available For [Disney+ $region] Soon${Font_Suffix}\n"
+		echo -n -e "\r Disney+:\t\t\t\t${Font_Yellow}Available For [Disney+ $region] Soon${Font_Suffix}\n"
 		return;
 	elif [ -n "$previewcheck" ] && [ -n "$isUnabailable" ];then
-		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		echo -n -e "\r Disney+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
 	elif [ -n "$region" ];then
-		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
+		echo -n -e "\r Disney+:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
 		return;
 	else
-		echo -n -e "\r DisneyPlus:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		echo -n -e "\r Disney+:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 		return;
 	fi
     
@@ -688,13 +688,17 @@ function MediaUnlockTest_HBOMax() {
         echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
     fi
-    local result=$(echo $tmpresult | grep 'geo-availability')
-	if [ -n "$result" ]; then
+    local isUnavailable=$(echo $tmpresult | grep 'geo-availability')
+	local region=$(echo $tmpresult | cut -f4 -d"/" | tr [:lower:] [:upper:]) 
+	if [ -n "$isUnavailable" ]; then
 		echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
-     else
-		echo -n -e "\r HBO Max:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    elif [ -z "$isUnavailable" ] && [ -n "$region" ];then
+		echo -n -e "\r HBO Max:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
 		return;
+	elif [ -z "$isUnavailable" ] && [ -z "$region" ];then
+		echo -n -e "\r HBO Max:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;	
 	fi
 	
 	echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -965,9 +969,11 @@ function MediaUnlockTest_KKTV() {
 
 function MediaUnlockTest_PeacockTV() {
     echo -n -e " Peacock TV:\t\t\t\t->\c";
-    local result=$(curl -${1} ${ssll} -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.peacocktv.com/" | grep 'unavailable');
-    
-	if [ -n "$result" ]; then
+    local result=$(curl -${1} ${ssll} -Ss -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.peacocktv.com/" | grep 'unavailable');
+    if [[ "$result" == "curl"* ]]; then
+        echo -n -e "\r Peacock TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+    elif [ -n "$result" ]; then
 		echo -n -e "\r Peacock TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
      else
@@ -1974,7 +1980,72 @@ function MediaUnlockTest_ElevenSportsTW() {
     fi
 }
 
-function US_UnlockTest() {
+function MediaUnlockTest_StarPlus() {
+	echo -n -e " Star+:\t\t\t\t\t->\c";
+    local starcookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '9p')
+	local TokenContent=$(curl -${1} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://star.api.edge.bamgrid.com/token" -H "authorization: Bearer c3RhciZicm93c2VyJjEuMC4w.COknIGCR7I6N0M5PGnlcdbESHGkNv7POwhFNL-_vIdg" -d "$starcookie")
+	local isBanned=$(echo $TokenContent | python -m json.tool 2> /dev/null | grep 'forbidden-location')
+	local is403=$(echo $TokenContent | grep '403 ERROR')
+	
+	if [ -n "$isBanned" ] || [ -n "$is403" ];then
+		echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	fi
+	
+	local fakecontent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '10p')
+	local refreshToken=$(echo $TokenContent | python -m json.tool 2> /dev/null | grep 'refresh_token' | awk '{print $2}' | cut -f2 -d'"')
+    local starcontent=$(echo $fakecontent | sed "s/ILOVESTAR/${refreshToken}/g")
+	local tmpresult=$(curl -${1} -X POST --user-agent "${UA_Browser}" -sSL --max-time 10 "https://star.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: c3RhciZicm93c2VyJjEuMC4w.COknIGCR7I6N0M5PGnlcdbESHGkNv7POwhFNL-_vIdg" -d "$starcontent" 2>&1)
+	local previewcheck=$(curl -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.starplus.com" | grep preview)
+	local isUnabailable=$(echo $previewcheck | grep 'unavailable')	
+    
+    if [[ "$tmpresult" == "curl"* ]];then
+        echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+    fi
+	
+	local region=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'countryCode' | cut -f4 -d'"')
+
+    if [ -n "$region" ] && [ -n "$previewcheck" ] && [ -z "$isUnabailable" ];then
+		echo -n -e "\r Star+:\t\t\t\t\t${Font_Yellow}Available For [Star+ $region] Soon${Font_Suffix}\n"
+		return;
+	elif [ -n "$previewcheck" ] && [ -n "$isUnabailable" ];then
+		echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	elif [ -n "$region" ];then
+		echo -n -e "\r Star+:\t\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		return;
+	fi
+    
+    
+}
+
+function MediaUnlockTest_DirecTVGO() {
+    echo -n -e " DriecTV Go:\t\t\t\t->\c";
+    local tmpresult=$(curl -${1} ${ssll} -Ss -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.directvgo.com/registrarse" 2>&1);
+    if [[ "$tmpresult" == "curl"* ]]; then
+        echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+	fi
+	local isForbidden=$(echo $tmpresult | grep 'proximamente')
+	local region=$(echo $tmpresult | cut -f4 -d"/" | tr [:lower:] [:upper:])
+	if [ -n "$result" ]; then
+		echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    else
+		echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Green}Yes (Region:$region)${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	return;
+
+}
+
+function NA_UnlockTest() {
 	echo "===========[ North America ]==========="
 	MediaUnlockTest_Fox ${1};
 	MediaUnlockTest_HuluUS ${1};
@@ -2087,8 +2158,8 @@ function Global_UnlockTest() {
 	echo "============[ Multination ]============"	
 	MediaUnlockTest_Dazn ${1};
 	MediaUnlockTest_HotStar ${1};
-	MediaUnlockTest_Netflix ${1};
 	MediaUnlockTest_DisneyPlus ${1};
+	MediaUnlockTest_Netflix ${1};
 	MediaUnlockTest_YouTube_Premium ${1};
 	MediaUnlockTest_PrimeVideo_Region ${1};
 	MediaUnlockTest_TVBAnywhere ${1};
@@ -2099,6 +2170,14 @@ function Global_UnlockTest() {
 	MediaUnlockTest_NetflixCDN ${1};
 	GameTest_Steam ${1};
 	echo "======================================="	
+}
+
+function SA_UnlockTest() {
+	echo "===========[ South America ]==========="
+	MediaUnlockTest_StarPlus ${1};
+	MediaUnlockTest_HBOMax ${1};
+	MediaUnlockTest_DirecTVGO ${1};
+	echo "======================================="
 }
 
 function CheckV4() {
@@ -2228,20 +2307,22 @@ function Start(){
 	if [[ "$language" == "English" ]];then
 		echo -e "${Font_Blue}Please Select Test Region or Press ENTER to Test All Regions${Font_Suffix}"
 		echo -e "${Font_SkyBlue}Input Number【1】：【 Multination + Taiwan 】${Font_Suffix}"
-		echo -e "${Font_SkyBlue}Input Number【2】：【 Multination + Japan 】${Font_Suffix}"
-		echo -e "${Font_SkyBlue}Input Number【3】：【 Multination + Hong Kong 】${Font_Suffix}"
+		echo -e "${Font_SkyBlue}Input Number【2】：【 Multination + Hong Kong 】${Font_Suffix}"
+		echo -e "${Font_SkyBlue}Input Number【3】：【 Multination + Japan 】${Font_Suffix}"
 		echo -e "${Font_SkyBlue}Input Number【4】：【 Multination + North America 】${Font_Suffix}"
-		echo -e "${Font_SkyBlue}Input Number【5】：【 Multination + Europe 】${Font_Suffix}"
-		echo -e "${Font_SkyBlue}Input Number【6】：【 Multination Only 】${Font_Suffix}" 
+		echo -e "${Font_SkyBlue}Input Number【5】：【 Multination + South America 】${Font_Suffix}"
+		echo -e "${Font_SkyBlue}Input Number【6】：【 Multination + Europe 】${Font_Suffix}"
+		echo -e "${Font_SkyBlue}Input Number【0】：【 Multination Only 】${Font_Suffix}" 
 		read -p "Please Input the Correct Number or Press ENTER:" num
 	else
 		echo -e "${Font_Blue}请选择检测项目，直接按回车将进行全区域检测${Font_Suffix}"
 		echo -e "${Font_SkyBlue}输入数字【1】：【跨国平台+台湾平台】检测${Font_Suffix}"
-		echo -e "${Font_SkyBlue}输入数字【2】：【跨国平台+日本平台】检测${Font_Suffix}"
-		echo -e "${Font_SkyBlue}输入数字【3】：【跨国平台+香港平台】检测${Font_Suffix}"
-		echo -e "${Font_SkyBlue}输入数字【4】：【跨国平台+美加平台】检测${Font_Suffix}"
-		echo -e "${Font_SkyBlue}输入数字【5】：【跨国平台+欧洲平台】检测${Font_Suffix}"
-		echo -e "${Font_SkyBlue}输入数字【6】：【  只进行跨国平台 】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【2】：【跨国平台+香港平台】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【3】：【跨国平台+日本平台】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【4】：【跨国平台+北美平台】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【5】：【跨国平台+南美平台】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【6】：【跨国平台+欧洲平台】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【0】：【  只进行跨国平台 】检测${Font_Suffix}"
 		read -p "请输入正确数字或直接按回车:" num
 	fi	
 }
@@ -2249,52 +2330,7 @@ Start
 
 function RunScript(){
 	if [[ -n "${num}" ]]; then
-		if [[ "$num" -eq 4 ]]; then
-			clear
-			ScriptTitle
-			CheckV4
-			if [[ "$isv4" -eq 1 ]];then
-				Global_UnlockTest 4
-				US_UnlockTest 4
-			fi
-			CheckV6
-			if 	[[ "$isv6" -eq 1 ]];then
-				Global_UnlockTest 6
-				US_UnlockTest 6
-			fi	
-			Goodbye
-			
-		elif [[ "$num" -eq 2 ]]; then
-			clear
-			ScriptTitle
-			CheckV4
-			if [[ "$isv4" -eq 1 ]];then
-				Global_UnlockTest 4
-				JP_UnlockTest 4
-			fi
-			CheckV6
-			if 	[[ "$isv6" -eq 1 ]];then
-				Global_UnlockTest 6
-				JP_UnlockTest 6
-			fi	
-			Goodbye
-			
-		elif [[ "$num" -eq 3 ]]; then
-			clear
-			ScriptTitle
-			CheckV4
-			if [[ "$isv4" -eq 1 ]];then
-				Global_UnlockTest 4
-				HK_UnlockTest 4
-			fi
-			CheckV6
-			if 	[[ "$isv6" -eq 1 ]];then
-				Global_UnlockTest 6
-				HK_UnlockTest 6
-			fi	
-			Goodbye
-			
-		elif [[ "$num" -eq 1 ]]; then
+		if [[ "$num" -eq 1 ]]; then
 			clear
 			ScriptTitle
 			CheckV4
@@ -2309,7 +2345,67 @@ function RunScript(){
 			fi	
 			Goodbye
 			
+		elif [[ "$num" -eq 2 ]]; then
+			clear
+			ScriptTitle
+			CheckV4
+			if [[ "$isv4" -eq 1 ]];then
+				Global_UnlockTest 4
+				HK_UnlockTest 4
+			fi
+			CheckV6
+			if 	[[ "$isv6" -eq 1 ]];then
+				Global_UnlockTest 6
+				HK_UnlockTest 6
+			fi	
+			Goodbye
+			
+		elif [[ "$num" -eq 3 ]]; then
+			clear
+			ScriptTitle
+			CheckV4
+			if [[ "$isv4" -eq 1 ]];then
+				Global_UnlockTest 4
+				JP_UnlockTest 4
+			fi
+			CheckV6
+			if 	[[ "$isv6" -eq 1 ]];then
+				Global_UnlockTest 6
+				JP_UnlockTest 6
+			fi	
+			Goodbye
+			
+		elif [[ "$num" -eq 4 ]]; then
+			clear
+			ScriptTitle
+			CheckV4
+			if [[ "$isv4" -eq 1 ]];then
+				Global_UnlockTest 4
+				NA_UnlockTest 4
+			fi
+			CheckV6
+			if 	[[ "$isv6" -eq 1 ]];then
+				Global_UnlockTest 6
+				NA_UnlockTest 6
+			fi	
+			Goodbye
+			
 		elif [[ "$num" -eq 5 ]]; then
+			clear
+			ScriptTitle
+			CheckV4
+			if [[ "$isv4" -eq 1 ]];then
+				Global_UnlockTest 4
+				SA_UnlockTest 4
+			fi
+			CheckV6
+			if 	[[ "$isv6" -eq 1 ]];then
+				Global_UnlockTest 6
+				SA_UnlockTest 6
+			fi	
+			Goodbye
+			
+		elif [[ "$num" -eq 6 ]]; then
 			clear
 			ScriptTitle
 			CheckV4
@@ -2323,8 +2419,8 @@ function RunScript(){
 				EU_UnlockTest 6
 			fi	
 			Goodbye
-			
-		elif [[ "$num" -eq 6 ]]; then
+		
+		elif [[ "$num" -eq 0 ]]; then
 			clear
 			ScriptTitle
 			CheckV4
@@ -2336,7 +2432,7 @@ function RunScript(){
 				Global_UnlockTest 6
 			fi	
 			Goodbye
-				
+			
 		else
 			echo -e "${Font_Red}请重新执行脚本并输入正确号码${Font_Suffix}"
 			echo -e "${Font_Red}Please Re-run the Script with Correct Number Input${Font_Suffix}"
@@ -2348,19 +2444,21 @@ function RunScript(){
 		CheckV4
 		if [[ "$isv4" -eq 1 ]];then
 			Global_UnlockTest 4
-			US_UnlockTest 4	
-			JP_UnlockTest 4
-			HK_UnlockTest 4
 			TW_UnlockTest 4
+			HK_UnlockTest 4
+			JP_UnlockTest 4
+			NA_UnlockTest 4	
+			SA_UnlockTest 4
 			EU_UnlockTest 4
 		fi	
 		CheckV6
 		if [[ "$isv6" -eq 1 ]];then
 			Global_UnlockTest 6
-			US_UnlockTest 6	
-			JP_UnlockTest 6
-			HK_UnlockTest 6
 			TW_UnlockTest 6
+			HK_UnlockTest 6
+			JP_UnlockTest 6
+			NA_UnlockTest 6	
+			SA_UnlockTest 6
 			EU_UnlockTest 6	
 		fi
 		Goodbye	
