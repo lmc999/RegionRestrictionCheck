@@ -2036,7 +2036,7 @@ function MediaUnlockTest_DirecTVGO() {
 		echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
     elif [ -z "$isForbidden" ] && [ -n "$region" ];then
-		echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Green}Yes (Region:$region)${Font_Suffix}\n"
+		echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
 		return;
 	fi
 	
