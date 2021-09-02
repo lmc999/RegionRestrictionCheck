@@ -1964,11 +1964,15 @@ function MediaUnlockTest_SkyGo() {
 
 function MediaUnlockTest_ElevenSportsTW() {
     echo -n -e " Eleven Sports TW:\t\t\t->\c";
-    local result=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://dv8n4jja5ycl3.cloudfront.net/tsft/ch01/playlist.m3u8?st=1629563333112&qq=YTllMWIxZjkzYjNkODUyZDQzMjQyZGM5ZDgxZGMyYzk4ZGU3MTdhMQ")
+	local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -s --max-time 10 "https://apis.v-saas.com:9501/member/api/viewAuthorization?contentId=1&memberId=384030&menuId=3&platform=5&imei=c959b475-f846-4a86-8e9b-508048372508")
+	local qq=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep '"qq"' | cut -f4 -d'"')
+	local st=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep '"st"' | cut -f4 -d'"')
+	local m3u_RUL=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep boostStreamUrl | cut -f4 -d'"')
+    local result=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "${m3u_RUL}?st=${st}&qq=${qq}")
     if [ "$result" = "000" ]; then
         echo -n -e "\r Eleven Sports TW:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
-    elif [ "$result" = "200" ]; then
+    elif [ "$result" = "401" ]; then
         echo -n -e "\r Eleven Sports TW:\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;
     elif [ "$result" = "403" ]; then
