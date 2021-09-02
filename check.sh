@@ -378,7 +378,7 @@ function MediaUnlockTest_DisneyPlus() {
 	local refreshToken=$(echo $TokenContent | python -m json.tool 2> /dev/null | grep 'refresh_token' | awk '{print $2}' | cut -f2 -d'"')
     local disneycontent=$(echo $fakecontent | sed "s/ILOVEDISNEY/${refreshToken}/g")
 	local tmpresult=$(curl -${1} -X POST --user-agent "${UA_Browser}" -sSL --max-time 10 "https://disney.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -d "$disneycontent" 2>&1)
-	local previewcheck=$(curl -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://disneyplus.com" | grep preview)
+	local previewcheck=$(curl -${1} -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://disneyplus.com" | grep preview)
 	local isUnabailable=$(echo $previewcheck | grep 'unavailable')	
     
     if [[ "$tmpresult" == "curl"* ]];then
@@ -1996,7 +1996,7 @@ function MediaUnlockTest_StarPlus() {
 	local refreshToken=$(echo $TokenContent | python -m json.tool 2> /dev/null | grep 'refresh_token' | awk '{print $2}' | cut -f2 -d'"')
     local starcontent=$(echo $fakecontent | sed "s/ILOVESTAR/${refreshToken}/g")
 	local tmpresult=$(curl -${1} -X POST --user-agent "${UA_Browser}" -sSL --max-time 10 "https://star.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: c3RhciZicm93c2VyJjEuMC4w.COknIGCR7I6N0M5PGnlcdbESHGkNv7POwhFNL-_vIdg" -d "$starcontent" 2>&1)
-	local previewcheck=$(curl -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.starplus.com" | grep preview)
+	local previewcheck=$(curl -${1} -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.starplus.com" | grep preview)
 	local isUnabailable=$(echo $previewcheck | grep 'unavailable')	
     
     if [[ "$tmpresult" == "curl"* ]];then
