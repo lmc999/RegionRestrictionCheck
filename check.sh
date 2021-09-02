@@ -2049,6 +2049,20 @@ function MediaUnlockTest_DirecTVGO() {
 
 }
 
+function MediaUnlockTest_DAM() {
+    echo -n -e " Karaoke@DAM:\t\t\t\t->\c";
+    local result=$(curl --user-agent "${UA_Browser}" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "http://cds1.clubdam.com/vhls-cds1/site/xbox/sample_1.mp4.m3u8")
+	if [[ "$result" == "000" ]]; then
+        echo -n -e "\r Karaoke@DAM:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        elif [ "$result" = "200" ]; then
+        echo -n -e "\r Karaoke@DAM:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        elif [ "$result" = "403" ]; then
+        echo -n -e "\r Karaoke@DAM:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r Karaoke@DAM:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+    fi
+}
+
 function NA_UnlockTest() {
 	echo "===========[ North America ]==========="
 	MediaUnlockTest_Fox ${1};
@@ -2148,6 +2162,7 @@ function JP_UnlockTest() {
 	MediaUnlockTest_wowow ${1};
 	MediaUnlockTest_FOD ${1};
 	MediaUnlockTest_Radiko ${1};
+	MediaUnlockTest_DAM ${1};
 	ShowRegion Game
 	MediaUnlockTest_Kancolle ${1};
 	MediaUnlockTest_UMAJP ${1};
