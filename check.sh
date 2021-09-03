@@ -1022,7 +1022,7 @@ function MediaUnlockTest_Tiktok_Region(){
 	local STmpresult=$(curl --user-agent "${UA_Browser}" -${1} ${ssll} -s --max-time 10 "https://www.tiktok.com/" -b "s_v_web_id=verify_57c6380f8e4c609135d2afc9894e35ca; tt_csrf_token=73Z-2VskmVwMX0PyUtin6WWI; MONITOR_WEB_ID=verify_57c6380f8e4c609135d2afc9894e35ca")
 	local SRegion=$(echo $STmpresult | grep '"$region":"' | sed 's/.*"$region//' | cut -f3 -d'"')
 	if [ -n "$SRegion" ];then
-        echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Yellow}${SRegion} (Using IDC IP)${Font_Suffix}\n"
+        echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Yellow}${SRegion} (IDC IP Detected)${Font_Suffix}\n"
         return;
 	else	
 		echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
@@ -1999,28 +1999,28 @@ function MediaUnlockTest_StarPlus() {
 	local fakecontent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '10p')
 	local refreshToken=$(echo $TokenContent | python -m json.tool 2> /dev/null | grep 'refresh_token' | awk '{print $2}' | cut -f2 -d'"')
     local starcontent=$(echo $fakecontent | sed "s/ILOVESTAR/${refreshToken}/g")
-	local tmpresult=$(curl -${1} -X POST --user-agent "${UA_Browser}" -sSL --max-time 10 "https://star.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: c3RhciZicm93c2VyJjEuMC4w.COknIGCR7I6N0M5PGnlcdbESHGkNv7POwhFNL-_vIdg" -d "$starcontent" 2>&1)
-	local previewcheck=$(curl -${1} -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.starplus.com" | grep preview)
-	local isUnabailable=$(echo $previewcheck | grep 'unavailable')	
-    
+	local tmpresult=$(curl -${1} --user-agent "${UA_Browser}" -X POST -sSL --max-time 10 "https://star.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: c3RhciZicm93c2VyJjEuMC4w.COknIGCR7I6N0M5PGnlcdbESHGkNv7POwhFNL-_vIdg" -d "$starcontent" 2>&1)
+	local previewcheck=$(curl -${1} -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.starplus.com/login")
+	local isUnavailable=$(echo $previewcheck | grep unavailable)
+	
     if [[ "$tmpresult" == "curl"* ]];then
         echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
     fi
-	
 	local region=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'countryCode' | cut -f4 -d'"')
+    local inSupportedLocation=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'inSupportedLocation' | awk '{print $2}' | cut -f1 -d',')
 
-    if [ -n "$region" ] && [ -n "$previewcheck" ] && [ -z "$isUnabailable" ];then
-		echo -n -e "\r Star+:\t\t\t\t\t${Font_Yellow}Available For [Star+ $region] Soon${Font_Suffix}\n"
+    if [ -n "$region" ] && [ -z "$isUnavailable" ] && [[ "$inSupportedLocation" == "false" ]];then
+		echo -n -e "\r Star+:\t\t\t\t\t${Font_Yellow}CDN Relay Available${Font_Suffix}\n"
 		return;
-	elif [ -n "$previewcheck" ] && [ -n "$isUnabailable" ];then
+	elif [ -n "$region" ] && [ -n "$isUnavailable" ];then
 		echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
-	elif [ -n "$region" ];then
+	elif [ -n "$region" ] && [[ "$inSupportedLocation" == "true" ]];then
 		echo -n -e "\r Star+:\t\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
 		return;
-	else
-		echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+	elif [ -z "$region" ];then
+		echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
 	fi
     
