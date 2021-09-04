@@ -30,16 +30,20 @@ Font_White="\033[37m";
 Font_Suffix="\033[0m";
 
 CountRunTimes(){
-RunTimes=$(curl -s --max-time 10 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Flmc999%2FRegionRestrictionCheck%2Fmain%2Fcheck.sh&count_bg=%2379C83D&title_bg=%2300B1FF&icon=&icon_color=%23E7E7E7&title=script+run+times&edge_flat=false" > /tmp/couting.txt)
-TodayRunTimes=$(cat /tmp/couting.txt | tac | sed -n '3p' | awk '{print $6}')
-TotalRunTimes=$(cat /tmp/couting.txt | tac | sed -n '3p' | awk '{print $8}')
-rm -rf /tmp/couting.txt
+RunTimes=$(curl -s --max-time 10 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Flmc999%2FRegionRestrictionCheck%2Fmain%2Fcheck.sh&count_bg=%2379C83D&title_bg=%2300B1FF&icon=&icon_color=%23E7E7E7&title=script+run+times&edge_flat=false" > ~/couting.txt)
+TodayRunTimes=$(cat ~/couting.txt | tac | sed -n '3p' | awk '{print $6}')
+TotalRunTimes=$(cat ~/couting.txt | tac | sed -n '3p' | awk '{print $8}')
+rm -rf ~/couting.txt
 }
 CountRunTimes
 
 checkos(){
-
-	os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
+	if [ -n $(echo $PWD | grep termux) ];then
+		os_version=Termux
+	else	
+		os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
+	fi
+	
 	if [[ "$os_version" == "2004" ]] || [[ "$os_version" == "10" ]] || [[ "$os_version" == "11" ]];then
 		ssll="-k --ciphers DEFAULT@SECLEVEL=1"
 	fi
@@ -60,39 +64,46 @@ checkCPU
 
 check_dependencies(){
 
-	os_detail=$(cat /etc/os-release)
+	os_detail=$(cat /etc/os-release 2> /dev/null)
 	if_debian=$(echo $os_detail | grep 'ebian')
 	if_redhat=$(echo $os_detail | grep 'rhel')
 	if [ -n "$if_debian" ];then
-		InstallMethod="apt install"
+		InstallMethod="apt"
 	elif [ -n "$if_redhat" ] && [[ "$os_version" -gt 7 ]];then
-		InstallMethod="dnf install"
+		InstallMethod="dnf"
 	elif [ -n "$if_redhat" ] && [[ "$os_version" -lt 8 ]];then
-		InstallMethod="yum install"
+		InstallMethod="yum"
+	elif [[ "$os_version" == "Termux" ]];then
+		InstallMethod="pkg"
 	fi
 	
 	python -V > /dev/null 2>&1
 		if [[ "$?" -ne "0" ]];then
 			python3 -V > /dev/null 2>&1
-			if [[ "$?" -ne "0" ]];then
+			if [[ "$?" -eq "0" ]];then
 				python3_patch=$(which python3)
 				ln -s $python3_patch /usr/bin/python > /dev/null 2>&1
 			else
 				if [ -n "$if_debian" ];then
 					echo -e "${Font_Green}Installing python${Font_Suffix}" 
-					apt update  > /dev/null 2>&1
-					apt install python -y  > /dev/null 2>&1
-					
+					$InstallMethod update  > /dev/null 2>&1
+					$InstallMethod install python -y  > /dev/null 2>&1
 				elif [ -n "$if_redhat" ];then
 					echo -e "${Font_Green}Installing python${Font_Suffix}"
 					if [[ "$os_version" -gt 7 ]];then
-						dnf install python3 -y > /dev/null 2>&1
+						$InstallMethod update  > /dev/null 2>&1
+						$InstallMethod install python3 -y > /dev/null 2>&1
 						python3_patch=$(which python3)
 						ln -s $python3_patch /usr/bin/python
 					else
-						yum install python -y > /dev/null 2>&1
+						$InstallMethod update  > /dev/null 2>&1
+						$InstallMethod install python -y > /dev/null 2>&1
 					fi	
 					
+				elif [[ "$os_version" == "Termux" ]];then
+					echo -e "${Font_Green}Installing python${Font_Suffix}"
+					$InstallMethod update -y > /dev/null 2>&1
+					$InstallMethod install python -y > /dev/null 2>&1
 					
 				fi
 			fi	
@@ -100,12 +111,18 @@ check_dependencies(){
 	
 	dig -v  > /dev/null 2>&1
 	if [[ "$?" -ne "0" ]];then
-		if [[ "$InstallMethod" == "apt install" ]];then
+		if [[ "$InstallMethod" == "apt" ]];then
 			echo -e "${Font_Green}Installing dnsutils${Font_Suffix}"
-			$InstallMethod dnsutils -y > /dev/null 2>&1
-		else
+			$InstallMethod update  > /dev/null 2>&1
+			$InstallMethod install dnsutils -y > /dev/null 2>&1
+		elif [[ "$InstallMethod" == "yum" ]];then
 			echo -e "${Font_Green}Installing bind-utils${Font_Suffix}"
-			$InstallMethod bind-utils -y > /dev/null 2>&1
+			$InstallMethod update  > /dev/null 2>&1
+			$InstallMethod install bind-utils -y > /dev/null 2>&1
+		elif [[ "$InstallMethod" == "pkg" ]];then
+			echo -e "${Font_Green}Installing bind-utils${Font_Suffix}"
+			$InstallMethod update -y > /dev/null 2>&1
+			$InstallMethod install dnsutils -y > /dev/null 2>&1	
 		fi
 	fi	
 }		
@@ -751,29 +768,29 @@ function MediaUnlockTest_ITVHUB() {
 
 function MediaUnlockTest_iQYI_Region(){
     echo -n -e " iQyi Oversea Region:\t\t\t->\c";
-    curl -${1} ${ssll} -s -I --max-time 10 "https://www.iq.com/" > /tmp/iqiyi
+    curl -${1} ${ssll} -s -I --max-time 10 "https://www.iq.com/" > ~/iqiyi
     
     if [ $? -eq 1 ];then
         echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
     fi
     
-    result=$(cat /tmp/iqiyi | grep 'mod=' | awk '{print $2}' | cut -f2 -d'=' | cut -f1 -d';')
+    result=$(cat ~/iqiyi | grep 'mod=' | awk '{print $2}' | cut -f2 -d'=' | cut -f1 -d';')
     if [ -n "$result" ]; then
 		if [[ "$result" == "ntw" ]]; then
 			result=TW 
 			echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Green}${result}${Font_Suffix}\n"
-			rm /tmp/iqiyi >/dev/null 2>&1
+			rm ~/iqiyi >/dev/null 2>&1
 			return;
 		else
 			result=$(echo $result | tr [:lower:] [:upper:]) 
 			echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Green}${result}${Font_Suffix}\n"
-			rm /tmp/iqiyi >/dev/null 2>&1
+			rm ~/iqiyi >/dev/null 2>&1
 			return;
 		fi	
     else
 		echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Red}Failed${Font_Suffix}\n"
-		rm /tmp/iqiyi >/dev/null 2>&1
+		rm ~/iqiyi >/dev/null 2>&1
 		return;
 	fi	
 }
@@ -1092,10 +1109,10 @@ function MediaUnlockTest_YouTube_CDN() {
 		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Yellow}Associated with $CDN_ISP${Font_Suffix}\n"
 		return;
 	elif [ -n "$iata" ];then
-		curl -s --max-time 10 "https://www.iata.org/AirportCodesSearch/Search?currentBlock=314384&currentPage=12572&airport.search=${iata}" > /tmp/iata.txt
-		local line=$(cat /tmp/iata.txt | grep -n "<td>"$iata | awk '{print $1}' | cut -f1 -d":")
+		curl -s --max-time 10 "https://www.iata.org/AirportCodesSearch/Search?currentBlock=314384&currentPage=12572&airport.search=${iata}" > ~/iata.txt
+		local line=$(cat ~/iata.txt | grep -n "<td>"$iata | awk '{print $1}' | cut -f1 -d":")
 		local nline=$(expr $line - 2)
-		local location=$(cat /tmp/iata.txt | awk NR==${nline} | sed 's/.*<td>//' | cut -f1 -d"<")
+		local location=$(cat ~/iata.txt | awk NR==${nline} | sed 's/.*<td>//' | cut -f1 -d"<")
 		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Green}$location${Font_Suffix}\n"
 		return;
 	else
@@ -1103,7 +1120,7 @@ function MediaUnlockTest_YouTube_CDN() {
 		return;
 	fi
 	
-	rm /tmp/iata.txt
+	rm ~/iata.txt
 }
 
 function MediaUnlockTest_BritBox() {
@@ -1892,10 +1909,10 @@ function MediaUnlockTest_NetflixCDN(){
 	
 	local CDN_ISP=$(curl -s --max-time 20 https://api.ip.sb/geoip/$CDNIP | python -m json.tool 2> /dev/null | grep 'isp' | cut -f4 -d'"')
 	local iata=$(echo $CDNAddr | cut -f3 -d"-" | sed 's/.\{3\}$//' | tr [:lower:] [:upper:])
-	curl -s --max-time 10 "https://www.iata.org/AirportCodesSearch/Search?currentBlock=314384&currentPage=12572&airport.search=${iata}" > /tmp/iata.txt
-	local line=$(cat /tmp/iata.txt | grep -n "<td>"$iata | awk '{print $1}' | cut -f1 -d":")
+	curl -s --max-time 10 "https://www.iata.org/AirportCodesSearch/Search?currentBlock=314384&currentPage=12572&airport.search=${iata}" > ~/iata.txt
+	local line=$(cat ~/iata.txt | grep -n "<td>"$iata | awk '{print $1}' | cut -f1 -d":")
 	local nline=$(expr $line - 2)
-	local location=$(cat /tmp/iata.txt | awk NR==${nline} | sed 's/.*<td>//' | cut -f1 -d"<")
+	local location=$(cat ~/iata.txt | awk NR==${nline} | sed 's/.*<td>//' | cut -f1 -d"<")
 	
 	if [ -n "$location" ] && [[ "$CDN_ISP" == "Netflix Streaming Services" ]];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Green}$location ${Font_Suffix}\n"
@@ -1907,6 +1924,8 @@ function MediaUnlockTest_NetflixCDN(){
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}No ISP Info Founded${Font_Suffix}\n"
 		return
 	fi
+	
+	rm ~/iata.txt
 }	
 
 function MediaUnlockTest_HBO_Nordic() {
