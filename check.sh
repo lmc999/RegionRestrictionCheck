@@ -1114,13 +1114,14 @@ function MediaUnlockTest_YouTube_CDN() {
 		local nline=$(expr $line - 2)
 		local location=$(cat ~/iata.txt | awk NR==${nline} | sed 's/.*<td>//' | cut -f1 -d"<")
 		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Green}$location${Font_Suffix}\n"
+		rm ~/iata.txt
 		return;
 	else
 		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Undetectable${Font_Suffix}\n"
+		rm ~/iata.txt
 		return;
 	fi
 	
-	rm ~/iata.txt
 }
 
 function MediaUnlockTest_BritBox() {
@@ -1916,16 +1917,17 @@ function MediaUnlockTest_NetflixCDN(){
 	
 	if [ -n "$location" ] && [[ "$CDN_ISP" == "Netflix Streaming Services" ]];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Green}$location ${Font_Suffix}\n"
+		rm ~/iata.txt
 		return
 	elif [ -n "$location" ] && [[ "$CDN_ISP" != "Netflix Streaming Services" ]];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Yellow}Associated with [$CDN_ISP] in [$location]${Font_Suffix}\n"
+		rm ~/iata.txt
 		return
 	elif [ -n "$location" ] && [ -z "$CDN_ISP" ];then	
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}No ISP Info Founded${Font_Suffix}\n"
+		rm ~/iata.txt
 		return
 	fi
-	
-	rm ~/iata.txt
 }	
 
 function MediaUnlockTest_HBO_Nordic() {
@@ -2320,6 +2322,7 @@ function Goodbye(){
 		echo -e "${Font_Yellow}Number of Script Runs for Today：${TodayRunTimes}; Total Number of Script Runs: ${TotalRunTimes} ${Font_Suffix}"
 	else	
 		echo -e "${Font_Green}本次测试已结束，感谢使用此脚本 ${Font_Suffix}";
+		echo -e "${Font_Purple}【检测脚现已适配Termux，可直接在安卓手机安装Termux后运行脚本】${Font_Suffix}"
 		echo -e ""
 		echo -e "${Font_Yellow}检测脚本当天运行次数：${TodayRunTimes}; 共计运行次数：${TotalRunTimes} ${Font_Suffix}"
 	fi	
