@@ -38,7 +38,8 @@ rm -rf ~/couting.txt
 CountRunTimes
 
 checkos(){
-	if [ -n $(echo $PWD | grep termux) ];then
+	ifTermux=$(echo $PWD | grep termux)
+	if [ -n "$ifTermux" ];then
 		os_version=Termux
 	else	
 		os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
@@ -120,7 +121,7 @@ check_dependencies(){
 			$InstallMethod update  > /dev/null 2>&1
 			$InstallMethod install bind-utils -y > /dev/null 2>&1
 		elif [[ "$InstallMethod" == "pkg" ]];then
-			echo -e "${Font_Green}Installing bind-utils${Font_Suffix}"
+			echo -e "${Font_Green}Installing dnsutils${Font_Suffix}"
 			$InstallMethod update -y > /dev/null 2>&1
 			$InstallMethod install dnsutils -y > /dev/null 2>&1	
 		fi
