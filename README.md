@@ -9,6 +9,8 @@
 ## 脚本介绍
 本脚本基于[CoiaPrant/MediaUnlock_Test](https://github.com/CoiaPrant/MediaUnlock_Test)代码进行修改
 
+支持OS/Platform：CentOS 6+, Ubuntu 14.04+, Debian 8+, Android with Termux
+
 + 优化了Disneyplus的判断准确性
 
 + 新增MyTVSuper解锁判断
