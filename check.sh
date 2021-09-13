@@ -2323,7 +2323,7 @@ function Goodbye(){
 		echo -e "${Font_Yellow}Number of Script Runs for Today：${TodayRunTimes}; Total Number of Script Runs: ${TotalRunTimes} ${Font_Suffix}"
 	else	
 		echo -e "${Font_Green}本次测试已结束，感谢使用此脚本 ${Font_Suffix}";
-		echo -e "${Font_Purple}【检测脚现已适配Termux，可直接在安卓手机安装Termux后运行脚本】${Font_Suffix}"
+		echo -e "${Font_Purple}【检测脚本现已适配Termux，可直接在安卓手机安装Termux后运行脚本】${Font_Suffix}"
 		echo -e ""
 		echo -e "${Font_Yellow}检测脚本当天运行次数：${TodayRunTimes}; 共计运行次数：${TotalRunTimes} ${Font_Suffix}"
 	fi	
