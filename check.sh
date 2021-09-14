@@ -31,16 +31,19 @@ Font_Suffix="\033[0m";
 
 CountRunTimes(){
 RunTimes=$(curl -s --max-time 10 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Flmc999%2FRegionRestrictionCheck%2Fmain%2Fcheck.sh&count_bg=%2379C83D&title_bg=%2300B1FF&icon=&icon_color=%23E7E7E7&title=script+run+times&edge_flat=false" > ~/couting.txt)
-TodayRunTimes=$(cat ~/couting.txt | tac | sed -n '3p' | awk '{print $6}')
-TotalRunTimes=$(cat ~/couting.txt | tac | sed -n '3p' | awk '{print $8}')
+TodayRunTimes=$(cat ~/couting.txt | tail -3 | head -n 1 | awk '{print $5}')
+TotalRunTimes=$(cat ~/couting.txt | tail -3 | head -n 1 | awk '{print $7}')
 rm -rf ~/couting.txt
 }
 CountRunTimes
 
 checkos(){
 	ifTermux=$(echo $PWD | grep termux)
+	ifMacOS=$(uname -a | grep Darwin)
 	if [ -n "$ifTermux" ];then
 		os_version=Termux
+	elif [ -n "$ifMacOS" ];then
+		os_version=MacOS	
 	else	
 		os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
 	fi
@@ -58,7 +61,9 @@ checkCPU(){
 	elif [[ "$CPUArch" == "i686" ]];then
 		arch=_i686
 	elif [[ "$CPUArch" == "arm" ]];then
-		arch=_arm	
+		arch=_arm
+	elif [[ "$CPUArch" == "x86_64" ]] && [ -n "$ifMacOS" ];then
+		arch=_darwin	
 	fi
 }	
 checkCPU
@@ -76,6 +81,8 @@ check_dependencies(){
 		InstallMethod="yum"
 	elif [[ "$os_version" == "Termux" ]];then
 		InstallMethod="pkg"
+	elif [[ "$os_version" == "MacOS" ]];then
+		InstallMethod="brew"	
 	fi
 	
 	python -V > /dev/null 2>&1
@@ -106,6 +113,10 @@ check_dependencies(){
 					$InstallMethod update -y > /dev/null 2>&1
 					$InstallMethod install python -y > /dev/null 2>&1
 					
+				elif [[ "$os_version" == "MacOS" ]];then
+					echo -e "${Font_Green}Installing python${Font_Suffix}"
+					$InstallMethod install python	
+					
 				fi
 			fi	
 		fi
@@ -124,8 +135,19 @@ check_dependencies(){
 			echo -e "${Font_Green}Installing dnsutils${Font_Suffix}"
 			$InstallMethod update -y > /dev/null 2>&1
 			$InstallMethod install dnsutils -y > /dev/null 2>&1	
+		elif [[ "$InstallMethod" == "brew" ]];then
+			echo -e "${Font_Green}Installing bind${Font_Suffix}"
+			$InstallMethod install bind	
 		fi
 	fi	
+	
+	if [[ "$os_version" == "MacOS" ]];then
+		md5sum /dev/null > /dev/null 2>&1
+		if [[ "$?" -ne "0" ]];then
+			echo -e "${Font_Green}Installing md5sha1sum${Font_Suffix}"
+			$InstallMethod install md5sha1sum
+		fi
+	fi		
 }		
 check_dependencies
 
@@ -1059,7 +1081,7 @@ function MediaUnlockTest_Tiktok_Region(){
 function MediaUnlockTest_YouTube_Premium() {
     echo -n -e " YouTube Premium:\t\t\t->\c";
     local tmpresult=$(curl -${1} -sS -H "Accept-Language: en" "https://www.youtube.com/premium" 2>&1 )
-    local region=$(curl --user-agent "${UA_Browser}" -${1} -sL --max-time 10 "https://www.youtube.com/red" | sed 's/,/\n/g' | grep "countryCode" | cut -d '"' -f4)
+    local region=$(curl --user-agent "${UA_Browser}" -${1} -sL --max-time 10 "https://www.youtube.com/premium" | grep "countryCode" | sed 's/.*"countryCode"//' | cut -f2 -d'"')
 	if [ -n "$region" ]; then
         sleep 0
 	else
@@ -2323,7 +2345,6 @@ function Goodbye(){
 		echo -e "${Font_Yellow}Number of Script Runs for Today：${TodayRunTimes}; Total Number of Script Runs: ${TotalRunTimes} ${Font_Suffix}"
 	else	
 		echo -e "${Font_Green}本次测试已结束，感谢使用此脚本 ${Font_Suffix}";
-		echo -e "${Font_Purple}【检测脚本现已适配Termux，可直接在安卓手机安装Termux后运行脚本】${Font_Suffix}"
 		echo -e ""
 		echo -e "${Font_Yellow}检测脚本当天运行次数：${TodayRunTimes}; 共计运行次数：${TotalRunTimes} ${Font_Suffix}"
 	fi	
@@ -2337,6 +2358,7 @@ function ScriptTitle(){
 		echo ""
 		echo -e "${Font_Green}Github Repository:${Font_Suffix} ${Font_Yellow} https://github.com/lmc999/RegionRestrictionCheck ${Font_Suffix}";
 		echo -e "${Font_Green}Telegram Discussion Group:${Font_Suffix} ${Font_Yellow} https://t.me/gameaccelerate ${Font_Suffix}";
+		echo -e "${Font_Purple}Supporting OS: CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android with Termux${Font_Suffix}"
 		echo ""
 		echo -e " ** Test Starts At: $(date)";
 		echo ""
@@ -2345,6 +2367,7 @@ function ScriptTitle(){
 		echo ""
 		echo -e "${Font_Green}项目地址${Font_Suffix} ${Font_Yellow}https://github.com/lmc999/RegionRestrictionCheck ${Font_Suffix}";
 		echo -e "${Font_Green}BUG反馈或使用交流可加TG群组${Font_Suffix} ${Font_Yellow}https://t.me/gameaccelerate ${Font_Suffix}";
+		echo -e "${Font_Purple}脚本适配OS: CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android with Termux${Font_Suffix}"
 		echo ""
 		echo -e " ** 测试时间: $(date)";
 		echo ""
