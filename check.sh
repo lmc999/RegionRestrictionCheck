@@ -2320,8 +2320,9 @@ function CheckV6() {
 			isv6=0
 			echo -e "${Font_SkyBlue}用户选择只检测IPv4结果，跳过IPv6检测...${Font_Suffix}"
 		else	
-			check6=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 10 ipv6.google.com)
-			if [[ "$check6" -ne "000" ]];then
+			check6_1=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 10 ipv6.google.com)
+			check6_2=$(curl -fsL --write-out %{http_code} --output /dev/null --max-time 10 ipv6.ip.sb)
+			if [[ "$check6_1" -ne "000" ]] || [[ "$check6_2" -ne "000" ]];then
 				echo ""
 				echo ""
 				echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
