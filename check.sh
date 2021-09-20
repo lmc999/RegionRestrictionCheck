@@ -1939,7 +1939,7 @@ function MediaUnlockTest_NetflixCDN(){
 	local location=$(cat ~/iata.txt | awk NR==${nline} | sed 's/.*<td>//' | cut -f1 -d"<")
 	
 	if [ -n "$location" ] && [[ "$CDN_ISP" == "Netflix Streaming Services" ]];then
-		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Green}$location ${Font_Suffix}\n"
+		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Green}$location${Font_Suffix}\n"
 		rm ~/iata.txt
 		return
 	elif [ -n "$location" ] && [[ "$CDN_ISP" != "Netflix Streaming Services" ]];then
