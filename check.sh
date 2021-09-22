@@ -675,7 +675,7 @@ function MediaUnlockTest_4GTV(){
         	return;
     fi
 	
-	checkfailed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'Success' |  awk '{print $2}')
+	checkfailed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'Success' |  awk '{print $2}' | cut -f1 -d',')
     if [[ "$checkfailed" == "false" ]]; then
 		echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;	
