@@ -1921,13 +1921,20 @@ function MediaUnlockTest_NetflixCDN(){
 	
 	local CDNAddr=$(echo $tmpresult | sed 's/.*"url":"//' | cut -f3 -d"/")
 	if [[ "$1" == "6" ]];then
-		CDNIP=$(nslookup -q=AAAA $CDNAddr | grep 'AAAA address' | awk '{print $NF}')
+		nslookup -q=AAAA $CDNAddr > ~/v6_addr.txt
+		ifAAAA=$(cat ~/v6_addr.txt | grep 'AAAA address' | awk '{print $NF}')
+		if [ -z "$ifAAAA" ];then
+			CDNIP=$(cat ~/v6_addr.txt | grep Address | sed -n '$p' | awk '{print $NF}')
+		else	
+			CDNIP=${ifAAAA}
+		fi	
 	else
 		CDNIP=$(nslookup $CDNAddr | sed '/^\s*$/d' | awk 'END {print}' | awk '{print $2}')
 	fi
 		
 	if [ -z "$CDNIP" ];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (CDN IP Not Found)${Font_Suffix}\n"
+		rm -rf ~/v6_addr.txt
 		return
 	fi	
 	
@@ -1941,14 +1948,17 @@ function MediaUnlockTest_NetflixCDN(){
 	if [ -n "$location" ] && [[ "$CDN_ISP" == "Netflix Streaming Services" ]];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Green}$location ${Font_Suffix}\n"
 		rm ~/iata.txt
+		rm -rf ~/v6_addr.txt
 		return
 	elif [ -n "$location" ] && [[ "$CDN_ISP" != "Netflix Streaming Services" ]];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Yellow}Associated with [$CDN_ISP] in [$location]${Font_Suffix}\n"
 		rm ~/iata.txt
+		rm -rf ~/v6_addr.txt
 		return
 	elif [ -n "$location" ] && [ -z "$CDN_ISP" ];then	
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}No ISP Info Founded${Font_Suffix}\n"
 		rm ~/iata.txt
+		rm -rf ~/v6_addr.txt
 		return
 	fi
 }	
