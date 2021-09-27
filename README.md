@@ -115,12 +115,22 @@ bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionChec
 
 ##### 只检测IPv4结果：
 ````bash
-bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) 4
+bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) -M 4
 ````
 
 ##### 只检测IPv6结果：
 ````bash
-bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) 6
+bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) -M 6
+````
+
+##### 指定检测的网卡名称：
+````bash
+bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) -I eth0
+````
+
+##### 选择脚本语言为英文：
+````bash
+bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) -L e
 ````
 
 **或者直接运行以下Docker命令** (兼容ARM架构)
