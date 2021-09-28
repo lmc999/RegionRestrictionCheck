@@ -65,8 +65,24 @@ This script was modified based on [CoiaPrant/MediaUnlock_Test](https://github.co
 
 **Make sure you have curl and python installed**
 
+**General Use**
 ````bash
-bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) e
+bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) -L e
+````
+
+**Test IPv4 Result Only**
+````bash
+bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) -L e -M 4
+````
+
+**Test IPv6 Result Only**
+````bash
+bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) -L e -M 6
+````
+
+**Specify a Certain Interface to be Tested**
+````bash
+bash <(curl -L -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh) -L e -I eth0
 ````
 
 **Or run in docker**
