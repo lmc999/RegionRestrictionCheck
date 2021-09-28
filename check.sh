@@ -2369,10 +2369,26 @@ function Goodbye(){
 		echo -e "${Font_Green}Testing Done! Thanks for Using This Script! ${Font_Suffix}";
 		echo -e ""
 		echo -e "${Font_Yellow}Number of Script Runs for Today：${TodayRunTimes}; Total Number of Script Runs: ${TotalRunTimes} ${Font_Suffix}"
+		echo -e ""
+		echo -e "========================================================="
+		echo -e "${Font_Red}If you found this script helpful, you can but me a coffee${Font_Suffix}"
+		echo -e "USDT: TL2iHGTADmAyWYCafBHF5vMbPe13zSyJu2"
+		echo -e "BTC: 3GmeB6zsrgu8FMB4z7dBAGmDEq4v6Td8EB"
+		echo -e "ETH：0x5A1a337270a36Bbbb5477BdD9C438c70a212C7fD"
+		echo -e "LTC：LQD4S6Y5bu3bHX6hx8ASsGHVfaqFGFNTbx"
+		echo -e "========================================================="
 	else	
 		echo -e "${Font_Green}本次测试已结束，感谢使用此脚本 ${Font_Suffix}";
 		echo -e ""
 		echo -e "${Font_Yellow}检测脚本当天运行次数：${TodayRunTimes}; 共计运行次数：${TotalRunTimes} ${Font_Suffix}"
+		echo -e ""
+		echo -e "================================================"
+		echo -e "${Font_Red}如本项目对你有帮助，可考虑请作者喝一瓶营养快线${Font_Suffix}"
+		echo -e "USDT: TL2iHGTADmAyWYCafBHF5vMbPe13zSyJu2"
+		echo -e "BTC: 3GmeB6zsrgu8FMB4z7dBAGmDEq4v6Td8EB"
+		echo -e "ETH：0x5A1a337270a36Bbbb5477BdD9C438c70a212C7fD"
+		echo -e "LTC：LQD4S6Y5bu3bHX6hx8ASsGHVfaqFGFNTbx"
+		echo -e "================================================"
 	fi	
 }
 
