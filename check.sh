@@ -2139,10 +2139,67 @@ function MediaUnlockTest_DAM() {
     fi
 }
 
+function MediaUnlockTest_DiscoveryPlus() {
+    echo -n -e " Discovery+:\t\t\t\t->\c";
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -sS "https://us1-prod-direct.discoveryplus.com/users/me" -b "_gcl_au=1.1.858579665.1632206782; _rdt_uuid=1632206782474.6a9ad4f2-8ef7-4a49-9d60-e071bce45e88; _scid=d154b864-8b7e-4f46-90e0-8b56cff67d05; _pin_unauth=dWlkPU1qWTRNR1ZoTlRBdE1tSXdNaTAwTW1Nd0xUbGxORFV0WWpZMU0yVXdPV1l6WldFeQ; _sctr=1|1632153600000; aam_fw=aam%3D9354365%3Baam%3D9040990; aam_uuid=24382050115125439381416006538140778858; st=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSSUQ6Z286NmY4N2JhOTktN2FiOC00NWFjLTg5ZDUtZTRlN2JhMTA3NDU4IiwianRpIjoidG9rZW4tN2UyMGFmMTAtYzBlMi00OWNkLTg2ZWUtYTNkYmYxYzYyMWQxIiwiYW5vbnltb3VzIjp0cnVlLCJpYXQiOjE2MzIyMDY3ODZ9.HakR2iZ9Ma9Hmcp1PXkR9J5GUjDAhEHu5b6ifzU5CIQ; gi_ls=0; _uetvid=a25161a01aa711ec92d47775379d5e4d; AMCV_BC501253513148ED0A490D45%40AdobeOrg=-1124106680%7CMCIDTS%7C18894%7CMCMID%7C24223296309793747161435877577673078228%7CMCAAMLH-1633011393%7C9%7CMCAAMB-1633011393%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCOPTOUT-1632413793s%7CNONE%7CvVersion%7C5.2.0; ass=19ef15da-95d6-4b1d-8fa2-e9e099c9cc38.1632408400.1632406594" 2>&1);
+    if [[ "$tmpresult" == "curl"* ]]; then
+        echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+	fi
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep currentLocationTerritory | cut -f4 -d'"')
+	if [[ "$result" == "us" ]]; then
+		echo -n -e "\r Discovery+:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    else
+		echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed ${Font_Suffix}\n"
+	return;
+
+}
+
+function MediaUnlockTest_ESPNPlus() {
+	echo -n -e " ESPN+:${Font_SkyBlue}[Sponsored by Jam]${Font_Suffix}\t\t->\c";
+    local espncookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '11p')
+	local TokenContent=$(curl -${1} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://espn.api.edge.bamgrid.com/token" -H "authorization: Bearer ZXNwbiZicm93c2VyJjEuMC4w.ptUt7QxsteaRruuPmGZFaJByOoqKvDP2a5YkInHrc7c" -d "$espncookie")
+	local isBanned=$(echo $TokenContent | python -m json.tool 2> /dev/null | grep 'forbidden-location')
+	local is403=$(echo $TokenContent | grep '403 ERROR')
+	
+	if [ -n "$isBanned" ] || [ -n "$is403" ];then
+		echo -n -e "\r ESPN+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	fi
+	
+	local fakecontent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '10p')
+	local refreshToken=$(echo $TokenContent | python -m json.tool 2> /dev/null | grep 'refresh_token' | awk '{print $2}' | cut -f2 -d'"')
+    local espncontent=$(echo $fakecontent | sed "s/ILOVESTAR/${refreshToken}/g")
+	local tmpresult=$(curl -${1} --user-agent "${UA_Browser}" -X POST -sSL --max-time 10 "https://espn.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: ZXNwbiZicm93c2VyJjEuMC4w.ptUt7QxsteaRruuPmGZFaJByOoqKvDP2a5YkInHrc7c" -d "$espncontent" 2>&1)
+	
+    if [[ "$tmpresult" == "curl"* ]];then
+        echo -n -e "\r ESPN+:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+    fi
+	local region=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'countryCode' | cut -f4 -d'"')
+    local inSupportedLocation=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'inSupportedLocation' | awk '{print $2}' | cut -f1 -d',')
+
+    if [[ "$region" == "US" ]] && [[ "$inSupportedLocation" == "true" ]];then
+		echo -n -e "\r ESPN+:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r ESPN+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	fi
+    
+    
+}
+
 function NA_UnlockTest() {
 	echo "===========[ North America ]==========="
 	MediaUnlockTest_Fox ${1};
 	MediaUnlockTest_HuluUS ${1};
+	MediaUnlockTest_ESPNPlus ${1};
 	MediaUnlockTest_EPIX ${1};
 	MediaUnlockTest_Starz ${1};
 	MediaUnlockTest_HBONow ${1};
@@ -2152,15 +2209,16 @@ function NA_UnlockTest() {
 	MediaUnlockTest_FuboTV ${1};
 	MediaUnlockTest_SlingTV ${1};
 	MediaUnlockTest_PlutoTV ${1};
+	MediaUnlockTest_AcornTV ${1};
 	MediaUnlockTest_SHOWTIME ${1};
 	MediaUnlockTest_ATTNOW ${1};
 	MediaUnlockTest_encoreTVB ${1};
 	MediaUnlockTest_CineMax ${1};
+	MediaUnlockTest_DiscoveryPlus ${1};
 	MediaUnlockTest_ParamountPlus ${1};
 	MediaUnlockTest_PeacockTV ${1};
 	ShowRegion CA
 	MediaUnlockTest_CBCGem ${1};
-	MediaUnlockTest_AcornTV ${1};
 	MediaUnlockTest_Crave ${1};
 	echo "======================================="
 }	
