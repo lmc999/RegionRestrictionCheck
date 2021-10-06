@@ -1391,22 +1391,22 @@ function MediaUnlockTest_Joyn() {
 }
 
 function MediaUnlockTest_SKY_DE() {
-    echo -n -e " Sky:\t\t\t\t\t->\c";
+    echo -n -e " Maori TV:\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} -s --max-time 10 "https://edge.api.brightcove.com/playback/v1/accounts/1050888051001/videos/6247131490001" -H "Accept: application/json;pk=BCpkADawqM0OXCLe4eIkpyuir8Ssf3kIQAM62a1KMa4-1_vTOWQIxoHHD4-oL-dPmlp-rLoS-WIAcaAMKuZVMR57QY4uLAmP4Ov3V416hHbqr0GNNtzVXamJ6d4-rA3Xi98W-8wtypdEyjGEZNepUCt3D7UdMthbsG-Ean3V4cafT4nZX03st5HlyK1chp51SfA-vKcAOhHZ4_Oa9TTN61tEH6YqML9PWGyKrbuN5myICcGsFzP3R2aOF8c5rPCHT2ZAiG7MoavHx8WMjhfB0QdBr2fphX24CSpUKlcjEnQJnBiA1AdLg9iyReWrAdQylX4Eyhw5OwKiCGJznfgY6BDtbUmeq1I9r9RfmhP5bfxVGjILSEFZgXbMqGOvYdrdare0aW2fTCxeHdHt0vyKOWTC6CS1lrGJF2sFPKn1T1csjVR8s4MODqCBY1PTbHY4A9aZ-2MDJUVJDkOK52hGej6aXE5b9N9_xOT2B9wbXL1B1ZB4JLjeAdBuVtaUOJ44N0aCd8Ns0o02E1APxucQqrjnEociLFNB0Bobe1nkGt3PS74IQcs-eBvWYSpolldMH6TKLu8JqgdnM4WIp3FZtTWJRADgAmvF9tVDUG9pcJoRx_CZ4im-rn-AzN3FeOQrM4rTlU3Q8YhSmyEIoxYYqsFDwbFlhsAcvqQkgaElYtuciCL5i3U8N4W9rIhPhQJzsPafmLdWxBP_FXicyek25GHFdQzCiT8nf1o860Jv2cHQ4xUNcnP-9blIkLy9JmuB2RgUXOHzWsrLGGW6hq9wLUtqwEoxcEAAcNJgmoC0k8HE-Ga-NHXng6EFWnqiOg_mZ_MDd7gmHrrKLkQV" -H "Origin: https://www.sky.de");
     if [ -z "$tmpresult" ]; then
-		echo -n -e "\r Sky:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi
 	
 	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep error_subcode | cut -f4 -d'"')	
 	    if [[ "$result" == "CLIENT_GEO" ]];then
-			echo -n -e "\r Sky:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 			return;
 		elif [ -z "$result" ] && [ -n "$tmpresult" ];then
-			echo -n -e "\r Sky:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+			echo -n -e "\r Maori TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 			return;
 		else
-			echo -n -e "\r Sky:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+			echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 		fi
 
 }
@@ -2195,6 +2195,243 @@ function MediaUnlockTest_ESPNPlus() {
     
 }
 
+function MediaUnlockTest_Stan() {
+    echo -n -e " Stan:\t\t\t\t\t->\c";
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -X POST -sS --max-time 10 "https://api.stan.com.au/login/v1/sessions/web/account");
+    if [ -z "$tmpresult" ]; then
+		echo -n -e "\r Stan:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+	
+	local result=$(echo $tmpresult | grep VPNDetected)	
+	if [ -z "$result" ];then
+		echo -n -e "\r Stan:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r Stan:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+	fi
+
+}
+
+function MediaUnlockTest_Binge() {
+    echo -n -e " Binge:\t\t\t\t\t->\c";
+    local result=$(curl $useNIC -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://auth.streamotion.com.au");
+    if [ "$result" = "000" ]; then
+		echo -n -e "\r Binge:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		is
+		return;
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r Binge:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r Binge:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    else
+        echo -n -e "\r Binge:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
+function MediaUnlockTest_Docplay() {
+    echo -n -e " Docplay:\t\t\t\t->\c";
+    local result=$(curl $useNIC -${1} ${ssll} -Ss -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.docplay.com/subscribe" | grep 'geoblocked');
+    if [[ "$result" == "curl"* ]]; then
+        echo -n -e "\r Docplay:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		isKayoSportsOK=2
+        return;
+    elif [ -n "$result" ]; then
+		echo -n -e "\r Docplay:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		isKayoSportsOK=0
+		return;
+     else
+		echo -n -e "\r Docplay:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		isKayoSportsOK=1
+		return;
+	fi
+	
+	echo -n -e "\r Docplay:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	isKayoSportsOK=2
+	return;
+
+}
+
+function MediaUnlockTest_OptusSports() {
+    echo -n -e " Optus Sports:\t\t\t\t->\c";
+    local result=$(curl $useNIC -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://sport.optus.com.au/api/userauth/validate/web/username/restriction.check@gmail.com");
+    if [ "$result" = "000" ]; then
+		echo -n -e "\r Optus Sports:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r Optus Sports:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r Optus Sports:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    else
+        echo -n -e "\r Optus Sports:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
+function MediaUnlockTest_KayoSports() {
+    echo -n -e " Kayo Sports:\t\t\t\t->\c";
+    if [[ "$isKayoSportsOK" = "2" ]]; then
+		echo -n -e "\r Kayo Sports:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		return;
+    elif [[ "$isKayoSportsOK" = "1" ]]; then
+        echo -n -e "\r Kayo Sports:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [[ "$isKayoSportsOK" = "0" ]]; then
+        echo -n -e "\r Kayo Sports:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    else
+        echo -n -e "\r Kayo Sports:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
+function MediaUnlockTest_NeonTV() {
+    echo -n -e " Neon TV:\t\t\t\t->\c";
+	local NeonHeader=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '12p')
+	local NeonContent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '13p')
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -sS -X POST "https://api.neontv.co.nz/api/client/gql?" -H "content-type: application/json" -H "$NeonHeader" -d "$NeonContent");
+    if [ -z "$tmpresult" ]; then
+		echo -n -e "\r Neon TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+	
+	local result=$(echo $tmpresult | grep 'RESTRICTED_GEOLOCATION')	
+	if [ -z "$result" ];then
+		echo -n -e "\r Neon TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r Neon TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+	fi
+
+}
+
+function MediaUnlockTest_SkyGONZ() {
+    echo -n -e " SkyGo NZ:\t\t\t\t->\c";
+    local result=$(curl $useNIC -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://login.sky.co.nz/authorize?audience=https%3A%2F%2Fapi.sky.co.nz&client_id=dXhXjmK9G90mOX3B02R1kV7gsC4bp8yx&redirect_uri=https%3A%2F%2Fwww.skygo.co.nz&connection=Sky-Internal-Connection&scope=openid%20profile%20email%20offline_access&response_type=code&response_mode=query&state=OXg3QjBGTHpoczVvdG1fRnJFZXVoNDlPc01vNzZjWjZsT3VES2VhN1dDWA%3D%3D&nonce=OEdvci4xZHBHU3VLb1M0T1JRbTZ6WDZJVGQ3R3J0TTdpTndvWjNMZDM5ZA%3D%3D&code_challenge=My5fiXIl-cX79KOUe1yDFzA6o2EOGpJeb6w1_qeNkpI&code_challenge_method=S256&auth0Client=eyJuYW1lIjoiYXV0aDAtcmVhY3QiLCJ2ZXJzaW9uIjoiMS4zLjAifQ%3D%3D");
+    if [ "$result" = "000" ]; then
+		echo -n -e "\r SkyGo NZ:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		is
+		return;
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r SkyGo NZ:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r SkyGo NZ:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    else
+        echo -n -e "\r SkyGo NZ:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
+function MediaUnlockTest_ThreeNow() {
+    echo -n -e " ThreeNow:\t\t\t\t->\c";
+    local result=$(curl $useNIC -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://bravo-livestream.fullscreen.nz/index.m3u8");
+    if [ "$result" = "000" ]; then
+		echo -n -e "\r ThreeNow:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		is
+		return;
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r ThreeNow:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r ThreeNow:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    else
+        echo -n -e "\r ThreeNow:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
+function MediaUnlockTest_MaoriTV() {
+    echo -n -e " Maori TV:\t\t\t\t->\c";
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -s --max-time 10 "https://edge.api.brightcove.com/playback/v1/accounts/1614493167001/videos/6275380737001" -H "Accept: application/json;pk=BCpkADawqM2E9yW4lLgKIEIV5majz5djzZCIqJiYMkP5yYaYdF6AQYq4isPId1ZLtQdGnK1ErLYG0-r1N-3DzAEdbfvw9SFdDWz_i09pLp8Njx1ybslyIXid-X_Dx31b7-PLdQhJCws-vk6Y" -H "Origin: https://www.maoritelevision.com");
+    if [ -z "$tmpresult" ]; then
+		echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+	
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep error_subcode | cut -f4 -d'"')	
+	    if [[ "$result" == "CLIENT_GEO" ]];then
+			echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+			return;
+		elif [ -z "$result" ] && [ -n "$tmpresult" ];then
+			echo -n -e "\r Maori TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+			return;
+		else
+			echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+		fi
+
+}
+
+function MediaUnlockTest_SBSonDemand() {
+    echo -n -e " SBS on Demand:\t\t\t\t->\c";
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -sS "https://www.sbs.com.au/api/v3/network?context=odwebsite" 2>&1);
+    if [[ "$tmpresult" == "curl"* ]]; then
+        echo -n -e "\r SBS on Demand:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+	fi
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep country_code | cut -f4 -d'"')
+	if [[ "$result" == "AU" ]]; then
+		echo -n -e "\r SBS on Demand:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    else
+		echo -n -e "\r SBS on Demand:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r SBS on Demand:\t\t\t\t${Font_Red}Failed ${Font_Suffix}\n"
+	return;
+
+}
+
+function MediaUnlockTest_ABCiView() {
+    echo -n -e " ABC iView:\t\t\t\t->\c";
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -sS --max-time 10 "https://api.iview.abc.net.au/v2/show/abc-kids-live-stream/video/LS1604H001S00?embed=highlightVideo,selectedSeries");
+    if [ -z "$tmpresult" ]; then
+		echo -n -e "\r ABC iView:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+	fi
+	
+	local result=$(echo $tmpresult | grep 'unavailable outside Australia')	
+	if [ -z "$result" ];then
+		echo -n -e "\r ABC iView:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	else
+		echo -n -e "\r ABC iView:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+	fi
+
+}
+
+function MediaUnlockTest_9Now() {
+    echo -n -e " 9Now:\t\t\t\t\t->\c";
+    local result=$(curl $useNIC -${1} ${ssll} -Ss -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://login.nine.com.au" | grep 'geoblock');
+    if [[ "$result" == "curl"* ]]; then
+        echo -n -e "\r 9Now:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+    elif [ -n "$result" ]; then
+		echo -n -e "\r 9Now:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+     else
+		echo -n -e "\r 9Now:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r 9Now:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	return;
+
+}
+
 function NA_UnlockTest() {
 	echo "===========[ North America ]==========="
 	MediaUnlockTest_Fox ${1};
@@ -2330,6 +2567,32 @@ function SA_UnlockTest() {
 	MediaUnlockTest_StarPlus ${1};
 	MediaUnlockTest_HBOMax ${1};
 	MediaUnlockTest_DirecTVGO ${1};
+	echo "======================================="
+}
+
+function OA_UnlockTest(){	
+	echo "==============[ Oceania ]=============="
+	MediaUnlockTest_NBATV ${1};
+	MediaUnlockTest_SlingTV ${1};
+	MediaUnlockTest_PlutoTV ${1};
+	MediaUnlockTest_AcornTV ${1};
+	MediaUnlockTest_SHOWTIME ${1};
+	MediaUnlockTest_BritBox ${1};
+	MediaUnlockTest_ParamountPlus ${1};
+	ShowRegion AU
+	MediaUnlockTest_Stan ${1};
+	MediaUnlockTest_9Now ${1};
+	MediaUnlockTest_Binge ${1};
+	MediaUnlockTest_Docplay ${1};
+	MediaUnlockTest_ABCiView ${1};
+	MediaUnlockTest_KayoSports ${1};
+	MediaUnlockTest_OptusSports ${1};
+	MediaUnlockTest_SBSonDemand ${1};
+	ShowRegion NZ
+	MediaUnlockTest_NeonTV ${1};
+	MediaUnlockTest_SkyGONZ ${1};
+	MediaUnlockTest_ThreeNow ${1};
+	MediaUnlockTest_MaoriTV ${1};
 	echo "======================================="
 }
 
@@ -2484,17 +2747,19 @@ function Start(){
 		echo -e "${Font_SkyBlue}Input Number【4】：【 Multination + North America 】${Font_Suffix}"
 		echo -e "${Font_SkyBlue}Input Number【5】：【 Multination + South America 】${Font_Suffix}"
 		echo -e "${Font_SkyBlue}Input Number【6】：【 Multination + Europe 】${Font_Suffix}"
+		echo -e "${Font_SkyBlue}Input Number【7】：【 Multination + Oceania 】${Font_Suffix}"
 		echo -e "${Font_SkyBlue}Input Number【0】：【 Multination Only 】${Font_Suffix}" 
 		read -p "Please Input the Correct Number or Press ENTER:" num
 	else
 		echo -e "${Font_Blue}请选择检测项目，直接按回车将进行全区域检测${Font_Suffix}"
-		echo -e "${Font_SkyBlue}输入数字【1】：【跨国平台+台湾平台】检测${Font_Suffix}"
-		echo -e "${Font_SkyBlue}输入数字【2】：【跨国平台+香港平台】检测${Font_Suffix}"
-		echo -e "${Font_SkyBlue}输入数字【3】：【跨国平台+日本平台】检测${Font_Suffix}"
-		echo -e "${Font_SkyBlue}输入数字【4】：【跨国平台+北美平台】检测${Font_Suffix}"
-		echo -e "${Font_SkyBlue}输入数字【5】：【跨国平台+南美平台】检测${Font_Suffix}"
-		echo -e "${Font_SkyBlue}输入数字【6】：【跨国平台+欧洲平台】检测${Font_Suffix}"
-		echo -e "${Font_SkyBlue}输入数字【0】：【  只进行跨国平台 】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【1】：【 跨国平台+台湾平台 】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【2】：【 跨国平台+香港平台 】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【3】：【 跨国平台+日本平台 】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【4】：【 跨国平台+北美平台 】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【5】：【 跨国平台+南美平台 】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【6】：【 跨国平台+欧洲平台 】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【7】：【跨国平台+大洋洲平台】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【0】：【   只进行跨国平台  】检测${Font_Suffix}"
 		read -p "请输入正确数字或直接按回车:" num
 	fi	
 }
@@ -2591,6 +2856,21 @@ function RunScript(){
 				EU_UnlockTest 6
 			fi	
 			Goodbye
+			
+		elif [[ "$num" -eq 7 ]]; then
+			clear
+			ScriptTitle
+			CheckV4
+			if [[ "$isv4" -eq 1 ]];then
+				Global_UnlockTest 4
+				OA_UnlockTest 4
+			fi
+			CheckV6
+			if 	[[ "$isv6" -eq 1 ]];then
+				Global_UnlockTest 6
+				OA_UnlockTest 6
+			fi	
+			Goodbye	
 		
 		elif [[ "$num" -eq 0 ]]; then
 			clear
@@ -2622,6 +2902,7 @@ function RunScript(){
 			NA_UnlockTest 4	
 			SA_UnlockTest 4
 			EU_UnlockTest 4
+			OA_UnlockTest 4
 		fi	
 		CheckV6
 		if [[ "$isv6" -eq 1 ]];then
@@ -2632,6 +2913,7 @@ function RunScript(){
 			NA_UnlockTest 6	
 			SA_UnlockTest 6
 			EU_UnlockTest 6	
+			OA_UnlockTest 6
 		fi
 		Goodbye	
 	fi
