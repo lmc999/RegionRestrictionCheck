@@ -11,6 +11,8 @@
 
 **支持OS/Platform：CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android with Termux**
 
+iOS运行方法请参考[此处](https://github.com/lmc999/RegionRestrictionCheck/wiki/iOS%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC%E6%96%B9%E6%B3%95)
+
 + 优化了Disneyplus的判断准确性
 
 + 新增MyTVSuper解锁判断
