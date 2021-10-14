@@ -339,7 +339,7 @@ function MediaUnlockTest_UMAJP() {
 function MediaUnlockTest_Kancolle() {
     echo -n -e " Kancolle Japan:\t\t\t->\c";
     # 测试，连续请求两次 (单独请求一次可能会返回35, 第二次开始变成0)
-    local result=`curl $useNIC --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 http://203.104.209.7/kcscontents/`;
+    local result=`curl $useNIC --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 http://203.104.209.7/kcscontents/news/`;
     if [ "$result" = "000" ]; then
         echo -n -e "\r Kancolle Japan:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         elif [ "$result" = "200" ]; then
@@ -2432,6 +2432,28 @@ function MediaUnlockTest_9Now() {
 
 }
 
+function MediaUnlockTest_Telasa() {
+    echo -n -e " Telasa:\t\t\t\t->\c";
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -sS "https://api-videopass-playback.kddi-video.com/v1/playback/system_status" -H "Authorization: 8334ba7cf4c29f744b65d9119bb0d9553101d1ef8dd870fc87fbb0bdabcf60cc" -H "X-Device-ID: d36f8e6b-e344-4f5e-9a55-90aeb3403799" 2>&1);
+    if [[ "$tmpresult" == "curl"* ]]; then
+        echo -n -e "\r Telasa:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+	fi
+	local isForbidden=$(echo $tmpresult | grep IPLocationNotAllowed)
+	local isAllowed=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep '"type"' | cut -f4 -d'"')
+	if [ -n "$isForbidden" ]; then
+		echo -n -e "\r Telasa:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    elif [ -z "$isForbidden" ] && [[ "$isAllowed" == "OK" ]];then
+		echo -n -e "\r Telasa:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r Telasa:\t\t\t\t${Font_Red}Failed ${Font_Suffix}\n"
+	return;
+
+}
+
 function NA_UnlockTest() {
 	echo "===========[ North America ]==========="
 	MediaUnlockTest_Fox ${1};
@@ -2526,6 +2548,7 @@ function JP_UnlockTest() {
 	MediaUnlockTest_DMM ${1};
 	MediaUnlockTest_AbemaTV_IPTest ${1};
 	MediaUnlockTest_Niconico ${1};
+	MediaUnlockTest_Telasa ${1};
 	MediaUnlockTest_Paravi ${1};
 	MediaUnlockTest_unext ${1};
 	MediaUnlockTest_HuluJP ${1};
