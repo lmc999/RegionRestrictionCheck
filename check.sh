@@ -1709,7 +1709,7 @@ function MediaUnlockTest_CBCGem() {
 
 function MediaUnlockTest_AcornTV() {
     echo -n -e " Acorn TV:\t\t\t\t->\c";
-    local tmpresult=$(curl $useNIC -${1} ${ssll} -s --max-time 10  "https://acorn.tv/");
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -s -L --max-time 10  "https://acorn.tv/");
 	local isblocked=$(curl $useNIC -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://acorn.tv/")
     if [ -z "$tmpresult" ]; then
 		echo -n -e "\r Acorn TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2104,23 +2104,23 @@ function MediaUnlockTest_StarPlus() {
 }
 
 function MediaUnlockTest_DirecTVGO() {
-    echo -n -e " DriecTV Go:\t\t\t\t->\c";
+    echo -n -e " DirecTV Go:\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} -Ss -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.directvgo.com/registrarse" 2>&1);
     if [[ "$tmpresult" == "curl"* ]]; then
-        echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r DirecTV Go:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
 	fi
 	local isForbidden=$(echo $tmpresult | grep 'proximamente')
 	local region=$(echo $tmpresult | cut -f4 -d"/" | tr [:lower:] [:upper:])
 	if [ -n "$isForbidden" ]; then
-		echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		echo -n -e "\r DirecTV Go:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
     elif [ -z "$isForbidden" ] && [ -n "$region" ];then
-		echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
+		echo -n -e "\r DirecTV Go:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
 		return;
 	fi
 	
-	echo -n -e "\r DriecTV Go:\t\t\t\t${Font_Red}Failed ${Font_Suffix}\n"
+	echo -n -e "\r DirecTV Go:\t\t\t\t${Font_Red}Failed ${Font_Suffix}\n"
 	return;
 
 }
@@ -2596,8 +2596,6 @@ function SA_UnlockTest() {
 function OA_UnlockTest(){	
 	echo "==============[ Oceania ]=============="
 	MediaUnlockTest_NBATV ${1};
-	MediaUnlockTest_SlingTV ${1};
-	MediaUnlockTest_PlutoTV ${1};
 	MediaUnlockTest_AcornTV ${1};
 	MediaUnlockTest_SHOWTIME ${1};
 	MediaUnlockTest_BritBox ${1};
