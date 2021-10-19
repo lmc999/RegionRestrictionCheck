@@ -2434,7 +2434,7 @@ function MediaUnlockTest_9Now() {
 
 function MediaUnlockTest_Telasa() {
     echo -n -e " Telasa:\t\t\t\t->\c";
-    local tmpresult=$(curl $useNIC -${1} ${ssll} -sS "https://api-videopass-playback.kddi-video.com/v1/playback/system_status" -H "Authorization: 8334ba7cf4c29f744b65d9119bb0d9553101d1ef8dd870fc87fbb0bdabcf60cc" -H "X-Device-ID: d36f8e6b-e344-4f5e-9a55-90aeb3403799" 2>&1);
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -sS "https://api-videopass-anon.kddi-video.com/v1/playback/system_status" -H "X-Device-ID: d36f8e6b-e344-4f5e-9a55-90aeb3403799" 2>&1);
     if [[ "$tmpresult" == "curl"* ]]; then
         echo -n -e "\r Telasa:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
