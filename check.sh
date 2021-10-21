@@ -2454,6 +2454,101 @@ function MediaUnlockTest_Telasa() {
 
 }
 
+function MediaUnlockTest_SetantaSports() {
+    echo -n -e " Setanta Sports:\t\t\t->\c";
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -sS "https://dce-frontoffice.imggaming.com/api/v2/consent-prompt" -H "Realm: dce.adjara" -H "x-api-key: 857a1e5d-e35e-4fdf-805b-a87b6f8364bf" 2>&1);
+    if [[ "$tmpresult" == "curl"* ]] && [[ "$1" == "6" ]]; then
+        echo -n -e "\r Setanta Sports:\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+        return;
+	elif [[ "$tmpresult" == "curl"* ]];then
+		echo -n -e "\r Setanta Sports:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+	fi
+	local result=$(echo $tmpresult  | python -m json.tool 2> /dev/null | grep outsideAllowedTerritories | awk '{print $2}' | cut -f1 -d",")
+	if [[ "$result" == "true" ]]; then
+		echo -n -e "\r Setanta Sports:\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    elif [[ "$result" == "false" ]]; then
+		echo -n -e "\r Setanta Sports:\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r Setanta Sports:\t\t\t${Font_Red}Failed ${Font_Suffix}\n"
+	return;
+
+}
+
+function MediaUnlockTest_MolaTV() {
+    echo -n -e " MolaTV:\t\t\t\t->\c";
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -sS "https://mola.tv/api/v2/videos/geoguard/check/vd30491025" 2>&1);
+    if [[ "$tmpresult" == "curl"* ]] && [[ "$1" == "6" ]]; then
+        echo -n -e "\r MolaTV:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+        return;
+	elif [[ "$tmpresult" == "curl"* ]];then
+		echo -n -e "\r MolaTV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+	fi
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep isAllowed | awk '{print $2}')
+	if [[ "$result" == "true" ]]; then
+		echo -n -e "\r MolaTV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [[ "$result" == "false" ]]; then
+		echo -n -e "\r MolaTV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r MolaTV:\t\t\t\t${Font_Red}Failed ${Font_Suffix}\n"
+	return;
+
+}
+
+function MediaUnlockTest_BeinConnect() {
+    echo -n -e " Bein Sports Connect:\t\t\t->\c";
+    local result=$(curl $useNIC -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://proxies.bein-mena-production.eu-west-2.tuc.red/proxy/availableOffers");
+    if [ "$result" = "000" ] && [[ "$1" == "6" ]]; then
+		echo -n -e "\r Bein Sports Connect:\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+		return;
+	elif [ "$result" = "000" ]; then
+		echo -n -e "\r Bein Sports Connect:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;	
+    elif [ "$result" = "500" ]; then
+        echo -n -e "\r Bein Sports Connect:\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "451" ]; then
+        echo -n -e "\r Bein Sports Connect:\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    else
+        echo -n -e "\r Bein Sports Connect:\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
+function MediaUnlockTest_EurosportRO() {
+    echo -n -e " Eurosport RO:\t\t\t\t->\c";
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -sS "https://eu3-prod-direct.eurosport.ro/playback/v2/videoPlaybackInfo/sourceSystemId/eurosport-vid1560178?usePreAuth=true" -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSSUQ6ZXVyb3Nwb3J0OjlkMWU3MmYyLTdkYjItNDE2Yy1iNmIyLTAwZjQyMWRiN2M4NiIsImp0aSI6InRva2VuLTc0MDU0ZDE3LWFhNWUtNGI0ZS04MDM4LTM3NTE4YjBiMzE4OCIsImFub255bW91cyI6dHJ1ZSwiaWF0IjoxNjM0NjM0MzY0fQ.T7X_JOyvAr3-spU_6wh07re4W-fmbCxZdGaUSZiu1mw' 2>&1);
+    if [[ "$tmpresult" == "curl"* ]] && [[ "$1" == "6" ]]; then
+        echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+        return;
+	elif [[ "$tmpresult" == "curl"* ]];then
+		echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+	fi
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep access.denied.geoblocked)
+	if [ -n "$result" ]; then
+		echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    else
+		echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}Failed ${Font_Suffix}\n"
+	return;
+
+}
+
+
 function NA_UnlockTest() {
 	echo "===========[ North America ]==========="
 	MediaUnlockTest_Fox ${1};
@@ -2617,6 +2712,23 @@ function OA_UnlockTest(){
 	echo "======================================="
 }
 
+function Sport_UnlockTest(){	
+	echo "===============[ Sport ]==============="
+	MediaUnlockTest_Dazn ${1};
+	MediaUnlockTest_StarPlus ${1};
+	MediaUnlockTest_ESPNPlus ${1};
+	MediaUnlockTest_NBATV ${1};
+	MediaUnlockTest_FuboTV ${1};
+	MediaUnlockTest_MolaTV ${1};
+	MediaUnlockTest_SetantaSports ${1};
+	MediaUnlockTest_ElevenSportsTW ${1};
+	MediaUnlockTest_OptusSports ${1};
+	MediaUnlockTest_BeinConnect ${1};
+	MediaUnlockTest_EurosportRO ${1};
+	
+	echo "======================================="
+}
+
 function CheckV4() {
 	if [[ "$language" == "e" ]];then
 		if [[ "$NetworkType" == "6" ]];then
@@ -2770,6 +2882,7 @@ function Start(){
 		echo -e "${Font_SkyBlue}Input Number【6】：【 Multination + Europe 】${Font_Suffix}"
 		echo -e "${Font_SkyBlue}Input Number【7】：【 Multination + Oceania 】${Font_Suffix}"
 		echo -e "${Font_SkyBlue}Input Number【0】：【 Multination Only 】${Font_Suffix}" 
+		echo -e "${Font_SkyBlue}Input Number【99】：【 Sport Platforms 】${Font_Suffix}"
 		read -p "Please Input the Correct Number or Press ENTER:" num
 	else
 		echo -e "${Font_Blue}请选择检测项目，直接按回车将进行全区域检测${Font_Suffix}"
@@ -2781,6 +2894,7 @@ function Start(){
 		echo -e "${Font_SkyBlue}输入数字【6】：【 跨国平台+欧洲平台 】检测${Font_Suffix}"
 		echo -e "${Font_SkyBlue}输入数字【7】：【跨国平台+大洋洲平台】检测${Font_Suffix}"
 		echo -e "${Font_SkyBlue}输入数字【0】：【   只进行跨国平台  】检测${Font_Suffix}"
+		echo -e "${Font_SkyBlue}输入数字【99】 【   体育直播平台    】检测${Font_Suffix}"
 		read -p "请输入正确数字或直接按回车:" num
 	fi	
 }
@@ -2890,6 +3004,19 @@ function RunScript(){
 			if 	[[ "$isv6" -eq 1 ]];then
 				Global_UnlockTest 6
 				OA_UnlockTest 6
+			fi	
+			Goodbye	
+			
+		elif [[ "$num" -eq 99 ]]; then
+			clear
+			ScriptTitle
+			CheckV4
+			if [[ "$isv4" -eq 1 ]];then
+				Sport_UnlockTest 4
+			fi
+			CheckV6
+			if 	[[ "$isv6" -eq 1 ]];then
+				Sport_UnlockTest 6
 			fi	
 			Goodbye	
 		
