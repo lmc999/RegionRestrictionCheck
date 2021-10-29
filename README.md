@@ -112,27 +112,27 @@ iOS运行方法请参考[此处](https://github.com/lmc999/RegionRestrictionChec
 **使用脚本前请确认curl已安装**
 
 ````bash
-bash <(curl -L -s https://git.io/JRw8R)
+bash <(curl -L -s check.unlock.media)
 ````
 
 ##### 只检测IPv4结果：
 ````bash
-bash <(curl -L -s https://git.io/JRw8R) -M 4
+bash <(curl -L -s check.unlock.media) -M 4
 ````
 
 ##### 只检测IPv6结果：
 ````bash
-bash <(curl -L -s https://git.io/JRw8R) -M 6
+bash <(curl -L -s check.unlock.media) -M 6
 ````
 
 ##### 指定检测的网卡名称：
 ````bash
-bash <(curl -L -s https://git.io/JRw8R) -I eth0
+bash <(curl -L -s check.unlock.media) -I eth0
 ````
 
 ##### 选择脚本语言为英文：
 ````bash
-bash <(curl -L -s https://git.io/JRw8R) -L e
+bash <(curl -L -s check.unlock.media) -L e
 ````
 
 **或者直接运行以下Docker命令** (兼容ARM架构)
