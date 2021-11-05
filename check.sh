@@ -2553,6 +2553,48 @@ function MediaUnlockTest_EurosportRO() {
 
 }
 
+function MediaUnlockTest_DiscoveryPlusUK() {
+    echo -n -e " Discovery+ UK:\t\t\t\t->\c";
+	local GetToken=$(curl $useNIC -${1} ${ssll} -sS "https://disco-api.discoveryplus.co.uk/token?realm=questuk&deviceId=61ee588b07c4df08c02861ecc1366a592c4ad02d08e8228ecfee67501d98bf47&shortlived=true" 2>&1)
+    if [[ "$GetToken" == "curl"* ]] && [[ "$1" == "6" ]]; then
+        echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+        return;
+	elif [[ "$GetToken" == "curl"* ]]; then	
+		echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+	fi
+	local Token=$(echo $GetToken | python -m json.tool 2> /dev/null | grep '"token":' | cut -f4 -d'"')
+	local tmpresult=$(curl $useNIC -${1} ${ssll} -sS "https://disco-api.discoveryplus.co.uk/users/me" -b "st=${Token}" 2>&1);
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep currentLocationTerritory | cut -f4 -d'"')
+	if [[ "$result" == "gb" ]]; then
+		echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    else
+		echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}Failed ${Font_Suffix}\n"
+	return;
+
+}
+
+function MediaUnlockTest_Channel5() {
+    echo -n -e " Channel 5:\t\t\t\t->\c";
+    local result=$(curl $useNIC -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://cassie.channel5.com/api/v2/live_media/my5desktopng/C5.json?timestamp=1636098944&auth=0_rZDiY0hp_TNcDyk2uD-Kl40HqDbXs7hOawxyqPnbI")
+    if [ "$result" = "000" ] && [[ "$1" == "6" ]]; then
+        echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+	elif [ "$result" = "000" ]; then
+        echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"	
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r Channel 5:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+    fi
+}
+
 
 function NA_UnlockTest() {
 	echo "===========[ North America ]==========="
@@ -2592,7 +2634,9 @@ function EU_UnlockTest() {
 	MediaUnlockTest_BritBox ${1};
 	MediaUnlockTest_ITVHUB ${1};
 	MediaUnlockTest_Channel4 ${1};
+	MediaUnlockTest_Channel5 ${1};
 	MediaUnlockTest_BBCiPLAYER ${1};
+	MediaUnlockTest_DiscoveryPlusUK ${1};
 	ShowRegion FR	
 	MediaUnlockTest_Salto ${1};
 	MediaUnlockTest_CanalPlus ${1};
