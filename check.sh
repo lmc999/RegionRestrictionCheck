@@ -723,7 +723,7 @@ function MediaUnlockTest_SlingTV() {
 
 function MediaUnlockTest_PlutoTV() {
     echo -n -e " Pluto TV:\t\t\t\t->\c";
-    local tmpresult=$(curl $useNIC -${1} ${ssll} -sS -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://pluto.tv/" 2>&1);
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://pluto.tv/" 2>&1);
     if [[ "$tmpresult" == "curl"* ]]; then
         echo -n -e "\r Pluto TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
@@ -2141,11 +2141,16 @@ function MediaUnlockTest_DAM() {
 
 function MediaUnlockTest_DiscoveryPlus() {
     echo -n -e " Discovery+:\t\t\t\t->\c";
-    local tmpresult=$(curl $useNIC -${1} ${ssll} -sS "https://us1-prod-direct.discoveryplus.com/users/me" -b "_gcl_au=1.1.858579665.1632206782; _rdt_uuid=1632206782474.6a9ad4f2-8ef7-4a49-9d60-e071bce45e88; _scid=d154b864-8b7e-4f46-90e0-8b56cff67d05; _pin_unauth=dWlkPU1qWTRNR1ZoTlRBdE1tSXdNaTAwTW1Nd0xUbGxORFV0WWpZMU0yVXdPV1l6WldFeQ; _sctr=1|1632153600000; aam_fw=aam%3D9354365%3Baam%3D9040990; aam_uuid=24382050115125439381416006538140778858; st=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSSUQ6Z286NmY4N2JhOTktN2FiOC00NWFjLTg5ZDUtZTRlN2JhMTA3NDU4IiwianRpIjoidG9rZW4tN2UyMGFmMTAtYzBlMi00OWNkLTg2ZWUtYTNkYmYxYzYyMWQxIiwiYW5vbnltb3VzIjp0cnVlLCJpYXQiOjE2MzIyMDY3ODZ9.HakR2iZ9Ma9Hmcp1PXkR9J5GUjDAhEHu5b6ifzU5CIQ; gi_ls=0; _uetvid=a25161a01aa711ec92d47775379d5e4d; AMCV_BC501253513148ED0A490D45%40AdobeOrg=-1124106680%7CMCIDTS%7C18894%7CMCMID%7C24223296309793747161435877577673078228%7CMCAAMLH-1633011393%7C9%7CMCAAMB-1633011393%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCOPTOUT-1632413793s%7CNONE%7CvVersion%7C5.2.0; ass=19ef15da-95d6-4b1d-8fa2-e9e099c9cc38.1632408400.1632406594" 2>&1);
-    if [[ "$tmpresult" == "curl"* ]]; then
-        echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	local GetToken=$(curl $useNIC -${1} ${ssll} -sS "https://us1-prod-direct.discoveryplus.com/token?deviceId=d1a4a5d25212400d1e6985984604d740&realm=go&shortlived=true" 2>&1)
+    if [[ "$GetToken" == "curl"* ]] && [[ "$1" == "6" ]]; then
+        echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+        return;
+	elif [[ "$GetToken" == "curl"* ]]; then	
+		echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
 	fi
+	local Token=$(echo $GetToken | python -m json.tool 2> /dev/null | grep '"token":' | cut -f4 -d'"')
+	local tmpresult=$(curl $useNIC -${1} ${ssll} -sS "https://us1-prod-direct.discoveryplus.com/users/me" -b "_gcl_au=1.1.858579665.1632206782; _rdt_uuid=1632206782474.6a9ad4f2-8ef7-4a49-9d60-e071bce45e88; _scid=d154b864-8b7e-4f46-90e0-8b56cff67d05; _pin_unauth=dWlkPU1qWTRNR1ZoTlRBdE1tSXdNaTAwTW1Nd0xUbGxORFV0WWpZMU0yVXdPV1l6WldFeQ; _sctr=1|1632153600000; aam_fw=aam%3D9354365%3Baam%3D9040990; aam_uuid=24382050115125439381416006538140778858; st=${Token}; gi_ls=0; _uetvid=a25161a01aa711ec92d47775379d5e4d; AMCV_BC501253513148ED0A490D45%40AdobeOrg=-1124106680%7CMCIDTS%7C18894%7CMCMID%7C24223296309793747161435877577673078228%7CMCAAMLH-1633011393%7C9%7CMCAAMB-1633011393%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCOPTOUT-1632413793s%7CNONE%7CvVersion%7C5.2.0; ass=19ef15da-95d6-4b1d-8fa2-e9e099c9cc38.1632408400.1632406594" 2>&1);
 	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep currentLocationTerritory | cut -f4 -d'"')
 	if [[ "$result" == "us" ]]; then
 		echo -n -e "\r Discovery+:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
