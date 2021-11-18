@@ -2484,25 +2484,25 @@ function MediaUnlockTest_SetantaSports() {
 }
 
 function MediaUnlockTest_MolaTV() {
-    echo -n -e " MolaTV:\t\t\t\t->\c";
+    echo -n -e " Mola TV:\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} -sS "https://mola.tv/api/v2/videos/geoguard/check/vd30491025" 2>&1);
     if [[ "$tmpresult" == "curl"* ]] && [[ "$1" == "6" ]]; then
-        echo -n -e "\r MolaTV:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+        echo -n -e "\r Mola TV:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
         return;
 	elif [[ "$tmpresult" == "curl"* ]];then
-		echo -n -e "\r MolaTV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		echo -n -e "\r Mola TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
 	fi
 	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep isAllowed | awk '{print $2}')
 	if [[ "$result" == "true" ]]; then
-		echo -n -e "\r MolaTV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		echo -n -e "\r Mola TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;
     elif [[ "$result" == "false" ]]; then
-		echo -n -e "\r MolaTV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		echo -n -e "\r Mola TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
 	fi
 	
-	echo -n -e "\r MolaTV:\t\t\t\t${Font_Red}Failed ${Font_Suffix}\n"
+	echo -n -e "\r Mola TV:\t\t\t\t${Font_Red}Failed ${Font_Suffix}\n"
 	return;
 
 }
@@ -2875,9 +2875,6 @@ function Goodbye(){
 		echo -e ""
 		echo -e "========================================================="
 		echo -e "${Font_Red}If you found this script helpful, you can but me a coffee${Font_Suffix}"
-		echo -e "USDT: TL2iHGTADmAyWYCafBHF5vMbPe13zSyJu2"
-		echo -e "BTC: 3GmeB6zsrgu8FMB4z7dBAGmDEq4v6Td8EB"
-		echo -e "ETH：0x5A1a337270a36Bbbb5477BdD9C438c70a212C7fD"
 		echo -e "LTC：LQD4S6Y5bu3bHX6hx8ASsGHVfaqFGFNTbx"
 		echo -e "========================================================="
 	else	
@@ -2887,9 +2884,6 @@ function Goodbye(){
 		echo -e ""
 		echo -e "================================================"
 		echo -e "${Font_Red}如本项目对你有帮助，可考虑请作者喝一瓶营养快线${Font_Suffix}"
-		echo -e "USDT: TL2iHGTADmAyWYCafBHF5vMbPe13zSyJu2"
-		echo -e "BTC: 3GmeB6zsrgu8FMB4z7dBAGmDEq4v6Td8EB"
-		echo -e "ETH：0x5A1a337270a36Bbbb5477BdD9C438c70a212C7fD"
 		echo -e "LTC：LQD4S6Y5bu3bHX6hx8ASsGHVfaqFGFNTbx"
 		echo -e "================================================"
 	fi	
@@ -2903,7 +2897,7 @@ function ScriptTitle(){
 		echo ""
 		echo -e "${Font_Green}Github Repository:${Font_Suffix} ${Font_Yellow} https://github.com/lmc999/RegionRestrictionCheck ${Font_Suffix}";
 		echo -e "${Font_Green}Telegram Discussion Group:${Font_Suffix} ${Font_Yellow} https://t.me/gameaccelerate ${Font_Suffix}";
-		echo -e "${Font_Purple}Supporting OS: CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android with Termux${Font_Suffix}"
+		echo -e "${Font_Purple}Supporting OS: CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android with Termux, iOS with iSH${Font_Suffix}"
 		echo ""
 		echo -e " ** Test Starts At: $(date)";
 		echo ""
