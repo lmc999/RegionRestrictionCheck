@@ -1068,7 +1068,7 @@ function MediaUnlockTest_FOD() {
 
 function MediaUnlockTest_Tiktok_Region(){
     echo -n -e " Tiktok Region:\t\t\t\t->\c";
-    local Ftmpresult=$(curl $useNIC --user-agent "${UA_Browser}" -${1} ${ssll} -s --max-time 10 "https://www.tiktok.com/")
+    local Ftmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://www.tiktok.com/")
 	
 	if [ "$Ftmpresult" = "curl"* ]; then
 		echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1081,7 +1081,7 @@ function MediaUnlockTest_Tiktok_Region(){
         return;
 	fi
 	
-	local STmpresult=$(curl $useNIC --user-agent "${UA_Browser}" -${1} ${ssll} -s --max-time 10 "https://www.tiktok.com/" -b "s_v_web_id=verify_57c6380f8e4c609135d2afc9894e35ca; tt_csrf_token=73Z-2VskmVwMX0PyUtin6WWI; MONITOR_WEB_ID=verify_57c6380f8e4c609135d2afc9894e35ca")
+	local STmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://www.tiktok.com/" -b "s_v_web_id=verify_57c6380f8e4c609135d2afc9894e35ca; tt_csrf_token=73Z-2VskmVwMX0PyUtin6WWI; MONITOR_WEB_ID=verify_57c6380f8e4c609135d2afc9894e35ca")
 	local SRegion=$(echo $STmpresult | grep '"$region":"' | sed 's/.*"$region//' | cut -f3 -d'"')
 	if [ -n "$SRegion" ];then
         echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Yellow}${SRegion} (IDC IP Detected)${Font_Suffix}\n"
@@ -1119,7 +1119,7 @@ function MediaUnlockTest_YouTube_Premium() {
         return;
 		
     fi
-    local result=$(echo $tmpresult | grep 'YouTube and YouTube Music ad-free')
+    local result=$(echo $tmpresult | grep 'Try it free')
     if [ -n "$result" ]; then
         echo -n -e "\r YouTube Premium:\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
         return;
@@ -2595,6 +2595,30 @@ function MediaUnlockTest_Channel5() {
     fi
 }
 
+function MediaUnlockTest_MyVideo() {
+    echo -n -e " MyVideo:\t\t\t\t->\c";
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.myvideo.net.tw/login.do" 2>&1);
+    if [[ "$tmpresult" == "curl"* ]] && [[ "$1" == "6" ]]; then
+		echo -n -e "\r MyVideo:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+	elif [[ "$tmpresult" == "curl"* ]]; then 	
+        echo -n -e "\r MyVideo:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+    fi
+	
+	local result=$(echo $tmpresult | grep 'serviceAreaBlock')
+	if [ -n "$result" ]; then
+		echo -n -e "\r MyVideo:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+     else
+		echo -n -e "\r MyVideo:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r MyVideo:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	return;
+
+}
+
 
 function NA_UnlockTest() {
 	echo "===========[ North America ]==========="
@@ -2676,6 +2700,7 @@ function TW_UnlockTest(){
 	echo "==============[ Taiwan ]==============="
 	MediaUnlockTest_KKTV ${1};
 	MediaUnlockTest_LiTV ${1};
+	MediaUnlockTest_MyVideo ${1};
 	MediaUnlockTest_4GTV ${1};
 	MediaUnlockTest_LineTV.TW ${1};
 	MediaUnlockTest_HamiVideo ${1};
@@ -2875,6 +2900,7 @@ function Goodbye(){
 		echo -e ""
 		echo -e "========================================================="
 		echo -e "${Font_Red}If you found this script helpful, you can but me a coffee${Font_Suffix}"
+		echo -e ""
 		echo -e "LTC：LQD4S6Y5bu3bHX6hx8ASsGHVfaqFGFNTbx"
 		echo -e "========================================================="
 	else	
@@ -2884,6 +2910,7 @@ function Goodbye(){
 		echo -e ""
 		echo -e "================================================"
 		echo -e "${Font_Red}如本项目对你有帮助，可考虑请作者喝一瓶营养快线${Font_Suffix}"
+		echo -e ""
 		echo -e "LTC：LQD4S6Y5bu3bHX6hx8ASsGHVfaqFGFNTbx"
 		echo -e "================================================"
 	fi	
@@ -2906,7 +2933,7 @@ function ScriptTitle(){
 		echo ""
 		echo -e "${Font_Green}项目地址${Font_Suffix} ${Font_Yellow}https://github.com/lmc999/RegionRestrictionCheck ${Font_Suffix}";
 		echo -e "${Font_Green}BUG反馈或使用交流可加TG群组${Font_Suffix} ${Font_Yellow}https://t.me/gameaccelerate ${Font_Suffix}";
-		echo -e "${Font_Purple}脚本适配OS: CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android with Termux${Font_Suffix}"
+		echo -e "${Font_Purple}脚本适配OS: CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android with Termux, iOS with iSH${Font_Suffix}"
 		echo ""
 		echo -e " ** 测试时间: $(date)";
 		echo ""
