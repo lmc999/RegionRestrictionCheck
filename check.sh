@@ -1120,7 +1120,8 @@ function MediaUnlockTest_YouTube_Premium() {
 		
     fi
     local result=$(echo $tmpresult | grep 'Try it free')
-    if [ -n "$result" ]; then
+    local result2=$(echo $tmpresult | grep 'YouTube and YouTube Music ad-free')
+    if [ -n "$result" ] || [ -n "$result2" ] ; then
         echo -n -e "\r YouTube Premium:\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
         return;
 	else
