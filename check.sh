@@ -419,7 +419,17 @@ function MediaUnlockTest_YouTube_Region() {
 
 function MediaUnlockTest_DisneyPlus() {
 	echo -n -e " Disney+:\t\t\t\t->\c";
-    local disneycookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '1p')
+	local PreAssertion=$(curl $useNIC -${1} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://global.edge.bamgrid.com/devices" -H "authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -H "content-type: application/json; charset=UTF-8" -d '{"deviceFamily":"browser","applicationRuntime":"chrome","deviceProfile":"windows","attributes":{}}' 2>&1)
+    if [[ "$PreAssertion" == "curl"* ]] && [[ "$1" == "6" ]];then
+		echo -n -e "\r Disney+:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+        return;
+	elif [[ "$PreAssertion" == "curl"* ]];then
+		echo -n -e "\r Disney+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+	fi
+	local assertion=$(echo $PreAssertion | python -m json.tool 2> /dev/null | grep assertion | cut -f4 -d'"')
+	local PreDisneyCookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '1p')
+	local disneycookie=$(echo $PreDisneyCookie | sed "s/DISNEYASSERTION/${assertion}/g")
 	local TokenContent=$(curl $useNIC -${1} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://global.edge.bamgrid.com/token" -H "authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -d "$disneycookie")
 	local isBanned=$(echo $TokenContent | python -m json.tool 2> /dev/null | grep 'forbidden-location')
 	local is403=$(echo $TokenContent | grep '403 ERROR')
@@ -435,13 +445,7 @@ function MediaUnlockTest_DisneyPlus() {
 	local tmpresult=$(curl $useNIC -${1} --user-agent "${UA_Browser}" -X POST -sSL --max-time 10 "https://disney.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -d "$disneycontent" 2>&1)
 	local previewcheck=$(curl $useNIC -${1} -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://disneyplus.com" | grep preview)
 	local isUnabailable=$(echo $previewcheck | grep 'unavailable')	
-    
-    if [[ "$tmpresult" == "curl"* ]];then
-        echo -n -e "\r Disney+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        return;
-    fi
-	
-	local region=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'countryCode' | cut -f4 -d'"')
+    local region=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'countryCode' | cut -f4 -d'"')
 	local inSupportedLocation=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'inSupportedLocation' | awk '{print $2}' | cut -f1 -d',')
 	
     if [[ "$region" == "JP" ]];then
@@ -2908,10 +2912,10 @@ function Goodbye(){
 		echo -e ""
 		echo -e "${Font_Yellow}检测脚本当天运行次数：${TodayRunTimes}; 共计运行次数：${TotalRunTimes} ${Font_Suffix}"
 		echo -e ""
+		echo -e "${Font_SkyBlue}【荐鸡时刻】${Font_Suffix}"
 		echo -e "================================================"
-		echo -e "${Font_Red}如本项目对你有帮助，可考虑请作者喝一瓶营养快线${Font_Suffix}"
-		echo -e ""
-		echo -e "LTC：LQD4S6Y5bu3bHX6hx8ASsGHVfaqFGFNTbx"
+		echo -e "${Font_Yellow}DMIT TYO Lite系列 三网回程cmi 端口带宽1Gbps以及上${Font_Suffix}"
+		echo -e "${Font_Red}传送门：${Font_Suffix}https://www.dmit.io/aff.php?aff=3198"
 		echo -e "================================================"
 	fi	
 }
@@ -2924,7 +2928,7 @@ function ScriptTitle(){
 		echo ""
 		echo -e "${Font_Green}Github Repository:${Font_Suffix} ${Font_Yellow} https://github.com/lmc999/RegionRestrictionCheck ${Font_Suffix}";
 		echo -e "${Font_Green}Telegram Discussion Group:${Font_Suffix} ${Font_Yellow} https://t.me/gameaccelerate ${Font_Suffix}";
-		echo -e "${Font_Purple}Supporting OS: CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android with Termux, iOS with iSH${Font_Suffix}"
+		echo -e "${Font_Purple}Supporting OS: CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android (Termux), iOS (iSH)${Font_Suffix}"
 		echo ""
 		echo -e " ** Test Starts At: $(date)";
 		echo ""
@@ -2933,7 +2937,7 @@ function ScriptTitle(){
 		echo ""
 		echo -e "${Font_Green}项目地址${Font_Suffix} ${Font_Yellow}https://github.com/lmc999/RegionRestrictionCheck ${Font_Suffix}";
 		echo -e "${Font_Green}BUG反馈或使用交流可加TG群组${Font_Suffix} ${Font_Yellow}https://t.me/gameaccelerate ${Font_Suffix}";
-		echo -e "${Font_Purple}脚本适配OS: CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android with Termux, iOS with iSH${Font_Suffix}"
+		echo -e "${Font_Purple}脚本适配OS: CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android (Termux), iOS (iSH)${Font_Suffix}"
 		echo ""
 		echo -e " ** 测试时间: $(date)";
 		echo ""
