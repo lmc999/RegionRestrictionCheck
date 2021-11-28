@@ -2422,21 +2422,21 @@ function MediaUnlockTest_ABCiView() {
 
 }
 
-function MediaUnlockTest_9Now() {
-    echo -n -e " 9Now:\t\t\t\t\t->\c";
+function MediaUnlockTest_Channel9() {
+    echo -n -e " Channel 9:\t\t\t\t->\c";
     local result=$(curl $useNIC -${1} ${ssll} -Ss -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://login.nine.com.au" | grep 'geoblock');
     if [[ "$result" == "curl"* ]]; then
-        echo -n -e "\r 9Now:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r Channel 9:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
     elif [ -n "$result" ]; then
-		echo -n -e "\r 9Now:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		echo -n -e "\r Channel 9:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 		return;
      else
-		echo -n -e "\r 9Now:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		echo -n -e "\r Channel 9:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;
 	fi
 	
-	echo -n -e "\r 9Now:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	echo -n -e "\r Channel 9:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 	return;
 
 }
@@ -2623,6 +2623,56 @@ function MediaUnlockTest_MyVideo() {
 
 }
 
+function MediaUnlockTest_Channel7() {
+    echo -n -e " Channel 7:\t\t\t\t->\c";
+	local GetPlayURL=$(curl $useNIC -${1} ${ssll} -s --max-time 10 "https://csm-e-cen7uswxaws102j8-3stdkepcx398.tls1.yospace.com/csm/extlive/sevenprd01,SYD1.m3u8?appId=7plus&deviceType=web&platformType=web&ppId=fb6be76a8ae5ab97ae0cada9ce9c88675f1cea6c2bcf3da2c1ac1ae272994795&videoType=live&accountId=5650355166001&advertId=null&uaId=null&optinDeviceType=&optinAdTracking=0&tvid=null&pc=1000&deviceId=ab12092a-c770-41ee-b979-36712f130d49&mstatus=true&hl=zh&ozid=bfd6acf2-8319-4104-8745-35727d80eb77&vid=5652239841001&yo.hb=5000&pp=csai-web&custParams=rc%25253D1%252526y%25253D4%252526c%25253Dn%252526dpc%25253D2010%252526seriesid%25253D7NNS&y=4&c=n&dpc=2010&rc=1&yo.pp=aGRudHM9ZXhwPTE2MzgxNzE1ODF-YWNsPS8qfmhtYWM9NmNjZmU3NzZlNGZkNDFlYmI4YjRlMDVkOGY4YmQxMDkzN2NmYjMxMTMzZTRjZDE5ZTlkOTczOGNkOTBjZjhjNQ&yo.oh=Y3NtLWUtbjdhdXMtZWIudGxzMS55b3NwYWNlLmNvbQ==" > ~/chanel7.txt 2>&1)
+    if [[ "$GetPlayURL" == "curl"* ]] && [[ "$1" == "6" ]]; then
+		echo -n -e "\r Channel 7:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+	elif [[ "$GetPlayURL" == "curl"* ]]; then 	
+        echo -n -e "\r Channel 7:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+    fi
+	local PlayURL=$(cat ~/chanel7.txt | grep 'm3u8' | awk 'NR==2')
+	rm -rf ~/chanel7.txt
+	local Playlist=$(curl $useNIC -${1} ${ssll} -s --max-time 10 $PlayURL | grep akamaized | awk 'NR==2')
+	local result=$(curl $useNIC -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "$Playlist")
+    if [ "$result" = "000" ] && [[ "$1" == "6" ]]; then
+        echo -n -e "\r Channel 7:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+	elif [ "$result" = "000" ]; then
+        echo -n -e "\r Channel 7:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"	
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r Channel 7:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r Channel 7:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r Channel 7:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+    fi
+}
+
+function MediaUnlockTest_Channel10() {
+    echo -n -e " Channel 10:\t\t\t\t->\c";
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -sL --max-time 10 "https://10play.com.au/geo-web" 2>&1);
+    if [[ "$tmpresult" == "curl"* ]] && [[ "$1" == "6" ]]; then
+		echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+	elif [[ "$tmpresult" == "curl"* ]]; then 	
+        echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return;
+    fi
+	
+	local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep 'allow' | awk '{print $2}' | cut -f1 -d",")
+	if [[ "$result" == "false" ]]; then
+		echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    elif [[ "$result" == "true" ]]; then
+		echo -n -e "\r Channel 10:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+	fi
+	
+	echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	return;
+
+}
+
 
 function NA_UnlockTest() {
 	echo "===========[ North America ]==========="
@@ -2775,9 +2825,11 @@ function OA_UnlockTest(){
 	MediaUnlockTest_ParamountPlus ${1};
 	ShowRegion AU
 	MediaUnlockTest_Stan ${1};
-	MediaUnlockTest_9Now ${1};
 	MediaUnlockTest_Binge ${1};
 	MediaUnlockTest_Docplay ${1};
+	MediaUnlockTest_Channel7 ${1};
+	MediaUnlockTest_Channel9 ${1};
+	MediaUnlockTest_Channel10 ${1};
 	MediaUnlockTest_ABCiView ${1};
 	MediaUnlockTest_KayoSports ${1};
 	MediaUnlockTest_OptusSports ${1};
