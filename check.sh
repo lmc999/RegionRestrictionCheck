@@ -342,7 +342,7 @@ function MediaUnlockTest_WFJP() {
     local result=`curl $useNIC --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 https://api.worldflipper.jp/`;
     if [ "$result" = "000" ]; then
         echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        elif [ "$result" = "404" ]; then
+        elif [ "$result" = "200" ]; then
         echo -n -e "\r World Flipper Japan:\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         elif [ "$result" = "403" ]; then
         echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}No${Font_Suffix}\n"
