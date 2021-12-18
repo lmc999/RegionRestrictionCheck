@@ -309,7 +309,7 @@ function MediaUnlockTest_AbemaTV_IPTest() {
 function MediaUnlockTest_PCRJP() {
     echo -n -e " Princess Connect Re:Dive Japan:\t->\c";
     # 测试，连续请求两次 (单独请求一次可能会返回35, 第二次开始变成0)
-    local result=`curl $useNIC --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 https://api-priconne-redive.cygames.jp/`;
+    local result=`curl $useNIC --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 https://api-priconne-redive.jp/`;
     if [ "$result" = "000" ]; then
         echo -n -e "\r Princess Connect Re:Dive Japan:\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         elif [ "$result" = "404" ]; then
@@ -325,6 +325,21 @@ function MediaUnlockTest_UMAJP() {
     echo -n -e " Pretty Derby Japan:\t\t\t->\c";
     # 测试，连续请求两次 (单独请求一次可能会返回35, 第二次开始变成0)
     local result=`curl $useNIC --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 https://api-umamusume.cygames.jp/`;
+    if [ "$result" = "000" ]; then
+        echo -n -e "\r Pretty Derby Japan:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        elif [ "$result" = "404" ]; then
+        echo -n -e "\r Pretty Derby Japan:\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        elif [ "$result" = "403" ]; then
+        echo -n -e "\r Pretty Derby Japan:\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r Pretty Derby Japan:\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+    fi
+}
+
+function MediaUnlockTest_WFJP() {
+    echo -n -e " Pretty Derby Japan:\t\t\t->\c";
+    # 测试，连续请求两次 (单独请求一次可能会返回35, 第二次开始变成0)
+    local result=`curl $useNIC --user-agent "${UA_Dalvik}" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 https://api.worldflipper.jp/`;
     if [ "$result" = "000" ]; then
         echo -n -e "\r Pretty Derby Japan:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         elif [ "$result" = "404" ]; then
@@ -2786,6 +2801,7 @@ function JP_UnlockTest() {
 	MediaUnlockTest_KonosubaFD ${1};
 	MediaUnlockTest_PCRJP ${1};
 	MediaUnlockTest_ProjectSekai ${1};
+	MediaUnlockTest_WFJP ${1};
 	echo "======================================="
 }	
 
