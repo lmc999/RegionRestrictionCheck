@@ -2800,8 +2800,8 @@ function JP_UnlockTest() {
 	MediaUnlockTest_UMAJP ${1};
 	MediaUnlockTest_KonosubaFD ${1};
 	MediaUnlockTest_PCRJP ${1};
-	MediaUnlockTest_ProjectSekai ${1};
 	MediaUnlockTest_WFJP ${1};
+	MediaUnlockTest_ProjectSekai ${1};
 	echo "======================================="
 }	
 
