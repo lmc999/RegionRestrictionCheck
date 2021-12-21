@@ -2067,7 +2067,7 @@ function MediaUnlockTest_ElevenSportsTW() {
     if [ "$result" = "000" ]; then
         echo -n -e "\r Eleven Sports TW:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
-    elif [ "$result" = "401" ]; then
+    elif [ "$result" = "200" ]; then
         echo -n -e "\r Eleven Sports TW:\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 		return;
     elif [ "$result" = "403" ]; then
@@ -2600,14 +2600,14 @@ function MediaUnlockTest_DiscoveryPlusUK() {
 
 function MediaUnlockTest_Channel5() {
     echo -n -e " Channel 5:\t\t\t\t->\c";
-    local result=$(curl $useNIC -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://cassie.channel5.com/api/v2/live_media/my5desktopng/C5.json?timestamp=1636098944&auth=0_rZDiY0hp_TNcDyk2uD-Kl40HqDbXs7hOawxyqPnbI")
-    if [ "$result" = "000" ] && [[ "$1" == "6" ]]; then
+	local Timestamp=$(date +%s)
+    local tmpresult=$(curl $useNIC -${1} ${ssll} -sL --max-time 10 "https://cassie.channel5.com/api/v2/live_media/my5desktopng/C5.json?timestamp=${Timestamp}&auth=0_rZDiY0hp_TNcDyk2uD-Kl40HqDbXs7hOawxyqPnbI" 2>&1)
+    local result=$(echo $tmpresult | python -m json.tool 2> /dev/null | grep code | cut -f4 -d'"') 
+	if [ -z "$result" ] && [[ "$1" == "6" ]]; then
         echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
-	elif [ "$result" = "000" ]; then
-        echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"	
-    elif [ "$result" = "200" ]; then
+	elif [[ "$result" == "4003" ]]; then
         echo -n -e "\r Channel 5:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-    elif [ "$result" = "403" ]; then
+    elif [ -n "$result" ] && [[ "$result" != "4003" ]]; then
         echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     else
         echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
