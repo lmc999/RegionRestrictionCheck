@@ -2081,19 +2081,7 @@ function MediaUnlockTest_ElevenSportsTW() {
 
 function MediaUnlockTest_StarPlus() {
 	echo -n -e " Star+:\t\t\t\t\t->\c";
-    local starcookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '9p')
-	local TokenContent=$(curl $useNIC -${1} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://star.api.edge.bamgrid.com/token" -H "authorization: Bearer c3RhciZicm93c2VyJjEuMC4w.COknIGCR7I6N0M5PGnlcdbESHGkNv7POwhFNL-_vIdg" -d "$starcookie")
-	local isBanned=$(echo $TokenContent | python -m json.tool 2> /dev/null | grep 'forbidden-location')
-	local is403=$(echo $TokenContent | grep '403 ERROR')
-	
-	if [ -n "$isBanned" ] || [ -n "$is403" ];then
-		echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-		return;
-	fi
-	
-	local fakecontent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '10p')
-	local refreshToken=$(echo $TokenContent | python -m json.tool 2> /dev/null | grep 'refresh_token' | awk '{print $2}' | cut -f2 -d'"')
-    local starcontent=$(echo $fakecontent | sed "s/ILOVESTAR/${refreshToken}/g")
+    local starcontent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '10p')
 	local tmpresult=$(curl $useNIC -${1} --user-agent "${UA_Browser}" -X POST -sSL --max-time 10 "https://star.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: c3RhciZicm93c2VyJjEuMC4w.COknIGCR7I6N0M5PGnlcdbESHGkNv7POwhFNL-_vIdg" -d "$starcontent" 2>&1)
 	local previewcheck=$(curl $useNIC -${1} -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.starplus.com/login")
 	local isUnavailable=$(echo $previewcheck | grep unavailable)
