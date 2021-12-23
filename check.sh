@@ -2976,6 +2976,12 @@ function Goodbye(){
 		echo -e "${Font_Green}半年付八折【Lite-Semi-Annually-Recur-20OFF】 ${Font_Suffix}"
 		echo -e "${Font_Red}传送门：${Font_Suffix}https://www.dmit.io/aff.php?aff=3198"
 		echo -e "================================================"
+		echo -e ""
+		echo -e "================================================"
+		echo -e "${Font_Yellow}光圈科技 全线产品保证Netflix解锁及Google定位(随机v6 IP)${Font_Suffix}"
+		echo -e "${Font_Red}传送门：${Font_Suffix}https://hosting.apernet.io/?affid=79"
+		echo -e "================================================"
+		
 	fi	
 }
 
