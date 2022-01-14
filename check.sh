@@ -2976,6 +2976,17 @@ function Goodbye(){
 		echo -e "${Font_Green}半年付八折【Lite-Semi-Annually-Recur-20OFF】 ${Font_Suffix}"
 		echo -e "${Font_Red}传送门：${Font_Suffix}https://www.dmit.io/aff.php?aff=3198"
 		echo -e "================================================"
+		echo -e ""
+		echo -e ""
+		echo -e ""
+		echo -e ""
+		echo -e "${Font_Red}**************************${Font_Suffix}"
+		echo -e "${Font_Red}*                        *${Font_Suffix}"
+		echo -e "${Font_Red}*${Font_Suffix} 新春广告招租           ${Font_Red}*${Font_Suffix}"
+		echo -e "${Font_Red}*${Font_Suffix} 请联系：@reidschat_bot ${Font_Red}*${Font_Suffix}"
+		echo -e "${Font_Red}*                        *${Font_Suffix}"
+		echo -e "${Font_Red}**************************${Font_Suffix}"
+		
 		
 	fi	
 }
