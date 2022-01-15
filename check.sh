@@ -1,5 +1,5 @@
 #!/bin/bash
-
+shopt -s expand_aliases
 Font_Black="\033[30m";
 Font_Red="\033[31m";
 Font_Green="\033[32m";
@@ -104,8 +104,9 @@ check_dependencies(){
 		if [[ "$?" -ne "0" ]];then
 			python3 -V > /dev/null 2>&1
 			if [[ "$?" -eq "0" ]];then
-				python3_patch=$(which python3)
-				ln -s $python3_patch /usr/bin/python > /dev/null 2>&1
+				alias python="python3"
+				# python3_patch=$(which python3)
+				# ln -s $python3_patch /usr/bin/python > /dev/null 2>&1
 			else
 				if [ -n "$if_debian" ];then
 					echo -e "${Font_Green}Installing python${Font_Suffix}" 
