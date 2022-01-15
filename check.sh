@@ -85,14 +85,11 @@ checkCPU
 
 check_dependencies(){
 
-	os_detail=$(cat /etc/os-release 2> /dev/null)
-	if_debian=$(echo $os_detail | grep 'ebian')
-	if_redhat=$(echo $os_detail | grep 'rhel')
-	if [ -n "$if_debian" ];then
+	# os_detail=$(cat /etc/os-release 2> /dev/null)
+
+	if [ "$(which apt 2>/dev/null)" ];then
 		InstallMethod="apt"
-	elif [ -n "$if_redhat" ] && [[ "$os_version" -gt 7 ]];then
-		InstallMethod="dnf"
-	elif [ -n "$if_redhat" ] && [[ "$os_version" -lt 8 ]];then
+	elif [ "$(which dnf 2>/dev/null)" ] || [ "$(which yum 2>/dev/null)" ];then
 		InstallMethod="yum"
 	elif [[ "$os_version" == "Termux" ]];then
 		InstallMethod="pkg"
