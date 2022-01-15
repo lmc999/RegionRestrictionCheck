@@ -106,11 +106,11 @@ check_dependencies(){
 		if command -v python3 &> /dev/null; then
 			alias python="python3"
 		else
-			if [ "$is_debian" -eq 1 ];then
+			if [ "$is_debian" == 1 ];then
 				echo -e "${Font_Green}Installing python${Font_Suffix}" 
 				$InstallMethod update  > /dev/null 2>&1
 				$InstallMethod install python -y  > /dev/null 2>&1
-			elif [ "$is_redhat" -eq 1 ];then
+			elif [ "$is_redhat" == 1 ];then
 				echo -e "${Font_Green}Installing python${Font_Suffix}"
 				if [[ "$os_version" -gt 7 ]];then
 					$InstallMethod update  > /dev/null 2>&1
@@ -122,12 +122,12 @@ check_dependencies(){
 					$InstallMethod install python -y > /dev/null 2>&1
 				fi	
 				
-			elif [ "$is_termux" -eq 1 ];then
+			elif [ "$is_termux" == 1 ];then
 				echo -e "${Font_Green}Installing python${Font_Suffix}"
 				$InstallMethod update -y > /dev/null 2>&1
 				$InstallMethod install python -y > /dev/null 2>&1
 				
-			elif [ "$is_macos" -eq 1 ];then
+			elif [ "$is_macos" == 1 ];then
 				echo -e "${Font_Green}Installing python${Font_Suffix}"
 				$InstallMethod install python	
 			fi
@@ -135,25 +135,25 @@ check_dependencies(){
 	fi
 	
 	if ! command -v dig &> /dev/null; then
-		if [ "$is_debian" -eq 1 ];then
+		if [ "$is_debian" == 1 ];then
 			echo -e "${Font_Green}Installing dnsutils${Font_Suffix}"
 			$InstallMethod update  > /dev/null 2>&1
 			$InstallMethod install dnsutils -y > /dev/null 2>&1
-		elif [ "$is_redhat" -eq 1 ];then
+		elif [ "$is_redhat" == 1 ];then
 			echo -e "${Font_Green}Installing bind-utils${Font_Suffix}"
 			$InstallMethod update  > /dev/null 2>&1
 			$InstallMethod install bind-utils -y > /dev/null 2>&1
-		elif [ "$is_termux" -eq 1 ];then
+		elif [ "$is_termux" == 1 ];then
 			echo -e "${Font_Green}Installing dnsutils${Font_Suffix}"
 			$InstallMethod update -y > /dev/null 2>&1
 			$InstallMethod install dnsutils -y > /dev/null 2>&1	
-		elif [ "$is_macos" -eq 1 ];then
+		elif [ "$is_macos" == 1 ];then
 			echo -e "${Font_Green}Installing bind${Font_Suffix}"
 			$InstallMethod install bind	
 		fi
 	fi	
 
-	if [ "$is_macos" -eq 1 ];then
+	if [ "$is_macos" == 1 ];then
 		if ! command -v md5sum &> /dev/null; then
 			echo -e "${Font_Green}Installing md5sha1sum${Font_Suffix}"
 			$InstallMethod install md5sha1sum
