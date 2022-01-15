@@ -57,14 +57,29 @@ checkos(){
 	ifMacOS=$(uname -a | grep Darwin)
 	if [ -n "$ifTermux" ];then
 		os_version=Termux
+		is_termux=1
 	elif [ -n "$ifMacOS" ];then
-		os_version=MacOS	
+		os_version=MacOS
+		is_macos=1
 	else	
 		os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
 	fi
 	
 	if [[ "$os_version" == "2004" ]] || [[ "$os_version" == "10" ]] || [[ "$os_version" == "11" ]];then
+		is_windows=1
 		ssll="-k --ciphers DEFAULT@SECLEVEL=1"
+	fi
+
+	if [ "$(which apt 2>/dev/null)" ];then
+		InstallMethod="apt"
+		is_debian=1
+	elif [ "$(which dnf 2>/dev/null)" ] || [ "$(which yum 2>/dev/null)" ];then
+		InstallMethod="yum"
+		is_redhat=1
+	elif [[ "$os_version" == "Termux" ]];then
+		InstallMethod="pkg"
+	elif [[ "$os_version" == "MacOS" ]];then
+		InstallMethod="brew"
 	fi
 }
 checkos	
@@ -87,80 +102,64 @@ check_dependencies(){
 
 	# os_detail=$(cat /etc/os-release 2> /dev/null)
 
-	if [ "$(which apt 2>/dev/null)" ];then
-		InstallMethod="apt"
-	elif [ "$(which dnf 2>/dev/null)" ] || [ "$(which yum 2>/dev/null)" ];then
-		InstallMethod="yum"
-	elif [[ "$os_version" == "Termux" ]];then
-		InstallMethod="pkg"
-	elif [[ "$os_version" == "MacOS" ]];then
-		InstallMethod="brew"	
+	if ! command -v python &> /dev/null; then
+		if command -v python3 &> /dev/null; then
+			alias python="python3"
+		else
+			if [ "$is_debian" -eq 1 ];then
+				echo -e "${Font_Green}Installing python${Font_Suffix}" 
+				$InstallMethod update  > /dev/null 2>&1
+				$InstallMethod install python -y  > /dev/null 2>&1
+			elif [ "$is_redhat" -eq 1 ];then
+				echo -e "${Font_Green}Installing python${Font_Suffix}"
+				if [[ "$os_version" -gt 7 ]];then
+					$InstallMethod update  > /dev/null 2>&1
+					$InstallMethod install python3 -y > /dev/null 2>&1
+					python3_patch=$(which python3)
+					ln -s $python3_patch /usr/bin/python
+				else
+					$InstallMethod update  > /dev/null 2>&1
+					$InstallMethod install python -y > /dev/null 2>&1
+				fi	
+				
+			elif [ "$is_termux" -eq 1 ];then
+				echo -e "${Font_Green}Installing python${Font_Suffix}"
+				$InstallMethod update -y > /dev/null 2>&1
+				$InstallMethod install python -y > /dev/null 2>&1
+				
+			elif [ "$is_macos" -eq 1 ];then
+				echo -e "${Font_Green}Installing python${Font_Suffix}"
+				$InstallMethod install python	
+			fi
+		fi
 	fi
 	
-	python -V > /dev/null 2>&1
-		if [[ "$?" -ne "0" ]];then
-			python3 -V > /dev/null 2>&1
-			if [[ "$?" -eq "0" ]];then
-				alias python="python3"
-				# python3_patch=$(which python3)
-				# ln -s $python3_patch /usr/bin/python > /dev/null 2>&1
-			else
-				if [ -n "$if_debian" ];then
-					echo -e "${Font_Green}Installing python${Font_Suffix}" 
-					$InstallMethod update  > /dev/null 2>&1
-					$InstallMethod install python -y  > /dev/null 2>&1
-				elif [ -n "$if_redhat" ];then
-					echo -e "${Font_Green}Installing python${Font_Suffix}"
-					if [[ "$os_version" -gt 7 ]];then
-						$InstallMethod update  > /dev/null 2>&1
-						$InstallMethod install python3 -y > /dev/null 2>&1
-						python3_patch=$(which python3)
-						ln -s $python3_patch /usr/bin/python
-					else
-						$InstallMethod update  > /dev/null 2>&1
-						$InstallMethod install python -y > /dev/null 2>&1
-					fi	
-					
-				elif [[ "$os_version" == "Termux" ]];then
-					echo -e "${Font_Green}Installing python${Font_Suffix}"
-					$InstallMethod update -y > /dev/null 2>&1
-					$InstallMethod install python -y > /dev/null 2>&1
-					
-				elif [[ "$os_version" == "MacOS" ]];then
-					echo -e "${Font_Green}Installing python${Font_Suffix}"
-					$InstallMethod install python	
-					
-				fi
-			fi	
-		fi
-	
-	dig -v  > /dev/null 2>&1
-	if [[ "$?" -ne "0" ]];then
-		if [[ "$InstallMethod" == "apt" ]];then
+	if ! command -v dig &> /dev/null; then
+		if [ "$is_debian" -eq 1 ];then
 			echo -e "${Font_Green}Installing dnsutils${Font_Suffix}"
 			$InstallMethod update  > /dev/null 2>&1
 			$InstallMethod install dnsutils -y > /dev/null 2>&1
-		elif [[ "$InstallMethod" == "yum" ]];then
+		elif [ "$is_redhat" -eq 1 ];then
 			echo -e "${Font_Green}Installing bind-utils${Font_Suffix}"
 			$InstallMethod update  > /dev/null 2>&1
 			$InstallMethod install bind-utils -y > /dev/null 2>&1
-		elif [[ "$InstallMethod" == "pkg" ]];then
+		elif [ "$is_termux" -eq 1 ];then
 			echo -e "${Font_Green}Installing dnsutils${Font_Suffix}"
 			$InstallMethod update -y > /dev/null 2>&1
 			$InstallMethod install dnsutils -y > /dev/null 2>&1	
-		elif [[ "$InstallMethod" == "brew" ]];then
+		elif [ "$is_macos" -eq 1 ];then
 			echo -e "${Font_Green}Installing bind${Font_Suffix}"
 			$InstallMethod install bind	
 		fi
 	fi	
-	
-	if [[ "$os_version" == "MacOS" ]];then
-		md5sum /dev/null > /dev/null 2>&1
-		if [[ "$?" -ne "0" ]];then
+
+	if [ "$is_macos" -eq 1 ];then
+		if ! command -v md5sum &> /dev/null; then
 			echo -e "${Font_Green}Installing md5sha1sum${Font_Suffix}"
 			$InstallMethod install md5sha1sum
 		fi
-	fi		
+	fi
+
 }		
 check_dependencies
 
