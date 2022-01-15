@@ -947,7 +947,7 @@ function MediaUnlockTest_Salto(){
 function MediaUnlockTest_LineTV.TW() {
     echo -n -e " LineTV.TW:\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} -s --max-time 10 "https://www.linetv.tw/api/part/11829/eps/1/part?chocomemberId=");
-    if [ "$tmpresult" = "curl"* ]; then
+    if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1030,7 +1030,7 @@ function MediaUnlockTest_ParamountPlus() {
 function MediaUnlockTest_KKTV() {
     echo -n -e " KKTV:\t\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} -s --max-time 10 "https://api.kktv.me/v3/ipcheck");
-    if [ "$tmpresult" = "curl"* ]; then
+    if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r KKTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1067,7 +1067,7 @@ function MediaUnlockTest_PeacockTV() {
 function MediaUnlockTest_FOD() {
 	echo -n -e " FOD(Fuji TV):\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} -s --max-time 10 "https://geocontrol1.stream.ne.jp/fod-geo/check.xml?time=1624504256");
-	if [ "$tmpresult" = "curl"* ]; then
+	if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1086,7 +1086,7 @@ function MediaUnlockTest_Tiktok_Region(){
     echo -n -e " Tiktok Region:\t\t\t\t->\c";
     local Ftmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://www.tiktok.com/")
 	
-	if [ "$Ftmpresult" = "curl"* ]; then
+	if [[ "$Ftmpresult" = "curl"* ]]; then
 		echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1203,7 +1203,7 @@ function MediaUnlockTest_PrimeVideo_Region(){
     echo -n -e " Amazon Prime Video:\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://www.primevideo.com")
 	
-	if [ "$tmpresult" = "curl"* ]; then
+	if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1223,7 +1223,7 @@ function MediaUnlockTest_Radiko(){
     echo -n -e " Radiko:\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://radiko.jp/area?_=1625406539531")
 	
-	if [ "$tmpresult" = "curl"* ]; then
+	if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r Radiko:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1250,7 +1250,7 @@ function MediaUnlockTest_DMM(){
     echo -n -e " DMM:\t\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://api-p.videomarket.jp/v3/api/play/keyauth?playKey=4c9e93baa7ca1fc0b63ccf418275afc2&deviceType=3&bitRate=0&loginFlag=0&connType=" -H "X-Authorization: 2bCf81eLJWOnHuqg6nNaPZJWfnuniPTKz9GXv5IS")
 	
-	if [ "$tmpresult" = "curl"* ]; then
+	if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1275,7 +1275,7 @@ function MediaUnlockTest_DMM(){
 function MediaUnlockTest_Catchplay() {
     echo -n -e " CatchPlay+:\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} -s --max-time 10 "https://sunapi.catchplay.com/geo" -H "authorization: Basic NTQ3MzM0NDgtYTU3Yi00MjU2LWE4MTEtMzdlYzNkNjJmM2E0Ok90QzR3elJRR2hLQ01sSDc2VEoy");
-    if [ "$tmpresult" = "curl"* ]; then
+    if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1327,7 +1327,7 @@ function MediaUnlockTest_HotStar() {
 function MediaUnlockTest_LiTV() {
     echo -n -e " LiTV:\t\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} -sS --max-time 10 -X POST "https://www.litv.tv/vod/ajax/getUrl" -d '{"type":"noauth","assetId":"vod44868-010001M001_800K","puid":"6bc49a81-aad2-425c-8124-5b16e9e01337"}'  -H "Content-Type: application/json" 2>&1);
-    if [ "$tmpresult" = "curl"* ]; then
+    if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
