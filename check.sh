@@ -164,7 +164,9 @@ check_dependencies(){
 check_dependencies
 
 local_ipv4=$(curl $useNIC -4 -s --max-time 10 api64.ipify.org)
+local_ipv4_asterisk=$(awk -F"." '{print $1"."$2".*.*"}'<<<"${local_ipv4}")
 local_ipv6=$(curl $useNIC -6 -s --max-time 20 api64.ipify.org)
+local_ipv6_asterisk=$(awk -F":" '{print $1":"$2":"$3":*:*"}'<<<"${local_ipv6}")
 local_isp4=$(curl $useNIC -s -4 --max-time 10 https://api.ip.sb/geoip/${local_ipv4} | cut -f1 -d"," | cut -f4 -d '"')
 local_isp6=$(curl $useNIC -s -6 --max-time 10 https://api.ip.sb/geoip/${local_ipv6} | cut -f1 -d"," | cut -f4 -d '"')
 		
@@ -2869,7 +2871,7 @@ function CheckV4() {
 		else
 			echo -e " ${Font_SkyBlue}** Checking Results Under IPv4${Font_Suffix} "
 			echo "--------------------------------"
-			echo -e " ${Font_SkyBlue}** Your Network Provider: ${local_isp4}${Font_Suffix} "
+			echo -e " ${Font_SkyBlue}** Your Network Provider: ${local_isp4} (${local_ipv4_asterisk})${Font_Suffix} "
 			check4=`ping 1.1.1.1 -c 1 2>&1`;
 			if [[ "$check4" != *"unreachable"* ]] && [[ "$check4" != *"Unreachable"* ]];then
 				isv4=1
@@ -2888,7 +2890,7 @@ function CheckV4() {
 		else
 			echo -e " ${Font_SkyBlue}** 正在测试IPv4解锁情况${Font_Suffix} "
 			echo "--------------------------------"
-			echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp4}${Font_Suffix} "
+			echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp4} (${local_ipv4_asterisk})${Font_Suffix} "
 			check4=`ping 1.1.1.1 -c 1 2>&1`;
 			if [[ "$check4" != *"unreachable"* ]] && [[ "$check4" != *"Unreachable"* ]];then
 				isv4=1
@@ -2915,7 +2917,7 @@ function CheckV6() {
 				echo ""
 				echo -e " ${Font_SkyBlue}** Checking Results Under IPv6${Font_Suffix} "
 				echo "--------------------------------"
-				echo -e " ${Font_SkyBlue}** Your Network Provider: ${local_isp6}${Font_Suffix} "
+				echo -e " ${Font_SkyBlue}** Your Network Provider: ${local_isp6} (${local_ipv6_asterisk})${Font_Suffix} "
 				isv6=1
 			else
 				echo -e "${Font_SkyBlue}No IPv6 Connectivity Found, Abort IPv6 Testing...${Font_Suffix}"
@@ -2937,7 +2939,7 @@ function CheckV6() {
 				echo ""
 				echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
 				echo "--------------------------------"
-				echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp6}${Font_Suffix} "
+				echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp6} (${local_ipv6_asterisk})${Font_Suffix} "
 				isv6=1
 			else
 				echo -e "${Font_SkyBlue}当前主机不支持IPv6,跳过...${Font_Suffix}"
