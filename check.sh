@@ -49,7 +49,6 @@ count_file=$(mktemp --suffix=RRC)
 RunTimes=$(curl -s --max-time 10 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Flmc999%2FRegionRestrictionCheck%2Fmain%2Fcheck.sh&count_bg=%2379C83D&title_bg=%2300B1FF&icon=&icon_color=%23E7E7E7&title=script+run+times&edge_flat=false" > "${count_file}")
 TodayRunTimes=$(cat "${count_file}" | tail -3 | head -n 1 | awk '{print $5}')
 TotalRunTimes=$(cat "${count_file}" | tail -3 | head -n 1 | awk '{print $7}')
-rm -rf ~/couting.txt
 }
 CountRunTimes
 
@@ -114,12 +113,11 @@ check_dependencies(){
 			elif [ "$is_redhat" == 1 ];then
 				echo -e "${Font_Green}Installing python${Font_Suffix}"
 				if [[ "$os_version" -gt 7 ]];then
-					$InstallMethod update  > /dev/null 2>&1
+					$InstallMethod makecache > /dev/null 2>&1
 					$InstallMethod install python3 -y > /dev/null 2>&1
-					python3_patch=$(which python3)
-					ln -s $python3_patch /usr/bin/python
+					alias python="python3"
 				else
-					$InstallMethod update  > /dev/null 2>&1
+					$InstallMethod makecache > /dev/null 2>&1
 					$InstallMethod install python -y > /dev/null 2>&1
 				fi	
 				
@@ -142,7 +140,7 @@ check_dependencies(){
 			$InstallMethod install dnsutils -y > /dev/null 2>&1
 		elif [ "$is_redhat" == 1 ];then
 			echo -e "${Font_Green}Installing bind-utils${Font_Suffix}"
-			$InstallMethod update  > /dev/null 2>&1
+			$InstallMethod makecache > /dev/null 2>&1
 			$InstallMethod install bind-utils -y > /dev/null 2>&1
 		elif [ "$is_termux" == 1 ];then
 			echo -e "${Font_Green}Installing dnsutils${Font_Suffix}"
