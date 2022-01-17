@@ -1,5 +1,5 @@
 #!/bin/bash
-
+shopt -s expand_aliases
 Font_Black="\033[30m";
 Font_Red="\033[31m";
 Font_Green="\033[32m";
@@ -45,10 +45,18 @@ WOWOW_Cookie=$(curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictio
 TVer_Cookie="Accept: application/json;pk=BCpkADawqM3ZdH8iYjCnmIpuIRqzCn12gVrtpk_qOePK3J9B6h7MuqOw5T_qIqdzpLvuvb_hTvu7hs-7NsvXnPTYKd9Cgw7YiwI9kFfOOCDDEr20WDEYMjGiLptzWouXXdfE996WWM8myP3Z"
 
 CountRunTimes(){
-RunTimes=$(curl -s --max-time 10 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Flmc999%2FRegionRestrictionCheck%2Fmain%2Fcheck.sh&count_bg=%2379C83D&title_bg=%2300B1FF&icon=&icon_color=%23E7E7E7&title=script+run+times&edge_flat=false" > ~/couting.txt)
-TodayRunTimes=$(cat ~/couting.txt | tail -3 | head -n 1 | awk '{print $5}')
-TotalRunTimes=$(cat ~/couting.txt | tail -3 | head -n 1 | awk '{print $7}')
-rm -rf ~/couting.txt
+if ! mktemp -u --suffix=RRC &>/dev/null; then
+	is_busybox=1
+fi
+
+if [ "$is_busybox" == 1 ]; then
+	count_file=$(mktemp)
+else
+	count_file=$(mktemp --suffix=RRC)
+fi
+RunTimes=$(curl -s --max-time 10 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Flmc999%2FRegionRestrictionCheck%2Fmain%2Fcheck.sh&count_bg=%2379C83D&title_bg=%2300B1FF&icon=&icon_color=%23E7E7E7&title=script+run+times&edge_flat=false" > "${count_file}")
+TodayRunTimes=$(cat "${count_file}" | tail -3 | head -n 1 | awk '{print $5}')
+TotalRunTimes=$(cat "${count_file}" | tail -3 | head -n 1 | awk '{print $7}')
 }
 CountRunTimes
 
@@ -57,14 +65,29 @@ checkos(){
 	ifMacOS=$(uname -a | grep Darwin)
 	if [ -n "$ifTermux" ];then
 		os_version=Termux
+		is_termux=1
 	elif [ -n "$ifMacOS" ];then
-		os_version=MacOS	
+		os_version=MacOS
+		is_macos=1
 	else	
 		os_version=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
 	fi
 	
 	if [[ "$os_version" == "2004" ]] || [[ "$os_version" == "10" ]] || [[ "$os_version" == "11" ]];then
+		is_windows=1
 		ssll="-k --ciphers DEFAULT@SECLEVEL=1"
+	fi
+
+	if [ "$(which apt 2>/dev/null)" ];then
+		InstallMethod="apt"
+		is_debian=1
+	elif [ "$(which dnf 2>/dev/null)" ] || [ "$(which yum 2>/dev/null)" ];then
+		InstallMethod="yum"
+		is_redhat=1
+	elif [[ "$os_version" == "Termux" ]];then
+		InstallMethod="pkg"
+	elif [[ "$os_version" == "MacOS" ]];then
+		InstallMethod="brew"
 	fi
 }
 checkos	
@@ -85,89 +108,72 @@ checkCPU
 
 check_dependencies(){
 
-	os_detail=$(cat /etc/os-release 2> /dev/null)
-	if_debian=$(echo $os_detail | grep 'ebian')
-	if_redhat=$(echo $os_detail | grep 'rhel')
-	if [ -n "$if_debian" ];then
-		InstallMethod="apt"
-	elif [ -n "$if_redhat" ] && [[ "$os_version" -gt 7 ]];then
-		InstallMethod="dnf"
-	elif [ -n "$if_redhat" ] && [[ "$os_version" -lt 8 ]];then
-		InstallMethod="yum"
-	elif [[ "$os_version" == "Termux" ]];then
-		InstallMethod="pkg"
-	elif [[ "$os_version" == "MacOS" ]];then
-		InstallMethod="brew"	
+	# os_detail=$(cat /etc/os-release 2> /dev/null)
+
+	if ! command -v python &> /dev/null; then
+		if command -v python3 &> /dev/null; then
+			alias python="python3"
+		else
+			if [ "$is_debian" == 1 ];then
+				echo -e "${Font_Green}Installing python${Font_Suffix}" 
+				$InstallMethod update  > /dev/null 2>&1
+				$InstallMethod install python -y  > /dev/null 2>&1
+			elif [ "$is_redhat" == 1 ];then
+				echo -e "${Font_Green}Installing python${Font_Suffix}"
+				if [[ "$os_version" -gt 7 ]];then
+					$InstallMethod makecache > /dev/null 2>&1
+					$InstallMethod install python3 -y > /dev/null 2>&1
+					alias python="python3"
+				else
+					$InstallMethod makecache > /dev/null 2>&1
+					$InstallMethod install python -y > /dev/null 2>&1
+				fi	
+				
+			elif [ "$is_termux" == 1 ];then
+				echo -e "${Font_Green}Installing python${Font_Suffix}"
+				$InstallMethod update -y > /dev/null 2>&1
+				$InstallMethod install python -y > /dev/null 2>&1
+				
+			elif [ "$is_macos" == 1 ];then
+				echo -e "${Font_Green}Installing python${Font_Suffix}"
+				$InstallMethod install python	
+			fi
+		fi
 	fi
 	
-	python -V > /dev/null 2>&1
-		if [[ "$?" -ne "0" ]];then
-			python3 -V > /dev/null 2>&1
-			if [[ "$?" -eq "0" ]];then
-				python3_patch=$(which python3)
-				ln -s $python3_patch /usr/bin/python > /dev/null 2>&1
-			else
-				if [ -n "$if_debian" ];then
-					echo -e "${Font_Green}Installing python${Font_Suffix}" 
-					$InstallMethod update  > /dev/null 2>&1
-					$InstallMethod install python -y  > /dev/null 2>&1
-				elif [ -n "$if_redhat" ];then
-					echo -e "${Font_Green}Installing python${Font_Suffix}"
-					if [[ "$os_version" -gt 7 ]];then
-						$InstallMethod update  > /dev/null 2>&1
-						$InstallMethod install python3 -y > /dev/null 2>&1
-						python3_patch=$(which python3)
-						ln -s $python3_patch /usr/bin/python
-					else
-						$InstallMethod update  > /dev/null 2>&1
-						$InstallMethod install python -y > /dev/null 2>&1
-					fi	
-					
-				elif [[ "$os_version" == "Termux" ]];then
-					echo -e "${Font_Green}Installing python${Font_Suffix}"
-					$InstallMethod update -y > /dev/null 2>&1
-					$InstallMethod install python -y > /dev/null 2>&1
-					
-				elif [[ "$os_version" == "MacOS" ]];then
-					echo -e "${Font_Green}Installing python${Font_Suffix}"
-					$InstallMethod install python	
-					
-				fi
-			fi	
-		fi
-	
-	dig -v  > /dev/null 2>&1
-	if [[ "$?" -ne "0" ]];then
-		if [[ "$InstallMethod" == "apt" ]];then
+	if ! command -v dig &> /dev/null; then
+		if [ "$is_debian" == 1 ];then
 			echo -e "${Font_Green}Installing dnsutils${Font_Suffix}"
 			$InstallMethod update  > /dev/null 2>&1
 			$InstallMethod install dnsutils -y > /dev/null 2>&1
-		elif [[ "$InstallMethod" == "yum" ]];then
+		elif [ "$is_redhat" == 1 ];then
 			echo -e "${Font_Green}Installing bind-utils${Font_Suffix}"
-			$InstallMethod update  > /dev/null 2>&1
+			$InstallMethod makecache > /dev/null 2>&1
 			$InstallMethod install bind-utils -y > /dev/null 2>&1
-		elif [[ "$InstallMethod" == "pkg" ]];then
+		elif [ "$is_termux" == 1 ];then
 			echo -e "${Font_Green}Installing dnsutils${Font_Suffix}"
 			$InstallMethod update -y > /dev/null 2>&1
 			$InstallMethod install dnsutils -y > /dev/null 2>&1	
-		elif [[ "$InstallMethod" == "brew" ]];then
+		elif [ "$is_macos" == 1 ];then
 			echo -e "${Font_Green}Installing bind${Font_Suffix}"
 			$InstallMethod install bind	
 		fi
 	fi	
-	
-	if [[ "$os_version" == "MacOS" ]];then
-		md5sum /dev/null > /dev/null 2>&1
-		if [[ "$?" -ne "0" ]];then
+
+	if [ "$is_macos" == 1 ];then
+		if ! command -v md5sum &> /dev/null; then
 			echo -e "${Font_Green}Installing md5sha1sum${Font_Suffix}"
 			$InstallMethod install md5sha1sum
 		fi
-	fi		
+	fi
+
 }		
 check_dependencies
 
 local_ipv4=$(curl $useNIC -4 -s --max-time 10 api64.ipify.org)
+local_ipv4_asterisk=$(awk -F"." '{print $1"."$2".*.*"}'<<<"${local_ipv4}")
 local_ipv6=$(curl $useNIC -6 -s --max-time 20 api64.ipify.org)
+local_ipv6_asterisk=$(awk -F":" '{print $1":"$2":"$3":*:*"}'<<<"${local_ipv6}")
 local_isp4=$(curl $useNIC -s -4 --max-time 10 https://api.ip.sb/geoip/${local_ipv4} | cut -f1 -d"," | cut -f4 -d '"')
 local_isp6=$(curl $useNIC -s -6 --max-time 10 https://api.ip.sb/geoip/${local_ipv6} | cut -f1 -d"," | cut -f4 -d '"')
 		
@@ -950,7 +956,7 @@ function MediaUnlockTest_Salto(){
 function MediaUnlockTest_LineTV.TW() {
     echo -n -e " LineTV.TW:\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} -s --max-time 10 "https://www.linetv.tw/api/part/11829/eps/1/part?chocomemberId=");
-    if [ "$tmpresult" = "curl"* ]; then
+    if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1033,7 +1039,7 @@ function MediaUnlockTest_ParamountPlus() {
 function MediaUnlockTest_KKTV() {
     echo -n -e " KKTV:\t\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} -s --max-time 10 "https://api.kktv.me/v3/ipcheck");
-    if [ "$tmpresult" = "curl"* ]; then
+    if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r KKTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1070,7 +1076,7 @@ function MediaUnlockTest_PeacockTV() {
 function MediaUnlockTest_FOD() {
 	echo -n -e " FOD(Fuji TV):\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} -s --max-time 10 "https://geocontrol1.stream.ne.jp/fod-geo/check.xml?time=1624504256");
-	if [ "$tmpresult" = "curl"* ]; then
+	if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1089,7 +1095,7 @@ function MediaUnlockTest_Tiktok_Region(){
     echo -n -e " Tiktok Region:\t\t\t\t->\c";
     local Ftmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://www.tiktok.com/")
 	
-	if [ "$Ftmpresult" = "curl"* ]; then
+	if [[ "$Ftmpresult" = "curl"* ]]; then
 		echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1206,7 +1212,7 @@ function MediaUnlockTest_PrimeVideo_Region(){
     echo -n -e " Amazon Prime Video:\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://www.primevideo.com")
 	
-	if [ "$tmpresult" = "curl"* ]; then
+	if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1226,7 +1232,7 @@ function MediaUnlockTest_Radiko(){
     echo -n -e " Radiko:\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://radiko.jp/area?_=1625406539531")
 	
-	if [ "$tmpresult" = "curl"* ]; then
+	if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r Radiko:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1253,7 +1259,7 @@ function MediaUnlockTest_DMM(){
     echo -n -e " DMM:\t\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://api-p.videomarket.jp/v3/api/play/keyauth?playKey=4c9e93baa7ca1fc0b63ccf418275afc2&deviceType=3&bitRate=0&loginFlag=0&connType=" -H "X-Authorization: 2bCf81eLJWOnHuqg6nNaPZJWfnuniPTKz9GXv5IS")
 	
-	if [ "$tmpresult" = "curl"* ]; then
+	if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1278,7 +1284,7 @@ function MediaUnlockTest_DMM(){
 function MediaUnlockTest_Catchplay() {
     echo -n -e " CatchPlay+:\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} -s --max-time 10 "https://sunapi.catchplay.com/geo" -H "authorization: Basic NTQ3MzM0NDgtYTU3Yi00MjU2LWE4MTEtMzdlYzNkNjJmM2E0Ok90QzR3elJRR2hLQ01sSDc2VEoy");
-    if [ "$tmpresult" = "curl"* ]; then
+    if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -1330,7 +1336,7 @@ function MediaUnlockTest_HotStar() {
 function MediaUnlockTest_LiTV() {
     echo -n -e " LiTV:\t\t\t\t\t->\c";
     local tmpresult=$(curl $useNIC -${1} ${ssll} -sS --max-time 10 -X POST "https://www.litv.tv/vod/ajax/getUrl" -d '{"type":"noauth","assetId":"vod44868-010001M001_800K","puid":"6bc49a81-aad2-425c-8124-5b16e9e01337"}'  -H "Content-Type: application/json" 2>&1);
-    if [ "$tmpresult" = "curl"* ]; then
+    if [[ "$tmpresult" = "curl"* ]]; then
 		echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
 	fi	
@@ -2872,7 +2878,7 @@ function CheckV4() {
 		else
 			echo -e " ${Font_SkyBlue}** Checking Results Under IPv4${Font_Suffix} "
 			echo "--------------------------------"
-			echo -e " ${Font_SkyBlue}** Your Network Provider: ${local_isp4}${Font_Suffix} "
+			echo -e " ${Font_SkyBlue}** Your Network Provider: ${local_isp4} (${local_ipv4_asterisk})${Font_Suffix} "
 			check4=`ping 1.1.1.1 -c 1 2>&1`;
 			if [[ "$check4" != *"unreachable"* ]] && [[ "$check4" != *"Unreachable"* ]];then
 				isv4=1
@@ -2891,7 +2897,7 @@ function CheckV4() {
 		else
 			echo -e " ${Font_SkyBlue}** 正在测试IPv4解锁情况${Font_Suffix} "
 			echo "--------------------------------"
-			echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp4}${Font_Suffix} "
+			echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp4} (${local_ipv4_asterisk})${Font_Suffix} "
 			check4=`ping 1.1.1.1 -c 1 2>&1`;
 			if [[ "$check4" != *"unreachable"* ]] && [[ "$check4" != *"Unreachable"* ]];then
 				isv4=1
@@ -2918,7 +2924,7 @@ function CheckV6() {
 				echo ""
 				echo -e " ${Font_SkyBlue}** Checking Results Under IPv6${Font_Suffix} "
 				echo "--------------------------------"
-				echo -e " ${Font_SkyBlue}** Your Network Provider: ${local_isp6}${Font_Suffix} "
+				echo -e " ${Font_SkyBlue}** Your Network Provider: ${local_isp6} (${local_ipv6_asterisk})${Font_Suffix} "
 				isv6=1
 			else
 				echo -e "${Font_SkyBlue}No IPv6 Connectivity Found, Abort IPv6 Testing...${Font_Suffix}"
@@ -2940,7 +2946,7 @@ function CheckV6() {
 				echo ""
 				echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
 				echo "--------------------------------"
-				echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp6}${Font_Suffix} "
+				echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp6} (${local_ipv6_asterisk})${Font_Suffix} "
 				isv6=1
 			else
 				echo -e "${Font_SkyBlue}当前主机不支持IPv6,跳过...${Font_Suffix}"
