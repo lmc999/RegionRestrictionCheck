@@ -2682,6 +2682,25 @@ function MediaUnlockTest_Channel10() {
 
 }
 
+function MediaUnlockTest_Funimation() {
+    echo -n -e " Funimation:\t\t\t\t->\c";
+    local result=$(curl $useNIC -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 --insecure "https://www.funimation.com");
+    if [ "$result" = "000" ] && [[ "$1" == "6" ]]; then
+		echo -n -e "\r Funimation:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+		return;
+	elif [ "$result" = "000" ] ; then
+		echo -n -e "\r Funimation:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r Funimation:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		return;
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r Funimation:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return;
+    fi
+
+}
+
 
 function NA_UnlockTest() {
 	echo "===========[ North America ]==========="
@@ -2702,6 +2721,7 @@ function NA_UnlockTest() {
 	MediaUnlockTest_ATTNOW ${1};
 	MediaUnlockTest_encoreTVB ${1};
 	MediaUnlockTest_CineMax ${1};
+	MediaUnlockTest_Funimation ${1};
 	MediaUnlockTest_DiscoveryPlus ${1};
 	MediaUnlockTest_ParamountPlus ${1};
 	MediaUnlockTest_PeacockTV ${1};
