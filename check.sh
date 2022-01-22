@@ -39,16 +39,16 @@ if [ -z "$iface" ];then
 	useNIC=""
 fi	
 
+if ! mktemp -u --suffix=RRC &>/dev/null; then
+	is_busybox=1
+fi
+
 UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36";
 UA_Dalvik="Dalvik/2.1.0 (Linux; U; Android 9; ALP-AL00 Build/HUAWEIALP-AL00)";
 WOWOW_Cookie=$(curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies | awk 'NR==3')
 TVer_Cookie="Accept: application/json;pk=BCpkADawqM3ZdH8iYjCnmIpuIRqzCn12gVrtpk_qOePK3J9B6h7MuqOw5T_qIqdzpLvuvb_hTvu7hs-7NsvXnPTYKd9Cgw7YiwI9kFfOOCDDEr20WDEYMjGiLptzWouXXdfE996WWM8myP3Z"
 
 CountRunTimes(){
-if ! mktemp -u --suffix=RRC &>/dev/null; then
-	is_busybox=1
-fi
-
 if [ "$is_busybox" == 1 ]; then
 	count_file=$(mktemp)
 else
@@ -2683,16 +2683,24 @@ function MediaUnlockTest_Channel10() {
 }
 
 function MediaUnlockTest_Funimation() {
+	if [ "$is_busybox" == 1 ]; then
+		tmp_file=$(mktemp)
+	else
+		tmp_file=$(mktemp --suffix=RRC)
+	fi
+	
     echo -n -e " Funimation:\t\t\t\t->\c";
-    local result=$(curl $useNIC -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 --insecure "https://www.funimation.com");
-    if [ "$result" = "000" ] && [[ "$1" == "6" ]]; then
+    curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -ILs --max-time 10 --insecure "https://www.funimation.com" > ${tmp_file}
+	result=$(cat ${tmp_file} | awk 'NR==1' | awk '{print $2}')
+    if [[ "$1" == "6" ]]; then
 		echo -n -e "\r Funimation:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
 		return;
 	elif [ "$result" = "000" ] ; then
 		echo -n -e "\r Funimation:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return;
     elif [ "$result" = "200" ]; then
-        echo -n -e "\r Funimation:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+		local region=$(cat ${tmp_file} | grep region= | awk '{print $2}' | cut -f1 -d";" | cut -f2 -d"=" )
+        echo -n -e "\r Funimation:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
 		return;
     elif [ "$result" = "403" ]; then
         echo -n -e "\r Funimation:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -2734,6 +2742,7 @@ function NA_UnlockTest() {
 function EU_UnlockTest() {
 	echo "===============[ Europe ]=============="
 	MediaUnlockTest_RakutenTV ${1};
+	MediaUnlockTest_Funimation ${1};
 	MediaUnlockTest_HBO_Nordic ${1};
 	MediaUnlockTest_HBOGO_EUROPE ${1};
 	ShowRegion GB
@@ -2843,6 +2852,7 @@ function SA_UnlockTest() {
 	MediaUnlockTest_StarPlus ${1};
 	MediaUnlockTest_HBOMax ${1};
 	MediaUnlockTest_DirecTVGO ${1};
+	MediaUnlockTest_Funimation ${1};
 	echo "======================================="
 }
 
@@ -2852,6 +2862,7 @@ function OA_UnlockTest(){
 	MediaUnlockTest_AcornTV ${1};
 	MediaUnlockTest_SHOWTIME ${1};
 	MediaUnlockTest_BritBox ${1};
+	MediaUnlockTest_Funimation ${1};
 	MediaUnlockTest_ParamountPlus ${1};
 	ShowRegion AU
 	MediaUnlockTest_Stan ${1};
