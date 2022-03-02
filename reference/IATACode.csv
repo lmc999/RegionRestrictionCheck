@@ -1,1994 +1,2510 @@
-City/Airport, Country, IATA code
-Aarhus, Denmark, AAR
-Abadan, Iran, ABD
-Abeche, Chad, AEH
-Aberdeen, United Kingdom, ABZ
-Aberdeen (SD), USA, ABR
-Abidjan, Cote d'Ivoire, ABJ
-Abilene (TX), USA, ABI
-Abu Dhabi - Abu Dhabi International, United Arab Emirates, AUH
-Abuja - Nnamdi Azikiwe International Airport, Nigeria, ABV
-Abu Rudeis, Egypt, AUE
-Abu Simbel, Egypt, ABS
-Acapulco, Mexico, ACA
-Accra - Kotoka International Airport, Ghana, ACC
-Adana, Turkey, ADA
-Addis Ababa - Bole International Airport, Ethiopia, ADD
-Adelaide, Australia, ADL
-Aden - Aden International Airport, Yemen, ADE
-Adiyaman, Turkey, ADF
-Adler/Sochi, Russia, AER
-Agades, Niger, AJY
-Agadir, Morocco, AGA
-Agana (Hag?t?a), Guam, SUM
-Aggeneys, South Africa, AGZ
-Aguadilla, Puerto Rico, BQN
-Aguascaliente, Mexico, AGU
-Ahmedabad, India, AMD
-Aiyura, Papua New Guinea, AYU
-Ajaccio, France, AJA
-Akita, Japan, AXT
-Akron (OH), USA, CAK
-Akrotiri - RAF, Cyprus, AKT
-Al Ain, United Arab Emirates, AAN
-Al Arish, Egypt, AAC
-Albany, Australia, ALH
-Albany (GA), USA, ABY
-Albany (NY) - Albany International Airport, USA, ALB
-Albi, France, LBI
-Alborg, Denmark, AAL
-Albuquerque (NM), USA, ABQ
-Albury, Australia, ABX
-Alderney, Channel Islands, ACI
-Aleppo, Syria, ALP
-Alesund, Norway, AES
-Alexander Bay - Kortdoorn, South Africa, ALJ
-Alexandria - Borg el Arab Airport, Egypt, HBH
-Alexandria - El Nhouza Airport, Egypt, ALY
-Alexandria - Esler Field, USA (LA), ESF
-Alfujairah (Fujairah), United Arab Emirates, FJR
-Alghero Sassari, Italy, AHO
-"Algiers,  Houari Boumediene Airport", Algeria, ALG
-Al Hoceima, Morocco, AHU
-Alicante, Spain, ALC
-Alice Springs, Australia, ASP
-Alldays, South Africa, ADY
-Allentown (PA), USA, ABE
-Almaty (Alma Ata) - Almaty International Airport, Kazakhstan, ALA
-Almeria, Spain, LEI
-Alta, Norway, ALF
-Altay, PR China, AAT
-Altenrhein, Switzerland, ACH
-Altoona (PA), USA, AOO
-Altus, USA, AXS
-Amami, Japan, ASJ
-Amarillo (TX), USA, AMA
-Amazon Bay, Papua New Guinea, AZB
-Amman - Queen Alia International Airport, Jordan, AMM
-Amman - Amman-Marka International Airport, Jordan, ADJ
-Amritsar, India, ATQ
-Amsterdam - Amsterdam Airport Schiphol, Netherlands, AMS
-Anand, India, QNB
-Anchorage (AK) - Ted Stevens Anchorage International, USA, ANC
-Ancona - Ancona Falconara Airport, Italy, AOI
-Andorra La Vella - Heliport, Andorra, ALV
-Anguilla, Anguilla, AXA
-Anjouan - Anjouan Airport, Comoros (Comores), AJN
-Ankara, Turkey, ANK
-Ankara - Esenbo?a International Airport, Turkey, ESB
-Annaba, Algeria, AAE
-Ann Arbor (MI), USA, ARB
-Annecy, France, NCY
-Anniston (AL), USA, ANB
-Antalya, Turkey, AYT
-Antananarivo (Tanannarive) - Ivato International Airport, Madagascar, TNR
-"Antigua,  V.C. Bird International", Antigua and Barbuda, ANU
-Antwerp, Belgium, ANR
-Aomori, Japan, AOJ
-Apia - Faleolo International Airport, Samoa, APW
-Appelton/Neenah/Menasha (WI), USA, ATW
-Aqaba, Jordan, AQJ
-Aracaju, Brazil, AJU
-Arkhangelsk, Russia, ARH
-Arusha, Tanzania, ARK
-Araxos, Greece, GPA
-Arlit, Niger, RLT
-Arrecife/Lanzarote, Spain, ACE
-"Aruba - Reina Beatrix International,  Oranjestad", Aruba, AUA
-Asheville (NC), USA, AVL
-Ashgabat - Saparmurat Turkmenbashy Int. Airport, Turkmenistan, ASB
-Asmara - Asmara International, Eritrea, ASM
-"Aspen,  (CO) - Aspen-Pitkin County Airport", USA, ASE
-Assiut, Egypt, ATZ
-Astana - Astana International Airport, Kazakhstan, TSE
-Asuncion - Asunci¨®n International Airport, Paraguay, ASU
-Aswan - Daraw Airport, Egypt, ASW
-Athens - Elefth¨¦rios Veniz¨¦los International Airport, Greece, ATH
-"Athens,  Hellinikon Airport", Greece, HEW
-Athens (GA), USA, AHN
-Athens (OH), USA, ATO
-Atlanta (GA) - Hartsfield Atlanta International Airport, USA, ATL
-Atlantic City (NJ) - Atlantic City International, USA, ACY
-"Attawapiskat,  NT", Canada, YAT
-Auckland - Auckland International Airport, New Zealand, AKL
-Augsburg - Augsbur gAirport, Germany, AGB
-Augusta (GA), USA, AGS
-Augusta (ME) - Augusta State Airport, USA, AUG
-Aurillac, France, AUR
-Austin (TX) - Austin-Bergstrom Airport, USA, AUS
-Ayawasi, Indonesia, AYW
-Ayers Rock - Connellan, Australia, AYQ
-Ayr, Australia, AYR
-Badajoz, Spain, BJZ
-Bagdad - Baghdad International Airport, Iraq, BGW
-Bagdogra, India, IXB
-Bahamas - Lynden Pindling International Airport, The Bahamas, NAS
-Bahawalpur, Pakistan, BHV
-Bahrain - Bahrain International Airport, Bahrain, BAH
-Bakersfield (CA), USA, BFL
-Baku - Heydar Aliyev International Airport, Azerbaijan, BAK
-Ballina, Australia, BNK
-Baltimore (MD) - Washington International Airport, USA, BWI
-Bamaga, Australia, ABM
-Bamako - Bamako-S¨¦nou International Airport, Mali, BKO
-Bambari, Central African Republic, BBY
-Bandar Seri Begawan - Brunei International Airport, Brunei, BWN
-Bandung - Husein Sastranegara International Airport, Indonesia, BDO
-Bangalore, India, BLR
-Bangassou, Central African Republic, BGU
-"Bangkok,  Don Muang", Thailand, DMK
-"Bangkok,  Suvarnabhumi International", Thailand, BKK
-Bangor (ME), USA, BGR
-Bangui - M'Poko International Airport, Central African Republic, BGF
-Banjul - Banjul International Airport (Yundum International), Gambia, BJL
-Bannu, Pakistan, BNP
-Barcelona, Spain, BCN
-Barcelona, Venezuela, BLA
-Bardufoss, Norway, BDU
-Bari, Italy, BRI
-Barisal, Bangladesh, BZL
-Baroda, India, BDQ
-Barra (the famous tidal beach landing), United Kingdom, BRR
-Barranquilla, Colombia, BAQ
-Basel, Switzerland, BSL
-Basel/Mulhouse, Switzerland/France, EAP
-"Basra,  Basrah", Iraq, BSR
-Basse-Terre - Pointe-¨¤-Pitre International Airport, Guadeloupe, PTP
-Basseterre - Robert L. Bradshaw International Airport, Saint Kitts and Nevis, SKB
-Bastia, France, BIA
-Baton Rouge (LA) - Baton Rouge Metropolitan Airport, USA, BTR
-Bayreuth - Bindlacher-Berg, Germany, BYU
-Beaumont/Pt. Arthur (TX), USA, BPT
-Beckley (WV), USA, BKW
-Beef Island - Terrance B. Lettsome, Virgin Islands (British), EIS
-Beijing, China, PEK
-Beijing - Nanyuan Airport, China, NAY
-Beira, Mozambique, BEW
-Beirut - Beirut Rafic Hariri International Airport, Lebanon, BEY
-Belem - Val de Cans International Airport, Brazil, BEL
-Belfast - George Best Belfast City Airport, United Kingdom, BHD
-Belfast - Belfast International Airport, United Kingdom, BFS
-Belgaum, India, IXG
-Belgrad (Beograd) - Belgrade Nikola Tesla International, Serbia, BEG
-Belize City - Philip S.W.Goldson International, Belize, BZE
-Bellingham (WA), USA, BLI
-Belo Horizonte - Tancredo Neves International Airport, Brazil, CNF
-Bemidji (MN), USA, BJI
-Benbecula, United Kingdom, BEB
-Benghazi (Bengasi), Libya, BEN
-Benguela, Angola, BUG
-Benton Harbour (MI), USA, BEH
-Berberati, Central African Republic, BBT
-Bergamo/Milan - Orio Al Serio, Italy, BGY
-Bergen, Norway, BGO
-Bergerac - Roumanieres, France, EGC
-Berlin, Germany, BER
-"Berlin,  Schoenefeld", Germany, SXF
-"Berlin,  Tegel", Germany, TXL
-"Berlin,  Tempelhof (ceased operating in 2008)", Germany, THF
-Bermuda - L.F. Wade International Airport, Bermuda, BDA
-"Berne,  Bern-Belp", Switzerland, BRN
-"Berne,  Railway Service", Switzerland, ZDJ
-Bethel (AK), USA, BET
-Bhopal, India, BHO
-Bhubaneswar, India, BBI
-Biarritz, France, BIQ
-Bilbao, Spain, BIO
-Billings (MT), USA, BIL
-Billund, Denmark, BLL
-Bintulu, Malaysia, BTU
-Biraro, Central African Republic, IRO
-Birmingham - Birmingham International Airport, United Kingdom, BHX
-Birmingham (AL), USA, BHM
-Bishkek - Manas International Airport, Kyrgyzstan, FRU
-Bismarck (ND) - Bismarck Municipal Airport, USA, BIS
-Bissau - Osvaldo Vieiro International Airport, Guinea-Bissau, BXO
-Blackpool, United Kingdom, BLK
-Blackwater, Australia, BLT
-Blantyre (Mandala) - Chileka International Airport, Malawi, BLZ
-Blenheim, New Zealand, BHE
-Bloemfontein - Bloemfontein Airport, South Africa, BFN
-Bloomington (IL), USA, BMI
-Bloomington (IN), USA, BMG
-Bluefield (WV), USA, BLF
-Boa Vista, Brazil, BVB
-Bobo/Dioulasso, Burkina Faso, BOY
-Bodo, Norway, BOO
-Bodrum - Milas Airport, Turkey, BJV
-Bogota - El Nuevo Dorado International Airport, Colombia, BOG
-Boise (ID) - Boise Air Terminal, USA, BOI
-Bologna, Italy, BLQ
-Bombay (Mumbai) - Chhatrapati Shivaji International, India, BOM
-Bonaire, Netherlands Antilles, BON
-"Bonaventure,  PQ", Canada, YVB
-Bora Bora, French Polynesia, BOB
-Bordeaux - Bordeaux Airport, France, BOD
-Borrego Springs (CA), USA, BXS
-Boston (MA) - General Edward Lawrence Logan, USA, BOS
-Bouake, Cote d'Ivoire, BYK
-Bourgas/Burgas, Bulgaria, BOJ
-Bournemouth, United Kingdom, BOH
-Bowen, Australia, ZBO
-Bozeman (MT), USA, BZN
-Bradford/Warren (PA) /Olean (NY), USA, BFD
-Brainerd (MN), USA, BRD
-Brampton Island, Australia, BMP
-Brasilia - President Juscelino Kubitschek International, Brazil, BSB
-Bratislava - M. R. ?tef¨¢nik Airport, Slovakia, BTS
-Brazzaville - Maya-Maya Airport, Congo (ROC), BZV
-Bremen - Bremen Airport (Flughafen Bremen), Germany, BRE
-"Brescia,  Montichiari", Italy, VBS
-Brest, France, BES
-Bria, Central African Republic, BIV
-Bridgeport (CT), USA, BDR
-Bridgetown - Grantley Adams International, Barbados, BGI
-Brindisi, Italy, BDS
-Brisbane, Australia, BNE
-Bristol, United Kingdom, BRS
-Broennoeysund, Norway, BNN
-Broken Hill, Australia, BHQ
-Brookings (SD), USA, BKX
-Broome, Australia, BME
-Brunswick (GA), USA, BQK
-Brussels - Brussels Airport, Belgium, BRU
-Bucaramanga, Colombia, BGA
-Bucharest, Romania, BUH
-Bucharest - Henri Coand? International Airport, Romania, OTP
-Budapest - Budapest Ferihegy International Airport, Hungary, BUD
-Buenos Aires, Argentina, BUE
-"Buenos Aires,  Ezeiza International Airport", Argentina, EZE
-"Buenos Aires,  Jorge Newbery", Argentina, AEP
-Buffalo Range, Zimbabwe, BFO
-Buffalo/Niagara Falls (NY), USA, BUF
-Bujumbura - Bujumbura International Airport, Burundi, BJM
-Bulawayo, Zimbabwe, BUQ
-Bullhead City (NV), USA, BHC
-Bundaberg, Australia, BDB
-Burbank (CA), USA, BUR
-Burlington IA, USA, BRL
-Burlington (VT), USA, BTV
-Burnie (Wynyard), Australia, BWT
-Butte (MT), USA, BTM
-Cabinda, Angola, CAB
-Cagliari, Italy, CAG
-Cairns, Australia, CNS
-Cairo - Cairo International Airport, Egypt, CAI
-Calama - El Loa, Chile, CJC
-Calcutta (Kolkata) - Netaji Subhas Chandra, India, CCU
-Calgary - Calgary International Airport, Canada, YYC
-Cali, Colombia, CLO
-Calicut, India, CCJ
-Calvi, France, CLY
-Cambridge Bay, Canada, YCB
-Cambrigde, United Kingdom, CBG
-Campbeltown, United Kingdom, CAL
-Campo Grande, Brazil, CGR
-Canberra - Canberra Airport, Australia, CBR
-Cancun, Mexico, CUN
-Cannes ¨C Mandelieu Airport, France, CEQ
-Canouan (island) - Canouan Airport, Saint Vincent & the Grenadines, CIW
-Cape Town - Cape Town International Airport, South Africa, CPT
-Caracas - Sim¨®n Bol¨ªvar International Airport, Venezuela, CCS
-Cardiff - Cardiff Airport, United Kingdom, CWL
-Carlsbad (CA), USA, CLD
-Carnarvon, Australia, CVQ
-Carnot, Central African Republic, CRF
-Carson City (NV), USA, CSN
-Casablanca, Morocco, CAS
-"Casablanca,  Mohamed V", Morocco, CMN
-Casa de Campo - La Romana International Airport, Dominican Republic, LRM
-Casino, Australia, CSI
-Casper (WY), USA, CPR
-Castaway, Fiji, CST
-Cartagena - Rafael N¨²?ez International Airport, Colombia, CTG
-Castries - George F. L. Charles Airport, Saint Lucia, SLU
-Catania, Italy, CTA
-Cayenne - Cayenne-Rochambeau Airport, French Guiana, CAY
-Cottbus - Cottbus-Drewitz Airport, Germany, CBU
-Cebu City - Mactan-Cebu International, Philippines, CEB
-Cedar City (UT), USA, CDC
-Cedar Rapids IA, USA, CID
-Ceduna, Australia, CED
-Cessnock, Australia, CES
-Chabarovsk (Khabarovsk), Russia, KHV
-Chambery, France, CMF
-Champaign (IL), USA, CMI
-Chandigarh - Chandigarh International Airport, India, IXC
-Changchun, "Jilin,  PR China", CGQ
-Chania, Greece, CHQ
-"Chaoyang,  Beijing - Chaoyang Airport", PR China, CHG
-Charleston (SC), USA, CHS
-Charleston (WV) - Yeager Airport, USA, CRW
-Charlotte (NC), USA, CLT
-Charlottesville (VA), USA, CHO
-Charters Towers, Australia, CXT
-Chattanooga (TN), USA, CHA
-Chengdu - Shuangliu, "Sichuan,  PR China", CTU
-Chennai (Madras), India, MAA
-Cheyenne (WY) - Cheyenne Regional Airport, USA, CYS
-Chiang Mai - Chiang Mai International Airport, Thailand, CNX
-Chiba City, Japan, QCB
-"Chicago (IL),  Midway", USA, MDW
-"Chicago (IL),  O'Hare International Airport", USA, ORD
-Chicago (IL), USA, CHI
-Chichen Itza, Mexico, CZA
-Chico (CA), USA, CIC
-Chihuahua - Gen Fierro Villalobos, Mexico, CUU
-Chios, Greece, JKH
-Chipata, Zambia, CIP
-Chisinau - Chi?in?u International Airport, Moldova, KIV
-Chita (Tschita), Russia, HTA
-Sapporo - New Chitose Airport, Japan, CTS
-Chitral, Pakistan, CJL
-Chittagong, Bangladesh, CGP
-Chongqing - Jiangbei International Airport, "Sichuan,  PR China", CKG
-Christchurch, New Zealand, CHC
-Chub Cay, Bahamas, CCZ
-Churchill, Canada, YYQ
-Cienfuegos - Jaime Gonz¨¢lez Airport, Cuba, CFG
-Cincinnati (OH) - Cincinnati/Northern Kentucky Int'l, USA, CVG
-Ciudad Del Carmen, Mexico, CME
-Ciudad Guayana, Venezuela, CGU
-Ciudad Juarez, Mexico, CJS
-Ciudad Obregon, Mexico, CEN
-Ciudad Victoria, Mexico, CVM
-Clarksburg (WV), USA, CKB
-Clermont, Australia, CMQ
-Clermont Ferrand, France, CFE
-"Cleveland (OH) ,  Burke Lakefront", USA, BKL
-Cleveland (OH) - Cleveland Hopkins International, USA, CLE
-Cochabamba, Bolivia, CBB
-Cochin, India, COK
-Cody/Powell/Yellowstone (WY), USA, COD
-Coffmann Cove (AK), USA, KCC
-Coffs Harbour, Australia, CFS
-Coimbatore, India, CJB
-Colima, Mexico, CLQ
-College Station/Bryan (TX), USA, CLL
-Collinsville, Australia, KCE
-Cologne - Cologne Airport (Flughafen K?ln/Bonn), Germany, CGN
-Colombo - Bandaranaike International Airport, Sri Lanka, CMB
-Colorado Springs (CO), USA, COS
-Columbia (SC) - Columbia Metropolitan Airport, USA, CAE
-Columbus (GA), USA, CSG
-Columbus (OH) - Port Columbus International, USA, CMH
-Conakry - Conakry International Airport, Guinea, CKY
-Concord (CA) - Buchanan Field, USA, CCR
-Concord (NH) - Concord Municipal Airport, USA, CON
-Constantine, Algeria, CZL
-Constanta (Constan?a) - Constanta Int'l Airport, Romania, CND
-Coober Pedy, Australia, CPD
-Cooktown, Australia, CTN
-Cooma, Australia, OOM
-Copenhagen - Copenhagen Airport, Denmark, CPH
-Cordoba, Argentina, COR
-Cordoba, Spain, ODB
-Cordova (AK), USA, CDV
-Corfu, Greece, CFU
-Cork, Ireland, ORK
-Corpus Christi (TX), USA, CRP
-Cotonou - Cotonou Cadjehoun Airport, Benin, COO
-Coventry - Baginton, United Kingdom, CVT
-Cozmel, Mexico, CZM
-Craig (AK), USA, CGA
-Crescent City (CA), USA, CEC
-Cuiaba - Marechal Rondon International Airport, Brazil, CGB
-Culiacan, Mexico, CUL
-Curacao - Cura?ao International Airport, Netherlands Antilles, CUR
-Curitiba - Afonso Pena International Airport, Brazil, CWB
-Cuyo, Philippines, CYU
- , , 
-D, , 
-Dakar - L¨¦opold S¨¦dar Senghor International Airport, Senegal, DKR
-Dalaman, Turkey, DLM
-Dalby, Australia, DBY
-Dalian - Zhoushuizi International Airport, "Liaoning,  PR China", DLC
-"Dallas (TX) ,  Love Field", USA, DAL
-Dallas/Ft. Worth (TX) - Dallas/Fort Worth International, USA, DFW
-Daloa, Cote d'Ivoire, DJO
-"Damascus,  International", Syria, DAM
-"Dammam,  King Fahad International", Saudi Arabien, DMM
-Danville (VA), USA, DAN
-Dar es Salam (Daressalam) - Julius Nyerere Int'l, Tanzania, DAR
-Darwin, Australia, DRW
-Daydream Island, Australia, DDI
-Dayton (OH), USA, DAY
-Daytona Beach (FL), USA, DAB
-Decatur (IL), USA, DEC
-Deer Lake/Corner Brook, Canada, YDF
-Delhi - Indira Gandhi International Airport, India, DEL
-Den Haag (The Hague), Netherlands, HAG
-Denizli, Turkey, DNZ
-Denpasar/Bali, Indonesia, DPS
-Denver (CO) - Denver International Airport, USA, DEN
-Dera Ismail Khan - Dera Ismail Khan Airport, Pakistan, DSK
-Derby, Australia, DRB
-Derry (Londonderry), United Kingdom, LDY
-Des Moines (IA) - Des Moines International Airport, USA, DSM
-"Detroit (MI) ,  Coleman A. Young Municipal", USA, DET
-"Detroit (MI) ,  Wayne County Airport", USA, DTW
-"Detroit (MI) ,  Metropolitan Area", USA, DTT
-Devils Lake (ND), USA, DVL
-Devonport, Australia, DPO
-Dhahran, Saudi Arabia, DHA
-Dhaka - Zia International Airport, Bangladesh, DAC
-Dili - Nicolau Lobato International Airport, Timor Leste (East Timor), DIL
-Dillingham (AK), USA, DLG
-Dinard, France, DNR
-Disneyland Paris, France, DLP
-Djerba, Tunisia, DJE
-Djibouti (city) - Djibouti-Ambouli International Airport, Djibouti, JIB
-Dodoma - Dodoma Airport, Tanzania, DOD
-Doha - Doha International Airport, Qatar, DOH
-"Doncaster/Sheffield,  Robin Hood International Airport", United Kingdom, DSA
-Donegal (Carrickfin), Ireland, CFN
-Dortmund, Germany, DTM
-Dothan (AL), USA, DHN
-Douala, Cameroon, DLA
-Dresden - Dresden Airport, Germany, DRS
-Dubai - Dubai International Airport, United Arab Emirates, DXB
-Dubbo, Australia, DBO
-Dublin - Dublin International Airport, Ireland, DUB
-Dubois (PA), USA, DUJ
-Dubrovnik, Croatia (Hrvatska), DBV
-Dubuque IA, USA, DBQ
-Duesseldorf - D¨¹sseldorf International Airport, Germany, DUS
-Duluth (MN) /Superior (WI), USA, DLH
-Dundee, United Kingdom, DND
-Dunedin, New Zealand, DUD
-Dunk Island, Australia, DKI
-Durango (CO), USA, DRO
-Durban, South Africa, DUR
-Dushanbe (Duschanbe) - Dushanbe Airport, Tajikistan, DYU
-Dutch Harbor (AK), USA, DUT
-Dysart, Australia, DYA
-Dzaoudzi, Mayotte, DZA
-East London, South Africa, ELS
-Easter Island, Chile, IPC
-Eau Clarie (WI), USA, EAU
-Edinburgh - Edinburgh Airport, "Scotland,  UK", EDI
-Edmonton, Canada, YEA
-"Edmonton,  International", Canada, YEG
-"Edmonton,  Municipal", Canada, YXD
-Egilsstadir, Iceland, EGS
-Eindhoven, Netherlands, EIN
-Samana - Saman¨¢ El Catey International Airport, Dominican Republic, AZS
-"Elba Island,  Marina Di Campo", Italy, EBA
-Elat, Israel, ETH
-"Elat,  Ovula", Israel, VDA
-Elkhart (IN), USA, EKI
-Elko (NV), USA, EKO
-Ellisras, South Africa, ELL
-El Minya, Egypt, EMY
-Elmira (NY), USA, ELM
-El Paso (TX) - El Paso International Airport, USA, ELP
-Ely (NV), USA, ELY
-Emerald, Australia, EDR
-Emerald, Australia, EMD
-Enontekioe, Finland, ENF
-Entebbe - Entebbe International Airport, Uganda, EBB
-Erfurt - Erfurt Airport (Flughafen Erfurt), Germany, ERF
-Erie (PA), USA, ERI
-"Eriwan (Yerevan,  Jerevan)", Armenia, EVN
-Erzincan, Turkey, ERC
-Erzurum, Turkey, ERZ
-Esbjerg, Denmark, EBJ
-Escanaba (MI), USA, ESC
-Esperance, Australia, EPR
-Eugene (OR), USA, EUG
-Eureka (CA), USA, ACV
-Evansville (IN), USA, EVV
-Evenes, Norway, EVE
-Exeter, United Kingdom, EXT
-Fairbanks (AK), USA, FAI
-Fair Isle (Shetland), United Kingdom, FIE
-Faisalabad, Pakistan, LYP
-Fargo (ND) (MN), USA, FAR
-Farmington (NM), USA, FMN
-Faro, Portugal, FAO
-Faroer - V¨¢gar Airport, Denmark, FAE
-Fayetteville (AR), USA, FYV
-Fayetteville/Ft. Bragg (NC), USA, FAY
-Fes, Morocco, FEZ
-Figari, France, FSC
-Flagstaff (AZ), USA, FLG
-Flin Flon, Canada, YFO
-Flint (MI), USA, FNT
-Florence (Firenze) - Peretola Airport, Italy, FLR
-Florence (SC), USA, FLO
-Florianopolis, Brazil, FLN
-Floro, Norway, FRO
-Fort Albert, Canada, YFA
-Fortaleza - Pinto Martins Airport, Brazil, FOR
-Fort de France - Martinique Aim¨¦ C¨¦saire International, Martinique, FDF
-Fort Dodge IA, USA, FOD
-Fort Huachuca/Sierra Vista (AZ), USA, FHU
-Fort Lauderdale/Hollywood (FL), USA, FLL
-Fort McMurray, Canada, YMM
-"Fort Myers,  Metropolitan Area (FL)", USA, FMY
-"Fort Myers,  Southwest Florida Reg (FL)", USA, RSW
-Fort Riley (KS) - Marshall AAF, USA, FRI
-Fort Smith, Canada, YSM
-Fort Smith (AR), USA, FSM
-Fort St. John, Canada, YXJ
-Fort Walton Beach (FL), USA, VPS
-Fort Wayne (IN), USA, FWA
-Fort Worth (TX) - Dallas/Fort Worth International Airport, USA, DFW
-Foula (Shetland), United Kingdom, FOU
-Francistown, Botswana, FRW
-Frankfurt/Main - Frankfurt Airport (Rhein-Main-Flughafen), Germany, FRA
-Frankfurt/Hahn, Germany, HHN
-Franklin/Oil City (PA), USA, FKL
-Fredericton, Canada, YFC
-Freeport - Grand Bahama International Airport, Bahamas, FPO
-Freetown - Freetown-Lungi International Airport, Sierra Leone, FNA
-Frejus, France, FRJ
-Fresno (CA), USA, FAT
-Friedrichshafen - Bodensee-Airport Friedrichshafen, Germany, FDH
-Fuerteventura, Spain, FUE
-"Fujairah,  International Airport", United Arab Emirates, FJR
-Fukuoka, Japan, FUK
-Fukushima - Fukushima Airport, Japan, FKS
-Funchal, Portugal, FNC
-Futuna, Wallis and Futuna Islands, FUT
-Gaborone - Sir Seretse Khama International Airport, Botswana, GBE
-Gadsden (AL), USA, GAD
-Gainesville (FL), USA, GNV
-Galway, Ireland, GWY
-Gander, Canada, YQX
-Garoua, Cameroon, GOU
-Gaza City - Gaza International Airport, Palestinian Territory, GZA
-Gaziantep, Turkey, GZT
-Gdansk, Poland, GDN
-Geelong, Australia, GEX
-Geneva - Geneva-Cointrin International Airport, Switzerland, GVA
-Genoa, Italy, GOA
-George, South Africa, GRJ
-Georgetown - Cheddi Jagan International Airport, Guyana, GEO
-Geraldton, Australia, GET
-Gerona, Spain, GRO
-Ghent (Gent), Belgium, GNE
-Gibraltar, Gibraltar, GIB
-Gilette (WY), USA, GCC
-Gilgit, Pakistan, GIL
-Gillam, Canada, YGX
-Gladstone, Australia, GLT
-"Glasgow,  Prestwick", United Kingdom, PIK
-Glasgow, United Kingdom, GLA
-Glasgow (MT), USA, GGW
-Glendive (MT), USA, GDV
-Goa, India, GOI
-"Goiania,  Santa Genoveva Airport", Brazil, GYN
-Gold Coast, Australia, OOL
-Goondiwindi, Australia, GOO
-Goose Bay, Canada, YYR
-Gorna, Bulgaria, GOZ
-Gothenburg (G?teborg) - Landvetter, Sweden, GOT
-Gove (Nhulunbuy), Australia, GOV
-Govenors Harbour, Bahamas, GHB
-Granada, Spain, GRX
-Grand Bahama International, Bahamas, FPO
-Grand Canyon (AZ), USA, GCN
-Grand Cayman - Owen Roberts International, Cayman Islands, GCM
-Grand Forks (ND), USA, GFK
-Grand Junction (CO), USA, GJT
-Grand Rapids (MI), USA, GRR
-Grand Rapids (MN), USA, GPZ
-Graz, Austria, GRZ
-Great Falls (MT), USA, GTF
-Great Keppel Island, Australia, GKL
-Green Bay (WI), USA, GRB
-Greenbrier/Lewisburg (WV), USA, LWB
-Greensboro/Winston Salem (NC), USA, GSO
-Greenville (MS), USA, GLH
-Greenville (NC), USA, PGV
-Greenville/Spartanburg (SC), USA, GSP
-Grenada - Point Salines Airport also Maurice Bishop, Grenada, GND
-Grenoble, France, GNB
-Griffith, Australia, GFF
-Groningen - Eelde, Netherlands, GRQ
-Groote Eylandt - Alyangula, Australia, GTE
-Groton/New London (CT), USA, GON
-Guadalajara, Mexico, GDL
-Guadalcanal, Solomon Islands, GSI
-Guam, Guam, GUM
-Guangzhou (Canton) - Baiyun International Airport, "Guangdong,  PR China", CAN
-Sao Paulo - Guarulhos International, Brazil, GRU
-Guatemala City - La Aurora International Airport, Guatemala, GUA
-Guayaquil - Simon Bolivar, Ecuador, GYE
-Guernsey, Channel Islands, GCI
-Guettin, Germany, GTI
-Gulfport/Biloxi (MS), USA, GPT
-Guilin - Liangjiang, "Guangxi,  PR China", KWL
-Gulu, Uganda, ULU
-Gunnison/Crested Butte (CO), USA, GUC
-Guwahati, India, GAU
-Gwadar, Pakistan, GWD
-Gweru, Zimbabwe, GWE
-Gympie, Australia, GYP
-Hachijo Jima, Japan, HAC
-Hag?t?a - Guam International Airport, Guam, GUM
-Haifa, Israel, HFA
-Haines (AK), USA, HNS
-Hakodate, Japan, HKD
-Halifax International, Canada, YHZ
-Hall Beach, Canada, YUX
-Hamburg - Fuhlsbuettel, Germany, HAM
-Hamilton, Australia, HLT
-Hamilton, Canada, YHM
-Hamilton, New Zealand, HLZ
-Hamilton Island, Australia, HTI
-Hammerfest, Norway, HFT
-Hancock (MI), USA, CMX
-Hangchow (Hangzhou), "Zhejiang,  PR China", HGH
-Hannover, Germany, HAJ
-Hanoi - Noi Bai International Airport, Vietnam, HAN
-Harare - Harare International Airport, Zimbabwe, HRE
-Harbin (Haerbin), "Heilongjiang,  PR China", HRB
-Harlingen/South Padre Island (TX), USA, HRL
-"Harrington Harbour,  PQ", Canada, YHR
-Harrisburg (PA) - Harrisburg Skyport, USA, HAR
-Harrisburg (PA) - Harrisburg International, USA, MDT
-Hartford (CT) /Springfield (MA), USA, BDL
-Hatyai (Hat Yai), Thailand, HDY
-Haugesund, Norway, HAU
-Havana - Jos¨¦ Mart¨ª International, Cuba, HAV
-Havre (MT), USA, HVR
-Hayman Island, Australia, HIS
-Helena (MT), USA, HLN
-Helsingborg, Sweden, JHE
-Helsinki - Vantaa, Finland, HEL
-Heraklion, Greece, HER
-Hermosillo - Gen. Pesqueira Garcia, Mexico, HMO
-Hervey Bay, Australia, HVB
-Hibbing (MN), USA, HIB
-Hickory (NC), USA, HKY
-Hilo (HI), USA, ITO
-Hilton Head Island (SC), USA, HHH
-Hinchinbrook Island, Australia, HNK
-Hiroshima International, Japan, HIJ
-Ho Chi Minh City (Saigon) - Tan Son Nhat International, Viet Nam, SGN
-Hobart, Australia, HBA
-Hof, Germany, HOQ
-Holguin, Cuba, HOG
-Home Hill, Australia, HMH
-Homer (AK), USA, HOM
-Hong Kong - International Airport (HKIA), Hong Kong, HKG
-Hong Kong - Chek Lap Kok, Hong Kong, ZJK
-Honiara Henderson International, Solomon Islands, HIR
-Honolulu (HI) - Honolulu International Airport, USA, HNL
-Hoonah (AK), USA, HNH
-Horta, Portugal, HOR
-"Houston (TX) ,  Hobby", USA, HOU
-"Houston,  TX - George Bush Intercontinental Airport", USA, IAH
-Huahine, French Polynesia, HUH
-Huatulco, Mexico, HUX
-Hue - Phu Bai, Viet Nam, HUI
-Humberside, United Kingdom, HUY
-Huntington (WV), USA, HTS
-Huntsville (AL), USA, HSV
-Hurghada International, Egypt, HRG
-Huron (SD), USA, HON
-Hwange National Park, Zimbabwe, HWN
-Hyannis (MA), USA, HYA
-Hydaburg (AK), USA, HYG
-Hyderabad - Rajiv Gandhi International Airport, India, HYD
-Hyderabad, Pakistan, HDD
-Ibiza, Ibiza/Spain, IBZ
-Idaho Falls (ID), USA, IDA
-"Iguazu,  Cataratas", Argentina, IGR
-Ile des Pins, New Caledonia, ILP
-Ile Ouen, New Caledonia, IOU
-Iliamna (AK), USA, ILI
-Imperial (CA), USA, IPL
-Incercargill, New Zealand, IVC
-"Incheon,  Incheon International Airport", Korea South, ICN
-Indianapolis (IN) International, USA, IND
-Ingham, Australia, IGH
-Innisfail, Australia, IFL
-Innsbruck - Kranebitten, Austria, INN
-International Falls (MN), USA, INL
-Inuvik, Canada, YEV
-Invercargill, New Zealand, IVC
-Inverness, United Kingdom, INV
-Inykern (CA), USA, IYK
-Iqaluit (Frobisher Bay), Canada, YFB
-Iquitos, Peru, IQT
-Irkutsk, Russia, IKT
-Ishigaki - New Ishigaki Airport, Japan, ISG
-Islamabad - Benazir Bhutto International Airport, Pakistan, ISB
-Islay, United Kingdom, ILY
-Isle of Man,  , IOM
-Istanbul - Istanbul Atat¨¹rk Airport, Turkey, IST
-Istanbul - Sabiha Gokcen, Turkey, SAW
-Ithaca/Cortland (NY), USA, ITH
-Ivalo, Finland, IVL
-Ixtapa/Zihuatenejo, Mexico, ZIH
-Izmir, Turkey, IZM
-Izmir - Adnan Menderes Airport, Turkey, ADB
-Jackson Hole (WY), USA, JAC
-Jackson (MI) - Reynolds Municipal, USA, JXN
-"Jackson,   MN  ", USA, MJQ
-Jackson (MS) - Jackson Internationall, USA, JAN
-Jackson (MS) - Hawkins Field   , USA, HKS
-Jackson (TN) - Mckellar, USA, MKL
-Jackson Hole (WY), USA, JAC
-Jacksonville (AR)  Little Rock AFB   , USA, LRF
-Jacksonville (FL) - Cecil Field NAS   , USA, NZC
-Jacksonville (FL) Jacksonville NAS   , USA, NIP
-Jacksonville (FL) - International, USA, JAX
-Jacksonville (FL) - Craig Municipal   , USA, CRG
-Jacksonville (IL) - Municipal Airport, USA, IJX
-Jacksonville (NC), USA, OAJ
-Jacksonville (TX), USA, JKV
-Jacmel   , Haiti, JAK
-Jacobabad, Pakistan, JAG
-Jacobina   , Brazil, JCM
-Jacquinot Bay, Papua New Guinea, JAQ
-Jaffna - Kankesanturai, Sri Lanka, JAF
-Jagdalpur, India, JGB
-Jaipur - Sanganeer, India, JAI
-Jaisalmer   , India, JSA
-Jakarta - Halim Perdana Kusuma, Indonesia, HLP
-Jakarta - Metropolitan Area, Indonesia, JKT
-Jakarta - Soekarno-Hatta International, Indonesia, CGK
-Jalalabad    , Afghanistan, JAA
-Jalandhar, India, JLR
-Jalapa, Mexico, JAL
-Jales, Brazil, JLS
-Jaluit Island  , Marshall Islands, UIT
-Jamba, Angola, JMB
-Jambi - Sultan Taha Syarifudn, Indonesia , DJB
-Jambol, Bulgaria, JAM
-Jamestown (ND), USA, JMS
-Jamestown (NY), USA, JHW
-Jammu - Satwari, India, IXJ
-Jamnagar - Govardhanpur, India, JGA
-Jamshedpur - Sonari Airport, India, IXW
-Janakpur, Nepal, JKR
-Jandakot, Australia, JAD
-Janesville (WI) - Rock County, USA, JVL
-Januaria, Brazil, JNA
-Jaque   , Panama, JQE
-Jatai, Brazil, JTI
-Jauja, Peru, JAU
-Jayapura - Sentani, Indonesia, DJJ
-Jeddah - King Abdulaziz International, Saudi Arabia, JED
-Jefferson City (MO) - Jefferson Memorial, USA, JEF
-Jeremie - Jeremie Airport, Haiti, JEE
-Jerez de la Frontera/Cadiz - La Parra, Spain, XRY
-Jersey, Channel Islands, JER
-Jerusalem - Atarot Airport (closed), Israel, JRS
-Jessore - Jessore Airport, Bangladesh, JSR
-Jeypore - Jeypore Airport, India, PYB
-Ji'an, "Jiangxi,  China", JGS
-Jiamusi - Jiamusi Airport, PR China, JMU
-Jiayuguan - Jiayuguan Airport, PR China, JGN
-Jijel, Algeria, GJL
-Jijiga, Ethiopia, JIJ
-Jilin, PR China, JIL
-Jimma, Ethiopia, JIM
-Jinan, "Shandong,  PR China", TNA
-Jingdezhen, PR China, JDZ
-Jinghong - Gasa Airport, PR China, JHG
-Jining, PR China, JNG
-Jinja, Uganda, JIN
-Jinjiang, PR China, JJN
-Jinka - Baco/Jinka Airport, Ethiopia, BCO
-Jinzhou - Jinzhou Airport, PR China, JNZ
-Jipijapa, Ecuador, JIP
-Jiri, Nepal, JIR
-Jiujiang - Jiujiang Lushan Airport, PR China, JIU
-Jiwani, Pakistan, JIW
-Joacaba, Brazil, JCB
-Joao Pessoa - Castro Pinto Airport, Brazil, JPA
-Jodhpur, India, JDH
-J?nk?ping (Jonkoping) - Axamo Airport, Sweden, JKG
-Joensuu, Finland, JOE
-Johannesburg - OR Tambo International Airport, South Africa, JNB
-Johnson City (NY) - Binghamton/Endicott/Johnson, USA, BGM
-Johnston Island, USA, JON
-Johnstown (PA), USA, JST
-Johor Bahru - Sultan Ismail International, Malaysia, JHB
-Joinville - Cubatao Airport, Brazil, JOI
-Jolo, Philippines, JOL
-Jomsom, Nepal, JMO
-Jonesboro (AR)  Jonesboro Airport, USA, JBR
-Joplin (MO), USA, JLN
-Jorhat - Rowriah Airport, India, JRH
-Jos, Nigeria, JOS
-Jose De San Martin, Argentina, JSM
-Jouf, Saudi Arabia, AJF
-Juanjui, Peru, JJI
-Juba, South Sudan, JUB
-Juist (island), Germany, JUI
-Juiz De Fora - Francisco De Assis Airport, Brazil, JDF
-Jujuy - El Cadillal Airport, Argentina, JUJ
-Julia Creek, Australia, JCK
-Juliaca, Peru, JUL
-Jumla, Nepal, JUM
-Jundah, Australia, JUN
-Juneau (AK) - Juneau International Airport, USA, JNU
-Junin, Argentina, JNI
-Juticalpa, Honduras, JUT
-Jwaneng, Botswana, JWA
-Jyv?skyl? (Jyvaskyla), Finland, JYV
- , , 
-K, , 
-Kabul - Khwaja Rawash Airport, Afghanistan, KBL
-Kagoshima, Japan, KOJ
-Kahramanmaras, Turkey, KCM
-Kahului (HI), USA, OGG
-Kajaani, Finland, KAJ
-Kalamata, Greece, KLX
-Kalamazoo/Battle Creek (MI), USA, AZO
-Kalgoorlie, Australia, KGI
-Kaliningrad, Russia, KGD
-Kalispell (MT), USA, FCA
-Kalmar, Sweden, KLR
-"Kamloops,  BC", Canada, YKA
-Kamuela (HI), USA, MUE
-Kano, Nigeria, KAN
-Kanpur, India, KNU
-Kansas City (MO) - Kansas City International Airport, USA, MCI
-Kaohsiung International, Taiwan, KHH
-Kapalua West (HI), USA, JHM
-Karachi - Jinnah International Airport, Pakistan, KHI
-Karlsruhe-Baden - Soellingen, Germany, FKB
-Karlstad, Sweden, KSD
-Karpathos, Greece, AOK
-Karratha, Australia, KTA
-Kars, Turkey, KYS
-Karumba, Australia, KRB
-Karup, Denmark, KRP
-"Kaschechawan,  PQ", Canada, ZKE
-Kassala, Sudan, KSL
-Katherine, Australia, KTR
-Kathmandu - Tribhuvan International Airport, Nepal, KTM
-Katima Mulilo/Mpacha, Namibia, MPA
-Kauhajoki, Finland, KHJ
-Kaunakakai (HI), USA, MKK
-Kavalla, Greece, KVA
-Kayseri, Turkey, ASR
-Kazan - Kazan International Airport, Russia, KZN
-Keetmanshoop, Namibia, KMP
-"Kelowna,  BC", Canada, YLW
-Kemi/Tornio, Finland, KEM
-Kenai (AK), USA, ENA
-Kent (Manston) Kent International, United Kingdom, MSE
-Kerry County, Ireland, KIR
-Ketchikan (AK), USA, KTN
-Key West (FL), USA, EYW
-Khamis Mushayat, Saudi Arabia, AHB
-Kharga - New Valley, Egypt, UVL
-Kharkov, Ukraine, HRK
-Khartoum - Khartoum International Airport, Sudan, KRT
-Khuzdar, Pakistan, KDD
-Kiel - Holtenau, Germany, KEL
-Kiev - Borispol, Ukraine, KBP
-Kiev - Zhulhany, Ukraine, IEV
-Kigali - Gregoire Kayibanda, Rwanda, KGL
-Kilimadjaro, Tanzania, JRO
-Killeem (TX), USA, ILE
-Kimberley, South Africa, KIM
-King Island, King Island (Australia), KNS
-King Salomon (AK), USA, AKN
-Kingscote, Australia, KGC
-Kingston - Norman Manley, Jamaica, KIN
-Kingston (NC), USA, ISO
-Kingstown - E. T. Joshua Airport, Saint Vincent and the Grenadines, SVD
-Kinshasa - N'Djili, Congo (DRC), FIH
-Kiritimati (island) - Cassidy International Airport, Kiribati, CXI
-Kirkenes, Norway, KKN
-Kirkuk, Iraq, KIK
-Kirkwall (Orkney), United Kingdom, KOI
-Kiruna, Sweden, KRN
-Kisangani, Congo (DRC), FKI
-Kittil?, Finland, KTT
-Kitwe, Zambia, KIW
-Klagenfurt, Austria, KLU
-Klamath Fall (OR), USA, LMT
-Klawock (AK), USA, KLW
-Kleinsee, South Africa, KLZ
-Knock, Ireland, NOC
-Knoxville (TN), USA, TYS
-Kobe, Japan, UKB
-Kochi, Japan, KCZ
-"K?ln,  K?ln/Bonn", Germany, CGN
-Kodiak (AK), USA, ADQ
-Kohat, Pakistan, OHT
-Kokkola/Pietarsaari, Finland, KOK
-Kolkata (Calcutta) - Netaji Subhas Chandra, India, CCU
-Komatsu, Japan, KMQ
-Kona (HI), USA, KOA
-Konya, Turkey, KYA
-Korhogo, Cote d'Ivoire, HGO
-Kos, Greece, KGS
-Kota Kinabalu, Malaysia, BKI
-Kotzbue (AK), USA, OTZ
-Kowanyama, Australia, KWM
-Krakow (Cracow) - John Paul II International Airport, Poland, KRK
-Kristiansand, Norway, KRS
-Kristianstad, Sweden, KID
-Kristiansund, Norway, KSU
-Kuala Lumpur - International Airport, Malaysia, KUL
-Kuala Lumpur - Sultan Abdul Aziz Shah, Malaysia, SZB
-Kuantan, Malaysia, KUA
-Kuching, Malaysia, KCH
-Kumamoto, Japan, KMJ
-Kununurra, Australia, KNX
-Kuopio, Finland, KUO
-Kushiro, Japan, KUH
-Kuujjuaq (FortChimo), Canada, YVP
-Kuujjuarapik, Canada, YGW
-Kuusamo, Finland, KAO
-Kuwait - Kuwait International, Kuwait, KWI
-Kyoto, Japan, UKY
-Labe, Guinea, LEK
-Labouchere Bay (AK), USA, WLB
-Labuan, Malaysia, LBU
-"Lac Brochet,  MB", Canada, XLB
-La Coruna, Spain, LCG
-La Crosse (WI), USA, LSE
-Lae - Lae Nadzab Airport, Papua New Guinea, LAE
-La Rochelle, France, LRH
-Lafayette (IN), USA, LAF
-"Lafayette,  La", USA, LFT
-Lagos - Murtala Muhammed Airport, Nigeria, LOS
-La Grande, Canada, YGL
-Lahore, Pakistan, LHE
-Lake Charles (LA), USA, LCH
-Lake Havasu City (AZ), USA, HII
-Lake Tahoe (CA), USA, TVL
-Lakselv, Norway, LKL
-Lambarene, Gabon, LBQ
-Lamezia Terme, Italy, SUF
-Lampedusa, Italy, LMP
-Lanai City (HI), USA, LNY
-Lancaster (PA), USA, LNS
-Land's End, United Kingdom, LEQ
-Langkawi (islands), Malaysia, LGK
-Lannion, France, LAI
-Lanseria, South Africa, HLA
-Lansing (MI), USA, LAN
-La Paz - El Alto, Bolivia, LPB
-La Paz - Leon, Mexico, LAP
-Lappeenranta, Finland, LPP
-Laramie (WY), USA, LAR
-Laredo (TX), USA, LRD
-Larnaca, Cyprus, LCA
-Las Palmas, Spain, LPA
-Las Vegas (NV), USA, LAS
-Latrobe (PA), USA, LBE
-Launceston, Australia, LST
-Laurel/Hattisburg (MS), USA, PIB
-Laverton, Australia, LVO
-Lawton (OK), USA, LAW
-Lazaro Cardenas, Mexico, LZC
-Leaf Rapids, Canada, YLR
-Learmouth (Exmouth), Australia, LEA
-Lebanon (NH), USA, LEB
-Leeds/Bradford, United Kingdom, LBA
-Leinster, Australia, LER
-Leipzig, Germany, LEJ
-Lelystad, Netherlands, LEY
-Leon, Mexico, BJX
-Leonora, Australia, LNO
-Lerwick/Tingwall (Shetland Islands), United Kingdom, LWK
-Lewiston (ID), USA, LWS
-Lewistown (MT), USA, LWT
-Lexington (KY), USA, LEX
-Libreville, Gabon, LBV
-Lidkoeping, Sweden, LDK
-Liege, Belgium, LGG
-Lifou, "Loyaute,  Pazifik", LIF
-Lihue (HI), USA, LIH
-Lille - Lille Airport, France, LIL
-Lilongwe - Lilongwe International, Malawi, LLW
-Lima - J Chavez International, Peru, LIM
-Limassol, Cyprus, QLI
-Limoges, France, LIG
-Lincoln (NE), USA, LNK
-Lindeman Island, Australia, LDC
-Linz - Hoersching, Austria, LNZ
-Lisala, Congo (DRC), LIQ
-Lisbon - Lisboa, Portugal, LIS
-Lismore, Australia, LSY
-Little Rock (AR), USA, LIT
-Liverpool, United Kingdom, LPL
-Lizard Island, Australia, LZR
-Ljubljana - Brnik, Slovenia, LJU
-Lockhart River, Australia, IRG
-Lome, Togo, LFW
-London, Canada, YXU
-London Metropolitan Area, United Kingdom, LON
-London - City Airport, United Kingdom, LCY
-London - Gatwick, United Kingdom, LGW
-London - Heathrow, United Kingdom, LHR
-London - Luton, United Kingdom, LTN
-London - Stansted, United Kingdom, STN
-Londonderry - Eglinton, United Kingdom, LDY
-Long Beach (CA), USA, LGB
-Long Island (AK), USA, LIJ
-"Long Island,  Islip (NY) - Mac Arthur", USA, ISP
-Longreach, Australia, LRE
-Longview/Kilgore (TX), USA, GGG
-Longyearbyen - Svalbard, Svalbard/Norway, LYR
-Loreto, Mexico, LTO
-Lorient, France, LRT
-Los Angeles (CA) - International, USA, LAX
-Los Cabos, Mexico, SJD
-Los Mochis, Mexico, LMM
-Los Rodeos, Teneriffa/Spain, TFN
-Losinj - Losinj Arpt, Croatia (Hrvatska), LSZ
-Lourdes/Tarbes, France, LDE
-Louisville (KY), USA, SDF
-Luanda - 4 de Fevereiro, Angola, LAD
-Lubbock (TX), USA, LBB
-Lucknow, India, LKO
-Luederitz, Namibia, LUD
-Luga, Malta, MLA
-Lugano, Switzerland, LUG
-Lulea, Sweden, LLA
-Lumbumbashi, Congo (DRC), FBM
-Lusaka - Lusaka International Airport, Zambia, LUN
-Lusisiki, South Africa, LUJ
-Luxembourg, Luxembourg, LUX
-Luxi - Mangshi, "Yunnan,  PR China", LUM
-Luxor, Egypt, LXR
-"Lvov (Lwow,  Lemberg)", Ukraine, LWO
-Lydd - Lydd International Airport, United Kingdom, LYX
-Lynchburg (VA), USA, LYH
-Lyon - Lyon-Saint Exup¨¦ry Airport official website, France, LYS
-Lyons (KS) - Rice County Municipal, USA, LYO
-Maastricht/Aachen, Netherlands, MST
-Macapa - Alberto Alcolumbre International Airport, Brazil, MCP
-Macau - Macau International Airport, "Macau,  China SAR", MFM
-Maceio - Zumbi dos Palmares International Airport, Brazil, MCZ
-Mackay, Australia, MKY
-Macon (GA), USA, MCN
-Mactan Island - Nab, Philippines, NOP
-Madinah (Medina) - Mohammad Bin Abdulaziz, Saudi Arabia, MED
-Madison (WI) - Dane County Regional Airport, USA, MSN
-Madras (Chennai) - Chennai International Airport, India, MAA
-Madrid - Barajas Airport, Spain, MAD
-Mahe - Seychelles International, Seychelles, SEZ
-Mahon, Spain, MAH
-Maitland, Australia, MTL
-Majunga, Madagascar, MJN
-Makung, Taiwan, MZG
-Malabo - Malabo International Airport, Equatorial Guinea, SSG
-Malaga, Spain, AGP
-Malatya, Turkey, MLX
-Male - Velana International Airport, Maledives, MLE
-Malindi, Kenya, MYD
-Malmo (Malmoe), Sweden, MMA
-Malmo (Malm?) - Malm? Airport, Sweden, MMX
-Man, Cote d'Ivoire, MJC
-Managua - Augusto C Sandino, Nicaragua, MGA
-Manaus - Eduardo Gomes International Airport, Brazil, MAO
-Manchester, United Kingdom, MAN
-Manchester (NH), USA, MHT
-Mandalay - Mandalay-Annisaton Airport, Myanmar, MDL
-Manguna, Papua New Guinea, MFO
-Manihi, French Polynesia, XMH
-Manila - Ninoy Aquino International, Philippines, MNL
-Manzanillo, Mexico, ZLO
-Manzini - Matsapha International, Swaziland, MTS
-Maputo - Maputo International, Mozambique, MPM
-Mar del Plata, Argentina, MDQ
-Maracaibo - La Chinita International, Venezuela, MAR
-Maradi, Niger, MFQ
-Maras, Turkey, KCM
-Marathon (FL), USA, MTH
-Mardin, Turkey, MQM
-Mare, New Caledonia, MEE
-Margate, South Africa, MGH
-Margerita, Venezuela, PMV
-Maribor, Slovenia, MBX
-Mariehamn (Maarianhamina), Finland, MHQ
-Maroua, Cameroon, MVR
-Marquette (MI), USA, MQT
-Marrakesh - Menara Airport, Morocco, RAK
-Marsa Alam, Egypt, RMF
-Marsa Matrah (Marsa Matruh), Egypt, MUH
-Marseille - Marseille Provence Airport, France, MRS
-Marsh Harbour, Bahamas, MHH
-Martha's Vineyard (MA), USA, MVY
-Martinsburg (WV), USA, MRB
-Maryborough, Australia, MBH
-Maseru - Moshoeshoe International, Lesotho, MSU
-Mason City IA, USA, MCW
-Masvingo, Zimbabwe, MVZ
-"Matsumoto,  Nagano", Japan, MMJ
-Matsuyama, Japan, MYJ
-Mattoon (IL), USA, MTO
-Maun, Botswana, MUB
-Maupiti, French Polynesia, MAU
-Mauritius - S.Seewoosagur Ram International, Mauritius, MRU
-Mayaguez, Puerto Rico, MAZ
-Mazatlan, Mexico, MZT
-McAllen (TX), USA, MFE
-Medan - Polania Int'l (now Soewondo AFB), Indonesia, MES
-Medan - Kualanamu International, Indonesia, KNO
-Medellin - Jos¨¦ Mar¨ªa C¨®rdova International, Colombia, MDE
-Medford (OR), USA, MFR
-Medina, Saudi Arabia, MED
-Meekatharra, Australia, MKR
-Melbourne - Melbourne Airport (Tullamarine), Australia, MEL
-Melbourne (FL), USA, MLB
-Melville Hall, Dominica, DOM
-Memphis (TN), USA, MEM
-Mendoza, Argentina, MDZ
-Manado, Indonesia, MDC
-Merced (CA), USA, MCE
-Merida, Mexico, MID
-Meridian (MS), USA, MEI
-Merimbula, Australia, MIM
-Messina, South Africa, MEZ
-Metlakatla (AK), USA, MTM
-Metz -  Frescaty, France, MZM
-Metz/Nancy Metz-Nancy-Lorraine, France, ETZ
-Mexicali, Mexico, MXL
-Mexico City - Mexico City International Airport, Mexico, MEX
-Mexico City - Atizapan, Mexico, AZP
-Mexico City - Juarez International, Mexico, MEX
-Mexico City - Santa Lucia, Mexico, NLU
-Mfuwe, Zambia, MFU
-Miami (FL), USA, MIA
-Mianwali, Pakistan, MWD
-Middlemount, Australia, MMM
-Midland/Odessa (TX), USA, MAF
-Midway Island - Sand Island Field, US Minor Outlying Islands, MDY
-Mikkeli, Finland, MIK
-Milan, Italy, MIL
-Milan - Linate, Italy, LIN
-Milan - Malpensa, Italy, MXP
-Milan - Orio Al Serio, Italy, BGY
-Mildura, Australia, MQL
-Miles City (MT), USA, MLS
-Milford Sound, New Zealand, MFN
-Milwaukee (WI), USA, MKE
-Minatitlan, Mexico, MTT
-Mineralnye Vody, Russia, MRV
-Minneapolis - St. Paul International Airport (MN), USA, MSP
-Minot (ND), USA, MOT
-"Minsk,  International", Belarus, MSQ
-Miri, Malaysia, MYY
-Mirpur, Pakistan, QML
-Missula (MT), USA, MSO
-Mitchell (SD), USA, MHE
-Miyako Jima (Ryuku Islands) - Hirara, Japan, MMY
-Miyazaki, Japan, KMI
-Mkambati, South Africa, MBM
-Moanda, Gabon, MFF
-Mobile (AL) - Pascagoula (MS), USA, MOB
-Modesto (CA), USA, MOD
-Moenjodaro, Pakistan, MJD
-Mogadishu, Somalia, MGQ
-Mokuti, Namibia, OKU
-Moline/Quad Cities (IL), USA, MLI
-Mombasa - Moi International, Kenya, MBA
-Monastir, Tunisia, MIR
-Moncton, Canada, YQM
-Monroe (LA), USA, MLU
-Monrovia - Metropolitan Area, Liberia, MLW
-Monrovia - Roberts International, Liberia, ROB
-Montego Bay - Sangster International, Jamaica, MBJ
-Montenegro, Brazil, QGF
-Monterey (CA), USA, MRY
-Monterrey - Gen. Mariano Escobedo, Mexico, MTY
-Monterrey - Aeropuerto Del Norte, Mexico, NTR
-Montevideo - Carrasco International Airport, Uruguay, MVD
-Montgomery (AL) - Montgomery Regional Airport, USA, MGM
-Montpellier - Montpellier¨CM¨¦diterran¨¦e Airport, France, MPL
-Montreal, Canada, YMQ
-Montreal - Dorval (Montr¨¦al-Trudeau), Canada, YUL
-Montreal - Mirabel, Canada, YMX
-Montrose/Tellruide (CO), USA, MTJ
-Moorea, French Polynesia, MOZ
-Moranbah, Australia, MOV
-Moree, Australia, MRZ
-Morelia, Mexico, MLM
-Morgantown (WV), USA, MGW
-"Morioka,  Hanamaki", Japan, HNA
-Moroni - Prince Said Ibrahim, Comoros (Comores), HAH
-Moruya, Australia, MYA
-Moscow - Metropolitan Area, Russia, MOW
-Moscow - Domodedovo, Russia, DME
-Moscow - Sheremetyevo, Russia, SVO
-Moscow - Vnukovo, Russia, VKO
-Moses Lake (WA), USA, MWH
-Mossel Bay, South Africa, MZY
-Mostar, Bosnia and Herzegovina, OMO
-Mosul, Iraq, OSM
-Mouila, Gabon, MJL
-Moundou, Chad, MQQ
-Mount Cook, New Zealand, GTN
-Mount Gambier, Australia, MGB
-Mount Magnet, Australia, MMG
-Mt. Isa, Australia, ISA
-Mt. McKinley (AK), USA, MCL
-Muenchen (Munich) - Franz Josef Strauss, Germany, MUC
-Muenster/Osnabrueck, Germany, FMO
-Mulhouse, France, MLH
-Multan, Pakistan, MUX
-Murcia, Spain, MJV
-Murmansk, Russia, MMK
-Mus, Turkey, MSR
-Muscat - Seeb, Oman, MCT
-Muscle Shoals (AL), USA, MSL
-Muskegon (MI), USA, MKG
-Muzaffarabad, Pakistan, MFG
-Mvengue, Gabon, MVB
-Mykonos, Greece, JMK
-Myrtle Beach (SC) - Myrtle Beach AFB, USA, MYR
-Myrtle Beach (SC) - Grand Strand Airport, USA, CRE
-Mysore, India, MYQ
-Mytilene (Lesbos), Greece, MJT
-Mzamba, South Africa, MZF
-Nadi, Fiji, NAN
-Nagasaki, Japan, NGS
-Nagoya - Komaki AFB, Japan, NGO
-Nagpur, India, NAG
-Nairobi, Kenya, NBO
-Nakhichevan, Azerbaijan, NAJ
-Nakhon Si Thammarat, Thailand, NST
-Nancy, France, ENC
-Nanisivik, Canada, YSR
-Nanning, "Guangxi,  PR China", NNG
-Nantes - Nantes Atlantique Airport, France, NTE
-Nantucket (MA), USA, ACK
-Naples - Naples Capodichino Airport, Italy, NAP
-Naples (FL), USA, APF
-Narrabri, Australia, NAA
-Narrandera, Australia, NRA
-Narsarsuaq, Greenland, UAK
-Nashville (TN), USA, BNA
-Nassau, Bahamas, NAS
-Natal - Augusto Severo International Airport, Brazil, NAT
-Nausori, Fiji/Suva, SUV
-Nawab Shah, Pakistan, WNS
-Naxos - Naxos Airport, Greece, JNX
-N'Djamena, Chad, NDJ
-N'Dola, Zambia, NLA
-Nelson, New Zealand, NSN
-Nelspruit, South Africa, NLP
-Nelspruit - Kruger Mpumalanga International Airport, South Africa, MQP
-Nevis, St. Kitts and Nevis, NEV
-New Bern (NC), USA, EWN
-New Haven (CT), USA, HVN
-"New Orleans,  La", USA, MSY
-Newquay, United Kingdom, NQY
-New Valley - Kharga, Egypt, UVL
-New York - John F. Kennedy (NY), USA, JFK
-New York - LaGuardia (NY), USA, LGA
-New York - Newark (NJ), USA, EWR
-New York (NY), USA, NYC
-Newburgh (NY), USA, SWF
-Newcastle - Belmont, Australia, BEO
-Newcastle - Williamtown, Australia, NTL
-Newcastle, United Kingdom, NCL
-Newcastle, South Africa, NCS
-Newman, Australia, ZNE
-Newport News/Williamsburg (VA), USA, PHF
-N'Gaoundere, Cameroon, NGE
-Niagara Falls International, USA, IAG
-Niamey, Niger, NIM
-Nice - Cote D'Azur Airport, France, NCE
-Nicosia, Cyprus, NIC
-Nikolaev, Ukraine, NLV
-Niigata, Japan, KIJ
-Nimes, France, FNI
-Nis, Serbia, INI
-Nizhny Novgorod - Strigino International Airport, Russia, GOJ
-Nome (AK), USA, OME
-Noosa, Australia, NSA
-Norfolk Island, Australia, NLK
-Norfolk/Virginia Beach (VA), USA, ORF
-Norman Wells, Canada, YVQ
-Norrkoeping, Sweden, NRK
-North Bend (OR), USA, OTH
-North Eleuthera, Bahamas, ELH
-Norwich, United Kingdom, NWI
-Nottingham - East Midlands, United Kingdom, EMA
-Nouadhibou, Mauritania, NDB
-Nouakchott, Mauritania, NKC
-Noumea, New Caledonia, NOU
-Novi Sad, Serbia, QND
-Novosibirsk - Tolmachevo Airport, Russia, OVB
-N¨¹rnberg (Nuremberg), Germany, NUE
-Nuevo Laredo, Mexico, NLD
-Nuku'alofa - Fua'Amotu International, Tonga, TBU
-Oakland (CA), USA, OAK
-Oaxaca - Xoxocotlan, Mexico, OAX
-Odense, Denmark, ODE
-Odessa, Ukraine, ODS
-Oerebro, Sweden, ORB
-Ohrid, Macedonia, OHD
-Oita, Japan, OIT
-Okayama, Japan, OKJ
-"Okinawa,  Ryukyo Island - Naha", Japan, OKA
-Oklahoma City (OK) - Will Rogers World, USA, OKC
-Olbia, Italy, OLB
-Olympic Dam, Australia, OLP
-Omaha (NE), USA, OMA
-Ondangwa, Namibia, OND
-Ontario (CA), USA, ONT
-Oran (Ouahran), Algeria, ORN
-Orange, Australia, OAG
-Orange County (Santa Ana) (CA), USA, SNA
-Oranjemund, Namibia, OMD
-Oranjestad - Reina Beatrix International, Aruba, AUA
-Orkney - Kirkwall, United Kingdom, KOI
-Orlando Metropolitan Area (FL), USA, ORL
-Orlando - International Airport (FL), USA, MCO
-Orpheus Island, Australia, ORS
-"Osaka,  Metropolitan Area", Japan, OSA
-Osaka - Itami, Japan, ITM
-Osaka - Kansai International Airport, Japan, KIX
-Oshkosh (WI), USA, OSH
-Osijek, Croatia (Hrvatska), OSI
-"Oslo - Oslo Airport,  Gardermoen", Norway, OSL
-Oslo - Fornebu, Norway, FBU
-Oslo - Sandefjord, Norway, TRF
-Ottawa - Hull, Canada, YOW
-Ouadda, Central African Republic, ODA
-Ouarzazate, Morocco, OZZ
-Oudtshoorn, South Africa, OUH
-Ouagadougou, Burkina Faso, OUA
-Oujda, Morocco, OUD
-Oulu, Finland, OUL
-Out Skerries (Shetland), United Kingdom, OUK
-Oviedo, Spain, OVD
-Owensboro (KY), USA, OWB
-Oxnard (CA), USA, OXR
-Oyem, Gabon/Loyautte, UVE
-Paderborn/Lippstadt, Germany, PAD
-Paducah (KY), USA, PAH
-Page/Lake Powell (AZ), USA, PGA
-Pago Pago, American Samoa, PPG
-Pakersburg (WV) /Marietta (OH), USA, PKB
-Palermo - Punta Raisi, Italy, PMO
-Palma de Mallorca, Spain, PMI
-Palmas, Brazil, PMW
-Palmdale/Lancaster (CA), USA, PMD
-Palmerston North, New Zealand, PMR
-Palm Springs (CA), USA, PSP
-Panama City - Tocumen International, Panama, PTY
-Panama City (FL), USA, PFN
-Panjgur, Pakistan, PJG
-Pantelleria, Italy, PNL
-Papeete - Faaa, French Polynesia (Tahiti), PPT
-Paphos, Cyprus, PFO
-Paraburdoo, Australia, PBO
-Paramaribo - Zanderij International, Suriname, PBM
-Paris, France, PAR
-Paris - Charles de Gaulle, France, CDG
-Paris - Le Bourget, France, LBG
-Paris - Orly, France, ORY
-Paro, Bhutan, PBH
-Pasco (WA), USA, PSC
-Pasni, Pakistan, PSI
-Patna, India, PAT
-Pattaya, Thailand, PYX
-Pau, France, PUF
-Pellston (MI), USA, PLN
-Penang International, Malaysia, PEN
-Pendelton (OR), USA, PDT
-Pensacola (FL), USA, PNS
-Peoria/Bloomington (IL), USA, PIA
-Pereira, Colombia, PEI
-Perpignan, France, PGF
-Perth International, Australia, PER
-Perugia, Italy, PEG
-Pescara, Italy, PSR
-Peshawar, Pakistan, PEW
-Petersburg (AK), USA, PSG
-Phalaborwa, South Africa, PHW
-Philadelphia (PA) - International, USA, PHL
-Phnom Penh - Pochentong, Cambodia, PNH
-Phoenix (AZ) - Sky Harbor International, USA, PHX
-Phuket, Thailand, HKT
-Pierre (SD), USA, PIR
-Pietermaritzburg, South Africa, PZB
-Pietersburg, South Africa, PTG
-Pilanesberg/Sun City, South Africa, NTY
-Pisa - Galileo Galilei, Italy, PSA
-Pittsburgh International Airport (PA), USA, PIT
-Plattsburgh (NY), USA, PLB
-Plettenberg Bay, South Africa, PBZ
-Pocatello (ID), USA, PIH
-Podgorica, Montenegro, TGD
-Pohnpei, Micronesia, PNI
-Pointe a Pitre, Guadeloupe, PTP
-Pointe Noire, Congo (ROC), PNR
-Poitiers - Biard, France, PIS
-Ponce, Puerto Rico, PSE
-Ponta Delgada, Portugal, PDL
-Pori, Finland, POR
-Port Angeles (WA), USA, CLM
-Port au Prince, Haiti, PAP
-Port Augusta, Australia, PUG
-Port Elizabeth, South Africa, PLZ
-Port Gentil, Gabon, POG
-Port Harcourt, Nigeria, PHC
-Port Hedland, Australia, PHE
-Portland, Australia, PTJ
-Portland (ME), USA, PWM
-Portland International (OR), USA, PDX
-Port Lincoln, Australia, PLO
-Port Macquarie, Australia, PQQ
-"Port Menier,  PQ", Canada, YPN
-Port Moresby - Jackson Field, Papua New Guinea, POM
-Porto, Portugal, OPO
-Porto Alegre - Salgado Filho International Airport, Brazil, POA
-Port of Spain - Piarco International, Trinidad and Tobago, POS
-Port Said, Egypt, PSD
-Porto Santo, Portugal, PXO
-Porto Velho, Brazil, PVH
-Port Vila, Vanuatu, VLI
-Poughkeepsie (NY), USA, POU
-"Poznan,  Lawica", Poland, POZ
-Prague - V¨¢clav Havel Airport (formerly Ruzyne), Czech Republic, PRG
-Praia - Nelson Mandela International Airport, Cape Verde, RAI
-Presque Island (ME), USA, PQI
-Pretoria - Wonderboom Apt., South Africa, PRY
-Preveza/Lefkas, Greece, PVK
-Prince George, Canada, YXS
-Prince Rupert/Digby Island, Canada, YPR
-Pristina, Serbia, PRN
-Prosperpine, Australia, PPP
-Providence (RI), USA, PVD
-Prudhoe Bay (AK), USA, SCC
-Puebla, Mexico, PBC
-Pueblo (CO), USA, PUB
-Puerto Escondido, Mexico, PXM
-Puerto Ordaz, Venezuela, PZO
-Puerto Plata, Dominican Republic, POP
-Puerto Vallarta, Mexico, PVR
-Pukatawagan, Canada, XPK
-Pula, Croatia (Hrvatska), PUY
-Pullman (WA), USA, PUW
-Pune, "India,  Maharashtra", PNQ
-Punta Arenas - Presidente Carlos Ib¨¢?ez del Campo, Chile, PUQ
-Punta Cana - Punta Cana International, Dominican Republic, PUJ
-Pu San (Busan) - Gimhae International Airport, South Korea, PUS
-Pyongyang - Sunan International Airport, North Korea, FNJ
-Quebec - Quebec International, Canada, YQB
-Queenstown, Australia, UEE
-Queenstown, New Zealand, ZQN
-Quetta, Pakistan, UET
-Qingdao, "Shandong,  PR China", TAO
-Quimper, France, UIP
-Quincy (IL), USA, UIN
-Quito - Mariscal Sucre International Airport, Ecuador, UIO
-Rabat - Rabat-Sal¨¦ Airport, Morocco, RBA
-Rahim Yar Khan - Shaikh Zayed International Airport, Pakistan, RYK
-Raiatea, French Polynesia, RFP
-"Rainbow Lake,  AB", Canada, YOP
-Rajkot, India, RAJ
-Raleigh/Durham (NC), USA, RDU
-Ranchi, India, IXR
-Rangiroa, French Polynesia, RGI
-Rangoon (Yangon) - Mingaladon, Myanmar, RGN
-Rapid City (SD), USA, RAP
-Rarotonga, Cook Island, RAR
-Ras al Khaymah (Ras al Khaimah), United Arab Emirates, RKT
-Rawala Kot, Pakistan, RAZ
-Rawalpindi, Pakistan, RWP
-Reading (PA), USA, RDG
-Recife - Guararapes-Gilberto Freyre International, Brazil, REC
-Redding (CA), USA, RDD
-Redmond (OR), USA, RDM
-Reggio Calabria, Italy, REG
-Regina, Canada, YQR
-Reina Sofia, Teneriffa/Spain, TFS
-Rennes, France, RNS
-Reno (NV), USA, RNO
-Resolute Bay, Canada, YRB
-Reus, Spain, REU
-Reykjavik - Metropolitan Area, Iceland, REK
-Reykjavik - Keflavik International, Iceland, KEF
-Rhinelander (WI), USA, RHI
-Rhodos, Greece, RHO
-Richards Bay, South Africa, RCB
-Richmond (VA), USA, RIC
-Riga, Latvia, RIX
-Rijeka, Croatia (Hrvatska), RJK
-Rimini, Italy, RMI
-Rio Branco - Pl¨¢cido de Castro International Airport, Brazil, RBR
-Rio de Janeiro - Galeao, Brazil, GIG
-Rio de Janeiro - Santos Dumont, Brazil, SDU
-Rio de Janeiro, Brazil, RIO
-Riyadh - King Khaled International, Saudi Arabia, RUH
-Roanne, France, RNE
-Roanoke (VA), USA, ROA
-Roatan, Honduras, RTB
-Rochester (MN), USA, RST
-Rochester (NY), USA, ROC
-Rock Sound, Bahamas, RSD
-Rock Springs (WY), USA, RKS
-Rockford (IL), USA, RFD
-Rockhampton, Australia, ROK
-Rockland (ME), USA, RKD
-Rocky Mount - Wilson (NC), USA, RWI
-Rodez, France, RDZ
-Rodrigues Island, Mauritius, RRG
-Roenne, Denmark, RNN
-Rome, Italy, ROM
-Rome - Ciampino, Italy, CIA
-Rome - Fuimicino, Italy, FCO
-Ronneby, Sweden, RNB
-Rosario, Argentina, ROS
-Rostov-on-Don - Rostov-on-Don Airport, Russia, RVI
-Rostov-on-Don - Platov International Airport, Russia, ROV
-Rotorua, New Zealand, ROT
-Rotterdam, Netherlands, RTM
-Rovaniemi, Finland, RVN
-Rundu, Namibia, NDU
-Ruse, Bulgaria, ROU
-Saarbruecken, Germany, SCN
-Sacramento (CA), USA, SMF
-Sado Shima, Japan, SDS
-Saginaw/Bay City/Midland (MI), USA, MBS
-Saidu Sharif, Pakistan, SDT
-Saigon (Ho Chi Minh City) - Tan Son Nhat International, Viet Nam, SGN
-Saint Brieuc, France, SBK
-Saint Denis - Roland Garros Airport, Reunion, RUN
-Saint John, Canada, YSJ
-Saipan, Northern Mariana Islands, SPN
-Sal, Cape Verde, SID
-Salalah, Oman, SLL
-Salem (OR), USA, SLE
-Salinas (CA), USA, SNS
-Salinas, Ecuador, SNC
-Salisbury, Zimbabwe, SAY
-Salisbury (MD), USA, SBY
-Saloniki, Greece, SKG
-"Salta,  Gen Belgrano", Argentina, SLA
-Salt Lake City (UT), USA, SLC
-Salvador - Salvador International Airport, Brazil, SSA
-Salzburg - W.A. Mozart, Austria, SZG
-Samara - Kurumoch International Airport, Russia, KUF
-Samarkand - Samarkand International Airport, Uzbekistan, SKD
-Samos, Greece, SMI
-Samsun, Turkey, SZF
-San Andres, Colombia, ADZ
-San Angelo (TX), USA, SJT
-San Antonio (TX), USA, SAT
-San Carlos de Bariloche, Argentina, BRC
-San Diego - Lindberg Field International (CA), USA, SAN
-"San Francisco - International Airport,  SA", USA, SFO
-San Jose Cabo, Mexico, SJD
-San Jose, Costa Rica, SJO
-San Jose (CA), USA, SJC
-San Juan - Luis Munoz Marin International Airport, Puerto Rico, SJU
-San Luis Obisco (CA), USA, SBP
-San Luis Potosi, Mexico, SLP
-San Pedro, Cote d'Ivoire, SPY
-San Pedro Sula, Honduras, SAP
-San Salvador, Bahamas, ZSA
-San Salvador, El Salvador, SAL
-San Sebastian, Spain, EAS
-Sanaa (Sana'a) - Sana'a International, Yemen, SAH
-Sandspit, Canada, YZP
-Santa Ana - John Wayne Airport (CA), USA, SNA
-Santa Barbara (CA), USA, SBA
-Santa Cruz de la Palma, Spain, SPC
-Santa Cruz de la Sierra, Bolivia, SRZ
-Santa Katarina - Mount Sinai, Egypt, SKV
-Santa Maria, Portugal, SMA
-Santa Maria (CA), USA, SMX
-Santander, Spain, SDR
-Santa Rosa (CA), USA, STS
-Santa Rosa, Bolivia, SRB
-Santa Rosa, Brazil, SRA
-Santa Rosa, Argentina, RSA
-"Santa Rosa,  Copan", Honduras, SDH
-Santa Rosalia, Colombia, SSL
-Santa Rosalia, Mexico, SRL
-Santiago - Antonio Maceo Airport, Cuba, SCU
-Santiago de Chile - Arturo Merino Benitez, Chile, SCL
-Santiago de Compostela, Spain, SCQ
-Santo, Vanuatu, SON
-Santo Domingo, Dominican Republic, SDQ
-Sao Luis - Marechal Cunha Machado International, Brazil, SLZ
-Sao Paulo, Brazil, SAO
-Sao Paulo - Congonhas, Brazil, CGH
-Sao Paulo - Guarulhos, Brazil, GRU
-Sao Paulo - Viracopos, Brazil, VCP
-Sao Tome, Sao Tome & Principe, TMS
-Sapporo, "Hokkaido,  Japan", SPK
-Sapporo - Okadama, "Hokkaido,  Japan", OKD
-Sapporo - New Chitose Airport, Japan, CTS
-Sarajevo, Bosnia and Herzegovina, SJJ
-Saransk - Saransk Airport, Russia, SKX
-Sarasota/Bradenton (FL), USA, SRQ
-Saskatoon, Canada, YXE
-Sassandra, Cote d'Ivoire, ZSS
-Savannah (GA), USA, SAV
-Savonlinna, Finland, SVL
-Scarborough - Crown Point International, Trinidad and Tobago, TAB
-Scone, Australia, NSO
-Scottsdale (AZ), USA, SCF
-Seattle/Tacoma (WA), USA, SEA
-Sehba, Libya, SEB
-Seinaejoki, Finland, SJY
-Selibi Phikwe, Botswana, PKW
-Sendai, Japan, SDJ
-Seoul - Incheon International Airport, South Korea, ICN
-Seoul - Kimpo, South Korea, SEL
-Sevilla, Spain, SVQ
-Sfax, Tunisia, SFA
-"Shamattawa,  MB", Canada, ZTM
-Shanghai - Hongqiao, China, SHA
-Shanghai - Pu Dong, China, PVG
-Shannon (Limerick), Ireland, SNN
-Sharjah, United Arab Emirates, SHJ
-Sharm El Sheikh, Egypt, SSH
-"Sheffield,  City Airport", United Kingdom, SZD
-"Sheffield,  Doncaster,  Robin Hood International Airport", United Kingdom, DSA
-Shenandoah Valley/Stauton (VA), USA, SHD
-Shenyang, "Liaoning,  PR China", SHE
-Shenzhen - Shenzhen Bao'an International, "Guangdong,  PR China", SZX
-Sheridan (WY), USA, SHR
-"Shreveport,  La", USA, SHV
-Shute Harbour, Australia, JHQ
-Sibu, Malaysia, SBW
-Sidney (MT), USA, SDY
-Silistra, Bulgaria, SLS
-Simferopol, Ukraine, SIP
-Sindhri, Pakistan, MPD
-Singapore - Changi, Singapore, SIN
-Singapore - Paya Lebar, Singapore, QPG
-Singapore - Seletar, Singapore, XSP
-Singleton, Australia, SIX
-Sioux City IA, USA, SUX
-Sioux Falls (SD), USA, FSD
-Sishen, South Africa, SIS
-Sitka (AK), USA, SIT
-Sivas, Turkey, VAS
-Siwa, Egypt, SEW
-Skagway (AK), USA, SGY
-Skardu, Pakistan, KDU
-Skiathos, Greece, JSI
-Skopje, Macedonia, SKP
-Skrydstrup, Denmark, SKS
-Skukuza, South Africa, SZK
-Sligo, Ireland, SXL
-Smithers, Canada, YYD
-Sodankylae, Finland, SOT
-Soenderborg, Denmark, SGD
-Soendre Stroemfjord, Greenland, SFJ
-Sofia - Vrazhdebna, Bulgaria, SOF
-Sogndal, Norway, SOG
-Southampton - Eastleigh, United Kingdom, SOU
-South Bend (IN), USA, SBN
-"South Indian Lake,  MB", Canada, XSI
-South Molle Island, Australia, SOI
-Southend (London), United Kingdom, SEN
-Split, Croatia (Hrvatska), SPU
-Spokane (WA), USA, GEG
-Springbok, South Africa, SBU
-Springfield (IL), USA, SPI
-Springfield (MO), USA, SGF
-Srinagar, India, SXR
-"St. Augustin,  PQ", Canada, YIF
-St. Croix, Virgin Islands (U.S.), STX
-St. Etienne, France, EBU
-St. George (UT), USA, SGU
-St. John's, Canada, YYT
-St. Kitts, St. Kitts and Nevis, SKB
-St. Louis (MO) Lambert¨CSt. Louis International Airport, USA, STL
-St. Lucia Hewanorra, Saint Lucia, UVF
-St. Lucia Vigle, Saint Lucia, SLU
-St. Marteen, Netherlands Antilles, SXM
-St. Martin, St. Martin (Guadeloupe), SFG
-St. Petersburg (Leningrad) - Pulkovo, Russia, LED
-"St. Pierre,  NF", Canada, FSP
-St. Thomas, Virgin Islands (U.S.), STT
-St. Vincent, Saint Vincent and the Grenadines, SVD
-Stansted (London), United Kingdom, STN
-State College/Belefonte (PA), USA, SCE
-Stavanger, Norway, SVG
-Steamboat Springs (CO), USA, HDN
-Stettin, Poland, SZZ
-Stockholm Metropolitan Area, Sweden, STO
-Stockholm - Arlanda, Sweden, ARN
-Stockholm - Bromma, Sweden, BMA
-Stockton (CA), USA, SCK
-Stornway, United Kingdom, SYY
-Strasbourg - Strasbourg Airport, France, SXB
-Streaky Bay, Australia, KBY
-Stuttgart - Echterdingen, Germany, STR
-Sui, Pakistan, SUL
-Sukkur, Pakistan, SKZ
-Sumburgh (Shetland), United Kingdom, LSI
-Sun Valley (ID), USA, SUN
-Sundsvall, Sweden, SDL
-Sunshine Coast, Australia, MCY
-Surabaya - Juanda, Indonesia, SUB
-Surat, India, STV
-Suva - Nausori Airport (Luvuluvu), Fiji, SUV
-Swakopmund, Namibia, SWP
-Sydney - Sydney Airport, Australia, SYD
-Sylhet, Bangladesh, ZYL
-Syracuse (NY), USA, SYR
-Tabuk, Saudi Arabia, TUU
-Taif, Saudi Arabia, TIF
-Taipei - Chiang Kai Shek, Taiwan, TPE
-Taipei - Sung Shan, Taiwan, TAY
-Taiyuan, "Shanxi,  PR China", TYN
-Takamatsu, Japan, TAK
-Talkeetna (AK), USA, TKA
-Tallahassee (FL), USA, TLH
-Tallinn - Pirita Harbour, Estonia, QUF
-Tallinn - Ulemiste, Estonia, TLL
-Tampa - International (FL), USA, TPA
-Tampere, Finland, TMP
-Tampico - Gen. F. Javier Mina, Mexico, TAM
-Tamworth, Australia, TMW
-Tangier - Boukhalef, Morocco, TNG
-Taree, Australia, TRO
-Targovishte, Bulgaria, TGV
-Tashkent - International, Uzbekistan, TAS
-Tawau, Malaysia, TWU
-Tbilisi - Novo Alexeyevka, Georgia, TBS
-Te Anau, New Zealand, TEU
-"Teesside,  Durham Tees Valley", United Kingdom, MME
-Tegucigalpa, Honduras, TGU
-Tehran (Teheran) - Mehrabad, Iran, THR
-Tekirdag - Corlu, Turkey, TEQ
-Tel Aviv - Ben Gurion International, Israel, TLV
-Telluride (CO), USA, TEX
-Temora, Australia, TEM
-Tenerife, Spain, TCI
-Tenerife - Sur Reina Sofia, Spain, TFS
-Tenerife - Norte Los Rodeos, Spain, TFN
-Tennant Creek, Australia, TCA
-Terceira, Portugal, TER
-Teresina, Brazil, THE
-Termez (Termes), Uzbekistan, TMZ
-Terrace, Canada, YXT
-Terre Haute (IN), USA, HUF
-Texarkana (AR), USA, TXK
-Thaba'Nchu, South Africa, TCU
-The Pas, Canada, YQD
-Thessaloniki - Makedonia Apt., Greece, SKG
-Thief River Falls (MN), USA, TVF
-Thira, Greece, JTR
-Thiruvananthapuram, India, TRV
-Thisted, Denmark, TED
-Thompson, Canada, YTH
-Thorne Bay (AK), USA, KTB
-Thunder Bay, Canada, YQT
-Thursday Island, Australia, TIS
-Tianjin, China, TSN
-Tijuana - Rodriguez, Mexico, TIJ
-Tioman, Indonesia, TOD
-Tirana - Rinas, Albania, TIA
-Tiruchirapally, India, TRZ
-Tivat, Montenegro, TIV
-Tobago, Trinidad and Tobago, TAB
-Tokushima, Japan, TKS
-Tokyo, Japan, TYO
-Tokyo - Haneda, Japan, HND
-Tokyo - Narita, Japan, NRT
-Toledo (OH), USA, TOL
-Tom Price, Australia, TPR
-Toowoomba, Australia, TWB
-Toronto - Billy Bishop Toronto City Airport, Canada, YTZ
-Toronto - Toronto Pearson International Airport, Canada, YYZ
-Toronto, Canada, YTO
-Tortola, British Virgin Islands, TOV
-Touho, New Caledonia, TOU
-Toulouse - Blagnac Airport, France, TLS
-Townsville, Australia, TSV
-Toyama, Japan, TOY
-Trabzon, Turkey, TZX
-Trapani, Italy, TPS
-Traverse City (MI), USA, TVC
-Treasure Cay, Bahamas, TCB
-Trenton/Princeton (NJ), USA, TTN
-Treviso, Italy, TSF
-Tri-Cities Regional (TN) /VA, USA, TRI
-Trieste, Italy, TRS
-Tripoli - Tripoli International, Libya, TIP
-Tromsoe, Norway, TOS
-Trondheim, Norway, TRD
-Tsumeb, Namibia, TSB
-Tucson (AZ), USA, TUS
-Tulepo (MS), USA, TUP
-Tulsa (OK), USA, TUL
-Tunis - Carthage, Tunisia, TUN
-Turbat, Pakistan, TUK
-Turin, Italy, TRN
-Turku, Finland, TKU
-Tuscaloosa (AL), USA, TCL
-Tuxtla Gutierrez, Mexico, TGZ
-Twin Falls (ID), USA, TWF
-Tyler (TX), USA, TYR
-Ua Huka, French Polynesia, UAH
-Ua Pou, French Polynesia, UAP
-Ube, Japan, UBJ
-Uberaba, Brazil, UBA
-Uberlandia - Eduardo Gomes Airport, Brazil, UDI
-Ubon Ratchathani - Muang Ubon Airport, Thailand, UBP
-Udaipur - Dabok Airport, India, UDR
-Uden - Volkel Airport, Netherlands, UDE
-Udon Thani, Thailand, UTH
-Ufa, Russia, UFA
-Uherske Hradiste, Czech Republic, UHE
-Uige, Angola, UGO
-Ujung Pandang - Hasanudin Airport, Indonesia, UPG
-Ukhta, Russia, UCT
-Ukiah (CA), USA, UKI
-Ulaanbaatar - Buyant Uhaa Airport, Mongolia, ULN
-Ulan-Ude, Russia, UUD
-Ulanhot, PR China, HLH
-Ulei, Vanuatu, ULB
-Ulsan, South Korea, USN
-Ulundi, South Africa, ULD
-Umea, Sweden, UME
-Umiujaq, Canada, YUD
-Umtata, South Africa, UTT
-Unalakleet (AK), USA, UNK
-Union Island, Saint Vincent and the Grenadines, UNI
-Unst (Shetland Island) - Baltasound Airport, United Kingdom, UNT
-Upala, Costa Rica, UPL
-Upernavik - Upernavik Heliport, Greenland, JUV
-Upington, South Africa, UTN
-Upolu Point (HI), USA, UPP
-Uranium City, Canada, YBE
-Urgench, Uzbekistan, UGC
-Uriman, Venezuela, URM
-Urmiehm (Orumieh), Iran, OMH
-Uruapan, Mexico, UPN
-Urubupunga - Ernesto Pochler Airport, Brazil, URB
-Uruguaiana - Ruben Berta Airport, Brazil, URG
-Urumqi, "Xinjiang,  PR China", URC
-Uruzgan, Afghanistan, URZ
-Ushuaia - Islas Malvinas Airport, Argentina, USH
-Utapao (Pattaya), Thailand, UTP
-Utica (NY) - Oneida County Airport, USA, UCA
-Utila, Honduras, UII
-Uummannaq, Greenland, UMD
-Uzhgorod, Ukraine, UDJ
- , , 
-V, , 
-Vaasa, Finland, VAA
-Vaexjoe, Sweden, VXO
-Vail (CO), USA, EGE
-Val d'Or, Canada, YVO
-Valdez (AK), USA, VDZ
-Valdosta (GA), USA, VLD
-Valencia, Spain, VLC
-Valencia, Venezuela, VLN
-Valladolid, Spain, VLL
-Valparaiso, Chile, VAP
-Valverde, Spain, VDE
-Van - Ferit Melen, Turkey, VAN
-Vancouver - Vancouver International, Canada, YVR
-Varadero, Cuba, VRA
-Varanasi, India, VNS
-Varkaus, Finland, VRK
-Varna, Bulgaria, VAR
-Vasteras, Sweden, VST
-Velikiye Luki (Welikije Luki), Russia, VLU
-Venice - Marco Polo, Italy, VCE
-Veracruz, Mexico, VER
-Vernal (UT), USA, VEL
-Vero Beach/Ft. Pierce (FL), USA, VRB
-Verona (Brescia) Montichiari, Italy, VBS
-Verona, Italy, VRN
-Victoria, Canada, YYJ
-Victoria Falls, Zimbabwe, VFA
-Vidin, Bulgaria, VID
-Vientiane - Wattay, Lao PDR, VTE
-Vigo, Spain, VGO
-Villahermosa, Mexico, VSA
-Vilnius, Lithuania, VNO
-Virgin Gorda, Virgin Islands (British), VIJ
-Visalia (CA), USA, VIS
-Visby, Sweden, VBY
-Vitoria, Spain, VIT
-Vitoria - Eurico de Aguiar Salles Airport, Brazil, VIX
-Vryheid, South Africa, VYD
-Wabush, Canada, YWK
-Waco (TX), USA, ACT
-Wagga, Australia, WGA
-Walla Walla (WA), USA, ALW
-Wallis, Wallis and Futuna Islands, WLS
-Walvis Bay, South Africa, WVB
-Warrnambool, Australia, WMB
-Warsaw - Fr¨¦d¨¦ric Chopin, Poland, WAW
-Washington DC - Baltimore Washington International, USA, BWI
-Washington DC - Dulles International, USA, IAD
-Washington DC - Ronald Reagan National, USA, DCA
-Washington DC, USA, WAS
-Waterloo IA, USA, ALO
-Watertown (SD), USA, ATY
-Wausau/Stevens Point (WI), USA, CWA
-Weipa, Australia, WEI
-Welkom, South Africa, WEL
-Wellington, New Zealand, WLG
-Wenatchee (WA), USA, EAT
-West Palm Beach (FL), USA, PBI
-West Yellowstone (MT), USA, WYS
-"Westerland,  Sylt Airport", Germany, GWT
-Whakatane, New Zealand, WHK
-"Whale Cove,  NT", Canada, YXN
-Whangarei, New Zealand, WRE
-White Plains (NY), USA, HPN
-Whitehorse, Canada, YXY
-Whitsunday Resort, Australia, HAP
-Whyalla, Australia, WYA
-Wichita Falls (TX), USA, SPS
-Wichita (KS), USA, ICT
-Wick, United Kingdom, WIC
-Wickham, Australia, WHM
-Wien (Vienna) - Vienna International, Austria, VIE
-"Wiesbaden,  Air Base", Germany, WIE
-Wilkes Barre/Scranton (PA), USA, AVP
-Williamsport (PA), USA, IPT
-Williston (ND), USA, ISL
-Wilmington (NC), USA, ILM
-Wilna (Vilnius), Lithuania, VNO
-Wiluna, Australia, WUN
-Windhoek - Eros, Namibia, ERS
-Windhoek - Hosea Kutako International, Namibia, WDH
-Windsor Ontario, Canada, YQG
-Winnipeg International, Canada, YWG
-Wolf Point (MT), USA, OLF
-Wollongong, Australia, WOL
-Woomera, Australia, UMR
-Worcester (MA), USA, ORH
-Worland (WY), USA, WRL
-Wrangell (AK), USA, WRG
-Wuhan, "Hubei,  PR China", WUH
-Wyndham, Australia, WYN
-Xiamen, "Fujian,  PR China", XMN
-Xi'an - Xianyang, "Shaanxi,  PR China", XIY
-Yakima (WA), USA, YKM
-Yakutat (AK), USA, YAK
-Yakutsk, Russia, YKS
-"Yamagata,  Junmachi", Japan, GAJ
-Yamoussoukro, C?te d'Ivoire, ASK
-Yanbu, Saudi Arabia, YNB
-Yangon (Rangoon) - Mingaladon, Myanmar, RGN
-Yaounde, Cameroon, YAO
-Yellowknife, Canada, YZF
-Yekaterinburg - Koltsovo Airport, Russia, SVX
-Yichang, "Hubei,  PR China", YIH
-Yokohama, Japan, YOK
-Yuma (AZ), USA, YUM
-Zacatecas, Mexico, ZCL
-Zadar, Croatia (Hrvatska), ZAD
-Zagreb - Zagreb Airport Pleso, Croatia (Hrvatska), ZAG
-Zakynthos, Greece, ZTH
-Zaragoza, Spain, ZAZ
-Zhob, Pakistan, PZH
-Zinder, Niger, ZND
-Zouerate, Mauritania, OUZ
-Zurich (Z¨¹rich) - Kloten, Switzerland, ZRH
+City, Country, IATA Code
+Aalborg, Denmark, (AAL)
+Aalesund, Norway, (AES)
+Aarhus, Denmark - Bus service, (ZID)
+Aarhus, Denmark - Tirstrup, (AAR)
+Aasiaat, Greenland, (JEG)
+Abadan, Iran, (ABD)
+Abakan, Russia, (ABA)
+Aberdeen, United Kingdom, (ABZ)
+Abha, Saudi Arabia, (AHB)
+Abidjan, Cote d'Ivoire, (ABJ)
+Abu Dhabi, United Arab Emirates, (AUH)
+Abu Simbel, Egypt, (ABS)
+Abuja, Nigeria, (ABV)
+Acapulco, Mexico, (ACA)
+Acarigua, Venezuela, (AGV)
+Accra, Ghana, (ACC)
+Adana, Turkey, (ADA)
+Addis Ababa, Ethopia, (ADD)
+Adelaide, Australia, (ADL)
+Aden, Yemen, (ADE)
+Adler/Sochi, Russia, (AER)
+Adrar, Algeria, (AZR)
+Afutara, Soloman Islands, (AFT)
+Agadir, Morocco, (AGA)
+Agartala, India, (IXA)
+Agaun, Papua New Guinea, (AUP)
+Agen, France, (AGF)
+Agra, India, (AGR)
+Agri, Turkey, (AJI)
+Aguadilla, Puerto Rico, (BQN)
+Aguascalientes, Mexico, (AGU)
+Aguni, Japan, (AGJ)
+Ahmedabad, India, (AMD)
+Ahwaz, Iran, (AWZ)
+Ailuk Island, Marshall Islands, (AIM)
+Aioun El Atrouss, Mauritania, (AEO)
+Airok, Marshall Islands, (AIC)
+Aitutaki, Cook Islands, (AIT)
+Aizawl, India, (AJL)
+Ajaccio, France, (AJA)
+Akita, Japan, (AXT)
+Aksu, China, (AKU)
+Aktyubinsk, Kazakhstan, (AKX)
+Akureyri, Iceland, (AEY)
+Al Ain, United Arab Emirates, (AAN)
+Al Arish, Egypt, (AAC)
+Al Ghaydah, Yemen, (AAY)
+Al Hoceima, Morocco, (AHU)
+Al-Baha, Saudi Arabia, (ABT)
+Albury, Australia, (ABX)
+Alderney, United Kingdom, (ACI)
+Aleppo, Syrian Arab Republic, (ALP)
+Alexander Bay, South Africa, (ALJ)
+Alexandria, Egypt, (ALY)
+Alexandroupolis, Greece, (AXD)
+Al-Fujairah, United Arab Emirates, (FJR)
+Alghero, Italy, (AHO)
+Algiers, Algeria, (ALG)
+Alicante, Spain, (ALC)
+Alice Springs, Australia, (ASP)
+Almaty, Kazakhstan, (AKX)
+Almeria, Spain, (LEI)
+Alor Island, Indonesia, (ARD)
+Alorsetar, Malaysia, (AOR)
+Alotau, Papua New Guinea, (GUR)
+Alta, Norway, (ALF)
+Altamira, Brazil, (ATM)
+Altay, China, (AAT)
+Altenrhein, Switzerland, (ACH)
+Alto Rio Senguerr, Argentina, (ARR)
+Amami O Shima, Japan, (ASJ)
+Amazon Bay, Papua New Guinea, (AZB)
+Ambanja, Madagascar, (IVA)
+Ambatomainty, Madagascar, (AMY)
+Ambatondrazaka, Madagascar, (WAM)
+Ambon, Indonesia, (AMQ)
+Amboseli, Kenya, (ASV)
+Amderma, Russia, (AMV)
+Amman, Jordan - Queen Alia International, (AMM)
+Amman, Jordan - Civil/Marka Airport, (ADJ)
+Amritsar, India, (ATQ)
+Amsterdam, Netherlands, (AMS)
+Anadyr, Russia, (DYR)
+Analalava, Madagascar, (HVA)
+Anapa, Russia, (AAQ)
+Ancona, Italy, (AOI)
+Andenes, Norway, (ANX)
+Andizhan, Uzbekistan, (AZN)
+Andros, Bahamas, (ASD)
+Aneityum, Vanuatu, (AUY)
+Angelholm/Helsingborg, Sweden, (JHE)
+Angers, France - Marce, (ANE)
+Angers, France - Rail service, (QXG)
+Anggi, Indonesia, (AGD)
+Anging, China, (AQG)
+Angouleme, France, (ANG)
+Anguilla, Anguilla, (AXA)
+Aniwa, Vanuatu, (AWD)
+Ankang, China, (AKA)
+Ankara, Turkey - Esenboga, (ESB)
+Ankara, Turkey - Etimesqut, (ANK)
+Ankavandra, Madagascar, (JVA)
+Annaba, Algeria, (AAE)
+Annecy, France, (NCY)
+Antalaha, Madagascar, (ANM)
+Antalya, Turkey, (AYT)
+Antaninvarivo, Madgascar, (TNR)
+Antigua, Antigua and Barbuda, (ANU)
+Antofagasta, Chile, (ANF)
+Antsalova, Madagascar, (WAQ)
+Antsiranana, Madagascar, (DIE)
+Antsohihy, Madagascar, (WAI)
+Antwerp, Belgium - Deurne Airport, (ANR)
+Antwerp, Belgium - Bus service, (ZAY)
+Aomori, Japan, (AOJ)
+Aosta, Italy, (AOT)
+Apartado, Colombia, (APO)
+Apia, Western Samoa, (APW)
+Apia, Western Samoa, (FGI)
+Aqaba, Jordan, (AQJ)
+Araca, Brazil, (AJU)
+Aracatuba, Brazil, (ARU)
+Arad, Romania, (ARW)
+Aragip, Papua New Guinea, (ARP)
+Araguaina, Brazil, (AUX)
+Arapoti, Brazil, (AAG)
+Arar, Saudi Arabia, (RAE)
+Arauca, Colombia, (AUC)
+Arba Mintch, Ethiopia, (AMH)
+Ardabil, Iran, (ADU)
+Arequipa, Peru, (AQP)
+Argelholm/Helsingborg, Sweden, (AGH)
+Argyle, Australia, (GYL)
+Arica, Chile, (ARI)
+Arkangelsk, Russia, (ARH)
+Armenia, Colombia, (AXM)
+Armidale, Australia, (ARM)
+Arthur's Town, Bahamas, (ATC)
+Arua, Uganda, (RUA)
+Aruba, Aruba, (AUA)
+Arusha, Tanzania, (ARK)
+Arvidsjaur, Sweden, (AJR)
+Asahikawa, Japan, (AKJ)
+Ashgabat, Turkmenistan, (ASB)
+Asmara, Eritrea, (ASM)
+Asosa, Ethopia, (ASO)
+Assiut, Egypt, (ATZ)
+Astana, Kazakhstan, (TSE)
+Astrakhan, Russia, (ASF)
+Asturias, Spain and Canary Islands, (OVD)
+Asuncion, Paraguay, (ASU)
+Aswan, Egypt, (ASW)
+Ataq, Yemen, (AXK)
+Athens, Greece, (ATH)
+Atiu Island, Cook Islands, (AIU)
+Atoifi, Solomon Islands, (ATD)
+Atuona, French Polynesia, (AUQ)
+Atyrau, Kazakhstan, (GUW)
+Auckland, New Zealand, (AKL)
+Augsburg/Munich, Germany, (AGB)
+Auki, Solomon Islands, (AKS)
+Aur Island, Marshall Islands, (AUL)
+Aurangabad, India, (IXU)
+Aurillac, France, (AUR)
+Aurukun, Australia, (AUU)
+Avignon, France, (AVN)
+Ayawaki, Indonesia, (AYW)
+Ayers Rock, Australia, (AYQ)
+Babo, Indonesia, (BXB)
+Bacolod, Philippines, (BCD)
+Badajcz, Spain, (BJZ)
+Bade, Indonesia, (BXD)
+Badu Island, Australia, (BDD)
+Bagdogra, India, (IXB)
+Baharpar, Ethiopia, (BJR)
+Bahawalpur, Pakistan, (BHV)
+Bahia Blanca, Argentina, (BHI)
+Bahia Pinas, Panama, (BFQ)
+Bahia Solano, Colombia, (BSC)
+Bahrain, Bahrain, (BAH)
+Baia Mare, Romania, (BAY)
+Baimuru, Papua New Guinea, (VMU)
+Baku, Azerbaijan, (BAK)
+Balalae, Solomon Islands, (BAS)
+Balikesir, Turkey, (BZI)
+Balikpapan, Indonesia, (BPN)
+Balimo, Papua New Guinea, (OPU)
+Ballina, Australia, (BNK)
+Balmaceda, Chile, (BBA)
+Bam, Iran, (BXR)
+Bamaga, Australia, (ABM)
+Bamako, Mali, (BKO)
+Banda Aceh, Indonesia, (BTJ)
+Bandar Abbas, Iran, (BND)
+Bandar Lampung, Indonesia - Branti, (TKG)
+Bandar Lengeh, Iran, (BDH)
+Bandar Seri Begawan, Brunei, (BWN)
+Bandung, Indonesia, (BDO)
+Bangalore, India, (BLR)
+Bangda, China, (BPX)
+Bangkok, Thailand, (BKK)
+Banja Luka, Bosnia Herzegovina, (BNX)
+Banjarmasin, Indonesia, (BDJ)
+Banjul, Gambia, (BJL)
+Banmethuot, Viet Nam - Phung-Doc, (BMV)
+Bannu, Pakistan, (BNP)
+Banqui, Central African Republic, (BGF)
+Baoshan, China, (BSD)
+Baotou, China, (BAV)
+Baracoa, Cuba, (BCA)
+Barcaldine, Australia, (BCI)
+Barcelona, Spain, (BCN)
+Barcelona, Venezuela, (BLA)
+Bardufoss, Norway, (BDU)
+Bari, Italy, (BRI)
+Barinas, Venezuela, (BNS)
+Bario, Malaysia, (BBN)
+Barisal, Bangladesh, (BZL)
+Barnaul, Russia, (BAX)
+Barquisimeto, Venezuela, (BRM)
+Barra Colorado, Costa Rica, (BCL)
+Barra, United Kingdom, (BRR)
+Barran Cabermeja, Colombia, (EJA)
+Barranquilla, Colombia, (BAQ)
+Barreiras, Brazil, (BRA)
+Basco, Philippines, (BSO)
+Basel, Switzerland, (BSL)
+Basel/Mulhouse Railway Station, Switzerland, (ZDH)
+Bashehr, Iran, (BUZ)
+Bastia, France, (BIA)
+Batam, Indonesia, (BTH)
+Bathurst Island, Australia, (BRT)
+Bathurst, Australia, (BHS)
+Batman, Turkey, (BAL)
+Batna, Algeria, (BLJ)
+Batom, Indonesia, (BXM)
+Batsfijord, Norway, (BJF)
+Battambang, Cambodia, (BBM)
+Batumi, Georgia, (BUS)
+Batuna, Solomon Islands, (BPF)
+Bauru, Brazil, (BAU)
+Bayamo, Cuba, (BYM)
+Bayreuth, Germany, (BYU)
+Bechar, Algeria, (CBH)
+Bedourie, Australia, (BEU)
+Beef Island, British Virgin Islands, (EIS)
+Beica, Ethiopia, (BEI)
+Beida, Libya - La Braq, (LAQ)
+Beihai, China, (BHY)
+Beijing, China, (PEK)
+Beira, Mozambique, (BEW)
+Beirut, Lebanon, (BEY)
+Bejaia, Algeria, (BJA)
+Belaga, Mozambique, (BLG)
+Belem, Brazil, (BEL)
+Belep Island, New Caledonia, (BMY)
+Belfast, Northern Ireland, United Kingdom, (BFS)
+Belfast, United Kingdom, (BHD)
+Belgorod, Russia, (EGO)
+Belgrade, Serbia and Montenegro - Beograd, (BEG)
+Belize City, Belize - International, (BZE)
+Belize City, Belize - Municipal, (TZA)
+Bellona, Solomon Islands, (BNY)
+Belo, Madagascar, (BMD)
+Belo Horizonte, Brazil - Tancredo Neves Intl., (CNF)
+Belo Horizonte, Brazil - Pampulha, (PLU)
+Benbecula, United Kingdom, (BEB)
+Benghazi, Libya, (BEN)
+Bengkulu, Indonesia, (BKS)
+Berau, Indonesia, (BEJ)
+Berbera, Somalia, (BBO)
+Bergen, Norway, (BGO)
+Bergerac, France, (EGC)
+Berlevag, Norway, (BVG)
+Berlin, Germany - All airports, (BER)
+Berlin, Germany - Tegel, (TXL)
+Berlin, Germany - Tempelhof, (THF)
+Berlin, Germany - Schoenefeld, (SXF)
+Bermuda, Bermuda, (BDA)
+Berne, Switzerland - Belp Airport, (BRN)
+Berne, Switzerland - Rail service, (ZDJ)
+Besalampy, Madagascar, (BPY)
+Beziers, France, (BZR)
+Bhadrapur, Nepal, (BDP)
+Bhairawa, Nepal, (BWA)
+Bhamo, Myanmar, (BMO)
+Bharatpur, Nepal, (BHR)
+Bhavnagar, India, (BHU)
+Bhopal, India, (BHO)
+Bhubaneswar, India, (BBI)
+Bhuj, India, (BHJ)
+Biak, Indonesia, (BIK)
+Biarritz, France, (BIQ)
+Bikini Atoll, Marshall Islands, (BII)
+Bilbao, Spain, (BIO)
+Billund, Denmark, (BLL)
+Bima, Indonesia, (BMU)
+Bimini, Bahamas, (BIM)
+Bimini, Bahamas, (NSB)
+Bintulu, Malaysia, (BTU)
+Bintuni, Indonesia, (NTI)
+Biratragar, Nepal, (BIR)
+Birdsville, Australia, (BVI)
+Birmingham, United Kingdom, (BHX)
+Bisha, Saudi Arabia, (BHH)
+Bishkek, Kyrgyzstan, (FRU)
+Biskra, Algeria, (BSK)
+Bissau, Guinea-Bissau, (OXB)
+Blackall, Australia, (BKQ)
+Blackpool, United Kingdom, (BLK)
+Blackwater, Australia, (BLT)
+Blagoveschensk, Russia, (BQS)
+Blantyre, Malawi, (BLZ)
+Blenheim, New Zealand, (BHE)
+Blo Horizonte, Brazil, (CNF)
+Bloemfontein, South Africa, (BFN)
+Boa Vista, Cape Verde, (BVC)
+Boang, Papua New Guinea, (BOV)
+Boavista, Brazil, (BVB)
+Bocas Del Toro, Panama, (BOC)
+Bodo, Norway, (BOO)
+Bodrum, Turkey, (BJV)
+Bogota, Colombia, (BOG)
+Boiju Island, Australia, (GIC)
+Bojnord, Iran, (BJB)
+Bokondini, Indonesia, (BUI)
+Bol, Croatia, (BWK)
+Bolzano, Italy, (BZO)
+Boma, Congo, (BOA)
+Bombay, India, (BOM)
+Bonaire, Netherlands Antilles, (BON)
+Bonn, Germany, (BNJ)
+Bora Bora, French Polynesia, (BOB)
+Bordeaux, France, (BOD)
+Borg El Arab, Egypt, (HBE)
+Borkum, Germany, (BMK)
+Borlange, Sweden, (BLE)
+Bornholm, Denmark, (RNN)
+Borroloola, Australia, (BOX)
+Bossaro, Somalia, (BSA)
+Boulia, Australia, (BQL)
+Bourgas, Bulgaria, (BOJ)
+Bourke, Australia, (BRK)
+Bournemouth, United Kingdom, (BOH)
+Brack, Libya, (BCQ)
+Brampton Island, Australia, (BMP)
+Brasilia, DF, Brazil, (BSB)
+Bratislava, Slovakia, (BTS)
+Bratsk, Russia, (BTK)
+Braunschweig, Denmark, (BWE)
+Brazzaville, Congo, (BZV)
+Bremen, Germany, (BRE)
+Brest, France, (BES)
+Brewarrina, Australia, (BWQ)
+Bridgetown, Barbados, (BGI)
+Brindisi, Italy, (BDS)
+Brisbane, Queensland, Australia, (BNE)
+Bristol, United Kingdom, (BRS)
+Brive-La-Gaillarde, France - Laroche, (BVE)
+Brno, Czech Republic - Turany, (BRQ)
+Brno, Czech Republic - Bus service, (ZDN)
+Broken Hill, Australia, (BHQ)
+Bronnoysund, Norway, (BNN)
+Broome, Australia, (BME)
+Brus Laguna, Honduras, (BHG)
+Brussels, Belgium - National, (BRU)
+Brussels, Belgium - Rail service, (ZYR)
+Brussels, Belguim - Charleroi, (CRL)
+Bucaramanga, Colombia, (BGA)
+Bucharest, Romania - Baneasa, (BBU)
+Bucharest, Romania - Otopeni International, (OTP)
+Budapest, Hungary, (BUD)
+Buenos Aires, Argentina - Jorge Newbery, (AEP)
+Buenos Aires, Argentina - Ministro Pistarini, (EZE)
+Bugulma, Russia, (UUA)
+Bujumbura, Burundi, (BJM)
+Buka, Papua New Guinea, (BUA)
+Bukhara, Uzbekistan, (BHK)
+Bukoba, Malaysia, (BKZ)
+Bulawayo, Zimbabwe, (BUQ)
+Bulgulma, Russia, (UUA)
+Bundaberg, Australia, (BDB)
+Bunsil, Papua New Guinea, (BXZ)
+Burao, Somalia, (BUO)
+Bureta, Fiji, (LEV)
+Buri Ram, Thailand, (BFV)
+Burketown, Australia, (BUC)
+Burnie, Australia, (BWT)
+Busan, South Korea - Gimhae, (PUS)
+Butuan, Philippines, (BXU)
+Bydgoszcz, Poland, (BZG)
+Cabo San Lucas, 'Los Cabos', Mexico, (SJD)
+Caen, France, (CFR)
+Cagayan De Oro, Philippines - Lumbia, (CGY)
+Cagliari, Italy, (CAG)
+Cairns, Australia, (CNS)
+Cairo, Egypt, (CAI)
+Cajamarca, Peru, (CJA)
+Calabar, Nigeria, (CBQ)
+Calama, Chile, (CJC)
+Calcutta, India, (CCU)
+Cali, Colombia, (CLO)
+Calvi, France, (CLY)
+Camaguey, Cuba, (CMW)
+Cambridge, United Kingdom, (CBG)
+Camodoro, Argentina, (CRD)
+Campbeltown, United Kingdom, (CAL)
+Campeche, Mexico, (CPE)
+Campina Grande, Brazil, (CPV)
+Campinas, Brazil, (CPQ)
+Campo Grande, Brazil, (CGR)
+Campos, Brazil, (CAW)
+Canaima, Venezuela, (CAS)
+Canberra, Australia, (CBR)
+Cancun, Mexico, (CUN)
+Cannes, France - Mandelieu, (CEQ)
+Cannes, France - Coisette Heliport, (JCA)
+Cannes, France - Vieux Port, (QYW)
+Canouan, Saint Vincent and the Grenadines, (CIW)
+Cap Haitien, Haiti, (CAP)
+Cape Orford, Papua New Guinea, (CPI)
+Cape Town, South Africa, (CPT)
+Cape Vogel, Papua New Guinea, (CVL)
+Caracas, Venezuela, (CCS)
+Carajas, Brazil, (CKS)
+Carcassonne, France, (CCF)
+Cardiff, United Kingdom, (CWL)
+Carnarvon, Australia, (CVQ)
+Carrillo, Costa Rica, (RIK)
+Cartagena, Colombia, (CTG)
+Carupani, Venezuela, (CUP)
+Casablanca, Morocco - Anfa, (CAS)
+Casablanca, Morocco - Mohamed V, (CMN)
+Cascavel, Brazil, (CAC)
+Casino, Australia, (CSI)
+Castaway, Fiji, (CST)
+Castres, France, (DCM)
+Catamarca, Argentina, (CTC)
+Catania, Italy, (CTA)
+Caucasia, Colombia, (CAQ)
+Caxias Do Sul, Brazil, (CXJ)
+Cayenne, French Guiana, (CAY)
+Cayman Brac Is, Cambodia, (CYB)
+Cayo Largo Del Sur, Cuba, (CYO)
+Cebu, Philippines - Matan International, (CEB)
+Cedun, Australia, (CED)
+Ceuta, Spain and Canary Islands, (JCU)
+Chah-Bahar, Iran, (ZBR)
+Chambery, France, (CMF)
+Chandigarh, India, (IXC)
+Changchun, China, (CGQ)
+Changde, China, (CGD)
+Changuinda, Panama, (CHX)
+Changzhou, China, (CZX)
+Chania, Greece, (CHQ)
+Chaoyang, China, (CHG)
+Chapeco, Brazil, (XAP)
+Charleville, Australia, (CTL)
+Chatham Island, New Zealand, (CHT)
+Cheboksary, Russia, (CSY)
+Chelybinsk, Russia, (CEK)
+Chennai, India, (MAA)
+Cheongju, South Korea, (CJJ)
+Cherepovets, Russia, (CEE)
+Chergdu, China, (CTU)
+Chester, United Kingdom, (CEG)
+Chetumal, Mexico, (CTM)
+Chevepovets, Russia, (CEE)
+Chi Mei, Taiwan, (CMJ)
+Chiang Mai, Thailand, (CNX)
+Chiang Rai, Thailand, (CEI)
+Chiayi, Taiwan, (CYI)
+Chicayo, Peru, (CIX)
+Chifeng, China, (CIF)
+Chihuahua, Mexico, (CUU)
+Chillan, Chile, (YAI)
+Chipata, Zambia, (CIP)
+Chisinau, Republic of Moldova, (KIV)
+Chita, Russia, (HTA)
+Chitral, Pakistan, (CJL)
+Chitre, Panama, (CTD)
+Chittagong, Bangladesh, (CGP)
+Choiseul Bay, Solomon Islands, (CHY)
+Chongqing, China, (CKG)
+Christchurch, New Zealand, (CHC)
+Christmas Island, Christmas Island, (XCH)
+Cicia, Fiji, (ICI)
+Ciego De Avila, Cuba, (AVI)
+Ciudad Bolivar, Venezuela, (CBL)
+Ciudad Del Carmen, Mexico, (CME)
+Ciudad del Este, Paraguay, (AGT)
+Ciudad Juarez, Mexico, (CJS)
+Ciudad Obregon, Mexico, (CEN)
+Ciudad Victoria, Mexico, (CVM)
+Clermont-ferrand, France, (CFE)
+Cleve, Australia, (CVC)
+Cloncurry, Australia, (CNJ)
+Club Makokola, Malawi, (CMK)
+Cluj, Romania, (CLJ)
+Cobar, Australia, (CAZ)
+Cobija, Bolivia, (CIJ)
+Cochabamba, Bolivia, (CBB)
+Cochin, India, (COK)
+Coconut Island, Australia, (CNC)
+Cocos Islands, Cocos, (Keeling) Islands, (CCK)
+Coen, Australia, (CUQ)
+Coffs Harbor, Australia, (CFS)
+Coimbatore, India, (CJB)
+Colima, Mexico, (CLQ)
+Cologne, Germany - Rail service, (QKL)
+Cologne, Germany - Cologne/Bonn, (CGN)
+Colombo, Sri Lanka, (CMB)
+Colon, Panama, (ONX)
+Conakry, Guinea, (CKY)
+Concepcion, Chile, (CCP)
+Concordia, Argentina, (COC)
+Condoto, Colombia, (COG)
+Constanta, Romania, (CND)
+Constantine, Algeria, (CZL)
+Contadora, Panama, (OTD)
+Coober Pedy, Australia, (CPD)
+Cooktown, Australia, (CTN)
+Cooma, NS, Australia, (OOM)
+Coonamble, Australia, (CNB)
+Copenhagen, Denmark, (CPH)
+Copiapo, Chile, (CPO)
+Cordoba, Argentina, (COR)
+Cork, Ireland, (ORK)
+Coro, Venezuela, (CZE)
+Corozal, Belize, (CZH)
+Corrientes, Argentina, (CNQ)
+Corumba, Brazil, (CMG)
+Corvo Island, Portugal, (CVU)
+Cotabato, Philippines, (CBO)
+Cotarou, Benin, (COC)
+Cox's Bazar, Bangladesh, (CXB)
+Cozumel, Mexico, (CZM)
+Craig Cove, Vanuatu, (CCV)
+Criciuma, Brazil, (CCM)
+Croker Island, Australia, (CKI)
+Crooked Island, Bahamas, (CRI)
+Crotone, Italy, (CRV)
+Cruzeiro Do Sul, Brazil, (CZS)
+Cucata, Colombia, (CUC)
+Cuenca, Ecuador, (CUE)
+Cuernavaca, Mexico, (CVJ)
+Cuiaba, Brazil, (CGB)
+Culiacan, Mexico, (CUL)
+Cumana, Venezuela, (CUM)
+Cunnamulla, Australia, (CMA)
+Curacao, Netherlands Antilles, (CUR)
+Curitiba, Brazil, (CWB)
+Cuzco, Peru, (CUZ)
+Da Nang, Viet Nam, (DAD)
+Dabra, Indonesia, (DRH)
+Daegu, South Korea, (TAE)
+Dakar, Senegal, (DKR)
+Dakhla, Morocco, (VIL)
+Dalaman, Turkey, (DLM)
+Dalat, Viet Nam - Lienkhang DLI)
+Dali City, China, (DLU)
+Dalian, China, (DLC)
+Damascus, Syrian Arab Republic, (DAM)
+Dammam, Saudi Arabia, (DMM)
+Dangriga, Belize, (DGA)
+Dar Es Salaam, Tanzania, (DAR)
+Darnley Island, QL, Australia, (NLF)
+Daru, Papua New Guinea, (DAU)
+Darwin, Northern Territory, Australia, (DRW)
+Datadawai, Indonesia, (DTD)
+Davao, Philipines - Mati, (DVO)
+David, Panama, (DAV)
+Dawe, Myanmar, (TVY)
+Daxian, China, (DAX)
+Dayang, China, (DYG)
+Daydream Is, Australia, (DDI)
+Deauville, France, (DOL)
+Debra Marcos, Ethiopia, (DBM)
+Debra Tabor, Ethiopia, (DBT)
+Deirezzor, Syria - Al Jafrah, (DEZ)
+Delhi, India, (DEL)
+Dembidollo, Ethiopia, (DEM)
+Denham, Australia, (DNM)
+Denizli, Turkey, (DNZ)
+Denpasar Bali, Indonesia, (DPS)
+Dera Ghazi, Pakistan, (DEA)
+Dera Ismail Khan, Pakistan, (DSK)
+Derby, Australia, (DRB)
+Derim, Papua New Guinea, (DER)
+Dessie, Ethiopia, (DSE)
+Devonport, Australia, (DPO)
+Dhaka, Bangledesh - Zia International, (DAC)
+Dibrugarn, India, (DIB)
+Dien Bien Phu, Viet Nam - Gialam, (DIN)
+Dijon, France, (DIJ)
+Dili, Indonesia, (DIL)
+Dillons Bay, Vanuata, (DLY)
+Dimapur, India, (DMU)
+Dinard, France, (DNR)
+Dipolog, Philippines, (DPL)
+Dire Dawa, Ethiopia, (DIR)
+Div, India, (DIU)
+Diyarbakir, Turkey, (DIY)
+Djanet, Algeria, (DJG)
+Djerba, Tunisia, (DJE)
+Djibouti, Djibouti, (JIB)
+Dnepropetrovsk, Ukraine, (DNK)
+Dobo, Indonesia, (DOB)
+Dodoma, Tanzania, (DOD)
+Dodoima, Papua New Guinea, (DDM)
+Doha, Qatar, (DOH)
+Dominica, Dominica - Cane Field, (DCF)
+Dominica, Dominica - Melville Hall, (DOM)
+Donegal, Ireland, (CFN)
+Donetsk, Ukraine, (DOK)
+Dongola, Sudan, (DOG)
+Doomadgee, Australia, (DMD)
+Dortmund, Germany, (DTM)
+Dourados, Brazil, (DOU)
+Dovala, Cameroon, (DLA)
+Dresden, Germany, (DRS)
+Dubai, United Arab Emirates, (DXB)
+Dubbo, Australia, (DBO)
+Dublin, Ireland, (DUB)
+Dubrovnik, Croatia, (DBV)
+Dumaguete, Philippines, (DGT)
+Dumai, Indonesia, (DUM)
+Dundee, United Kingdom, (DND)
+Dunedin, New Zealand, (DUD)
+Dunhuang, China, (DNH)
+Dunk Island, Australia, (DKI)
+Durango, Mexico, (DGO)
+Durban, South Africa, (DUR)
+Dushanbe, Tajikistan, (DYU)
+Dusseldorf, Germany - International, (DUS)
+Dusseldorf, Germany - Moenchen-Gl., (MGL)
+Dusseldorf, Germany - Rail service, (QDU)
+Dzaoudzi, Mayotte, (DZA)
+East London, South Africa, (ELS)
+Ebon, Marshall Islands, (EBO)
+Eday, United Kingdom, (EOI)
+Edinburgh, United Kingdom, (EDI)
+Edremit, Turkey, (EDO)
+Edward River, Australia, (EDR)
+Egilsstadir, Iceland, (EGS)
+Eindhoven, Netherlands, (EIN)
+Eisenach, Germany, (EIB)
+Ekaterinburg, Russia, (SVX)
+El Bolsan, Argentina, (EHL)
+El Fasher, Sudan, (ELF)
+El Maiten, Argentina, (EMX)
+El Obeid, Sudan, (EBD)
+El Oved, Algeria, (ELU)
+El Portillo/Samana, Dominician Republic - El Portillo, (EPS)
+El Real, Panama, (ELE)
+El Salvador, Chile, (ESR)
+El Vigia, Venezuela, (VIG)
+El Yopal, Colombia, (EYP)
+Elat, Italy, (ETH)
+Elazig, Turkey, (EZS)
+Elba Island, Italy, (EBA)
+Elcho Island, Australia, (ELC)
+Eldoret, Kenya, (EDL)
+Eleuthera Island, Bahamas, (ELH)
+Elista, Russia, (ESL)
+Emae, Vanuata, (EAE)
+Embessa, Papua New Guinea, (EMS)
+Emerald, Australia, (EMD)
+Emo, Papua New Guinea, (EMO)
+Enarotali, Indonesia, (EWI)
+Ende, Indonesia, (ENE)
+Enewetak Island, Marshall Islands, (ENT)
+Enontekio, Finland, (ENF)
+Enshi, China, (ENH)
+Entebbe, Uganda, (EBB)
+Enugu, Nigeria, (ENU)
+Epinal, France, (EPL)
+Ercan, Cyprus, (ECN)
+Erfurt, Germany, (ERF)
+Erzincan, Turkey, (ERC)
+Erzurum, Turkey, (ERZ)
+Esbjerg, Denmark - Esbjerg Airport, (EBJ)
+Esbjerg, Denmark - Rail service, (ZBB)
+Esmeraldas, Ecuador, (ESM)
+Esperance, Australia, (EPR)
+Espiritu Santo, Vanuatu, (SON)
+Esquel, Argentina, (EQS)
+Eveter, United Kingdom, (EXT)
+Ewer, Indonesia, (EWE)
+Exmouth Gulf, Australia, (EXM)
+Fagernes, Norway, (VDB)
+Fair Isle, United Kingdom, (FIE)
+Faisalabad, Pakistan, (LYP)
+Fajard, Puerto Rico, (FAJ)
+Fak Fak, Indonesia, (FKQ)
+Fakarava, French Polynesia, (FAV)
+Farafangana, Madagascar, (RVA)
+Faro, Portugal, (FAO)
+Faroe Islands, Faroe Islands, (FAE)
+Fera Island, Solomon Islands, (FRE)
+Fergana, Uzbekistan, (FEG)
+Fernando De Noronha, Brazil, (FEN)
+Fez, Morocco, (FEZ)
+Fianarantsoa, Madagascar, (WFI)
+Figari, France, (FSC)
+Filton, United Kingdom, (FZO)
+Finkenwerder, Germany, (XFW)
+Fitzroy Crossing, Australia, (FIZ)
+Flensburg, Germany, (FLF)
+Florence, Italy - Gal Galilei, (PSA)
+Florence, Italy - Peretola, (FLR)
+Florencia, Colombia, (FLA)
+Flores Island, Portugal, (FLW)
+Flores, Guatemala, (FRS)
+Florianopolis, Brazil, (FLN)
+Floro, Norway, (FRO)
+Foggia, Italy, (FOG)
+Forde, Norway, (FDE)
+Formosa, Argentina, (FMA)
+Fort Dauphin, Madagascar, (FTU)
+Fort De France, Martinique, (FDF)
+Fortaleza, Brazil, (FOR)
+Franca, Brazil, (FRC)
+Franceville, Gabon, (MVB)
+Francistown, Botswana, (FRW)
+Frankfurt, Germany - Hahn, (HHN)
+Frankfurt, Germany - International, (FRA)
+Fredericia, Denmark, (ZBJ)
+Freeport, Bahamas, (FPO)
+Freetown, Sierra Leone - Lungi Intl, (FNA)
+Friedrichshafer, Germany, (FDH)
+Fuerteventura, Spain, (FUE)
+Fukuoka, Japan, (FUK)
+Fukue, Japan, (FUJ)
+Fukushima, Japan, (FKS)
+Funafuti Atol, Tuvalu, (FUN)
+Funchal, Portugal, (FNC)
+Futuna Island, Vanuatu, (FTA)
+Futuna Island, Wallis and Futuna Islands, (FUT)
+Fuyang, China, (FUG)
+Fuzhou, China, (FOC)
+Gaborone, Botswana, (GBE)
+Gafsa, Tunisia, (GAF)
+Gagnoa, Cote D'Ivoire, (GGN)
+Galapagos, Ecuador, (GPS)
+Gallivare, Sweden, (GEV)
+Galway, Ireland, (GWY)
+Gamba, Gabon, (GAX)
+Gambela, Ethiopia, (GMB)
+Gan Island, Maldives, (GAN)
+Gangneung, South Korea, (KAG)
+Garachine, Panama, (GHE)
+Garaina, Papua New Guinea, (GAR)
+Garasa, Papua New Guinea, (GRL)
+Garden Point, Australia, (GPN)
+Garoua, Cameroon, (GOV)
+Gassim, Saudi Arabia, (ELQ)
+Gaua, Vanuatu, (ZGU)
+Gawahati, India, (GAU)
+Gaza City, Occupied Palestinian Territory, (GZA)
+Gaziatep, Turkey, (GZT)
+Gdansk, Poland, (GDN)
+Gebe, Indonesia, (GEB)
+Gelendzik, Russia, (GDZ)
+Geneina, Sudan, (EGN)
+General Santos, Philippines, (GES)
+Geneva, Switzerland, (GVA)
+Genoa, Italy, (GOA)
+George Town, Bahamas, (GGT)
+George, South Africa, (GRJ)
+Georgetown, Guyana, (GEO)
+Geraldton, Australia,, (GET)
+Gerona, Spain, (GRO)
+Ghadames, Libya, (LTD)
+Ghardala, Algeria, (GHA)
+Ghat, Libya, (GHT)
+Gibraltar, Gibraltar, (GIB)
+Gilgit, Pakistan, (GIL)
+Gisborne, New Zealand, (GIS)
+Gizan, Saudi Arabia, (GIZ)
+Gizo, Solomon Islands, (GZO)
+Gladstone, Australia, (GLT)
+Glasgow, United Kingdom - Glasgow International, (GLA)
+Glasgow, United Kingdom - Prestwick, (PIK)
+Glen Innes, Australia, (GLI)
+Goa, India, (GOI)
+Goba, Ethiopia, (GOB)
+Gobernador Gregores, Argentina, (GGS)
+Gode/Iddidole, Ethopia, (GDE)
+Goiania, Brazil, (GYN)
+Gold Coast, QL, Australia, (OOL)
+Golfito, Costa Rica, (GLF)
+Golmud, China, (GOQ)
+Gonalia, Papua New Guinea, (GOE)
+Gondari, Ethiopia, (GDQ)
+Gore, Ethiopia, (GOR)
+Goroka, Papua New Guinea, (GKA)
+Gorontalo, Indonesia, (GTO)
+Gothenburg, Sweden - Landvetter, (GOT)
+Gothenburg, Sweden - Saeve, (GSE)
+Goulburn Island, Australia, (GBL)
+Goundam, Mali, (GUD)
+Gove, Australia, (GOV)
+Governors Harbour, Bahamas, (GHB)
+Governador Valadares, Brazil, (GVR)
+Goya, CR, Argentina, (OYA)
+Gozo, Malta, (GZM)
+Graciosa Island, Portugal, (GRW)
+Grafton, Australia, (GFN)
+Granada, Spain, (GRX)
+Grand Cayman, Cayman Islands, (GCM)
+Grand Turk Island, Turks and Caicos Islands, (GDT)
+Graz, Austria, (GRZ)
+Grenada, Grenada,, (GND)
+Grenoble, France, (GNB)
+Griffith, Australia, (GFF)
+Grimsey, Iceland, (GRY)
+Groennedal, Greenland, (JGR)
+Groningen, Netherlands, (GRQ)
+Groofe Eylandt, Australia, (GTE)
+Guadalajara, Mexico, (GDL)
+Guam, (GUM)
+Guanaja, Honduras, (GJA)
+Guanajuato, Mexico, (BJX)
+Guangzhou, China, (CAN)
+Guantanamo, Cuba, (GAO)
+Guatemala City, Guatemala, (GUA)
+Guayaquil, Ecuador, (GYE)
+Guayaramerin, Bolivia, (GYA)
+Guaymas, Mexico, (GYM)
+Guernsey, United Kingdom, (GCI)
+Guerrero Negro, Mexico, (GUB)
+Guilin, China, (KWL)
+Guiria, Venezuela, (GUI)
+Gulu, Uganda, (ULU)
+Gulyang, China, (KWE)
+Gunsan, South Korea, (KUV)
+Gurayat, Saudi Arabia, (URY)
+Gwadar, Pakistan, (GWD)
+Gwangju, South Korea, (KWJ)
+Gwalior, India, (GWL)
+Gyandzha, Azerbaijan, (KVD)
+Gyourmri, Armenia, (LWN)
+HaApa, Tonga, (HPA)
+Hachijo Jima, Japan, (HAC)
+Hagfors, Sweden, (HFS)
+Haifa, Israel, (HFA)
+Haikou, China, (HAK)
+Hail, Saudi Arabia, (HAS)
+Hailar, China, (HLD)
+Haiphong, Viet Nam - Catbi, (HPH)
+Hakodate, Japan, (HKD)
+Halberstadt, Germany, (ZHQ)
+Halls Creek, Australia, (HCQ)
+Halmstad, Sweden, (HAD)
+Hamburg, Germany - Fuhisbuettel, (HAM)
+Hamburg, Germany - Luebeck, (LBC)
+Hamilton Island, Australia, (HTI)
+Hamilton, Bermuda, (BDA)
+Hamilton, New Zealand, (HLZ)
+Hammerfest, Norway, (HFT)
+Hangzhou, China, (HGH)
+Hanimaadhoo, Maldives, (HAQ)
+Hanoi, Viet Nam - Noibai, (HAN)
+Hanover, Germany, (HAJ)
+Hanzhang, China, (HZG)
+Harare, Zimbabwe, (HRE)
+Harbin, China, (HRB)
+Hargeisa, Somolia, (HGA)
+Harstad-Narvik, Norway, (EVE)
+Hassi Messaoud, Algeria, (HME)
+Hasvik, Norway, (HAA)
+Hat Yai, Thailand, (HDY)
+Hateruma, Japan, (HTR)
+Haugesund, Norway, (HAU)
+Havana, Cuba, (HAV)
+Hayman Island, Australia, (HIS)
+Hefei, China, (HFE)
+Heidelberg, Germany, (HDB)
+Helgoland, Germany, (HGL)
+Helsinki, Finland, (HEL)
+Heno, Myanmar, (HEH)
+Heraklian, Greece, (HER)
+Heringsdorf, Germany, (HDF)
+Hermavan, Sweden, (HMV)
+Hermosillo, Mexico, (HMO)
+Herning, Denmark, (XAK)
+Hervey Bay, Australia, (HVB)
+Hiroshima, Japan - International, (HIJ)
+Hiroshima, Japan - Hiroshima West, (HIW)
+Hivaro, Papua New Guinea, (HIT)
+Ho Chi Minh City, Viet Nam, (SGN)
+Hobart, Australia, (HBA)
+Hodeidah, Yemen, (HOD)
+Hoedspruit, South Africa, (HDS)
+Hof, Germany, (HOQ)
+Hofuf, Saudi Arabia, (HOF)
+Hohhot, China, (HET)
+Hokitika, New Zealand, (HKK)
+Holguin, Cuba, (HOG)
+Hong Kong, Hong Kong, (HKG)
+Honiara, Solomon Islands, (HIR)
+Honningsvag, Norway, (HVG)
+Hooker, Australia, (HOK)
+Horn Island Australia, (HID)
+Hornafjordur, Iceland, (HFN)
+Horta, Portugal, (HOR)
+Hoskins, Papua New Guinea, (HKN)
+Hotan, China, (HTN)
+Houeisay, Laos, (HOE)
+Houn, Libya, (HUQ)
+Huahine, French Polynesia, (HUH)
+Hualien, Taiwan - Phi Bai, (HUN)
+Hualtin, Thailand, (HHQ)
+Huanuco, French Polynesia, (HUU)
+Huargyan, China, (HYN)
+Huatulco, Mexico, (HUX)
+Hudiksvall, Sweden, (HUV)
+Hue, Viet Nam, (HUI)
+Hughenden, Australia, (HGD)
+Hultsfred, Sweden, (HLF)
+Humberside, United Kingdom, (HUY)
+Hurghada, Egypt, (HRG)
+Hwange Nat Park, Zimbabwe, (HWN)
+Hyderabad, India, (HYD)
+Iasi, Romania, (IAS)
+Ibague, Colombia, (IBE)
+Ibiza, Spain, (IBZ)
+Igarka, Russia, (IAA)
+Iguassu Falls, PR, Brazil, (IGU)
+Iguazu, Argentina, (IGR)
+Ihu, Papua New Guinea, (IHU)
+Ile Des Pins, New Caledonia, (ILP)
+Ilheus, Brazil, (IOS)
+Illaga, Indonesia, (ILA)
+Iloilo, Philippines - Mandurriao, (ILO)
+Ilu, Indonesia, (IUL)
+Ilulissat, Greenland, (JAV)
+Imperatriz, Brazil, (IMP)
+Imphal, India, (IMF)
+In Amenas, Algeria, (IAM)
+Inagua, Bahamas, (IGA)
+Inanwatan, Indonesia, (INX)
+Indagen, Papua New Guinea, (IDN)
+Indore, India, (IDR)
+Innsbruck, Austria, (INN)
+Inta, Russia, (INA)
+Invercargill, New Zealand, (IVC)
+Inverell, Australia, (IVR)
+Inverness, United Kingdom, (INV)
+Ioannina, Greece, (IOA)
+Ioma, Papua New Guinea, (IOP)
+Ipatinga, Brazil, (IPN)
+Ipiales, Colombia, (IPI)
+Ipil, Philippines, (IPE)
+Ipoh, Malaysia, (IPH)
+Ipota, Vanuatu, (IPA)
+Iquique, Chile, (IQQ)
+Iquitos, Peru, (IQT)
+Irkutsk, Russia, (IKT)
+Isafjordur, Iceland, (IFJ)
+Isfahan, Iran, (IFN)
+Ishigakij, Japan, (ISG)
+Islamabad, Pakistan, (ISB)
+Island Lake/Garden Hill, Canada, (YIV)
+Islay, United Kingdom, (ILY)
+Isle of Man, United Kingdom, (IOM)
+Isles of Scilly, United Kingdom - St Marys, (ISC)
+Isles of Scilly, United Kingdom - Tresco, (TSO)
+Istanbul, Turkey, (IST)
+Itaituba, Brazil, (ITB)
+Itokama, Papua New Guinea, (ITK)
+Ivalo, Finland, (IVL)
+Ivano-Frankovsk, Ukraine, (IFO)
+Iwami, Japan, (IWJ)
+Ixtapa, Mexico, (ZIH)
+Ixtepec, Mexico, (IZT)
+Izmir, Turkey, (ADB)
+Izumo, Japan, (IZO)
+Jabor, Marshall Islands, (JAT)
+Jacareacanga, Brazil, (JCR)
+Jacobabad, Pakistan, (JAG)
+Jacquinot Bay, Papua New Guinea, (JAQ)
+Jaipur, India, (JAI)
+Jakarta, Indonesia, (CGK)
+Jalapa, Mexico, (JAL)
+Jaluit Island, Marshall Islands, (UIT)
+Jambi. Indonesia, (DJB)
+Jamnagar, India, (JGA)
+Janakpur, Nepal, (JKR)
+Jaque, Panama, (JQE)
+Jayapura, Indonesia, (DJJ)
+Jeddah, Saudi Arabia, (JED)
+Jeh, Marshall Islands, (JEJ)
+Jeju, South Korea - Jeju Airport, metro area, (CJU)
+Jerez De La Frontere, Spain, (XRY)
+Jersey, United Kingdom, (JER)
+Jessore, Bangladesh, (JSR)
+Jiamusi, China, (JMU)
+Jiayuguan, China, (JGN)
+Jijel, Algeria, (GJL)
+Jijiga, Ethiopia, (JIJ)
+Jimma, Ethiopia, (JIM)
+Jinan, China, (TNA)
+Jingdezhen, China, (JDZ)
+Jinghong, China, (JHG)
+Jinja, Uganda, (JIN)
+Jinjiang, China, (JJN)
+Jinju, South Korea - Sancheon, (HIN)
+Jinka, Ethiopia, (BCO)
+Jinzhou, China, (JNZ)
+Ji-Parana, Brazil, (JPR)
+Jiwani, Pakistan, (JIW)
+Joao Pessoa, Brazil, (JPA)
+Jodhpur, India, (JDH)
+Joensuu, Finland, (JOE)
+Johannesburg, South Africa, (JNB)
+Johnston Island, US Minor Outlying Islands, (JON)
+Johor, Malaysia, (JHB)
+Joinville, Brazil, (JOI)
+Jommu, India, (IXJ)
+Jomsom, Nepal, (JMO)
+Jonkoping, Sweden, (JKG)
+Jorhat, India, (JRH)
+Jose De San Martin, Argentina, (JSM)
+Jouf, Saudi Arabia, (AJF)
+Juazeiro Do Norte, Brazil, (JDO)
+Juist, Germany, (JUI)
+Juiz De Fora, Brazil, (JDF)
+Jujuy, Argentina, (JUJ)
+Julia Creek, Australia, (JCK)
+Juliaca, Peru, (JUL)
+Juzha, China, (JUZ)
+Jyvaskyla, Finland, (JYV)
+Kaadedhdhoo, Maldives, (KDM)
+Kaben, Marshall Islands, (KBT)
+Kabri Dar, Ethiopia, (ABK)
+Kabul, Afghanistan, (KBL)
+Kabwun, Papua New Guinea, (KBM)
+Kadanwari, Pakistan, (KCF)
+Kadhonoo, Maldives, (KDO)
+Kaintiba, Papua New Guinea, (KZF)
+Kaitaia, New Zealand, (KAT)
+Kajaani, Finland, (KAJ)
+Kalbarri, Australia, (KAX)
+Kaliningrad, Russia, (KGD)
+Kambuaya, Indonesia, (KBX)
+Kameshli, Syrian Arab Republic, (KAC)
+Kamur, Indonesia, (KCD)
+Kamusi, Papua New Guinea, (KUY)
+Kano, Nigeria, (KAN)
+Karachi, Pakistan - Quaid-E-Azam International, (KHI)
+Kardia, Estonia, (KDL)
+Kariba, Zimbabwe, (KAB)
+Karlsruhe/Badern Baden, Germany, (FKB)
+Karpathos, Greece, (AOK)
+Karubaga, Indonesia, (KBF)
+Kasaba Bay, Zambia, (ZKB)
+Kasama, Zambia, (KAA)
+Kasane, Botswana, (BBK)
+Katherine, NT, Australia, (KTR)
+Kathmandu, Nepal, (KTM)
+Katowice, Poland, (KTW)
+Kaunas, Lithuania, (KUN)
+Kavala, Greece, (KVA)
+Kavieng, Papua New Guinea, (KVG)
+Kawthaung, Myanmar, (KAW)
+Kayseri, Turkey, (ASR)
+Kazan,, Russia, (KZN)
+Kefallinia, Greece, (EFL)
+Kendari, Indonesia, (KDI)
+Kerkyra, Greece, (CFU)
+Khajuraho, India, (HJR)
+Kharga, Egypt, (UVL)
+Kharkov, Ukraine, (HRK)
+Khudzhand, Tajikistan, (LBD)
+Khuzdar, Pakistan, (KDD)
+Kiev, Ukraine - Zhulhany, (IEV)
+Kiev, Ukraine - Borispol, (KBP)
+Kigali, Rwanda, (KGL)
+Kigoma, Tanzania, (TKQ)
+Kilimanjaro, Tanzania, (JRO)
+Kimmirut/Lake Harbour, Canada, (YLC)
+Kingston, Jamaica - Norman Manley, (KIN)
+Kingston, Jamaica - Tinson, (KTP)
+Kinshasa, Congo, (FIH)
+Kirakira, Solomon Islands, (IRA)
+Kitadaito, Japan, (KTD)
+Kittila, Finland, (KTT)
+Kiunga, Papua New Guinea, (UNG)
+Kiwayu, Kenya, (KWY)
+Knock, Ireland, (NOC)
+Kochi, Japan, (KCZ)
+Koh Samui, Thailand, (USM)
+Kolkata, India, (CCU)
+Kolobrzeg, Poland, (QJY)
+Komsomolsk Na Amure, Russia, (KXK)
+Konya, Turkey, (KYA)
+Koror, Palau, (ROR)
+Koszalin, Poland, (OSZ)
+Kota Bharu, Malaysia, (KBR)
+Kota Kinabalu, Malaysia, (BKI)
+Kowanyama, QL, Australia, (KWM)
+Kozhikode, India, (CCJ)
+Krabi, Thailand, (KBV)
+Krakow, Poland, (KRK)
+Krivoy Rog, Ukraine, (KWG)
+Kuala Lumpur, Malaysia, (KUL)
+Kuala Terengganu, Malaysia, (TGG)
+Kuantan, Malaysia, (KUA)
+Kubin Island, QL, Australia, (KUG)
+Kuching, Malaysia, (KCH)
+Kahramanmaras, Turkey, (KCM)
+Kudat, Malaysia, (KUD)
+Kufrah, Libya, (AKF)
+Kulusuk, Greenland, (KUS)
+Kumejima, Japan, (UEO)
+Kundiawa, Papau New Guinea, (CMU)
+Kuopio, Finland, (KUO)
+Kuri, Papua New Guinea, (KUQ)
+Kushiro, Japan, (KUH)
+Kutaisi, Georgia, (KUT)
+Kuusamo, Finland, (KAO)
+Kuwait, Kuwait, (KWI)
+Kwajalein, Marshall Islands, (KWA)
+Kyzyl, Russia, (KYZ)
+La Ceiba, Honduras, (LCE)
+La Coruna, Spain, (LCG)
+La Palma, Panama, (PLP)
+La Paz, Bolivia, (LPB)
+La Paz, Mexico, (LAP)
+La Rioja, Argentina, (IRJ)
+La Romana, Dominican Republic, (LRM)
+La Serena, Chile, (LSC)
+Laayoune, Morocco, (EUN)
+Labasa, Fiji, (LBS)
+Lablab, Papua New Guinea, (LAB)
+Labuan Bajo, Indonesia, (LBJ)
+Labuan, Malaysia, (LBU)
+Lae Island, Marshall Islands, (LML)
+Lae, Papua New Guinea, (LAE)
+Lages, SC, Brazil, (LAJ)
+Lago Agrio, Ecuador, (LGQ)
+Lago Argentina, Argentina, (ING)
+Lagos, Nigeria, (LOS)
+Lahadbatu, Malaysia, (LDU)
+Lahore, Pakistan, (LHE)
+Lakeba, Fiji, (LKB)
+Lakselv, Norway, (LKL)
+Lalibela, Ethiopia, (LLI)
+Lamap, Vanuatu, (LPM)
+Lamen Bay, Vanuatu, (LNB)
+Lamezia-Terme, Italy, (SUF)
+Lampang, Thailand, (LPI)
+Lampedusa, Italy, (LMP)
+Lamu, Kenya, (LAU)
+Lands End, United Kingdom, (LEQ)
+Langguri, Indonesia, (LUV)
+Langkawi, Malaysia, (LGK)
+Lannion, France, (LAI)
+Lanzarote, Spain, (ACE)
+Lanzhau, Guinea, (LHW)
+Lanzhou, China, (ZGC)
+Laoag, Philippines, (LAO)
+Lappeenranta, Finland, (LPP)
+Larantuka, Indonesia, (LKA)
+Larnaca, Cyprus, (LCA)
+Larochelle, France, (LRH)
+Las Palmas, Spain, (LPA)
+Las Piedras, Venezuela, (LSP)
+Latakia, Syria, (LTK)
+Laucala Island, Fiji, (LUC)
+Launceston, TS, Australia, (LST)
+Luanda, Angola, (LAD)
+Laverton, WA, Australia, (LVO)
+Lawas, Malaysia, (LWY)
+Le Havre, France, (LEH)
+Le Mans, France, (ZLN)
+Le Puy, France, (LPY)
+Le Touquet, France, (LTQ)
+Learmonth, WA, Australia, (LEA)
+Leeds, United Kingdom, (LBA)
+Legaspi, Philippines, (LGP)
+Leh, India, (IXL)
+Leinster, WA, Australia, (LER)
+Leipzig, Germany, (LEJ)
+Leknes, Norway, (LKN)
+Lemnos, Greece, (LXS)
+Leon, Mexico, (BJX)
+Leonora, WA, Australia, (LNO)
+Leticia, Colombia, (LET)
+Lhasa, China, (LXA)
+Lianyungang, China, (LYG)
+Liberia, Costa Rica, (LIR)
+Libreville, Gabon, (LBV)
+Lichinga, Mozambique, (VXC)
+Liege, Belgium, (LGG)
+Lifa, New Caledonia, (LIF)
+Lightning Ridge, NS, Australia, (LHG)
+Lihir Island, Papua New Guinea, (LNV)
+Lijiang City, China, (LJG)
+Likiep Island, Marshall Islands, (LIK)
+Lille, France - Lesquin, (LIL)
+Lille, France - Rail service, (XDB)
+Lilongwe, Malawi, (LLW)
+Lima, Peru, (LIM)
+Limbang, Malaysia, (LMN)
+Limoges, France, (LIG)
+Lindeman Island, QL, Australia, (LDC)
+Lindi, Tanzania, (LDI)
+Linkoping, Sweden, (LPI)
+Linyi, China, (LYI)
+Linz, Austria, (LNZ)
+Lisbon, Portugal, (LIS)
+Lismore, NS, Australia, (LSY)
+Liuzhou, China, (LZH)
+Liverpool, United Kingdom, (LPL)
+Livingstone, Zambia, (LVI)
+Lizard Island, QL, Australia, (LZR)
+Ljubliana, Slovenia, (LJU)
+Lockhart River, Australia, (IRG)
+Loen, Marshall Islands, (LOF)
+Loja, Ecuador, (LOH)
+Lome, Togo, (LFW)
+London, United Kingdom - All airports, (LON)
+London, United Kingdom - Biggin Hill, (BQH)
+London, United Kingdom - Gatwick, (LGW)
+London, United Kingdom - Heathrow, (LHR)
+London, United Kingdom - London City, (LCY)
+London, United Kingdom - Luton, (LTN)
+London, United Kingdom - Stansted, (STN)
+Londonderry, United Kingdom, (LDY)
+London-Paddington, United Kingdom - Rail service, (QQP)
+Londrina, PR, Brazil, (LDB)
+Long Apung, Indonesia, (LPU)
+Long Banga, Malaysia, (LBP)
+Long Bawan, Indonesia, (LBW)
+Long Island, Australia, (HAP)
+Long Island/Deadmans Cay, Bahamas, (LGI)
+Long Lellang, Malaysia, (LGL)
+Long Seridan, Malaysia, (ODN)
+Longana, Vanuatu, (LOD)
+Longreach, QL, Australia, (LRE)
+Longyearbyen, Svalbard & Jan Mayen Island, (LYR)
+Lonorore, Vanuatu, (LNE)
+Lord Howe Island, NS, Australia, (LDH)
+Loreto, Mexico, (LTO)
+Lorient, France, (LRT)
+Los Cabos, Mexico, (SJD)
+Los Mochis, Mexico, (LMM)
+Losuia, Papua New Guinea, (LSA)
+Lourdes/Tarbes, France, (LDE)
+Lozaro Cardenas, Mexico, (LZC)
+Luanda, Angola, (LAD)
+Luang Namtha, Laos, (LXG)
+Luang Prabang, Laos, (LPQ)
+Lucknow, India, (LKO)
+Luderitz, Namibia, (LUD)
+Lugano, Switzerland, (LUG)
+Lugansk, Uganda, (VSG)
+Lukla, Nepal, (LUA)
+Lulea, Sweden, (LLA)
+Lumbashi, Congo, (FBM)
+Luoyang, China, (LYA)
+Lusaka, Zambia, (LUN)
+Luwuk, Indonesia, (LUW)
+Luxembourg, Luxembourg, (LUX)
+Luxi, China, (LUM)
+Luxor, Egypt, (LXR)
+Luzhou, China, (LZO)
+Lvov, Ukraine, (LWO)
+Lyoksele, Sweden, (LYC)
+Lyon, France - Satolas, (LYS)
+Lyon, France - Lyon Part-Dieu Rail service, (XYD)
+Maastricht, Netherlands, (MST)
+Mabuiag Island, QL, Australia, (UBB)
+Macapa, AP, Brazil, (MCP)
+Macas, Ecuador, (XMS)
+Macau, China, (MFM)
+Maceio, AL, Brazil, (MCZ)
+Machala, Ecuador, (MCH)
+Mackay, QL, Australia, (MKY)
+Madang, Papua New Guinea, (MAG)
+Madinah, Saudi Arabia, (MED)
+Madrid, Spain, (MAD)
+Madurai, India, (IXM)
+Mae Hong Son, Thailand, (HGN)
+Mae Sot, Thailand, (MAQ)
+Maewo, Vanuatu, (MWF)
+Mafia, Tanzania, (MFA)
+Magadan, Russia, (GDX)
+Magnitogorsk, Russia, (MQF)
+Mahanoro, Madagascar, (VVB)
+Mahe Island, Seychelles, (SEZ)
+Maintirano, Madagascar, (MXT)
+Maio, Cape Verde, (MMO)
+Majkin, Marshall Islands, (MJE)
+Majunga, Madagascar, (MJN)
+Majuro, Marshall Islands, (MAJ)
+Makale, Ethiopia, (MQX)
+Makhachkala, Russia, (MCX)
+Makokou, Gabon, (MKU)
+Makung, Taiwan, (MZG)
+Malabo, Equatorial Guinea, (SSG)
+Malacca, Malaysia, (MKZ)
+Malaga, Spain, (AGP)
+Malakai, Sudan, (MAK)
+Malargue, MD, Argentina, (LGS)
+Malatya, Turkey, (MLX)
+Male, Maldives, (MLE)
+Malindi, Kenya, (MYD)
+Malmo, Sweden, (MMX)
+Maloelap Island, Marshall Islands, (MAV)
+Malololailai, Fiji, (PTF)
+Malta, Malta, (MLA)
+Mampikony, Madagascar, (WMP)
+Mana Island, Fiji, (MNF)
+Manado, Indonesia, (MDC)
+Managua, Nicaragua, (MGA)
+Manakara, Madagascar, (WVK)
+Mananara, Madagascar, (WMR)
+Manang, Nepal, (NGX)
+Mananjary, Madagascar, (MNJ)
+Manaus, AM, Brazil, (MAO)
+Manchester, United Kingdom, (MAN)
+Mandalay, Myanmar, (MDL)
+Mandritsara, Madagascar, (WMA)
+Mangaia Island, Cook Islands, (MGS)
+Mangalore, India, (IXE)
+Mangrove Cay, Bahamas, (MAY)
+Mangu, Zambia, (MNR)
+Manguna, Papua New Guinea, (MFO)
+Manihi, French Polynesia, (XMH)
+Manihiki Island, Cook Islands, (MHX)
+Manila, Philippines, (MNL)
+Maningrioa, NT, Australia, (MNG)
+Manizales, Colombia, (MZL)
+Manja, Madagascar, (MJA)
+Mannheim, Germany, (MHG)
+Manokwari, Indonesia, (MKW)
+Manston, United Kingdom, (MSE)
+Manta, Ecuador, (MEC)
+Manus Island, Papua New Guinea, (MAS)
+Manzanillo, Cuba, (MZO)
+Manzanillo, Mexico, (ZLO)
+Manzini, Swaziland, (MTS)
+Mao, Chad, (AMO)
+Maota Savaii Is, Western Samoa, (MXS)
+Maputo, Mozambique, (MPM)
+Mar Del Plata, BA, Argentina, (MDQ)
+Mara Lodges, Kenya, (MRE)
+Maraba, PA, Brazil, (MAB)
+Maracaibo, Venezuela, (MAR)
+Maracay, Venezuela, (MYC)
+Mare, New Caledonia, (MEE)
+Margate, South Africa, (MGH)
+Maribor, Slovenia, (MBX)
+Mariehamn, Finland, (MHQ)
+Mariitsoq, Greenland, (JSU)
+Marilia, SP, Brazil, (MII)
+Maringa, PR, Brazil, (MGF)
+Mariupol, Ukraine, (MPW)
+Maroantsetra, Madagascar, (WMN)
+Marova, Cameroon, (MVR)
+Marseille, France, (MRS)
+Marsh Harbour, Bahamas, (MHH)
+Marudi, Malaysia, (MUR)
+Maryborough, QL, Australia, (MBH)
+Masbate, Philippines, (MBT)
+Maseru, Lesotho, (MSU)
+Mashad, Iran, (MHD)
+Matamoros, Mexico, (MAM)
+Mataram, Indonesia, (AMI)
+Matsumoto, Japan, (MMJ)
+Matsuyama, Japan, (MYJ)
+Maturin, Venezuela, (MUN)
+Mauke Island, Cook Islands, (MUK)
+Maulmyine, Myanmar, (MNU)
+Maumere, Indonesia, (MOF)
+Maun, Botswana, (MUB)
+Maupiti, French Polynesia, (MAU)
+Mauritius, Mauritius, (MRU)
+Mayaguana, Bahamas, (MYG)
+Mayaguez, Puerto Rico, (MAZ)
+Mazatlan, Mexico, (MZT)
+Mbandaka, Congo, (MDK)
+Mbuji Mayi, Congo, (MJM)
+Mcarthur River, NT, Australia, (MCV)
+Medan, Indonesia, (MES)
+Medellin, Colombia - Enrique Olaya Herrera, (EOH)
+Medellin, Colombia?- Jose Marie Cordova, (MDE)
+Meekatharra, WA, Australia, (MKR)
+Mehamn, Norway, (MEH)
+Meixian, China, (MXZ)
+Mejit Island, Marshall Islands, (MJB)
+Mekane Selam, Ethiopia, (MKS)
+Melbourne, Victoria, Australia, (MEL)
+Melilla, Spain, (MLN)
+Memanbetsu, Japan, (MMB)
+Mendi, Ethiopia, (NDM)
+Mendi, Papua New Guinea, (MDU)
+Mendoza, MD, Argentina, (MDZ)
+Menorca, Spain, (MAH)
+Menyamya, Papua New Guinea, (MYX)
+Merauke, Indonesia, (MKQ)
+Merave, Sudan, (MWE)
+Merdey, Indonesia, (RDE)
+Merida, Mexico, (MID)
+Merida, Venezuela, (MRD)
+Merimbula, NS, Australia, (MIM)
+Mersa Matruh, Egypt, (MUH)
+Metz/Nancy, France, (ETZ)
+Mexicali, Mexico, (MXL)
+Mexico City, Mexico, (MEX)
+Mfume, Zambia, (MFU)
+Miandrivazo, Madagascar, (ZVA)
+Middle Caicos, Turks and Caicos, (MDS)
+Midway Island, US Minor Outlying Islands, (MDY)
+Mikkeli, Finland, (MIK)
+Mikonos, Greece, (JMK)
+Milan, Italy - Orio Al Serio, (BGY)
+Milan, Italy - Linate, (LIN)
+Milan, Italy - Malpensa, (MXP)
+Milan, Italy - Parma, (PMF)
+Mildura, VI, Australia, (MQL)
+Mili Island, Marshall Islands, (MIJ)
+Milingimbi, NT, Australia, (MGT)
+Minami Daito, Japan, (MMD)
+Minatitla, Mexico, (MTT)
+Mindiptana, Indonesia, (MDP)
+Mineralnye Vody, Russia, (MRV)
+Minsk, Belarus - Minsk International 1, (MHP)
+Minsk, Belarus - Minsk International 2, (MSQ)
+Miri, Malaysia, (MYY)
+Mirnyj, Russia, (MJZ)
+Misawa, Japan, (MSJ)
+Misima Island, Papua New Guinea, (MIS)
+Misurata, Libya, (MRA)
+Mitiaro Island, Cook Islands, (MOI)
+MiyakeJima, Japan, (MYE)
+Miyako Jima, Japan, (MMY)
+Mizan Teferi, Ethiopia, (MTF)
+Mo I Rana, Norway, (MQN)
+Moa, Cuba, (MOA)
+Moala, Fiji, (MFJ)
+Moanamani, Indonesia, (ONI)
+Moanda, Congo, (MNB)
+Moanda, Gabon, (MFF)
+Mogadishu, Somalia, (MGQ)
+Mohenjodaro, Denmark, (MJD)
+Mokpo, South Korea, (MPK)
+Mokuti Lodge, Namibia, (OKU)
+Molde, Norway, (MOL)
+Mombasa, Kenya, (MBA)
+Monastir, Tunisia, (MIR)
+Monbetsu, Japan, (MBE)
+Monclova, Mexico, (LOV)
+Monkey Mia, WA, Australia, (MJK)
+Mono, Solomon Islands, (MNY)
+Monrovia, Liberia, (ROB)
+Monte Carlo, Monaco, (MCM)
+Monte Dourado, PA, Brazil, (MEU)
+Montego Bay, Jamaica, (MBJ)
+Monteria, Colombia, (MTR)
+Monterrey, Mexico, (MTY)
+Montes Claros, MG, Brazil, (MOC)
+Montevideo, Uruguay, (MVD)
+Montpellier, France, (MPL)
+Montserrat, Montserrat, (MNI)
+Moorea, French Polynesia, (MOZ)
+Mopti, Mali, (MZI)
+Mora, Sweden, (MXX)
+Morafenobe, Madagascar, (TVA)
+Morambe, Madagascar, (MXM)
+Moranbah, QL, Australia, (MOV)
+Moree, NS, Australia, (MRZ)
+Morelia, Mexico, (MLM)
+Morioka, Japan, (HNA)
+Mornington, QL, Australia, (ONG)
+Moro, Papua New Guinea, (MXH)
+Morondava, Madagascar, (MOQ)
+Moroni, Comoros, (HAH)
+Moruya, NS, Australia, (MYA)
+Moscow, Russia - all locations, (MOW)
+Moscow, Russia - Bykovo, (BKA)
+Moscow, Russia - Domodedovo, (DME)
+Moscow, Russia - Sheremetyevo, (SVO)
+Moscow, Russia - Vnukovo, (VKO)
+Mosjoen, Norway, (MJF)
+Mostar, Bosnia and Herzegovina, (OMO)
+Mota Lava, Vanuatu, (MTV)
+Mouila, Gabon, (MJL)
+Mount Cook, New Zealand, (MON)
+Mount Gambier, SA, Australia, (MGB)
+Mount Hagen, Papua New Guinea, (HGU)
+Mount Hotham, VI, Australia, (MHU)
+Mount Isa, Australia, (ISA)
+Mount Keith, WA, Australia, (WME)
+Mount Magnet, WA, Australia, (MMG)
+Mount Pleasant, Falkland Islands, (MPN)
+Mpacha, Namibia, (MPA)
+Mtwara, Tanzania, (MYW)
+Mucuri, BA, Brazil, (MVS)
+Mudanjiang, China, (MDG)
+Mudgee, Australia, (DGE)
+Muenster, Germany, (FMO)
+Mukan, Malaysia, (MKM)
+Mulhouse, France, (MLH)
+Mulia, Indonesia, (LII)
+Multan, Pakistan, (MUX)
+Mulu, Malaysia, (MZV)
+Mumbai, India, (BOM)
+Munda, Solomon Islands, (MUA)
+Munich, Germany, (MUC)
+Murcia, Spain, (MJV)
+Murmansk, Russia, (MMK)
+Murray Island, QL, Australia, (MYI)
+Mus, Turkey, (MSR)
+Muscat, Oman, (MCT)
+Musoma, Tanzania, (MUZ)
+Muzaffarabad, Pakistan, (MFG)
+Mwanza, Tanzania, (MWZ)
+Myeik, Myanmar, (MGZ)
+Myitkyina, Myanmar, (MYT)
+Mytilene, Greece, (MJT)
+Mzuzu, Malawi, (ZZU)
+Nabire, Indonesia, (NBX)
+Nacala, Mozambique, (MNC)
+Nadar, Morocco, (NDR)
+Nadi, Fiji, (NAN)
+Nadym, Russia, (NYM)
+Naga, Philippines, (WNP)
+Nagasaki, Japan, (NGS)
+Nagoya, Japan, (NGO)
+Nagpur, India, (NAG)
+Nairobi, Kenya - Jomo Kenyatta Intl, (NBO)
+Nairobi, Kenya - Wilson, (WIL)
+Nakhichevan, Azerbaijan, (NAJ)
+Nakhon Ratchosima, Thailand, (NAK)
+Nakhon Si Thammarat, Thailand, (NST)
+Nalchik, Russia, (NAL)
+Namangan, Uzbekistan, (NMA)
+Namatana, Papua New Guinea, (ATN)
+Namorik Island, Marshall Islands, (NDK)
+Nampula, Mozambique, (APL)
+Namsos, Norway, (OSY)
+Namudi, Papua New Guinea, (NDI)
+Nan, Thailand, (NNT)
+Nanchong, China, (NAO)
+Nanking/Nanjing, China, (NKG)
+Nanning, China, (NNG)
+Nanortalik, Greenland, (JNN)
+Nantes, France - Nantes Atlantique, (NTE)
+Nantes, France - Rail service, (QJZ)
+Nantong, China, (NTG)
+Nanyang, China, (NNY)
+Nanyuki, Kenya, (NYK)
+Napier-Hastings, New Zealand, (NPE)
+Naples, Italy, (NAP)
+Narathiwat, Thailand, (NAW)
+Narrabri, NS, Australia, (NAA)
+Narsaq, Greenland, (JNS)
+Narsarsuaq, Greenland, (UAK)
+Narvik, Norway, (NVK)
+Naryan-Mar, Russia, (NNM)
+Nassau, Bahamas - International, (NAS)
+Nassau, Bahamas - Paradise Island, (PID)
+Natadi, Congo, (MAT)
+Natal, RN, Brazil, (NAT)
+Nauru Island, Nauru, (INU)
+Navegantes, SC, Brazil, (NVT)
+Nawabshah, Pakistan, (WNS)
+NayUrengoy, Russia, (NUX)
+Ndola, Zambia, (NLA)
+Neerlerit Inaat, Greenland, (CNP)
+Nefteyugansk, Russia, (NFG)
+Neghelli, Ethiopia, (EGL)
+Negril, Jamaica, (NEG)
+Neiva, Colombia, (NVA)
+Nejran, Saudi Arabia, (EAM)
+Nelso, New Zealand, (NSN)
+Nelspruit, South Africa, (NLP)
+Nema, Mauritania, (EMN)
+Neryjungri, Russia, (NER)
+Neuquen, NE, Argentina, (NQN)
+Nevis, St. Kitts and Nevis, (NEV)
+New London/Groton, (GON)
+New Plymouth, New Zealand, (NPL)
+Newcastle, New South Wales, Australia - Belmont, (BEO)
+Newcastle, New South Wales, Australia, (NTL)
+Newcastle, United Kingdom, (NCL)
+Newman, WA, Australia, (ZNE)
+Newquay, United Kingdom, (NQY)
+Ngaoundere, Cameroon, (NGE)
+Ngau Island, Fiji, (NGI)
+Ngukurr, NT, Australia, (RPM)
+Nha Trang, Viet Nam, (NHA)
+Niamey, Niger, (NIM)
+Nice, France, (NCE)
+Nicosia, Cyprus, (NIC)
+Nimes, France, (FNI)
+Ningbo, China, (NGB)
+Nioko, Congo, (NIX)
+Niuafo'ou, Tonga, (NFO)
+Niuatoputapu, Tonga, (NTT)
+Niue Island, Niue, (IUE)
+Nizhnevartovsk, Russia, (NJC)
+Nizhniy Novgorod, Russia, (GOJ)
+Nojabrxsk, Russia, (NOJ)
+Ndjamena, Chad, (NDJ)
+Norderney, Germany, (NRD)
+Nordholz-Speika, Germany, (NDZ)
+Norfolk Island, Norfolk Island, (NLK)
+Noril'sk, Russia, (NSK)
+Normanton, QL, Australia, (NTN)
+Norrkoping, Sweden, (NRK)
+Norsup, Vanuatu, (NUS)
+North Caicos, Turks and Caicos Islands, (NCA)
+North Eleuthera, Bahamas, (ELH)
+North Ronaldsay, United Kingdom, (NRL)
+Norwich, United Kingdom, (NWI)
+Nosara Beach, Costa Rica, (NOB)
+Nossi-be, Madagascar, (NOS)
+Nottingham, United Kingdom, (EMA)
+Nouadhiba, Mauritania, (NDB)
+Nouakchott, Mauritania, (NKC)
+Noumea, New Caledonia - Tontouta, (NOU)
+Noumea, New Caledonia - Magenta, (GEA)
+Novgorod, Russia, (NVR)
+Novokuznetsk, Russia, (NOZ)
+Novosibirsk, Russia - Tolmachevo, (OVB)
+Nueva Gerona, Cuba, (GER)
+Nuevo Laredo, Mexico, (NLD)
+Nuku Hiva, French Polynesia, (NHV)
+Nuku'Alofa, Tonga, (TBU)
+Nukus, Uzbekistan, (NCU)
+Numbulwar, NT, Australia, (NUB)
+Nunukan, Indonesia, (NNX)
+Nuremberg, Germany - Rail service, (ZAQ)
+Nuremberg, Germany, (NUE)
+Nuuk, Greenland, (GOH)
+Nyala, Sudan, (UYL)
+Nyaung, Myanmar, (NYU)
+Nyngan, NS, Australia, (NYN)
+Oaxaca, Mexico, (OAX)
+Obano, Indonesia, (OBD)
+Obihiro, Japan, (OBO)
+Ocho Rios, Jamaica, (OCJ)
+Odense, Denmark, (ZBQ)
+Odessa, Ukraine, (ODS)
+Ohrid, Macedonia, (OHD)
+Oita, Japan, (OIT)
+Okaba, Indonedia, (OKQ)
+Okayama, Japan, (OKJ)
+Okhotsk, Russia, (OHO)
+Okinawa, Japan, (OKA)
+Okoshiri, Japan, (OIR)
+Oksibil, Indonesia, (OKL)
+Olbia, Italy, (OLB)
+Olpoi, Vanuatu, (OLJ)
+Olympic Dam, SA, Australia, (OLP)
+Omboue, Gabon, (OMB)
+Omsk, Russia, (OMS)
+Ondangwa, Namibia, (OND)
+Oradea, Romania, (OMR)
+Oran, Algeria, (ORN)
+Orange, New South Wales, Australia, (OAG)
+Oranjemund, Namibia, (OMD)
+Orebro, Sweeden - Obrebro-Bofors, (ORB)
+Orenburg, Russia, (REN)
+Ormara, Pakistan, (ORW)
+Ornskoldsvik, Sweden, (OER)
+Orsk, Russia, (OSW)
+Orsta-Volda, Norway, (HOV)
+Osaka, Japan - all airports, (OSA)
+Osaka, Japan - Itami, (ITM)
+Osaka, Japan - Kansai Intl, (KIX)
+Oshima, Japan, (OIM)
+Osijek, Croatia, (OSI)
+Oskarshamn, Sweden, (OSK)
+Oslo, Norway, (OSL)
+Oslo, Norway - Sandefjord, (TRF)
+Ostersund, Sweden, (OSD)
+Ostrava, Czech Republic, (OSR)
+Otu, Colombia, (OTU)
+Ouagadougou, Burkina Faso, (OUA)
+Ouargla, Algeria, (OGX)
+Ouarzazate, Morocco, (OZZ)
+Oudomxay, Laos, (ODY)
+Oujda, Morocco, (OUD)
+Oulu, Finland, (OUL)
+Ouvea, New Caledonia, (UVE)
+Ovda, Israel, (VDA)
+Oyem, Gabon, (OYE)
+Paama, Vanuatu, (PBJ)
+Paamiut, Greenland, (JFR)
+Padang, Indonesia, (PDG)
+Paderborn, Germany, (PAD)
+Pago Pago, American Samoa, (PPG)
+Pakse, Laos, (PKZ)
+Pakuba, Uganda, (PAF)
+Palacios, Honduras, (PCH)
+Palang Karaya, Indonesia, (PKY)
+Palanga, Lithuania, (PLQ)
+Palembang, Indonesia, (PLM)
+Palenque, Mexico, (PQM)
+Palermo, Sicily, Italy, (PMO)
+Palma Mallorca, Spain and Canary Islands, (PMI)
+Palmar, Costa Rica, (PMZ)
+Palmas, TO, Brazil, (PMW)
+Palmerston North, New Zealand, (PMR)
+Palu, Indonesia, (PLW)
+Pamplona, Spain, (PNA)
+Panama City, Panama - Tocumen Intl, (PTY)
+Panama City, Panama - Paitilla, (PAC)
+Pangkalanboun, Indonesia, (PKN)
+Pangkalpinang, Indonesia, (PGK)
+Panjger, Pakistan, (PJG)
+Pantelleria, Italy, (PNL)
+Papa Westray, United Kingdom, (PPW)
+Papeete, French Polynesia, (PPT)
+Paphos, Cyprus, (PFO)
+Para Chinar, Pakistan, (PAJ)
+Paraburdoo, WA, Australia, (PBO)
+Paradise Island, Bahamas, (PID)
+Paramaribo, Suriname - Zanderij Intl, (PBM)
+Paramaribo, Suriname - Zorg En Hoop, (ORG)
+Parana, ER, Argentina, (PRA)
+Parasi, Solomon Islands, (PRS)
+Paris, France - All airports, (PAR)
+Paris, France - Charles Degaulle, (CDG)
+Paris, France - Orly, (ORY)
+Paris, France - Beauvais-Tille, (BVA)
+Parma/Milan, Italy, (PMF)
+Parnaiba, PI, Brazil, (PHB)
+Paro, Bhutan, (PBH)
+Pasni, Pakistan, (PSI)
+Paso de Los Libres, Argentina, (AOL)
+Passo Fundo, RS, Brazil, (PFB)
+Pasto, Colombia, (PSO)
+Patna, India, (PAT)
+Patras, Greece, (GPA)
+Pau, France, (PUF)
+Pavlodar, Kazakhstan, (PWQ)
+Pechora, Russia, (PEX)
+Pekanbaru, Indonesia, (PKU)
+Pelotas, RS, Brazil, (PET)
+Pemba, Mozambique, (POL)
+Pemba, Tanzania - Wawi, (PMA)
+Penang, Malaysia, (PEN)
+Penrhyn Island, Cook Islands, (PYE)
+Penzance, United Kingdom, (PZE)
+Pereira, Colombia, (PEI)
+Perigueux, France, (PGX)
+Perito Moreno, SC, Argentina, (PMQ)
+Perm, Russia, (PEE)
+Perpignan, France, (PGF)
+Perth, Western Australia, Australia, (PER)
+Perugia, Italy, (PEG)
+Pescara, Italy, (PSR)
+Peshawar, Pakistan, (PEW)
+Petrolina, PE, Brazil, (PNZ)
+Petropaulousk-Kamchats, Russia, (PKC)
+Petrozavodsk, Russia, (PES)
+Phalaborwa, South Africa, (PHW)
+Phitsanulok, Thailand, (PHS)
+Phnom Penh, Cambodia, (PNH)
+Phrae, Thailand, (PRH)
+Phu Quoc, Viet Nam - Duong Dang, (PQC)
+Phuket, Thailand, (HKT)
+Pico Island, Portugal, (PIX)
+Piedras Negras, Mexico, (PDS)
+Pietermaritzburg, South Africa, (PZB)
+Pietersburb, South Africa, (PTG)
+Pingtung, Taiwan, (PIF)
+Pisa, Italy - Gal Galilei, (PSA)
+Pituffik, Greenland, (THU)
+Piura, Peru, (PIU)
+Placencia, Belize, (PLJ)
+Pleiku, Viet Nam, (PXU)
+Plettenburg Bay, South Africa, (PBZ)
+Plymouth, United Kingdom, (PLH)
+Podgoriea, Serbia and Montenegro - Golubovci, (TGD)
+Pohnpei, Micronesia, (PNI)
+Pointe Noire, Congo, (PNR)
+Pointe-a-Pitre, Guadeloupe, (PTP)
+Poitiers, France - Biard, (PIS)
+Poitiers, France - Rail service, (XOP)
+Pokhara, Nepal, (PKR)
+Poltava, Ukraine, (PLV)
+Polyarnyj, Russia, (PYJ)
+Ponce, Puerto Rico, (PSE)
+Ponta Delgada, Portugal, (PDL)
+Ponta Pora, MS, Brazil, (PMG)
+Pontianak, Indonesia, (PNK)
+Popondetta, Papua New Guinea, (PNP)
+Popraol/Tatry, Slovakia, (TAT)
+Porbandar, India, (PBD)
+Pori, Finland, (POR)
+Porlamar, Venezuela, (PMV)
+Port Antonio, Jamaica, (POT)
+Port Au Prince, Haiti, (PAP)
+Port Augusta, SA, Australia, (PUG)
+Port Berge, Madagascar, (WPB)
+Port Blair, India, (IXZ)
+Port Elizabeth, South Africa, (PLZ)
+Port Gentil, Gabon, (POG)
+Port Harcourt, Nigeria, (PHC)
+Port Headland, WA, Australia, (PHE)
+Port Lincoln, SA, Australia, (PLO)
+Port Macquarie, NS, Australia, (PQQ)
+Port Moresby, Papua New Guinea, (POM)
+Port of Spain, Trinidad, (POS)
+Port Stanley, Falkland Islands, (PSY)
+Port Sudan, Sudan, (PZU)
+Port Vila, Vanuatu, (VLI)
+Portland, VI, Australia, (PTJ)
+Porto Alegre, RS, Brazil, (POA)
+Porto Santo, Portugal, (PXO)
+Porto Seguro, Brazil, (BPS)
+Porto Velho, RO, Brazil, (PVH)
+Porto, Portugal, (OPO)
+Portoviejo, Ecuador, (PVO)
+Posadas, MI, Argentina, (PSS)
+Poza Rico, Mexico, (PAZ)
+Poznan, Poland, (POZ)
+Prague, Czech Republic, (PRG)
+Praia, Cape Verde, (RAI)
+Pres. Roque Saenz Pena, CH, Argentina, (PRQ)
+Presidente Prudente, SP, Brazil, (PPB)
+Preveza/Lefkas, Greece, (PVK)
+Pristina, Serbia and Montenegro, (PRN)
+Proserpine, QL, Australia, (PPP)
+Providenciales, Turks and Caicos Islands, (PLS)
+Pucallpa, Peru, (PCL)
+Puebla, Mexico, (PBC)
+Puerto Ayacucha, Venezuela, (PYH)
+Puerto Berria, Colombia, (PBE)
+Puerto del Rosario, Spain, (FUE)
+Puerto Deseado, SC, Argentina, (PUD)
+Puerto Escondido, Mexico, (PXM)
+Puerto Jimenez, Costa Rica, (PJM)
+Puerto Lempira, Honduras, (PEU)
+Puerto Madryn, CB, Argentina, (PMY)
+Puerto Maldonado, Peru, (PEM)
+Puerto Montt, Chile, (PMC)
+Puerto Ordaz, Venezuela, (PZO)
+Puerto Plata, Dominican Republic, (POP)
+Puerto Princesa, Philippines, (PPS)
+Puerto Suarez, Bolivia, (PSZ)
+Puerto Vallarta, Mexico, (PVR)
+Pula, Croatia, (PUY)
+Pune, India, (PNQ)
+Punta Arenas, Chile, (PUQ)
+Punta Cana, Dominican Republic, (PUJ)
+Punta Del Este, Uruguay, (PDP)
+Punta Gorda, Belize, (PND)
+Punta Islita, Costa Rica, (PBP)
+Puttaparthi, India, (PUT)
+Putussibau, Indonesia, (PSU)
+Pyongyang, North Korea, (FNJ)
+Qaisumah, Saudi Arabia, (AQI)
+Qaqortoq, Greenland, (JJU)
+Qiemo, China, (IQM)
+Qingdao, China, (TAO)
+Qiqihar, China, (NDG)
+Queenstown, New Zealand, (ZQN)
+Quelimane, Mozambique, (UEL)
+Quepos, Costa Rica, (XQP)
+Queretaro, Mexico, (QRO)
+Quetta, Pakistan, (UET)
+Qui Nhon, Viet Nam, (UIH)
+Quibdo, Colombia, (UIB)
+Quimper, France, (UIP)
+Quipi, QL, Australia, (ULP)
+Quito, Ecuador, (UIO)
+Rabaraba, Papua New Guinea, (RBP)
+Rabat, Morocco, (RBA)
+Rabaul, Papua New Guinea, (RAB)
+Rach Gia, Viet Nam, (VKG)
+Raduzhnyi, Russia, (RAT)
+Rafha, Saudi Arabia, (RAH)
+Rafsanjan, Iran, (RJN)
+Raiatea, French Polynesia, (RFP)
+Rajkot, India, (RAJ)
+Rajshahi, Bangladesh, (RJH)
+Ramato, Solomon Islands, (RBV)
+Ramingining, NT, Australia, (RAM)
+Ranchi, India, (IXR)
+Ranong, Thailand, (UNN)
+Rarotonga, Cook Islands, (RAR)
+Ras Al Khaimah, United Arab Emirates, (RKT)
+Rasht, Iran, (RAS)
+Ratanakiri, Cambodia, (RBE)
+Rawala Kot, Pakistan, (RAZ)
+Rebun, Japan, (RBJ)
+Recife, PE, Brazil, (REC)
+Reconquista, SF, Argentina, (RCQ)
+Reggio Calabria, Italy, (REG)
+Rennell, Solomon Islands, (RNL)
+Rennes, France, (RNS)
+Resistencia, CW, Argentina, (RES)
+Reus, Spain and Canary Islands, (REU)
+Reykjavik, Iceland, (KEF)
+Reynossa, Mexico, (REX)
+Rhodes, Gabon, (RHO)
+Ribeirao Preto, SP, Brazil, (RAO)
+Riberalta, Bolivia, (RIB)
+Richards Bay, South Africa, (RCB)
+Richmond, QL, Australia, (RCM)
+Riga, Latvia, (RIX)
+Rijeka, Croatia, (RJK)
+Rimini, Italy, (RMI)
+Rio Branco, AC, Brazil, (RBR)
+Rio Cuarto, CD, Argentina, (RCU)
+Rio De Janeiro, RJ, Brazil, (GIG)
+Rio Gallegos, Argentina - Internacional, (RGL)
+Rio Grande, RS, Brazil, (RIG)
+Rio Grande, TF, Argentina, (RGA)
+Rio Mayo, CB, Argentina, (ROY)
+Rio Verde, GO, Brazil, (RVD)
+Riohacha, Colombia, (RCH)
+Rishiri, Japan, (RIS)
+Riyadh, Saudi Arabia, (RUH)
+Riyan Mukalla, Yemen, (RIY)
+Roane, France, (RNE)
+Roatan, Honduras, (RTB)
+Roch Gia, Viet Nam, (VKG)
+Rock Sound, Bahamas, (RSD)
+Rockhampton, QL, Australia, (ROK)
+Rodez, France, (RDZ)
+Rodrigues Island, Mauritius, (RRG)
+Roervik, Norway, (RVK)
+Rognan, Norway, (ZXM)
+Roma, QL, Australia, (RMA)
+Rome, Italy - All airports, (ROM)
+Rome, Italy - Ciampino, (CIA)
+Rome, Italy - Leonardo Da Vinci/Fiumicino, (FCO)
+Rongelap Island, Marshall Islands, (RNP)
+Ronneby, Sweden, (RNB)
+Roros, Norway, (RRS)
+Rorutu, French Polynesia, (RUR)
+Rosario, SF, Argentina, (ROS)
+Rosh Pina, Iceland, (RPN)
+Rost, Norway, (RET)
+Rostock-Laage, Germany, (RLG)
+Rostov, Russia, (ROV)
+Rota, Northern Mariana Islands, (ROP)
+Rotorua, New Zealand, (ROT)
+Rotterdam, Netherlands, (RTM)
+Rouen, France, (URO)
+Rovaniemi, Finland, (RVN)
+S. Cristobal del Casas, Mexico, (SZT)
+Saarbruecken, Germany, (QFZ)
+Saint Croix, U.S. Virgin Islands, (STX)
+Saint Lucia, ST. LUCIA, (SLU)
+Saint Maarten, Netherlands Antilles, (SXM)
+Saint Petersburg, Russia - Pulkovo, (LED)
+Saint Thomas, U.S. Virgin Islands, (STT)
+Saint Tropez, France - La Mole, (LTT)
+Saint Tropez, France, (XPZ)
+Saipan, Northern Mariana Islands, (SPN)
+Sakon Nakhon, Thailand, (SNO)
+Salehard, Russia, (SLY)
+Salt Cay, Turks and Caicos Islands, (SLX)
+Saltillo, Mexico, (SLW)
+Salvadore, BA, Brazil, (SSA)
+Salzburg, Austria, (SZG)
+Samara, Russia, (KUF)
+Sambaua, Madagascar, (SVB)
+Samburu, Kenya, (UAS)
+Samos, Greece, (SMI)
+San Andres Island, Colombia, (ADZ)
+San Antonio Oesta, RN, Argentina, (OES)
+San Antonio, Venezuela, (SVZ)
+San Carlos, Argentina, (BRC)
+San Jose, Costa Rica - Juan Santa Maria, (SJO)
+San Jose, Costa Rica - Tobias Bolanos Int'l, (SYQ)
+San Juan, Puerto Rico, (SJU)
+San Juan, SJ, Argentina, (UAQ)
+San Julian, SC, Argentina, (ULA)
+San Luis Potosi, Mexico, (SLP)
+San Luis, SL, Argentina, (LUQ)
+San Marino, San Marino, (SAI)
+San Martin De Los Andes, Argentina, (CPC)
+San Miguel, Panama, (NMG)
+San Pedro Sula, Honduras, (SAP)
+San Rafael, Argentina, (AFA)
+San Salvador, Bahamas, (ZSA)
+San Salvador, El Salvador, (SAL)
+San Sebastian, Spain, (EAS)
+Sana'a, Yemen, (SAH)
+Sanday, United Kingdom, (NDY)
+Santa Ana, Solomon Islands, (NNB)
+Santa Barbara, Ed, Venezuela, (STB)
+Santa Cruz De La Palma, Spain and Canary Islands - La Palma, (SPC)
+Santa Cruz, Bolivia, (VVI)
+Santa Maria, Brazil, (RIA)
+Santa Maria, Portugal, (SMA)
+Santa Marta, Colombia, (SMR)
+Santa Rosa, LP, Argentina, (RSA)
+Santarem, PA, Brazil, (STM)
+Sante Marie, Madagascar, (SMS)
+Santiago, Chile, (SCL)
+Santiago, Dominican Republic, (STI)
+Santo Angelo, Brazil, (GEL)
+Santo Antao, Cape Verde, (NTO)
+Santo Domingo, Dominican Republic - Herrera, (HEX)
+Santo Domingo, Dominican Republic - Las Americas, (SDQ)
+Santo Domingo, Venezuela, (STD)
+Sanya, China, (SYX)
+Sao Nicolau, Cape Verde, (SNE)
+Sao Paulo, Brazil - Congonhas, (CGH)
+Sao Paulo, Brazil - Viracopos, (VCP)
+Sao Paulo, Brazil - Guarulhos Intl, (GRU)
+Sao Tome Is., Sao Tome and Principe, (TMS)
+Sao Vicente, Cape Verde, (VXE)
+Sapporo, Japan - Chitose, (CTS)
+Sapporo, Japan - Okadama, (OKD)
+Sara, Vanuatu, (SSR)
+Saratov, Russia, (RTW)
+Sarmi, Indonesia, (ZRM)
+Satu Mare, Romania, (SUJ)
+Satwag, Papua New Guinea, (SWG)
+Sau Luiz, MA, Brazil, (SLZ)
+Saumlaki, Indonesia, (SXK)
+Savannakhet, Laos, (ZVK)
+Savonlinna, Finland, (SVL)
+Savusavu, Fiji, (SVU)
+Sayaboury, Laos, (ZBY)
+Sege, Solomon Islands, (EGM)
+Seiyun, Yemen, (GXF)
+Selje, Norway, (QFK)
+Semarang, Indonesia, (SRG)
+Senggo, Indonesia, (ZEG)
+Seoul, South Korea - All Airports, (SEL)
+Seoul, South Korea - Gimpo International, (GMP)
+Seoul, South Korea - Incheon International, (ICN)
+Servi, Indonesia, (ZRI)
+Sesriem, Namibia, (SZM)
+Sevilla, Spain and Canary Islands, (SVQ)
+Shanghai, China, (PVG)
+Shannon, Ireland, (SNN)
+Shantou, China, (SWA)
+Sharm El Sheikh, Egypt, (SSH)
+Sheffield, United Kingdom, (SZD)
+Shenzhen, China, (SZX)
+Shetland Islands, United Kingdom - Lerwick/Tingwall, (LWK)
+Shetland Islands, United Kingdom - Sumburgh, (LSI)
+Shillavo, Ethiopia, (HIL)
+Shimkent, Kazakhstan, (CIT)
+Shiraz, Iran, (SYZ)
+Shonai, Japan, (SYO)
+Shute Harbor, Australia, (JHQ)
+Siem Reap, Cambodia, (REP)
+Silchar, India, (IXS)
+Simao, China, (SYM)
+Sinak, Indonesia, (NKD)
+Singapore, Singapore - Changi, (SIN)
+Singapore, Singapore - Seletar, (XSP)
+Sintang, Indonesia, (SQG)
+Sisimiut, Greenland, (JHS)
+Sittwe, Myanmar, (AKY)
+Sivas, Turkey, (VAS)
+Skiathos, Greece, (JSI)
+Skopie, Macedonia, (FYROM), (SKP)
+Skovde, Sweden, (KVB)
+Skukuza, South Africa, (SZK)
+Sligo, Ireland, (SXL)
+Soalala, Madagascar, (DWB)
+Soderham, Sweden, (SOO)
+Sofia, Bulgaria, (SOF)
+Sognolal, Norway, (SOG)
+Solo City, Indonesia, (SOC)
+Son-La, Viet Nam - Na-San, (SQH)
+Sorkjosen, Norway, (SOJ)
+Sorocaba, Brazil, (SOD)
+South Andros, Bahamas, (TZN)
+South Caicos, Turks and Caicos Islands, (XSC)
+South Hampton, United Kingdom, (SOU)
+South Molle Island, QL, Australia, (SOI)
+Split, Croatia, (SPU)
+Spring Point, Bahamas, (AXP)
+Srinagar, India, (SXR)
+St. Croix Island, U.S. Virgin Islands, (STX)
+St Denis de la Reunion, Reunion, (RUN)
+St Kitts, St Kitts and Nevis, (SKB)
+St Pierre, St Pierre and Miquelon, (FSP)
+St Vincent, Saint Vincent and the Grenadines, (SVD)
+St. Etienne, France, (EBU)
+St. Eustatius, Netherlands Antilles, (EUX)
+St. Lucia, St. Lucia - Hawnorra, (UVF)
+St. Lucia, St. Lucia, (UVF)
+St. Petersburg, Russia, (LED)
+St. Pierre de la Reunion, Reunion, (ZSE)
+St. Thomas Island, U.S. Virgin Islands, (STT)
+Stavropol, Russia, (STW)
+Stavanger, Norway, (SVG)
+Stella Maris, Bahamas, (SML)
+Stockholm, Sweden - All airports, (STO)
+Stockholm, Sweden - Arlanda, (ARN)
+Stockholm, Sweden - Bromma, (BMA)
+Stornoway, United Kingdom, (SYY)
+Storuman, Sweden, (SQO)
+Strasbourg, France - Bus service, (XER)
+Strasbourg, France - Entzheim, (SXB)
+Stronsay, United Kingdom, (SOY)
+Stung Treng, Cambodia, (TNX)
+Stuttgart, Germany - Echterdingen, (STR)
+Stuttgart, Germany - Rail service, (ZWS)
+Suavanao, Solomon Islands, (VAO)
+Sucre, Bolivia, (SRE)
+Sue Island, QL, Australia, (SYU)
+Sui, Pakistan, (SUL)
+Sukhotthai, Thailand, (THS)
+Sun City, South Africa, (NTY)
+Sunshine Coast, QL, Australia, (MCY)
+Surabaya, Indonesia, (SUB)
+Surat Thani, Thailand, (URT)
+Suva, Fiji, (SUV)
+Sveg, Sweden, (EVG)
+Svolvaer, Norway, (SVJ)
+Sydney, New South Wales, Australia, (SYD)
+Sylhet, Bangladesh, (ZYL)
+Szczecin, Poland, (SZZ)
+Taba, Egypt, (TCP)
+Tabarka, Tunisia, (TBJ)
+Tabatinga, AM, Brazil, (TBT)
+Tabora, Tanzania, (TBO)
+Tabriz, Iran, (TBZ)
+Tabubil, Papua New Guinea, (TBG)
+Tabuk, Saudi Arabia, (TUU)
+Tacheng, China, (TCG)
+Tachilek, Myanmar, (THL)
+Tacloban, Philippines, (TAC)
+Tacna, Peru, (TCQ)
+Taichung, Taiwan, (TXG)
+Taif, Saudi Arabia, (TIF)
+Tainan, Taiwan, (TNN)
+Taipei, Taiwan - Sung Shan, (TSA)
+Taipei, Taiwan - Chiang Kai Shek, (TPE)
+Taitung, Taiwan, (TTT)
+Taiyuan, China, (TYN)
+Taiz, Yemen, (TAI)
+Tallinn, Estonia, (TLL)
+Tamanrasset, Algeria, (TMR)
+Tamarindo, Costa Rica, (TNO)
+Tamatave, Madagascar, (TMM)
+Tambohorano, Madagascar, (WTA)
+Tambolaka, Indonesia, (TMC)
+Tambor, Costa Rica, (TMU)
+Tampere, Finland, (TMP)
+Tampico, Mexico, (TAM)
+Tamworth, NS, Australia, (TMW)
+Tanahmerah, Indonesia, (TMH)
+Tangier, Morocco, (TNG)
+Tanjung Pandan, Indonesia, (TJQ)
+Tanjung Selor, Indonesia, (TJS)
+Tanna, Vanuatu, (TAH)
+Tapachula, Mexico, (TAP)
+Tarakan, Indonesia, (TRK)
+Taramajma, Japan, (TRA)
+Taranto, Italy, (TAR)
+Tarapoto, Peru, (TPP)
+Tarawa, Kiribati, (TRW)
+Taree, NS, Australia, (TRO)
+Tari, Papua New Guinea, (TIZ)
+Tarija, Bolivia, (TJA)
+Tashkent, Uzbekistan, (TAS)
+Taupo, New Zealand, (TUO)
+Tauranga, New Zealand, (TRG)
+Taveuni, Fiji, (TVU)
+Tawau, Malaysia, (TWU)
+Tbessa, Algeria, (TEE)
+Tbilisi, Georgia, (TBS)
+Tchibanga, Gabon, (TCH)
+Te Anau, New Zealand, (TEU)
+Teesside, United Kingdom, (MME)
+Tefe, AM, Brazil, (TFF)
+Tegucigalpa, Honduras, (TGU)
+Tehran, Iran - Mehrabad, (THR)
+Tekadu, Papua New Guinea, (TKB)
+Tel Aviv, Israel, (TLV)
+Tembagapura, Indonesia, (TIM)
+Teminabuan, Indonesia, (TXM)
+Temuco, Chile, (ZCO)
+Tenerife, Spain and Canary Islands - Norte Los Rodeos, (TFN)
+Tenerife, Spain and the Canary Islands - Sur Reina Sofia, (TFS)
+Tennant Creek, NT, Australia, (TCA)
+Tepic, Mexico, (TPQ)
+Terceira Island, Portugal, (TER)
+Teresina, PI, Brazil, (THE)
+Termez, Uzbekistan, (TMJ)
+Ternate, Indonesia, (TTE)
+Tetabedi, Papua New Guinea, (TDB)
+Tete, Mozambique, (TET)
+Tetuan, Morocco, (TTU)
+Tezpur, India, (TEZ)
+Thandwe, Myanmar, (SNW)
+Thangool, QL, Australia, (THG)
+Thargomindah, QL, Australia, (XTG)
+The Bight, Bahamas, (TBI)
+Thessaloniki, Greece, (SKG)
+Thira, Greece, (JTR)
+Thiruvananthapuram, India, (TRV)
+Thorshofn, Iceland, (THO)
+Thursday Island, QL, Australia, (TIS)
+Tianjn, China, (TSN)
+Tiaret, Algeria, (TID)
+Tiga, New Caledonia, (TGJ)
+Tijuana, Mexico, (TIJ)
+Tikehau Atoll, French Polynesia, (TIH)
+Tiksi, Russia, (IKS)
+Timaru, New Zealand, (TIU)
+Timimoun, Algeria, (TMX)
+Timosoara, Romania, (TSR)
+Tindouf, Algeria, (TIN)
+Tinian, Northern Mariana Islands, (TIQ)
+Tioljikja, Mauritania, (TIY)
+Tioman, Malaysia, (TOD)
+Tippi, Ethiopia, (TIE)
+Tirana, Albania, (TIA)
+Tiree, United Kingdom, (TRE)
+Tirgu Mures, Romania, (TGM)
+Tiruchirapally, India, (TRZ)
+Tirupati, India, (TIR)
+Tivat, Serbia and Montenegro, (TIV)
+Tlemcen, Algeria, (TLM)
+Tobago, Trinidad and Tobago, (TAB)
+Tobruk, Libya, (TOB)
+Tokunoshima, Japan, (TKN)
+Tokushima, Japan, (TKS)
+Tokyo, Japan - All airports, (TYO)
+Tokyo, Japan - Haneda, (HND)
+Tokyo, Japan - Narita, (NRT)
+Toledo, PR, Brazil, (TOW)
+Toluco, Mexico, (TLC)
+Tom Price, WA, Australia, (TPR)
+Tomanggong, Malaysia, (TMG)
+Tombouctou, Mali, (TOM)
+Tomsk, Russia, (TOF)
+Tongliao, China, (TGO)
+Tongoa, Vanuatu, (TGH)
+Toowoomba, QL, Australia, (TWB)
+Torreon, Mexico, (TRC)
+Torres, Vanuatu, (TOH)
+Torsby, Sweden, (TYF)
+Tortola, British Virgin Islands, (TOV)
+Tortoli, Italy, (TTB)
+Tortuquero, Costa Rica, (TTQ)
+Tottori, Japan, (TTJ)
+Touho, New Caledonia, (TOU)
+Toulon, France, (TLN)
+Toulouse, France, (TLS)
+Tours, France, (TUF)
+Tours, France - Rail service, (XSH)
+Townsville, QL, Australia, (TSV)
+Toyama, Japan, (TOY)
+Tozeur, Tunisia, (TOE)
+Trabzon, Turkey, (TZX)
+Trang, Thailand, (TST)
+Trapani, Italy, (TPS)
+Traralgon, VI, Australia, (TGN)
+Treasure Cay, Bahamas, (TCB)
+Trelew, CB, Argentina, (REL)
+Trieste, Italy, (TRS)
+Trinidad, Bolivia, (TDD)
+Trinidad, Trinidad and Tobago, (POS)
+Tripoli, Latvia, (TIP)
+Trollhattan, Sweden, (THN)
+Trombetas, PA, Brazil, (TMT)
+Tromso, Norway, (TOS)
+Trondheim, Norway, (TRD)
+Trujillo, Honduras, (TJI)
+Trujillo, Peru, (TRU)
+Truk, Micronesia, (TKK)
+Tsaratanana, Madagascar, (TTS)
+Tsiroanomandidy, Madagascar, (WTS)
+Tsumeb, Namibia, (TSB)
+Tsushima, Japan, (TSJ)
+Tubuai, French Polynesia, (TUB)
+Tucuman, TU, Argentina, (TUC)
+Tucupita, Venezuela, (TUV)
+Tucurui, PA, Brazil, (TUR)
+Tufi, Papua New Guinea, (TFI)
+Tuguegarao, Philippines, (TUG)
+Tulcan, Ecuador, (TUA)
+Tulear, Madagascar, (TLE)
+Tum, Ethiopia, (TUJ)
+Tumaco, Colombia, (TCO)
+Tumbes, Peru, (TBP)
+Tunis, Tunisia, (TUN)
+Tunxi, China, (TXN)
+Turaif, Saudi Arabia, (TUI)
+Turbat, Pakistan, (TUK)
+Turin, Italy, (TRN)
+Turku, Finland, (TKU)
+Tuxtla Gutierrez, Mexico, (TGZ)
+Tyumen, Russia, (TJM)
+Ube, Japan, (UBJ)
+Uberaba, MG, Brazil, (UBA)
+Uberlandia, MG, Brazil, (UDI)
+Ubon Ratchathani, Thailand, (UBP)
+Udaipur, Indonesia, (UDR)
+Udon Thani, Thailand, (UTH)
+Ufa, Russia, (UFA)
+Ujae Island, Marshall Islands, (UJE)
+Ujung Pandang, Indonesia, (UPG)
+Ukhta, Russia, (UCT)
+Ulaanbaatar, Mongolia, (ULN)
+Ulanhot, China, (HLH)
+Ulan-Ude, Russia, (UUD)
+Ulei, Vanuatu, (ULB)
+Uliastai, Mongolia, (ULY)
+Ulithi, Micronesia, (ULI)
+Ulsan, South Korea, (USN)
+Ulundi, South Africa, (ULD)
+Umea, Sweden, (UME)
+Umtata, South Africa, (UTT)
+Upernavik, Greenland, (JUV)
+Upington, South Africa, (UTN)
+Uraj, Russia, (URJ)
+Uralsk, Kazakhstan, (URA)
+Urgench, Uzbekistan, (UGC)
+Urmieh, Iran, (OMH)
+Uroubi, Papua New Guinea, (URU)
+Uruapan, Mexico, (UPN)
+Uruguaiana, RS, Brazil, (URG)
+Urumqi, China, (URC)
+Useless Loop, WA, Australia, (USL)
+Ushuaia, TF, Argentina, (USH)
+Usinsk, Russia, (USK)
+Ust-Kamenogorsk, Kazakhstan, (UKK)
+Ust-Ilimsk, Russia, (UIK)
+Utapao, Thailand, (UTP)
+Utila, Honduras, (UII)
+Utirik Island, Marshall Islands, (UTK)
+Uummannaq, Greeland, (UMD)
+Uzhgorod, Ukraine, (UDJ)
+Vaasa, Finland, (VAA)
+Vadodara, India, (BDQ)
+Vadso, Norway, (VDS)
+Valdivia, Chile, (ZAL)
+Valencia, Spain, (VLC)
+Valencia, Venezuela, (VLN)
+Valenciennes, France, (XVS)
+Valera, Venezuela, (VLV)
+Valesdir, Vanuatu, (VLS)
+Valladolid, Spain and Canary Islands, (VLL)
+Valledupar, Colombia, (VUP)
+Valverde, Spain and Canary Islands - Hierro, (VDE)
+Van, Turkey, (VAN)
+Vancouver, BC, (YVR)
+Vanimo, Papua New Guinea, (VAI)
+Vanuabalavu, Fiji, (VBV)
+Varanasi, India, (VNS)
+Vardoe, Norway, (VAW)
+Varginha, MG, Brazil, (VAG)
+Varkaus, Finland, (VRK)
+Varna, Bulgaria, (VAR)
+Vasteras, Sweden, (VST)
+Vatomatry, Madagascar, (VAT)
+Vava'u, Tonga, (VAV)
+Vaxjo, Sweden, (VXO)
+V.C. Bird International, Antigua & Barbuda, (ANU)
+Venice, Italy - Marco Polo, (VCE)
+Venice, Italy - Treviso, (TSF)
+Veracruz, Mexico, (VER)
+Varadero, Cuba, (VRA)
+Verona, Italy, (VRN)
+Vestmannaeyjar, Iceland, (VEY)
+Victoria Falls, Zimbabwe, (VFA)
+Victoria River Downs, NT, Australia, (VCD)
+Viedma, RN, Argentina, (VDM)
+Vienna, Austria, (VIE)
+Vientiane, Laos - Wattay, (VTE)
+Vieques, Puerto Rico, (VQS)
+Vigo, Spain, (VGO)
+Vilanculos, Mozambique, (VNX)
+Vilhelmina, Sweden, (VHM)
+Vilhena, Brazil, (BVH)
+Villa Gesell, BA, Argentina, (VLG)
+Villa Mercedes, SL, Argentina, (VME)
+Villahermosa, Mexico, (VSA)
+Vilnius, Lithuania, (VNO)
+Vinh City, Viet Nam, (VII)
+Virgin Gorda, British Virgin Islands, (VIJ)
+Visby, Sweden, (VBY)
+Vishakhapatnam, India, (VTZ)
+Vitebsk, Belarus, (VTB)
+Vitoria da Conquista, BA, Brazil, (VDC)
+Vitoria, Spain and Canary Islands, (VIT)
+Vivigani, Papua New Guinea, (VIV)
+Vladikavkaz, Russia, (OGZ)
+Vladivostok, Russia, (VVO)
+Vohemar, Madagascar, (VOH)
+Volgodonsk, Russia, (VLK)
+Volgograd, Russia, (VOG)
+Vopnafjordur, Iceland, (VPN)
+Vorkuta, Russia, (VKT)
+Voronezh, Russia, (VOZ)
+Wadi Ad Dawasir, Saudi Arabia, (WAE)
+Wadi Halfa, Sudan, (WHF)
+Wagethe, Indonesia, (WET)
+Wagga Wagga, NS, Australia, (WGA)
+Wahai, Indonesia, (WBA)
+Waingapo, Indonesia, (WGP)
+Wakkanai, Japan, (WKJ)
+Walaha, Vanuatu, (WLH)
+Walgett, NS, Australia, (WGE)
+Wallis Island, Wallis and Futuna Islands, (WLS)
+Walvis Bay, Namibia, (WVB)
+Wamena, Indonesia, (WMX)
+Wanaka, New Zealand, (WKA)
+Wanganui, New Zealand, (WAG)
+Wangerooge, Germany, (AGE)
+Wanigela, Papua New Guinea, (AGL)
+Wanxian, China, (WXN)
+Warsaw, Poland, (WAW)
+Wasior, Indonesia, (WSR)
+Wasu, Papua New Guinea, (WSU)
+Waterford, Ireland, (WAT)
+Wau, Papua New Guinea, (WUG)
+Wau, Sudan, (WUU)
+Wedau, Papua New Guinea, (WED)
+Wedjh, Saudi Arabia, (EJH)
+Weihai, China, (WEH)
+Weipa, QL, Australia, (WEI)
+Wellington, New Zealand, (WLG)
+Wenzhou, China, (WNZ)
+Westerland, Germany, (GWT)
+Westport, New Zealand, (WSZ)
+Westray, United Kingdom, (WRY)
+Wewak, Papua New Guinea, (WWK)
+Whakatane, New Zealand, (WHK)
+Whangarei, New Zealand, (WRE)
+Whyalla, SA, Australia, (WYA)
+Wick, United Kingdom, (WIC)
+Wilhelmshaven, Germany, (WVN)
+Wiluna, WA, Australia, (WUN)
+Windarra, QL, Australia, (WNR)
+Winton, QL, Australia, (WIN)
+Woja, Marshall Islands, (WJA)
+Wonan, Taiwan, (WOT)
+WonJu, South Korea, (WJU)
+Wotho Island, Marshall Islands, (WTO)
+Wotje Island, Marshall Islands, (WTE)
+Wroclaw, Poland, (WRO)
+Wudinna, SA, Australia, (WUD)
+Wuhan, China, (WUH)
+Wuyishan, China, (WUS)
+Wyndham, WA, Australia, (WYN)
+Xiamen, China, (XMN)
+Xi An, China - Xianyang, (XIY)
+Xiangfan, China, (XFN)
+Xichang, China, (XIC)
+Xieng Khouang, Laos, (XKH)
+Xilinhot, China, (XIL)
+Xining, China, (XNN)
+Xuzhou, China, (XUZ)
+Yakutsk, Russia, (YKS)
+Yalumet, Papua New Guinea, (KYX)
+Yam Island, QL, Australia, (XMY)
+Yamagata, Japan, (GAJ)
+Yan'an, China, (ENY)
+Yanbu, Saudi Arabia, (YNB)
+Yancheng, China, (YNZ)
+Yandina, Solomon Islands, (XYA)
+Yangon, Myanmar, (RGN)
+Yanji, China, (YNJ)
+Yantai, China, (YNT)
+Yaounde, Cameroon, (YAO)
+Yap, Micronesia, (YAP)
+Yaroslavl, Russia, (IAR)
+Yazd, Iran, (AZD)
+Yelimane, Mali, (EYL)
+Yeosu, South Korea, (RSU)
+Yerevan, Armenia, (EVN)
+Yibin, China, (YBP)
+Yichang, China, (YIH)
+Yinchuan, China, (INC)
+Yining, China, (YIN)
+Yiwu, China, (YIW)
+Yogyakarta, Indonesia, (JOG)
+Yonago, Japan, (YGJ)
+Yonaguni Jima, Japan, (OGN)
+Yorke Island, QL, Australia, (OKR)
+Yoronjima, Japan, (RNJ)
+Yulin, China, (UYN)
+Yuzhno-Sakhalinsk, Russia, (UUS)
+Zadar, Croatia, (ZAD)
+Zagreb, Croatia, (ZAG)
+Zahedan, Iran, (ZAH)
+Zakinthos Island, Greece, (ZTH)
+Zamboanga, Philippines, (ZAM)
+Zanzibar, Tanzania - Kisauni, (ZNZ)
+Zaporozhye, Ukraine, (OZH)
+Zaragoza, Spain and Canary Islands, (ZAZ)
+Zhanjiang, China, (ZHA)
+Zhaotong, China, (ZAT)
+Zhengzha, China, (CGO)
+Zhob, Pakistan, (PZH)
+Zhoushan, China, (HSN)
+Zhuhai, China, (ZUH)
+Zielana, Poland, (IEG)
+Zihuatanejo/Ixtapa, Mexico, (ZIH)
+Zouerate, Mauritania, (OUZ)
+Zugapa, Indonesia, (UGU)
+Zurich, Switzerland, (ZRH)
