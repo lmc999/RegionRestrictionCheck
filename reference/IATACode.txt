@@ -1,0 +1,1498 @@
+Aalborg | Denmark | AAL
+Aalesund | Norway | AES
+Aarhus | Denmark | AAR
+Abbotsford, BC | Canada | YXX
+Aberdeen | Scotland | ABZ
+Aberdeen, SD | USA | ABR
+Abidjan | Ivory Coast | ABJ
+Abilene, TX | USA | ABI
+Abu Dhabi | United Arab Emirates | AUH
+Abuja | Nigeria | ABV
+Acapulco | Mexico | ACA
+Accra | Ghana | ACC
+Adana | Turkey | ADA
+Addis Ababa | Ethiopia | ADD
+Adelaide, S.A. | Australia | ADL
+Aden | Yemen | ADE
+Adiyaman | Turkey | ADF
+Agadir | Morocco | AGA
+Agana | Guam | GUM
+Aguadilla | Puerto Rico | BQN
+Aguascalientes | Mexico | AGU
+Ahe | French Polynesia | AHE
+Ahmedabad | India | AMD
+Ajaccio, Corsica | France | AJA
+Akita | Japan | AXT
+Akron, OH | USA | CAK
+Alamosa, CO | USA | ALS
+Albany, GA | USA | ABY
+Albany, NY | USA | ALB
+Albenga | Italy | ALL
+Albuquerque, NM | USA | ABQ
+Albury, N.S.W. | Australia | ABX
+Alexandria | Egypt | ALY
+Alexandria | Egypt | HBE
+Alexandria, LA | USA | AEX
+Alexandroupolis | Greece | AXD
+Alghero, Sardinia | Italy | AHO
+Algiers | Algeria | ALG
+Alicante | Spain | ALC
+Alice Springs, N.T. | Australia | ASP
+Alice Town, North Bimini Island | Bahamas | NSB
+Allentown, PA | USA | ABE
+Alliance, NE | USA | AIA
+Almaty | Kazakhstan | ALA
+Almeria | Spain | LEI
+Alor Setar | Malaysia | AOR
+Alpena, MI | USA | APN
+Alta | Norway | ALF
+Altenrhein | Switzerland | ACH
+Altoona, PA | USA | AOO
+Amarillo, TX | USA | AMA
+Amman | Jordan | AMM
+Amsterdam | Netherlands | AMS
+Anahim Lake, BC | Canada | YAA
+Anchorage, AK | USA | ANC
+Ancona | Italy | AOI
+Andros Town | Bahamas | ASD
+Angeles City | Philippines | CRK
+Angra do Heroismo, Terceira Island | Azores | TER
+Ankara | Turkey | ESB
+Annaba | Algeria | AAE
+Annecy | France | NCY
+Antalya | Turkey | AYT
+Antananarivo | Madagascar | TNR
+Antofagasta | Chile | ANF
+Antwerp | Belgium | ANR
+Aomori | Japan | AOJ
+Aosta | Italy | AOT
+Appleton, WI | USA | ATW
+Ardabil | Iran | ADU
+Arequipa | Peru | AQP
+Argostoli, Kefalonia Island | Greece | EFL
+Arica | Chile | ARI
+Arkhangelsk | Russia | ARH
+Armidale, N.S.W. | Australia | ARM
+Arrecife, Lanzarote Island | Canary Islands | ACE
+Arusha | Tanzania | ARK
+Arviat, NWT | Canada | YEK
+Arvidsjaur | Sweden | AJR
+Asheville, NC | USA | AVL
+Asmara | Eritrea | ASM
+Aspen, CO | USA | ASE
+Astana | Kazakhstan | TSE
+Asuncion | Paraguay | ASU
+Aswan | Egypt | ASW
+Athens | Greece | ATH
+Athens, GA | USA | AHN
+Atlanta, GA | USA | ATL
+Atlantic City, NJ | USA | ACY
+Auckland | New Zealand | AKL
+Augusta, GA | USA | AGS
+Augusta, ME | USA | AUG
+Austin, TX | USA | AUS
+Avarua, Rarotonga Island | Cook Islands | RAR
+Ayers Rock, N.T. | Australia | AYQ
+Bacolod | Philippines | BCD
+Badajoz | Spain | BJZ
+Baghdad | Iraq | SDA
+Bagotville, PQ | Canada | YBG
+Baie-Comeau, PQ | Canada | YBC
+Bakersfield, CA | USA | BFL
+Baku | Azerbaijan | BAK
+Baku | Azerbaijan | GYD
+Balaton | Hungary | SOB
+Balephuil | Scotland | TRE
+Balikpapan, Kalimantan | Indonesia | BPN
+Ballina, N.S.W. | Australia | BNK
+Balmaceda | Chile | BBA
+Baltimore, MD | USA | BWI
+Ban Me Thuot | Vietnam | BMV
+Bandar Seri Begawan | Brunei | BWN
+Bangalore | India | BLR
+Bangda | China | BPX
+Bangkok | Thailand | BKK
+Bangor, ME | USA | BGR
+Bangui | Central African Republic | BGF
+Banjul | Gambia | BJL
+Bar Harbor, ME | USA | BHB
+Barcelona | Spain | BCN
+Bardufoss | Norway | BDU
+Bari | Italy | BRI
+Barisal | Bangladesh | BZL
+Barranquilla | Colombia | BAQ
+Barrow, AK | USA | BRW
+Basel | Switzerland | BSL
+Basseterre | St. Kitts | SKB
+Bastia, Corsica | France | BIA
+Bathurst, N.S.W. | Australia | BHS
+Baton Rouge, LA | USA | BTR
+Bauru | Brazil | BAU
+Beaumont, TX | USA | BPT
+Beauvais | France | BVA
+Beckley, WV | USA | BKW
+Bedford, MA | USA | BED
+Beef Island, Tortola | British Virgin Islands | EIS
+Beijing | China | BJS
+Beirut | Lebanon | BEY
+Belem | Brazil | BEL
+Belfast | Northern Ireland | BFS
+Belfast | Northern Ireland | BHD
+Belgrade | Serbia and Montenegro | BEG
+Belize City | Belize | BZE
+Bellingham, WA | USA | BLI
+Belo Horizonte | Brazil | CNF
+Bemidji, MN | USA | BJI
+Benbecula | Scotland | BEB
+Benguela | Angola | BUG
+Bergen | Norway | BGO
+Berlin | Germany | BER - All Airports
+Berlin | Germany | SXF
+Berlin | Germany | THF
+Berlin | Germany | TXL
+Berne | Switzerland | BRN
+Bethel, AK | USA | BET
+Bettles, AK | USA | BTT
+Biak, Papua | Indonesia | BIK
+Biarritz | France | BIQ
+Bilbao | Spain | BIO
+Billings, MT | USA | BIL
+Billund | Denmark | BLL
+Binghamton, NY | USA | BGM
+Bintulu, Sarawak | Malaysia | BTU
+Birmingham | England | BHX
+Birmingham, AL | USA | BHM
+Bishkek | Kyrgyzstan | FRU
+Bismarck, ND | USA | BIS
+Bissau | Guinea-Bissau | OXB
+Blantyre | Malawi | BLZ
+Blenheim | New Zealand | BHE
+Bloemfontein | South Africa | BFN
+Bloomington, IL | USA | BMI
+Bloomington, IN | USA | BMG
+Bluefield, WV | USA | BLF
+Bodo | Norway | BOO
+Bogota | Colombia | BOG
+Boise, ID | USA | BOI
+Bologna | Italy | BLQ
+Bolzano | Italy | BZO
+Bordeaux | France | BOD
+Borlange | Sweden | BLE
+Boston, MA | USA | BOS
+Bozeman, MT | USA | BZN
+Brasilia | Brazil | BSB
+Bratislava | Slovakia | BTS
+Brazzaville | Congo | BZV
+Bremen | Germany | BRE
+Brest | France | BES
+Bridgetown | Barbados | BGI
+Brindisi | Italy | BDS
+Brisbane, Qld. | Australia | BNE
+Bristol | England | BRS
+Broken Hill, N.S.W. | Australia | BHQ
+Brookings, SD | USA | BKX
+Broome, W.A. | Australia | BME
+Brownsville, TX | USA | BRO
+Brunswick, GA | USA | BQK
+Brussels | Belgium | BRU
+Bucharest | Romania | OTP
+Budapest | Hungary | BUD
+Buenos Aires | Argentina | EZE
+Buffalo, NY | USA | BUF
+Bujumbura | Burundi | BJM
+Bulawayo | Zimbabwe | BUQ
+Bundaberg, Qld. | Australia | BDB
+Burbank, CA | USA | BUR
+Buri Ram | Thailand | BFV
+Burlington, IA | USA | BRL
+Burlington, MA | USA | BBF
+Burlington, VT | USA | BTV
+Busan, Korea | Republic of | PUS
+Butte, MT | USA | BTM
+Butuan | Philippines | BXU
+Bydgoszcz | Poland | BZG
+Caen | France | CFR
+Cagayan de Oro | Philippines | CGY
+Cagliari, Sardinia | Italy | CAG
+Cairns, Qld. | Australia | CNS
+Cairo | Egypt | CAI
+Calcutta | India | CCU
+Calgary, AB | Canada | YYC
+Cali | Colombia | CLO
+Calvi, Corsica | France | CLY
+Campbell River, BC | Canada | YBL
+Campbeltown | Scotland | CAL
+Campeche | Mexico | CPE
+Canberra, A.C.T. | Australia | CBR
+Cancun | Mexico | CUN
+Cap-aux-Meules, | Canada | YGR
+Cape Girardeau, MO | USA | CGI
+Cape Town | South Africa | CPT
+Caracas | Venezuela | CCS
+Cardiff | Wales | CWL
+Carlsbad, CA | USA | CLD
+Carlsbad, NM | USA | CNM
+Cartagena | Colombia | CTG
+Casablanca | Morocco | CMN
+Casper, WY | USA | CPR
+Castlegar, BC | Canada | YCG
+Castries | St. Lucia | SLU
+Catania, Sicily | Italy | CTA
+Cayenne | French Guiana | CAY
+Cayman Brac | Cayman Islands | CYB
+Cebu | Philippines | CEB
+Cedar Rapids, IA | USA | CID
+Ceduna, S.A. | Australia | CED
+Champaign, IL | USA | CMI
+Changchun | China | CGQ
+Changsha | China | CSX
+Chania, Crete | Greece | CHQ
+Charleston, SC | USA | CHS
+Charleston, WV | USA | CRW
+Charleville, Qld. | Australia | CTL
+Charlotte Amalie, St. Thomas | U.S. Virgin Islands | STT
+Charlotte, NC | USA | CLT
+Charlottesville, VA | USA | CHO
+Charlottetown, PEI | Canada | YYG
+Chattanooga, TN | USA | CHA
+Chengdu | China | CTU
+Chennai (Madras) | India | MAA
+Chetumal | Mexico | CTM
+Cheyenne, WY | USA | CYS
+Chiang Mai | Thailand | CNX
+Chiang Rai | Thailand | CEI
+Chibougamau, PQ | Canada | YMT
+Chicago, IL | USA | CHI - All 
+Chicago, IL | USA | MDW
+Chicago, IL | USA | ORD
+Chico, CA | USA | CIC
+Chihuahua | Mexico | CUU
+Chios | Greece | JKH
+Chisinau | Moldova | KIV
+Chongqing | China | CKG
+Christchurch | New Zealand | CHC
+Christiansted, St. Croix | U.S. Virgin Islands | STX
+Churchill, MB | Canada | YYQ
+Cincinnati, OH | USA | CVG
+Ciudad Bolivar | Venezuela | CBL
+Ciudad Del Carmen | Mexico | CME
+Ciudad del Este | Paraguay | AGT
+Ciudad Juarez | Mexico | CJS
+Ciudad Obregon | Mexico | CEN
+Ciudad Victoria | Mexico | CVM
+Clarksburg, WV | USA | CKB
+Clermont-Ferrand | France | CFE
+Cleveland, OH | USA | CLE
+Clovis, NM | USA | CVN
+Cockburn Town, San Salvador Island | Bahamas | ZSA
+Cody, WY | USA | COD
+Coffs Harbour, N.S.W. | Australia | CFS
+Colima | Mexico | CLQ
+College Station, TX | USA | CLL
+Cologne | Germany | CGN
+Colombo | Sri Lanka | CMB
+Colorado Springs, CO | USA | COS
+Columbia, MO | USA | COU
+Columbia, SC | USA | CAE
+Columbus, GA | USA | CSG
+Columbus, IN | USA | CLU
+Columbus, MS | USA | GTR
+Columbus, NE | USA | OLU
+Columbus, OH | USA | CMH
+Conakry | Guinea | CKY
+Concepcion | Chile | CCP
+Connaught | Ireland | NOC
+Coober Pedy, S.A. | Australia | CPD
+Copenhagen | Denmark | CPH
+Copiapo | Chile | CPO
+Cordoba | Argentina | COR
+Cordova, AK | USA | CDV
+Cork | Ireland | ORK
+Corpus Christi, TX | USA | CRP
+Cotabato | Philippines | CBO
+Cozumel | Mexico | CZM
+Cranbrook, BC | Canada | YXC
+Crotone | Italy | CRV
+Cubi Point Nas | Philippines | NCP
+Culiacan | Mexico | CUL
+Curitiba | Brazil | CWB
+Cusco | Peru | CUZ
+Da Nang | Vietnam | DAD
+Dakar | Senegal | DKR
+Dalaman | Turkey | DLM
+Dali City | China | DLU
+Dalian | China | DLC
+Dallas, TX | USA | DAL
+Dallas, TX | USA | DFW
+Damascus | Syria | DAM
+Dangriga | Belize | DGA
+Dar es Salaam | Tanzania | DAR
+Darwin, N.T. | Australia | DRW
+Davao | Philippines | DVO
+Dawadmi | Saudi Arabia | DWD
+Dayong | China | DYG
+Dayton, OH | USA | DAY
+Daytona Beach, FL | USA | DAB
+Deadmans Cay, Long Island | Bahamas | LGI
+Deboyne | Papua-New Guinea | DOY
+Decatur, IL | USA | DEC
+Deer Lake, NF | Canada | YDF
+Delhi | India | DEL
+Denpasar, Bali | Indonesia | DPS
+Denver, CO | USA | DEN
+Des Moines, IA | USA | DSM
+Detroit, MI | USA | DTT - All 
+Detroit, MI | USA | DTW
+Devils Lake, ND | USA | DVL
+Devonport, Tas. | Australia | DPO
+Dhahran | Saudi Arabia | DHA
+Dhaka | Bangladesh | DAC
+Dickinson, ND | USA | DIK
+Dien-Bien-Phu | Vietnam | DIN
+Dillingham, AK | USA | DLG
+Dipolog | Philippines | DPL
+Djibouti | Djibouti | JIB
+Dnepropetrovsk | Ukraine | DNK
+Dodge City, KS | USA | DDC
+Doha | Qatar | DOH
+Doncaster | England | DSA
+Donetsk | Ukraine | DOK
+Dortmund | Germany | DTM
+Dothan, AL | USA | DHN
+Douala | Cameroon | DLA
+Dresden | Germany | DRS
+Dryden, ON | Canada | YHD
+Du Bois, PA | USA | DUJ
+Dubai | United Arab Emirates | DXB
+Dubbo, N.S.W. | Australia | DBO
+Dublin | Ireland | DUB
+Dubrovnik | Croatia | DBV
+Dubuque, IA | USA | DBQ
+Duluth, MN | USA | DLH
+Dumaguete | Philippines | DGT
+Dunedin | New Zealand | DUD
+Durango | Mexico | DGO
+Durango, CO | USA | DRO
+Durban | South Africa | DUR
+Dushanbe | Tajikistan | DYU
+Dusseldorf | Germany | DUS
+Dutch Harbor, Un Island, AK | USA | DUT
+East London | South Africa | ELS
+East Midlands | England | EMA
+Eau Claire, WI | USA | EAU
+Edinburgh | Scotland | EDI
+Edmonton, AB | Canada | YEG
+Eek, AK | USA | EEK
+Ekaterinburg, Siberia | Russia | SVX
+El Calafate | Argentina | FTE
+El Centro, CA | USA | IPL
+El Dorado, AR | USA | ELD
+El Paso, TX | USA | ELP
+El Salvador | Chile | ESR
+Elko, NV | USA | EKO
+Elmira, NY | USA | ELM
+Emerald, Qld. | Australia | EMD
+Enid, OK | USA | WDG
+Entebbe | Uganda | EBB
+Erfurt | Germany | ERF
+Erie, PA | USA | ERI
+Esbjerg | Denmark | EBJ
+Escanaba, MI | USA | ESC
+Eugene, OR | USA | EUG
+Eureka, CA | USA | ACV
+Evansville, IN | USA | EVV
+Evenes | Norway | EVE
+Fairbanks, AK | USA | FAI
+Fargo, ND | USA | FAR
+Farmington, NM | USA | FMN
+Faro | Portugal | FAO
+Fayetteville, AR | USA | XNA
+Fayetteville, NC | USA | FAY
+Fernando de Noronha | Brazil | FEN
+Figari, Corsica | France | FSC
+Flagstaff, AZ | USA | FLG
+Flin Flon, MB | Canada | YFO
+Flint, MI | USA | FNT
+Florence | Italy | FLR
+Florence, SC | USA | FLO
+Flores | Guatemala | FRS
+Fort Dodge, IA | USA | FOD
+Fort Lauderdale, FL | USA | FLL
+Fort Leonard Wood, MO | USA | TBN
+Fort McMurray, AB | Canada | YMM
+Fort Myers, FL | USA | RSW
+Fort Nelson, BC | Canada | YYE
+Fort Saint John, BC | Canada | YXJ
+Fort Smith, AR | USA | FSM
+Fort Smith, NWT | Canada | YSM
+Fort Walton Beach, FL | USA | VPS
+Fort Wayne, IN | USA | FWA
+Fort Yukon, AK | USA | FYU
+Fort-de-France | Martinique | FDF
+Frankfurt | Germany | FRA
+Fredericton, NB | Canada | YFC
+Freeport, Grand Bahama Island | Bahamas | FPO
+Freetown | Sierra Leone | FNA
+Fresno, CA | USA | FAT
+Friedrichshafen | Germany | FDH
+Fukuoka | Japan | FUK
+Fukushima | Japan | FKS
+Funchal | Madeira | FNC
+Fuzhou | China | FOC
+Gainesville, FL | USA | GNV
+Gander, NF | Canada | YQX
+Garden City, KS | USA | GCK
+Gaspe, PQ | Canada | YGP
+Gdansk | Poland | GDN
+General Santos | Philippines | GES
+Geneva | Switzerland | GVA
+Genoa | Italy | GOA
+George Town, Great Exuma Island | Bahamas | GGT
+Georgetown | Guyana | GEO
+Georgetown, Grand Cayman Island | Cayman Islands | GCM
+Gillette, WY | USA | GCC
+Gisborne | New Zealand | GIS
+Gladstone, Qld. | Australia | GLT
+Glasgow | Scotland | GLA
+Glasgow | Scotland | PIK
+Glendive, MT | USA | GDV
+Gold Coast, Qld. | Australia | OOL
+Gothenburg | Sweden | GOT
+Gove, N.T. | Australia | GOV
+Governor's Harbour, Eleuthera Island | Bahamas | GHB
+Granada | Spain | GRX
+Grand Forks, ND | USA | GFK
+Grand Island, NE | USA | GRI
+Grand Junction, CO | USA | GJT
+Grand Rapids, MI | USA | GRR
+Grande Prairie, AB | Canada | YQU
+Graz | Austria | GRZ
+Great Bend, KS | USA | GBD
+Great Falls, MT | USA | GTF
+Green Bay, WI | USA | GRB
+Greenbrier, WV | USA | LWB
+Greensboro, NC | USA | GSO
+Greenville, MS | USA | GLH
+Greenville, NC | USA | PGV
+Greenville, SC | USA | GSP
+Griffith, N.S.W. | Australia | GFF
+Guadalajara | Mexico | GDL
+Guangzhou | China | CAN
+Guatemala City | Guatemala | GUA
+Guayaquil | Ecuador | GYE
+Guaymas | Mexico | GYM
+Guernsey | Channel Islands | GCI
+Guilin | China | KWL
+Gulfport, MS | USA | GPT
+Gunnison, CO | USA | GUC
+Gustavia | St. Barts | SBH
+Hagerstown, MD | USA | HGR
+Haikou, Hainan Island | China | HAK
+Hailar | China | HLD
+Hakodate | Japan | HKD
+Halifax, NS | Canada | YHZ
+Halmstad | Sweden | HAD
+Hamburg | Germany | HAM
+Hamilton | Bermuda | BDA
+Hamilton | New Zealand | HLZ
+Hamilton Island, Whitsunday Island, Qld. | Australia | HTI
+Hamilton, ON | Canada | YHM
+Hammerfest | Norway | HFT
+Hana, Maui, HI | USA | HNM
+Hancock, MI | USA | CMX
+Hanga Roa, Easter Island | Chile | IPC
+Hangzhou | China | HGH
+Hannover | Germany | HAJ
+Hanoi | Vietnam | HAN
+Harare | Zimbabwe | HRE
+Harbin | China | HRB
+Harlingen, TX | USA | HRL
+Harrisburg, PA | USA | MDT
+Harrison, AR | USA | HRO
+Hartford, CT | USA | BDL
+Hat Yai | Thailand | HDY
+Haugesund | Norway | HAU
+Havana | Cuba | HAV
+Havre, MT | USA | HVR
+Hays, KS | USA | HYS
+Hefei | China | HFE
+Helena, MT | USA | HLN
+Helsingborg | Sweden | AGH
+Helsinki | Finland | HEL
+Hemavan | Sweden | HMV
+Hengchun | Taiwan | HCN
+Heraklion, Crete | Greece | HER
+Hermosillo | Mexico | HMO
+Hibbing, MN | USA | HIB
+Hilo, Hawaii | USA | Big
+Hilton Head Island, SC | USA | HHH
+Ho Chi Minh City (Saigon) | Vietnam | SGN
+Hobart, Tas. | Australia | HBA
+Hobbs, NM | USA | HOB
+Hof | Germany | HOQ
+Hohhot | China | HET
+Hokitika | New Zealand | HKK
+Homer, AK | USA | HOM
+Hong Kong | China | HKG
+Honiara, Guadalcanal | Solomon Islands | HIR
+Honolulu, Oahu, HI | USA | HNL
+Hoolehua, Molokai, HI | USA | MKK
+Horn Island, Qld. | Australia | HID
+Hot Springs, AR | USA | HOT
+Houmt Souk | Tunisia | DJE
+Houston, TX | USA | EFD
+Houston, TX | USA | HOU
+Houston, TX | USA | IAH
+Hualien | Taiwan | HUN
+Hue | Vietnam | HUI
+Humberside | England | HUY
+Huntington, WV | USA | HTS
+Huntsville, AL | USA | HSV
+Hurghada | Egypt | HRG
+Huron, SD | USA | HON
+Hyannis, MA | USA | HYA
+Hyderabad | India | HYD
+Ibadan | Nigeria | IBA
+Ibiza | Spain | IBZ
+Idaho Falls, ID | USA | IDA
+Ikaria Island | Greece | JIK
+Iloilo | Philippines | ILO
+Indianapolis, IN | USA | IND
+Innsbruck | Austria | INN
+International Falls, MN | USA | INL
+Invercargill | New Zealand | IVC
+Inverness | Scotland | INV
+Inyokern, CA | USA | IYK
+Ioannina | Greece | IOA
+Ipoh | Malaysia | IPH
+Iqaluit, Nunavut | Canada | YFB
+Irkutsk, Siberia | Russia | IKT
+Iron Mountain, MI | USA | IMT
+Ironwood, MI | USA | IWD
+Islamabad-Rawalpindi | Pakistan | ISB
+Islay Island | Scotland | ILY
+Islip, NY | USA | ISP
+Istanbul | Turkey | IST
+Istanbul | Turkey | SAW
+Ithaca, NY | USA | ITH
+Ivalo | Finland | IVL
+Iwami | Japan | IWJ
+Ixtapa | Mexico | ZIH
+Izmir | Turkey | ADB
+Izumo | Japan | IZO
+Jackson Hole, WY | USA | JAC
+Jackson, MS | USA | JAN
+Jackson, TN | USA | MKL
+Jacksonville, FL | USA | JAX
+Jacksonville, NC | USA | OAJ
+Jakarta, Java | Indonesia | CGK
+Jakarta, Java | Indonesia | JKT - All Airports
+Jalapa | Mexico | JAL
+Jamestown, ND | USA | JMS
+Jamestown, NY | USA | JHW
+Jeddah | Saudi Arabia | JED
+Jeju, Korea | Republic of | CJU
+Jerez de La Frontera | Spain | XRY
+Jersey | Channel Islands | JER
+Jiamusi | China | JMU
+Jijiga | Ethiopia | JIJ
+Joensuu | Finland | JOE
+Johannesburg | South Africa | JNB
+Johnstown, PA | USA | JST
+Johor Bahru | Malaysia | JHB
+Jonesboro, AR | USA | JBR
+Jonkoping | Sweden | JKG
+Joplin, MO | USA | JLN
+Juneau, AK | USA | JNU
+Jyvaskyla | Finland | JYV
+Kabul | Afghanistan | KBL
+Kagoshima | Japan | KOJ
+Kahului, Maui, HI | USA | OGG
+Kailua-Kona, HI | USA | KOA
+Kaitaia | New Zealand | KAT
+Kajaani | Finland | KAJ
+Kalamazoo, MI | USA | AZO
+Kalaupapa, Molokai, HI | USA | LUP
+Kalgoorlie, W.A. | Australia | KGI
+Kalibo | Philippines | KLO
+Kaliningrad | Russia | KGD
+Kalispell, MT | USA | FCA
+Kalmar | Sweden | KLR
+Kamloops, BC | Canada | YKA
+Kansas City, MO | USA | MCI
+Kaohsiung | Taiwan | KHH
+Kapalua, Maui, HI | USA | JHM
+Karachi | Pakistan | KHI
+Karaganda | Kazakhstan | KGF
+Karlstad | Sweden | KSD
+Karratha, W.A. | Australia | KTA
+Karup | Denmark | KRP
+Kashi | China | KHG
+Kathmandu | Nepal | KTM
+Katowice | Poland | KTW
+Kearney, NE | USA | EAR
+Kelowna, BC | Canada | YLW
+Kenai, AK | USA | ENA
+Kenora, ON | Canada | YQK
+Kerikeri | New Zealand | KKE
+Ketchikan, AK | USA | KTN
+Key West, FL | USA | EYW
+Kharkov | Ukraine | HRK
+Khartoum | Sudan | KRT
+Khon Kaen | Thailand | KKC
+Kiel | Germany | KEL
+Kiev | Ukraine | KBP
+Kigali | Rwanda | KGL
+Killeen, TX | USA | GRK
+King Salmon, AK | USA | AKN
+Kingman, AZ | USA | IGM
+Kingscote, Kangaroo Island, S.A. | Australia | KGC
+Kingston | Jamaica | KIN
+Kingston | Jamaica | KTP
+Kingston, ON | Canada | YGK
+Kingstown | St. Vincent | SVD
+Kinshasa | Zaire | FIH
+Kirksville, MO | USA | IRK
+Kirkwall, Orkney Islands | Scotland | KOI
+Kiruna | Sweden | KRN
+Kisangani | Zaire | FKI
+Kittila | Finland | KTT
+Klagenfurt | Austria | KLU
+Klamath Falls, OR | USA | LMT
+Knoxville, TN | USA | TYS
+Kodiak, AK | USA | ADQ
+Koh Samui | Thailand | USM
+Kokkola | Finland | KOK
+Komatsu | Japan | KMQ
+Koror | Palau | ROR
+Kos | Greece | KGS
+Kosrae | Micronesia | KSA
+Kota Bharu | Malaysia | KBR
+Kota Kinabalu, Sabah | Malaysia | BKI
+Krabi | Thailand | KBV
+Krakow | Poland | KRK
+Kralendijk | Bonaire | BON
+Kramfors | Sweden | KRF
+Kristiansand | Norway | KRS
+Kristianstad | Sweden | KID
+Kuala Lumpur | Malaysia | KUL
+Kuala Terengganu | Malaysia | TGG
+Kuantan | Malaysia | KUA
+Kuching, Sarawak | Malaysia | KCH
+Kumamoto | Japan | KMJ
+Kunming | China | KMG
+Kuopio | Finland | KUO
+Kushiro | Japan | KUH
+Kuwait | Kuwait | KWI
+Kzyl Orda | Kazakhstan | KZO
+La Coruna | Spain | LCG
+La Crosse, WI | USA | LSE
+La Paz | Mexico | LAP
+La Paz | Bolivia | LPB
+La Romana | Dominican Republic | LRM
+La Serena | Chile | LSC
+Lafayette, LA | USA | LFT
+Lagos | Nigeria | LOS
+Lahad Datu, Sabah | Malaysia | LDU
+Lahore | Pakistan | LHE
+Lake Charles, LA | USA | LCH
+Lake Havasu City, AZ | USA | HII
+Lamezia Terme | Italy | SUF
+Lanai City, Lanai, HI | USA | LNY
+Lancaster, PA | USA | LNS
+Langkawi | Malaysia | LGK
+Lannion | France | LAI
+Lansing, MI | USA | LAN
+Lanzhou | China | LHW
+Laramie, WY | USA | LAR
+Laredo, TX | USA | LRD
+Larnaca | Cyprus | LCA
+Las Cruces, NM | USA | LRU
+Las Palmas, Grand Canary Island | Canary Islands | LPA
+Las Vegas, NV | USA | LAS
+Latrobe, PA | USA | LBE
+Launceston, Tas. | Australia | LST
+Laurel, MS | USA | PIB
+Lawton, OK | USA | LAW
+Lazaro Cardenas | Mexico | LZC
+Le Havre | France | LEH
+Lebanon, NH | USA | LEB
+Leeds | England | LBA
+Legaspi | Philippines | LGP
+Leipzig | Germany | LEJ
+Leon | Mexico | BJX
+Leon | Spain | LEN
+Lerwick, Shetland Islands | Scotland | LSI
+Lethbridge, AB | Canada | YQL
+Lewiston, ID | USA | LWS
+Lewiston, ME | USA | LEW
+Lewistown, MT | USA | LWT
+Lexington, KY | USA | LEX
+Lhasa, Tibet | China | LXA
+Liberal, KS | USA | LBL
+Liberia | Costa Rica | LIR
+Libreville | Gabon | LBV
+Lihue, Kauai, HI | USA | LIH
+Lijiang City | China | LJG
+Lille | France | LIL
+Lilongwe | Malawi | LLW
+Lima | Peru | LIM
+Limoges | France | LIG
+Lincang | China | LNJ
+Lincoln, NE | USA | LNK
+Linkoping | Sweden | LPI
+Linz | Austria | LNZ
+Lisbon | Portugal | LIS
+Little Rock, AR | USA | LIT
+Liverpool | England | LPL
+Ljubljana | Slovenia | LJU
+Logrono | Spain | RJL
+Lome | Togo | LFW
+London | England | LCY
+London | England | LGW
+London | England | LHR
+London | England | LON - All Airports
+London | England | STN
+London, ON | Canada | YXU
+Londonderry | Northern Ireland | LDY
+Long Banga | Malaysia | LBP
+Long Beach, CA | USA | LGB
+Longreach, Qld. | Australia | LRE
+Longview, TX | USA | GGG
+Longyearbyen, Svalbard | Norway | LYR
+Loreto | Mexico | LTO
+Lorient | France | LRT
+Los Angeles, CA | USA | LAX
+Los Angeles, CA | USA | QLA-All
+Los Cabos | Mexico | SJD
+Louisville, KY, USA | USA | SDF
+Lourdes | France | LDE
+Luanda | Angola | LAD
+Lubbock, TX | USA | LBB
+Lubumbashi | Zaire | FBM
+Lugano | Switzerland | LUG
+Lugansk | Ukraine | VSG
+Lukla | Nepal | LUA
+Lulea | Sweden | LLA
+Lusaka | Zambia | LUN
+Luton | England | LTN
+Luxembourg | Luxembourg | LUX
+Luxor | Egypt | LXR
+Lycksele | Sweden | LYC
+Lynchburg, VA | USA | LYH
+Lyon | France | LYS
+Mackay, Qld. | Australia | MKY
+Macon, GA | USA | MCN
+Madison, WI | USA | MSN
+Madrid | Spain | MAD
+Mae Hong Son | Thailand | HGN
+Magdalens Islands, PQ | | 
+Mahebourg | Mauritius | MRU
+Majuro | Marshall Islands | MAJ
+Mala Mala | South Africa | AAM
+Malabo, Bioko Island | Equatorial Guinea | SSG
+Malaga | Spain | AGP
+Male | Maldives | MLE
+Malmo | Sweden | MMA - All Airports
+Malmo | Sweden | MMX
+Managua | Nicaragua | MGA
+Manama | Bahrain | BAH
+Manaus | Brazil | MAO
+Manchester | England | MAN
+Manchester, NH | USA | MHT
+Mangrove Cay, Andros Island | Bahamas | MAY
+Manhattan, KS | USA | MHK
+Manila | Philippines | MNL
+Manistee, MI | USA | MBL
+Manzanillo | Mexico | ZLO
+Manzini | Swaziland | MTS
+Mao, Minorca | Spain | MAH
+Maputo | Mozambique | MPM
+Maracaibo | Venezuela | MAR
+Mariehamn, Aland | Finland | MHQ
+Marilia | Brazil | MII
+Marion, IL | USA | MWA
+Mariupol | Ukraine | MPW
+Maroochydore, Qld. | Australia | MCY
+Marquette, MI | USA | MQT
+Marrakech | Morocco | RAK
+Marseille | France | MRS
+Marsh Harbour, Abaco Island | Bahamas | MHH
+Martha's Vineyard, MA | USA | MVY
+Maseru | Lesotho | MSU
+Mason City, IA | USA | MCW
+Massena, NY | USA | MSS
+Matsu | Taiwan | MFK
+Matsuyama | Japan | MYJ
+Mazatlan | Mexico | MZT
+McAllen, TX | USA | MFE
+McCook, NE | USA | MCK
+Medan, Sumatra | Indonesia | MES
+Medellin | Colombia | MDE
+Medford, OR | USA | MFR
+Medicine Hat, AB | Canada | YXH
+Melbourne, FL | USA | MLB
+Melbourne, Vic. | Australia | AVV
+Melbourne, Vic. | Australia | MEL
+Melilla | Spain | MLN
+Memanbetsu | Japan | MMB
+Memphis, TN | USA | MEM
+Mendoza | Argentina | MDZ
+Merida | Mexico | MID
+Meridian, MS | USA | MEI
+Merimbula, N.S.W. | Australia | MIM
+Metz | France | ETZ
+Mexicali | Mexico | MXL
+Mexico City | Mexico | MEX
+Miami, FL | USA | MIA
+Mian Yang | China | MIG
+Midland, TX | USA | MAF
+Mikonos | Greece | JMK
+Milan | Italy | LIN
+Milan | Italy | MIL - All
+Milan | Italy | MXP
+Mildura, Vic. | Australia | MQL
+Miles City, MT | USA | MLS
+Milwaukee, WI | USA | MKE
+Minneapolis, MN | USA | MSP
+Minot, ND | USA | MOT
+Minsk | Belarus | MHP
+Minsk | Belarus | MSQ
+Miri, Sarawak | Malaysia | MYY
+Misawa | Japan | MSJ
+Missoula, MT | USA | MSO
+Miyazaki | Japan | KMI
+Mobile, AL | USA | MOB
+Modesto, CA | USA | MOD
+Mogadishu | Somalia | MGQ
+Moline, IL | USA | MLI
+Mombasa | Kenya | MBA
+Monastir | Tunisia | MIR
+Monclova | Mexico | LOV
+Moncton, NB | Canada | YQM
+Monroe, LA | USA | MLU
+Monrovia | Liberia | ROB
+Mont-Joli, PQ | Canada | YYY
+Montego Bay | Jamaica | MBJ
+Monterey, CA | USA | MRY
+Monterrey | Mexico | MTY
+Montevideo | Uruguay | MVD
+Montgomery, AL | USA | MGM
+Montpellier | France | MPL
+Montreal, PQ | Canada | YMQ-All
+Montreal, PQ | Canada | YUL
+Montreal, PQ | Canada | YMQ All 
+Montrose, CO | USA | MTJ
+Mora | Sweden | MXX
+Moree, N.S.W. | Australia | MRZ
+Morelia | Mexico | MLM
+Morgantown, WV | USA | MGW
+Moroni | Comoro Islands | HAH
+Moruya, N.S.W. | Australia | MYA
+Moscow | Russia | MOW All
+Moscow | Russia | SVO
+Moscow | Russia | VKO
+Moses Lake, WA | USA | MWH
+Mount Gambier, S.A. | Australia | MGB
+Mount Isa, Qld. | Australia | ISA
+Mudanjiang | China | MDG
+Mulhouse | France | EAP - All
+Mulhouse | France | MLH
+Mulu | Malaysia | MZV
+Mumbai (Bombay) | India | BOM
+Munich | Germany | MUC
+Munster | Germany | FMO
+Murcia | Spain | MJV
+Murmansk | Russia | MMK
+Muscat | Oman | MCT
+Muscle Shoals, AL | USA | MSL
+Muskegon, MI | USA | MKG
+Myrtle Beach, SC | USA | MYR
+Mytilene, Lesbos Island | Greece | MJT
+N'Djamena | Chad | NDJ
+Nadi | Fiji | NAN
+Nador | Morocco | NDR
+Nagasaki | Japan | NGS
+Nagoya | Japan | NGO
+Nagoya | Japan | NKM
+Naha, Okinawa | Japan | OKA
+Nairobi | Kenya | NBO
+Nakhon Si Thammarat | Thailand | NST
+Nanaimo, BC | Canada | YCD
+Nanchang | China | KHN
+Nangen | Taiwan | LZN
+Nanjing | China | NKG
+Nanki Shirahama | Japan | SHM
+Nanning | China | NNG
+Nantes | France | NTE
+Nantucket, MA | USA | ACK
+Napier | New Zealand | NPE
+Naples | Italy | NAP
+Naples, FL | USA | APF
+Narrabri, N.S.W. | Australia | NAA
+Narrandera, N.S.W. | Australia | NRA
+Narvik | Norway | NVK
+Naryan Mar | Russia | NNM
+Nashville, TN | USA | BNA
+Nassau | Bahamas | NAS
+Nassau | Bahamas | PID
+Naze, Amami-O Island | Japan | ASJ
+Nelson | New Zealand | NSN
+Nelspruit | South Africa | MQP
+New Bern, NC | USA | EWN
+New Haven, CT | USA | HVN
+New Orleans, LA | USA | MSY
+New York, NY | USA | JFK
+New York, NY | USA | LGA
+New York, NY | USA | NYC -All
+Newark, NJ | USA | EWR
+Newburgh, NY | USA | SWF
+Newcastle | England | NCL
+Newcastle, N.S.W. | Australia | NTL
+Newman, W.A. | Australia | ZNE
+Newport News, VA | USA | PHF
+Niamey | Niger | NIM
+Nice | France | NCE
+Niigata | Japan | KIJ
+Ningbo | China | NGB
+Nizhniy Novgorod | Russia | GOJ
+Nome, AK | USA | OME
+Norfolk, VA | USA | ORF
+Norrkoping | Sweden | NRK
+North Bay, ON | Canada | YYB
+North Bend, OR | USA | OTH
+North Eleuthera | Bahamas | ELH
+North Platte, NE | USA | LBF
+Norwich | England | NWI
+Nouakchott | Mauritania | NKC
+Noumea | New Caledonia | GEA
+Noumea | New Caledonia | NOU
+Novosibirsk, Siberia | Russia | OVB
+Nuevo Laredo | Mexico | NLD
+Nuremberg | Germany | NUE
+Oakland, CA | USA | OAK
+Oaxaca | Mexico | OAX
+Obihiro | Japan | OBO
+Ocho Rios | Jamaica | OCJ
+Odate Noshiro | Japan | ONJ
+Odessa | Ukraine | ODS
+Ogdensburg, NY | USA | OGS
+Oita | Japan | OIT
+Oklahoma City, OK | USA | OKC
+Olbia, Sardinia | Italy | OLB
+Olympic Dam, S.A. | Australia | OLP
+Omaha, NE | USA | OMA
+Omsk, Siberia | Russia | OMS
+Ontario, CA | USA | ONT
+Orange County, CA | USA | SNA
+Orange, N.S.W. | Australia | OAG
+Oranjestad | Aruba | AUA
+Oranjestad | St. Eustatius | EUX
+Orebro | Sweden | ORB
+Orlando, FL | USA | MCO
+Ornskoldsvik | Sweden | OER
+Osaka | Japan | ITM
+Osaka | Japan | KIX
+Osaka | Japan | OSA - All Airports
+Oshkosh, WI | USA | OSH
+Oslo | Norway | OSL
+Osorno | Chile | ZOS
+Ostersund | Sweden | OSD
+Ostrava | Czech Republic | OSR
+Ottawa, ON | Canada | YOW
+Ouagadougou | Burkina Faso | OUA
+Oulu | Finland | OUL
+Owensboro, KY | USA | OWB
+Oxnard, CA | USA | OXR
+Paderborn | Germany | PAD
+Paducah, KY | USA | PAH
+Page, AZ | USA | PGA
+Pago Pago, Tutuila | American Samoa | PPG
+Pajala | Sweden | PJA
+Palembang, Sumatra | Indonesia | PLM
+Palermo, Sicily | Italy | PMO
+Palm Springs, CA | USA | PSP
+Palma, Mallorca | Spain | PMI
+Palmas | Brazil | PMW
+Palmerston North | New Zealand | PMR
+Pamplona | Spain | PNA
+Panama City | Panama | PTY
+Panama City, FL | USA | PFN
+Papeete, Tahiti | French Polynesia | PPT
+Paphos | Cyprus | PFO
+Paraburdoo, W.A. | Australia | PBO
+Paramaribo | Suriname | PBM
+Paris | France | CDG
+Paris | France | ORY
+Paris | France | PAR -All
+Parkersburg, WV | USA | PKB
+Parkes, N.S.W. | Australia | PKE
+Pasco, WA | USA | PSC
+Pau | France | PUF
+Pellston, MI | USA | PLN
+Penang, Penang Island | Malaysia | PEN
+Pendleton, OR | USA | PDT
+Pensacola, FL | USA | PNS
+Penticton, BC | Canada | YYF
+Peoria, IL | USA | PIA
+Perpignan | France | PGF
+Perth, W.A. | Australia | PER
+Perugia | Italy | PEG
+Peshawar | Pakistan | PEW
+Petropavlovsk-Kamchatsky, Siberia | Russia | PKC
+Philadelphia, PA | USA | PHL
+Philipsburg | St. Maarten | SXM
+Phitsanulok | Thailand | PHS
+Phnom Penh | Cambodia | PNH
+Phoenix, AZ | USA | PHX
+Phuket | Thailand | HKT
+Piedras Negras | Mexico | PDS
+Pierre, SD | USA | PIR
+Pinehurst, NC | USA | SOP
+Pisa | Italy | PSA
+Pittsburgh, PA | USA | PIT
+Placencia | Belize | PLJ
+Plattsburgh, NY | USA | PLB
+Pleiku | Vietnam | PXU
+Pocatello, ID | USA | PIH
+Pohnpei | Micronesia | PNI
+Pointe-A-Pitre, Grande-Terre | Guadeloupe | PTP
+Ponca City, OK | USA | PNC
+Ponta Delgada, Sao Miguel Island | Azores | PDL
+Port Hardy, BC | Canada | YZT
+Port Hedland, W.A. | Australia | PHE
+Port Lincoln, S.A. | Australia | PLO
+Port Macquarie, N.S.W. | Australia | PQQ
+Port Moresby | Papua-New Guinea | POM
+Port of Spain | Trinidad and Tobago | POS
+Port Vila, Efate Island | Vanuatu | VLI
+Port-au-Prince | Haiti | PAP
+Portland, ME | USA | PWM
+Portland, OR | USA | PDX
+Portland, Vic. | Australia | PTJ
+Porto | Portugal | OPO
+Porto Alegre | Brazil | POA
+Porto Santo | Madeira | PXO
+Portsmouth, NH | USA | PSM
+Powell River, BC | Canada | YPW
+Poznan | Poland | POZ
+Prague | Czech Republic | PRG
+Prescott, AZ | USA | PRC
+Presque Isle, ME | USA | PQI
+Prince George, BC | Canada | YXS
+Prince Rupert, BC | Canada | YPR
+Proserpine, Qld. | Australia | PPP
+Providence, RI | USA | PVD
+Providenciales Island | Turks and Caicos Islands | PLS
+Provincetown, MA | USA | PVC
+Pucon | Chile | ZPC
+Puebla | Mexico | PBC
+Pueblo, CO | USA | PUB
+Puerto del Rosario, Fuerteventura Island | Canary Islands | FUE
+Puerto Escondido | Mexico | PXM
+Puerto Montt | Chile | PMC
+Puerto Plata | Dominican Republic | POP
+Puerto Princesa | Philippines | PPS
+Puerto Vallarta | Mexico | PVR
+Pullman, WA | USA | PUW
+Punta Arenas, Tierra del Fuego | Chile | PUQ
+Punta Cana | Dominican Republic | PUJ
+Punta Gorda | Belize | PND
+Puttaparthi | India | PUT
+Pyongyang | North Korea | FNJ
+Qingdao | China | TAO
+Quebec, PQ | Canada | YQB
+Queenstown | New Zealand | ZQN
+Queretaro | Mexico | QRO
+Quesnel, BC | Canada | YQZ
+Quimper | France | UIP
+Quincy, IL | USA | UIN
+Quito | Ecuador | UIO
+Rach Gia | Vietnam | VKG
+Raleigh, NC | USA | RDU
+Rangoon | Myanmar (Burma) | RGN
+Rankin Inlet, NWT | Canada | YRT
+Ranong | Thailand | UNN
+Rapid City, SD | USA | RAP
+Recife | Brazil | REC
+Red Lake, ON | Canada | YRL
+Redding, CA | USA | RDD
+Redmond, OR | USA | RDM
+Reggio di Calabria | Italy | REG
+Regina, SK | Canada | YQR
+Rennes | France | RNS
+Reno, NV | USA | RNO
+Reykjavik | Iceland | KEF
+Reykjavik | Iceland | REK - All Airports
+Reykjavik | Iceland | RKV
+Reynosa | Mexico | REX
+Rhinelander, WI | USA | RHI
+Rhodes | Greece | RHO
+Richmond, VA | USA | RIC
+Riga | Latvia | RIX
+Rimini | Italy | RMI
+Rio de Janeiro | Brazil | GIG
+Rio de Janeiro | Brazil | RIO - All Airports
+Rio de Janeiro | Brazil | SDU
+Riverton, WY | USA | RIW
+Riyadh | Saudi Arabia | RUH
+Roanoke, VA | USA | ROA
+Roberval, PQ | Canada | YRJ
+Rochester, MN | USA | RST
+Rochester, NY | USA | ROC
+Rock Sound | Bahamas | RSD
+Rock Springs, WY | USA | RKS
+Rockford, IL | USA | RFD
+Rockhampton, Qld. | Australia | ROK
+Rockland, ME | USA | RKD
+Rodez | France | RDZ
+Roma, Qld. | Australia | RMA
+Rome | Italy | CIA
+Rome | Italy (FCO-Leonardo Da Vinci | FCO
+Rome | Italy | ROM-All
+Ronne | Denmark | RNN
+Ronneby | Sweden | RNB
+Roseau | Dominica | DOM
+Rostov | Russia | ROV
+Roswell, NM | USA | ROW
+Rotorua | New Zealand | ROT
+Rotterdam | Netherlands | RTM
+Rouen | France | URO
+Rouyn-Noranda, PQ | Canada | YUY
+Rovaniemi | Finland | RVN
+Roxas City | Philippines | RXS
+Rutland, VT | USA | RUT
+Rzeszow | Poland | RZE
+Saba Island | Saba | SAB
+Sacramento, CA | USA | SMF
+Saga | Japan | HSG
+Saginaw, MI | USA | MBS
+Saint John, NB | Canada | YSJ
+Saint-Denis | Reunion | RUN
+Saint-Pierre | Reunion | ZSE
+Saipan | Northern Mariana Islands | SPN
+Salina, KS | USA | SLN
+Salisbury, MD | USA | SBY
+Salt Lake City, UT | USA | SLC
+Saltillo | Mexico | SLW
+Salvador | Brazil | SSA
+Salzburg | Austria | SZG
+Samsun | Turkey | SZF
+San Andres | Colombia | ADZ
+San Andros | Bahamas | SAQ
+San Angelo, TX | USA | SJT
+San Antonio, TX | USA | SAT
+San Carlos de Bariloche | Argentina | BRC
+San Diego, CA | USA | SAN
+San Francisco, CA | USA | QSF -All
+San Francisco, CA | USA | SFO
+San Jose | Costa Rica | SJO
+San Jose, CA | USA | SJC
+San Juan | Puerto Rico | SJU
+San Luis Obispo, CA | USA | SBP
+San Luis Potosi | Mexico | SLP
+San Salvador | El Salvador | SAL
+San Sebastian | Spain | EAS
+Sanaa | Yemen | SAH
+Sand Point, AK | USA | SDP
+Sandakan, Sabah | Malaysia | SDK
+Sandefjord | Norway | TRF
+Sandspit, Queen Charlotte Islands, BC | Canada | YZP
+Santa Barbara, CA | USA | SBA
+Santa Cruz | Spain | SPC
+Santa Cruz de Tenerife | Canary Islands | TFN
+Santa Fe, NM | USA | SAF
+Santa Maria, CA | USA | SMX
+Santa Maria, Sal Island | Cape Verde | SID
+Santa Rosa | Argentina | RSA
+Santa Rosa, CA | USA | STS
+Santander | Spain | SDR
+Santiago | Chile | SCL
+Santiago | Dominican Republic | STI
+Santo Domingo | Dominican Republic | SDQ
+Sanya | China | SYX
+Sao Jose So Rio Preto | Brazil | SJP
+Sao Paulo | Brazil | CGH
+Sao Paulo | Brazil | GRU
+Sao Paulo | Brazil | SAO - All Airports
+Sapporo | Japan | CTS
+Sapporo | Japan | OKD
+Sarajevo | Bosnia and Herzegovina | SJJ
+Saranac Lake, NY | USA | SLK
+Sarasota, FL | USA | SRQ
+Sarnia, ON | Canada | YZR
+Saskatoon, SK | Canada | YXE
+Sault Ste. Marie, MI | USA | CIU
+Sault Ste. Marie, ON | Canada | YAM
+Savannah, GA | USA | SAV
+Scottsbluff, NE | USA | BFF
+Seattle, WA | USA | SEA
+Semipalatinsk | Kazakhstan | PLX
+Seoul, Korea | Republic of | GMP
+Seoul, Korea | Republic of | ICN
+Sept-Iles, PQ | Canada | YZV
+Seville | Spain | SVQ
+Shanghai | China | PVG
+Shanghai | China | SHA
+Shannon | Ireland | SNN
+Shantou | China | SWA
+Sharjah | United Arab Emirates | SHJ
+Sharm El Sheikh | Egypt | SSH
+Shenandoah Valley Airport, VA | USA | SHD
+Shenyang | China | SHE
+Shenzhen | China | SZX
+Sheridan, WY | USA | SHR
+Shijiazhuang | China | SJW
+Shreveport, LA | USA | SHV
+Sibu, Sarawak | Malaysia | SBW
+Sidney, MT | USA | SDY
+Silver City, NM | USA | SVC
+Singapore | Singapore | SIN
+Sioux City, IA | USA | SUX
+Sioux Falls, SD | USA | FSD
+Sioux Lookout, ON | Canada | YXL
+Sitka, AK | USA | SIT
+Skagway, AK | USA | SGY
+Skelleftea | Sweden | SFT
+Skopje | Macedonia | SKP
+Smithers, BC | Canada | YYD
+Sofia | Bulgaria | SOF
+Sonderborg | Denmark | SGD
+Songpan Jiuzhai Huanglong | China | JZH
+South Andros | Bahamas | TZN
+South Bend, IN | USA | SBN
+Southampton | England | SOU
+Split | Croatia | SPU
+Spokane, WA | USA | GEG
+Springfield, IL | USA | SPI
+Springfield, MA | USA | CEF
+Springfield, MO | USA | SGF
+Springfield, VT | USA | VSF
+St. Cloud, MN | USA | STC
+St. George, UT | USA | SGU
+St. George's | Grenada | GND
+St. John's | Antigua | ANU
+St. John's, NF | Canada | YYT
+St. Louis, MO | USA | STL
+St. Petersburg | Russia | LED
+St. Petersburg, FL | USA | PIE
+State College, PA | USA | SCE
+Stavanger | Norway | SVG
+Steamboat Springs, CO | USA | SBS
+Stella Maris, Long Island | Bahamas | SML
+Stockholm | Sweden | ARN
+Stockholm | Sweden | BMA
+Stockholm | Sweden | STO-All
+Stornoway, Isle of Lewis | Scotland | SYY
+Storuman | Sweden | SQO
+Strasbourg | France | SXB
+Stuttgart | Germany | STR
+Subic Bay | Philippines | SFS
+Sudbury, ON | Canada | YSB
+Sukhothai | Thailand | THS
+Sun Valley, ID | USA | SUN
+Sundsvall | Sweden | SDL
+Surabaya, Java | Indonesia | SUB
+Surat Thani | Thailand | URT
+Suva | Fiji | SUV
+Sydney, Cape Breton Island, NS | Canada | YQY
+Sydney, N.S.W. | Australia | SYD
+Syracuse, NY | USA | SYR
+Szczecin | Poland | SZZ
+Taba | Egypt | TCP
+Tabriz | Iran | TBZ
+Tacloban | Philippines | TAC
+Taegu | South Korea | TAE
+Tagbilaran | Philippines | TAG
+Taichung | Taiwan | RMQ
+Taipei | Taiwan | TPE
+Taipei | Taiwan | TSA
+Taiyuan | China | TYN
+Takamatsu | Japan | TAK
+Tallahassee, FL | USA | TLH
+Tallinn | Estonia | TLL
+Tampa, FL | USA | TPA
+Tampere | Finland | TMP
+Tampico | Mexico | TAM
+Tamworth, N.S.W. | Australia | TMW
+Tangier | Morocco | TNG
+Tapachula | Mexico | TAP
+Tashkent | Uzbekistan | TAS
+Taupo | New Zealand | TUO
+Tauranga | New Zealand | TRG
+Tawau, Sabah | Malaysia | TWU
+Tbilisi | Georgia | TBS
+Teesside | England | MME
+Tegucigalpa | Honduras | TGU
+Tehran | Iran | THR
+Tel Aviv | Israel | TLV
+Telluride, CO | USA | TEX
+Temuco | Chile | ZCO
+Tenerife Island | Canary Islands | TCI - All Airports
+Tenerife Island | Canary Islands | TFS
+Tenerife Island | Canary Islands | TVI - All Airports
+Tepic | Mexico | TPQ
+Termez | Uzbekistan | TMJ
+Terrace, BC | Canada | YXT
+Texarkana, AR | USA | TXK
+The Valley | Anguilla | AXA
+Thessaloniki | Greece | SKG
+Thief River Falls, MN | USA | TVF
+Thira, Santorini Island | Greece | JTR
+Thompson, MB | Canada | YTH
+Thunder Bay, ON | Canada | YQT
+Tianjin | China | TSN
+Tijuana | Mexico | TIJ
+Timaru | New Zealand | TIU
+Timmins, ON | Canada | YTS
+Tirana | Albania | TIA
+Tobago | Trinidad and Tobago | TAB
+Toksook Bay, AK | USA | OOK
+Tokyo | Japan | HND
+Tokyo | Japan | NRT
+Tokyo | Japan | TYO - All Airports
+Toledo, OH | USA | TOL
+Toluca | Mexico | TLC
+Tongren | China | TEN
+Topeka, KS | USA | TOP
+Toronto, ON | Canada | YTO - All Airports
+Toronto, ON | Canada | YTZ
+Toronto, ON | Canada | YTO -All 
+Toronto, ON | Canada | YYZ
+Torreon | Mexico | TRC
+Toulon | France | TLN
+Toulouse | France | TLS
+Townsville, Qld. | Australia | TSV
+Trang | Thailand | TST
+Trat | Thailand | TDX
+Traverse City, MI | USA | TVC
+Treasure Cay, Abaco Island | Bahamas | TCB
+Trenton, NJ | USA | TTN
+Tri-City Airport, TN | USA | TRI
+Trieste | Italy | TRS
+Tripoli | Libya | TIP
+Tromso | Norway | TOS
+Trondheim | Norway | TRD
+Truk | Micronesia | TKK
+Tucson, AZ | USA | TUS
+Tulsa, OK | USA | TUL
+Tunis | Tunisia | TUN
+Tupelo, MS | USA | TUP
+Turin | Italy | TRN
+Turku | Finland | TKU
+Tuxtla Gutierrez | Mexico | TGZ
+Twin Falls, ID | USA | TWF
+Tyler, TX | USA | TYR
+Ubon Ratchathani | Thailand | UBP
+Udon Thani | Thailand | UTH
+Ujung Pandang, Sulawesi | Indonesia | UPG
+Ulan Bator | Mongolia | ULN
+Umea | Sweden | UME
+Una | Brazil | UNA
+Unalakleet, AK | USA | UNK
+Urumqi, Sinkiang | China | URC
+Ushuaia, Tierra del Fuego | Argentina | USH
+Ust Kamenogorsk | Kazakhstan | UKK
+Utapao | Thailand | UTP
+Vaasa | Finland | VAA
+Vail, CO | USA | EGE
+Val-d'Or, PQ | Canada | YVO
+Valdez, AK | USA | VDZ
+Valdivia | Chile | ZAL
+Valdosta, GA | USA | VLD
+Valencia | Spain | VLC
+Valladolid | Spain | VLL
+Valletta | Malta | MLA
+Vancouver, BC | Canada | YVR
+Varanasi | India | VNS
+Varna | Bulgaria | VAR
+Vasteras | Sweden | VST
+Vaxjo | Sweden | VXO
+Venice | Italy | VCE
+Veracruz | Mexico | VER
+Verona | Italy | VRN
+Victoria, BC | Canada | YYJ
+Victoria, Mahe Island | Seychelles | SEZ
+Victoria, TX | USA | VCT
+Vienna | Austria | VIE
+Vientiane | Laos | VTE
+Vieques | Puerto Rico | VQS
+Vieux Fort | St. Lucia | UVF
+Vigo | Spain | VGO
+Vilhelmina | Sweden | VHM
+Villahermosa | Mexico | VSA
+Vilnius | Lithuania | VNO
+Vinh City | Vietnam | VII
+Visalia, CA | USA | VIS
+Visby | Sweden | VBY
+Vitoria | Spain | VIT
+Vladivostok, Siberia | Russia | VVO
+Volgograd | Russia | VOG
+Wabush, Labrador, NF | Canada | YWK
+Waco, TX | USA | ACT
+Wagga-Wagga, N.S.W. | Australia | WGA
+Wajima | Japan | NTQ
+Walla Walla, WA | USA | ALW
+Wanganui | New Zealand | WAG
+Warri | Nigeria | QRW
+Warsaw | Poland | WAW
+Washington DC | USA | DCA
+Washington DC | USA | IAD
+Washington DC | USA | WAS - All Airports 
+Waterloo, IA | USA | ALO
+Watertown, NY | USA | ART
+Watertown, SD | USA | ATY
+Wausau, WI | USA | CWA
+Weipa, Qld. | Australia | WEI
+Wellington | New Zealand | WLG
+Wenatchee, WA | USA | EAT
+West Palm Beach, FL | USA | PBI
+West Yellowstone, MT | USA | WYS
+Westport | New Zealand | WSZ
+Whakatane | New Zealand | WHK
+Whangarei | New Zealand | WRE
+White Plains, NY | USA | HPN
+Whitehorse, YT | Canada | YXY
+Whyalla, S.A. | Australia | WYA
+Wichita Falls, TX | USA | SPS
+Wichita, KS | USA | ICT
+Wick | Scotland | WIC
+Wilkes-Barre, PA | USA | AVP
+Willemstad | Curacao | CUR
+Williams Lake, BC | Canada | YWL
+Williamsport, PA | USA | IPT
+Williston, ND | USA | ISN
+Wilmington, DE | USA | ILG
+Wilmington, NC | USA | ILM
+Windsor, ON | Canada | YQG
+Winnipeg, MB | Canada | YWG
+Wolf Point, MT | USA | OLF
+Worland, WY | USA | WRL
+Wrangell, AK | USA | WRG
+Wroclaw | Poland | WRO
+Wuhan | China | WUH
+Xi'an | China | XIY
+Xiamen | China | XMN
+Xichang | China | XIC
+Yakima, WA | USA | YKM
+Yakutat, AK | USA | YAK
+Yamagata | Japan | GAJ
+Yangyang, Korea | Republic of | YNY
+Yanji | China | YNJ
+Yantai | China | YNT
+Yaounde | Cameroon | NSI
+Yaounde | Cameroon | YAO
+Yap | Micronesia | YAP
+Yellowknife, NWT | Canada | YZF
+Yerevan | Armenia | EVN
+Yogyakarta, Java | Indonesia | JOG
+Yuma, AZ | USA | YUM
+Zacatecas | Mexico | ZCL
+Zadar | Croatia | ZAD
+Zagreb | Croatia | ZAG
+Zamboanga | Philippines | ZAM
+Zanzibar | Tanzania | ZNZ
+Zaragoza | Spain | ZAZ
+Zhengzhou | China | CGO
+Zhoushan | China | HSN
+Zurich | Switzerland | ZRH
