@@ -1165,23 +1165,19 @@ function MediaUnlockTest_YouTube_CDN() {
         return;
     fi
 	
-	iata=$(echo $tmpresult | grep router | cut -f2 -d'"' | cut -f2 -d"." | sed 's/.\{2\}$//' | tr [:lower:] [:upper:])
-	checkfailed=$(echo $tmpresult | grep "=>")
+	local iata=$(echo $tmpresult | grep router | cut -f2 -d'"' | cut -f2 -d"." | sed 's/.\{2\}$//' | tr [:lower:] [:upper:])
+	local checkfailed=$(echo $tmpresult | grep "=>")
 	if [ -z "$iata" ] && [ -n "$checkfailed" ];then
 		CDN_ISP=$(echo $checkfailed | awk '{print $3}' | cut -f1 -d"-" | tr [:lower:] [:upper:])
-		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Yellow}Associated with $CDN_ISP${Font_Suffix}\n"
+		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Yellow}Associated with [$CDN_ISP]${Font_Suffix}\n"
 		return;
 	elif [ -n "$iata" ];then
-		curl $useNIC -s --max-time 10 "https://www.iata.org/AirportCodesSearch/Search?currentBlock=314384&currentPage=12572&airport.search=${iata}" > ~/iata.txt
-		local line=$(cat ~/iata.txt | grep -n "<td>"$iata | awk '{print $1}' | cut -f1 -d":")
-		local nline=$(expr $line - 2)
-		local location=$(cat ~/iata.txt | awk NR==${nline} | sed 's/.*<td>//' | cut -f1 -d"<")
+		local lineNo=$(curl $useNIC -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt" | cut -f3 -d"|" | sed -n  "/${iata}/=")
+		local location=$(curl $useNIC -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
 		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Green}$location${Font_Suffix}\n"
-		rm ~/iata.txt
 		return;
 	else
 		echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Undetectable${Font_Suffix}\n"
-		rm ~/iata.txt
 		return;
 	fi
 	
@@ -1980,24 +1976,19 @@ function MediaUnlockTest_NetflixCDN(){
 	
 	local CDN_ISP=$(curl $useNIC -s --max-time 20 https://api.ip.sb/geoip/$CDNIP | python -m json.tool 2> /dev/null | grep 'isp' | cut -f4 -d'"')
 	local iata=$(echo $CDNAddr | cut -f3 -d"-" | sed 's/.\{3\}$//' | tr [:lower:] [:upper:])
-	curl $useNIC -s --max-time 10 "https://www.iata.org/AirportCodesSearch/Search?currentBlock=314384&currentPage=12572&airport.search=${iata}" > ~/iata.txt
-	local line=$(cat ~/iata.txt | grep -n "<td>"$iata | awk '{print $1}' | cut -f1 -d":")
-	local nline=$(expr $line - 2)
-	local location=$(cat ~/iata.txt | awk NR==${nline} | sed 's/.*<td>//' | cut -f1 -d"<")
+	local lineNo=$(curl $useNIC -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt" | cut -f3 -d"|" | sed -n  "/${iata}/=")
+	local location=$(curl $useNIC -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
 	
 	if [ -n "$location" ] && [[ "$CDN_ISP" == "Netflix Streaming Services" ]];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Green}$location ${Font_Suffix}\n"
-		rm ~/iata.txt
 		rm -rf ~/v6_addr.txt
 		return
 	elif [ -n "$location" ] && [[ "$CDN_ISP" != "Netflix Streaming Services" ]];then
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Yellow}Associated with [$CDN_ISP] in [$location]${Font_Suffix}\n"
-		rm ~/iata.txt
 		rm -rf ~/v6_addr.txt
 		return
 	elif [ -n "$location" ] && [ -z "$CDN_ISP" ];then	
 		echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}No ISP Info Founded${Font_Suffix}\n"
-		rm ~/iata.txt
 		rm -rf ~/v6_addr.txt
 		return
 	fi
@@ -2841,8 +2832,8 @@ function Global_UnlockTest() {
 	MediaUnlockTest_Tiktok_Region ${1};
 	MediaUnlockTest_iQYI_Region ${1};
 	MediaUnlockTest_Viu.com ${1};
-	#MediaUnlockTest_YouTube_CDN ${1};
-	#MediaUnlockTest_NetflixCDN ${1};
+	MediaUnlockTest_YouTube_CDN ${1};
+	MediaUnlockTest_NetflixCDN ${1};
 	GameTest_Steam ${1};
 	echo "======================================="	
 }
@@ -3019,7 +3010,7 @@ function Goodbye(){
 		echo -e ""
 		echo -e "${Font_Red}**************************${Font_Suffix}"
 		echo -e "${Font_Red}*                        *${Font_Suffix}"
-		echo -e "${Font_Red}*${Font_Suffix} 新春广告招租           ${Font_Red}*${Font_Suffix}"
+		echo -e "${Font_Red}*${Font_Suffix} 广告招租               ${Font_Red}*${Font_Suffix}"
 		echo -e "${Font_Red}*${Font_Suffix} 请联系：@reidschat_bot ${Font_Red}*${Font_Suffix}"
 		echo -e "${Font_Red}*                        *${Font_Suffix}"
 		echo -e "${Font_Red}**************************${Font_Suffix}"
