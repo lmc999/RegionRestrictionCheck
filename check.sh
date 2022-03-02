@@ -2841,8 +2841,8 @@ function Global_UnlockTest() {
 	MediaUnlockTest_Tiktok_Region ${1};
 	MediaUnlockTest_iQYI_Region ${1};
 	MediaUnlockTest_Viu.com ${1};
-	MediaUnlockTest_YouTube_CDN ${1};
-	MediaUnlockTest_NetflixCDN ${1};
+	#MediaUnlockTest_YouTube_CDN ${1};
+	#MediaUnlockTest_NetflixCDN ${1};
 	GameTest_Steam ${1};
 	echo "======================================="	
 }
