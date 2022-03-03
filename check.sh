@@ -1106,10 +1106,10 @@ function MediaUnlockTest_Tiktok_Region(){
         return;
 	fi
 	
-	local STmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://www.tiktok.com/" -b "s_v_web_id=verify_57c6380f8e4c609135d2afc9894e35ca; tt_csrf_token=73Z-2VskmVwMX0PyUtin6WWI; MONITOR_WEB_ID=verify_57c6380f8e4c609135d2afc9894e35ca")
+	local STmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" -H "Accept-Encoding: gzip" -H "Accept-Language: en"  "https://www.tiktok.com" | gunzip)
 	local SRegion=$(echo $STmpresult | grep '"$region":"' | sed 's/.*"$region//' | cut -f3 -d'"')
 	if [ -n "$SRegion" ];then
-        echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Yellow}${SRegion} (IDC IP Detected)${Font_Suffix}\n"
+        echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Yellow}${SRegion} (Possible IDC IP)${Font_Suffix}\n"
         return;
 	else	
 		echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
