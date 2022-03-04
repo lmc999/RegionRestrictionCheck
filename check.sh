@@ -1120,38 +1120,33 @@ function MediaUnlockTest_Tiktok_Region(){
 
 function MediaUnlockTest_YouTube_Premium() {
     echo -n -e " YouTube Premium:\t\t\t->\c";
-    local tmpresult=$(curl $useNIC -${1} -sS -H "Accept-Language: en" "https://www.youtube.com/premium" 2>&1 )
-    local region=$(curl $useNIC --user-agent "${UA_Browser}" -${1} -sL --max-time 10 "https://www.youtube.com/premium" | grep "countryCode" | sed 's/.*"countryCode"//' | cut -f2 -d'"')
-	if [ -n "$region" ]; then
-        sleep 0
-	else
-		isCN=$(echo $tmpresult | grep 'www.google.cn')
-		if [ -n "$isCN" ]; then
-			region=CN
-		else	
-			region=US
-		fi	
-	fi	
+    local tmpresult=$(curl $useNIC --user-agent "${UA_Browser}" -${1} --max-time 10 -sSL -H "Accept-Language: en" "https://www.youtube.com/premium" 2>&1 )
 	
-    if [[ "$tmpresult" == "curl"* ]];then
+	if [[ "$tmpresult" == "curl"* ]];then
         echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return;
     fi
     
-    local result=$(echo $tmpresult | grep 'Premium is not available in your country')
-    if [ -n "$result" ]; then
-        echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}No${Font_Suffix} ${Font_Green} (Region: $region)${Font_Suffix} \n"
+	local isCN=$(echo $tmpresult | grep 'www.google.cn')
+	if [ -n "$isCN" ]; then
+		echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}No${Font_Suffix} ${Font_Green} (Region: CN)${Font_Suffix} \n"
+		return;
+	fi	
+	
+    local isNotAvailable=$(echo $tmpresult | grep 'Premium is not available in your country')
+    local region=$(echo $tmpresult | grep "countryCode" | sed 's/.*"countryCode"//' | cut -f2 -d'"')
+	local isAvailable=$(echo $tmpresult | grep 'manageSubscriptionButton')
+    
+	
+    if [ -n "$isNotAvailable" ] && [ -z "$region" ]; then
+        echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}No${Font_Suffix} \n"
         return;
-		
-    fi
-    local result=$(echo $tmpresult | grep 'manageSubscriptionButton')
-    if [ -n "$result" ] ; then
-        echo -n -e "\r YouTube Premium:\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
+	elif [ -n "$isAvailable" ];then
+		echo -n -e "\r YouTube Premium:\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
         return;
 	else
 		echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}Failed${Font_Suffix}\n"
-		
-    fi	
+    fi
 	
     
 }
