@@ -1106,7 +1106,7 @@ function MediaUnlockTest_Tiktok_Region(){
         return;
 	fi
 	
-	local STmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" -H "Accept-Encoding: gzip" -H "Accept-Language: en"  "https://www.tiktok.com" | gunzip)
+	local STmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" -H "Accept-Encoding: gzip" -H "Accept-Language: en"  "https://www.tiktok.com" | gunzip 2> /dev/null)
 	local SRegion=$(echo $STmpresult | grep '"$region":"' | sed 's/.*"$region//' | cut -f3 -d'"')
 	if [ -n "$SRegion" ];then
         echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Yellow}${SRegion} (Possible IDC IP)${Font_Suffix}\n"
