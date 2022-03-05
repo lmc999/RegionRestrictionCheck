@@ -1091,33 +1091,6 @@ function MediaUnlockTest_FOD() {
 	fi
 }
 
-function MediaUnlockTest_Tiktok_Region(){
-    echo -n -e " Tiktok Region:\t\t\t\t->\c";
-    local Ftmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://www.tiktok.com/")
-	
-	if [[ "$Ftmpresult" = "curl"* ]]; then
-		echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-		return;
-	fi	
-    
-	local FRegion=$(echo $Ftmpresult | grep '"$region":"' | sed 's/.*"$region//' | cut -f3 -d'"')
-    if [ -n "$FRegion" ];then
-        echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Green}${FRegion}${Font_Suffix}\n"
-        return;
-	fi
-	
-	local STmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" -H "Accept-Encoding: gzip" -H "Accept-Language: en"  "https://www.tiktok.com" | gunzip 2> /dev/null)
-	local SRegion=$(echo $STmpresult | grep '"$region":"' | sed 's/.*"$region//' | cut -f3 -d'"')
-	if [ -n "$SRegion" ];then
-        echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Yellow}${SRegion} (Possible IDC IP)${Font_Suffix}\n"
-        return;
-	else	
-		echo -n -e "\r Tiktok Region:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
-		return;
-    fi
-    
-}
-
 function MediaUnlockTest_YouTube_Premium() {
     echo -n -e " YouTube Premium:\t\t\t->\c";
     local tmpresult=$(curl $useNIC --user-agent "${UA_Browser}" -${1} --max-time 10 -sSL -H "Accept-Language: en" "https://www.youtube.com/premium" 2>&1 )
@@ -2824,7 +2797,6 @@ function Global_UnlockTest() {
 	MediaUnlockTest_YouTube_Premium ${1};
 	MediaUnlockTest_PrimeVideo_Region ${1};
 	MediaUnlockTest_TVBAnywhere ${1};
-	MediaUnlockTest_Tiktok_Region ${1};
 	MediaUnlockTest_iQYI_Region ${1};
 	MediaUnlockTest_Viu.com ${1};
 	MediaUnlockTest_YouTube_CDN ${1};
@@ -3009,7 +2981,9 @@ function Goodbye(){
 		echo -e "${Font_Red}*${Font_Suffix} 请联系：@reidschat_bot ${Font_Red}*${Font_Suffix}"
 		echo -e "${Font_Red}*                        *${Font_Suffix}"
 		echo -e "${Font_Red}**************************${Font_Suffix}"
-		
+		echo ""
+		echo -e "${Font_Yellow}由于大部分IP的Tiktok检测时间过长，已将该检测移除出脚本${Font_Suffix}"
+		echo -e "${Font_Yellow}需要检测Tiktok区域请移步项目: https://github.com/lmc999/TikTokCheck${Font_Suffix}"
 		
 	fi	
 }
