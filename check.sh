@@ -1114,8 +1114,14 @@ function MediaUnlockTest_YouTube_Premium() {
     if [ -n "$isNotAvailable" ] && [ -z "$region" ]; then
         echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}No${Font_Suffix} \n"
         return;
-	elif [ -n "$isAvailable" ];then
+	elif [ -n "$isAvailable" ] && [ -n "$region" ]; then
 		echo -n -e "\r YouTube Premium:\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
+        return;
+	elif [ -n "$isAvailable" ] && [ -z "$region" ]; then
+		echo -n -e "\r YouTube Premium:\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        return;
+	elif [ -n "$isNotAvailable" ] && [ -n "$region" ]; then
+		echo -n -e "\r YouTube Premium:\t\t\t${Font_Green}No${Font_Suffix}\n"
         return;
 	else
 		echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}Failed${Font_Suffix}\n"
