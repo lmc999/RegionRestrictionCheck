@@ -419,25 +419,6 @@ function MediaUnlockTest_Netflix() {
     fi   
 }
 
-function MediaUnlockTest_YouTube_Region() {
-    echo -n -e " YouTube Region:\t\t\t->\c";
-    local result=`curl $useNIC --user-agent "${UA_Browser}" -${1} -sSL --max-time 10 "https://www.youtube.com/" 2>&1`;
-    
-    if [[ "$result" == "curl"* ]];then
-        echo -n -e "\r YouTube Region:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        return;
-    fi
-    
-    local result=`curl $useNIC --user-agent "${UA_Browser}" -${1} -sL --max-time 10 "https://www.youtube.com/red" | sed 's/,/\n/g' | grep "countryCode" | cut -d '"' -f4`;
-    if [ -n "$result" ]; then
-        echo -n -e "\r YouTube Region:\t\t\t${Font_Green}${result}${Font_Suffix}\n"
-        return;
-    fi
-    
-    echo -n -e "\r YouTube Region:\t\t\t${Font_Green}US${Font_Suffix}\n"
-    return;
-}
-
 function MediaUnlockTest_DisneyPlus() {
 	echo -n -e " Disney+:\t\t\t\t->\c";
 	local PreAssertion=$(curl $useNIC -${1} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://global.edge.bamgrid.com/devices" -H "authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -H "content-type: application/json; charset=UTF-8" -d '{"deviceFamily":"browser","applicationRuntime":"chrome","deviceProfile":"windows","attributes":{}}' 2>&1)
@@ -1093,7 +1074,7 @@ function MediaUnlockTest_FOD() {
 
 function MediaUnlockTest_YouTube_Premium() {
     echo -n -e " YouTube Premium:\t\t\t->\c";
-    local tmpresult=$(curl $useNIC --user-agent "${UA_Browser}" -${1} --max-time 10 -sSL -H "Accept-Language: en" "https://www.youtube.com/premium" 2>&1 )
+    local tmpresult=$(curl $useNIC --user-agent "${UA_Browser}" -${1} --max-time 10 -sSL -H "Accept-Language: en" -b "YSC=BiCUU3-5Gdk; CONSENT=YES+cb.20220301-11-p0.en+FX+700; GPS=1; VISITOR_INFO1_LIVE=4VwPMkB7W5A; PREF=tz=Asia.Shanghai; _gcl_au=1.1.1809531354.1646633279" "https://www.youtube.com/premium" 2>&1 )
 	
 	if [[ "$tmpresult" == "curl"* ]];then
         echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1111,17 +1092,14 @@ function MediaUnlockTest_YouTube_Premium() {
 	local isAvailable=$(echo $tmpresult | grep 'manageSubscriptionButton')
     
 	
-    if [ -n "$isNotAvailable" ] && [ -z "$region" ]; then
+    if [ -n "$isNotAvailable" ]; then
         echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}No${Font_Suffix} \n"
         return;
 	elif [ -n "$isAvailable" ] && [ -n "$region" ]; then
 		echo -n -e "\r YouTube Premium:\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
         return;
-	elif [ -n "$isAvailable" ] && [ -z "$region" ]; then
+	elif [ -z "$region" ] && [ -n "$isAvailable" ]; then
 		echo -n -e "\r YouTube Premium:\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-        return;
-	elif [ -n "$isNotAvailable" ] && [ -n "$region" ]; then
-		echo -n -e "\r YouTube Premium:\t\t\t${Font_Green}No${Font_Suffix}\n"
         return;
 	else
 		echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}Failed${Font_Suffix}\n"
