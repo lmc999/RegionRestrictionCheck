@@ -10,7 +10,7 @@ Font_SkyBlue="\033[36m";
 Font_White="\033[37m";
 Font_Suffix="\033[0m";
 
-while getopts ":I:M:L:" optname
+while getopts ":I:M:L:N:" optname
 do
     case "$optname" in
 		"I")
@@ -27,6 +27,9 @@ do
 		"L")
         language="e"
         ;;
+		"N")
+		num="$OPTARG"
+		;;
 		":")
         echo "Unknown error while processing options"
 		exit 1
@@ -2997,7 +3000,7 @@ function ScriptTitle(){
 }
 ScriptTitle
 
-function Start(){
+function ReadNum(){
 	if [[ "$language" == "e" ]];then
 		echo -e "${Font_Blue}Please Select Test Region or Press ENTER to Test All Regions${Font_Suffix}"
 		echo -e "${Font_SkyBlue}Input Number【1】：【 Multination + Taiwan 】${Font_Suffix}"
@@ -3023,6 +3026,12 @@ function Start(){
 		echo -e "${Font_SkyBlue}输入数字【99】 【   体育直播平台    】检测${Font_Suffix}"
 		read -p "请输入正确数字或直接按回车:" num
 	fi	
+}
+
+function Start(){
+	if [ -z "$num" ];then
+		ReadNum
+	fi
 }
 Start
 
