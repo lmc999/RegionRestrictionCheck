@@ -2970,7 +2970,7 @@ function Goodbye(){
 		echo ""
 		echo -e "${Font_Purple}\$69.99/年起${Font_Suffix}"
 		echo ""
-		echo -e "${Font_Red}下單鏈接:${Font_Suffix} https://hmbcloud.com/cart.php?aff=473&gid=32"
+		echo -e "${Font_Red}下單鏈接:${Font_Suffix} https://hmbcloud.com/aff.php?aff=473&gid=32"
 		echo -e "${Font_SkyBlue}    __  ____  _______  ________   ____  __  ______ ${Font_Suffix}"
 		echo -e "${Font_SkyBlue}   / / / /  |/  / __ )/ ____/ /  / __ \/ / / / __ \ ${Font_Suffix}"
 		echo -e "${Font_SkyBlue}  / /_/ / /|_/ / __  / /   / /  / / / / / / / / / /${Font_Suffix}"
