@@ -2956,25 +2956,31 @@ function Goodbye(){
 		echo -e ""
 		echo -e "${Font_Yellow}检测脚本当天运行次数：${TodayRunTimes}; 共计运行次数：${TotalRunTimes} ${Font_Suffix}"
 		echo -e ""
-		echo -e "${Font_SkyBlue}【荐鸡时刻】${Font_Suffix}"
+		echo -e "${Font_Red}【广告时间】${Font_Suffix}"
 		echo -e "================================================"
-		echo -e "${Font_Yellow}DMIT TYO Lite系列 三网回程cmi 端口带宽1Gbps以及上${Font_Suffix}"
-		echo -e "${Font_SkyBlue}Lite系列优惠码(Tiny除外): ${Font_Suffix}"
-		echo -e "${Font_Green}年付七折【Lite-Annually-Recur-30OFF】 ${Font_Suffix}"
-		echo -e "${Font_Green}半年付八折【Lite-Semi-Annually-Recur-20OFF】 ${Font_Suffix}"
-		echo -e "${Font_Red}传送门：${Font_Suffix}https://www.dmit.io/aff.php?aff=3198"
-		echo -e "================================================"
-		echo -e ""
-		echo -e ""
-		echo -e ""
-		echo -e ""
-		echo -e "${Font_Red}**************************${Font_Suffix}"
-		echo -e "${Font_Red}*                        *${Font_Suffix}"
-		echo -e "${Font_Red}*${Font_Suffix} 广告招租               ${Font_Red}*${Font_Suffix}"
-		echo -e "${Font_Red}*${Font_Suffix} 请联系：@reidschat_bot ${Font_Red}*${Font_Suffix}"
-		echo -e "${Font_Red}*                        *${Font_Suffix}"
-		echo -e "${Font_Red}**************************${Font_Suffix}"
+		echo -e "${Font_Yellow}半月灣美國洛杉磯 聯通1Gbps的Premium 9929:${Font_Suffix}"
 		echo ""
+		echo -e "${Font_SkyBlue}✅ 聯通版的瓦工 GIA
+✅ 美國原生 IP
+✅ 支持rDNS
+✅ 72小時退款保證 ${Font_Suffix}"
+		echo ""
+		echo -e "${Font_Green}Looking Glass: http://lg.dc5-9929.hmbcloud.net/${Font_Suffix}"
+		echo ""
+		echo ""
+		echo -e "${Font_Purple}\$69.99/年起${Font_Suffix}"
+		echo ""
+		echo -e "${Font_Red}下單鏈接:${Font_Suffix} https://hmbcloud.com/cart.php?aff=473&gid=32"
+		echo -e "${Font_SkyBlue}    __  ____  _______  ________   ____  __  ______ ${Font_Suffix}"
+		echo -e "${Font_SkyBlue}   / / / /  |/  / __ )/ ____/ /  / __ \/ / / / __ \ ${Font_Suffix}"
+		echo -e "${Font_SkyBlue}  / /_/ / /|_/ / __  / /   / /  / / / / / / / / / /${Font_Suffix}"
+		echo -e "${Font_SkyBlue} / __  / /  / / /_/ / /___/ /__/ /_/ / /_/ / /_/ / ${Font_Suffix}"
+		echo -e "${Font_SkyBlue}/_/ /_/_/  /_/_____/\____/_____\____/\____/_____/ ${Font_Suffix}"
+		echo -e "================================================"
+		echo -e ""
+		echo -e ""
+		echo -e ""
+		echo -e ""
 		echo -e "${Font_Yellow}由于大部分IP的Tiktok检测时间过长，已将该检测移除出脚本${Font_Suffix}"
 		echo -e "${Font_Yellow}需要检测Tiktok区域请移步项目: https://github.com/lmc999/TikTokCheck${Font_Suffix}"
 		
@@ -3030,6 +3036,7 @@ function Start(){
 		echo -e "${Font_SkyBlue}输入数字【7】：【跨国平台+大洋洲平台】检测${Font_Suffix}"
 		echo -e "${Font_SkyBlue}输入数字【0】：【   只进行跨国平台  】检测${Font_Suffix}"
 		echo -e "${Font_SkyBlue}输入数字【99】 【   体育直播平台    】检测${Font_Suffix}"
+		echo -e "${Font_Purple}输入数字【69】 【   广告推广投放    】咨询${Font_Suffix}"
 		read -p "请输入正确数字或直接按回车:" num
 	fi	
 }
@@ -3167,7 +3174,19 @@ function RunScript(){
 				Global_UnlockTest 6
 			fi	
 			Goodbye
-			
+		
+		elif [[ "$num" -eq 69 ]]; then
+			clear
+			ScriptTitle
+			echo ""
+			echo ""
+			echo -e "${Font_Red}**************************${Font_Suffix}"
+			echo -e "${Font_Red}*                        *${Font_Suffix}"
+			echo -e "${Font_Red}*${Font_Suffix} 广告招租               ${Font_Red}*${Font_Suffix}"
+			echo -e "${Font_Red}*${Font_Suffix} 请联系：@reidschat_bot ${Font_Red}*${Font_Suffix}"
+			echo -e "${Font_Red}*                        *${Font_Suffix}"
+			echo -e "${Font_Red}**************************${Font_Suffix}"
+		
 		else
 			echo -e "${Font_Red}请重新执行脚本并输入正确号码${Font_Suffix}"
 			echo -e "${Font_Red}Please Re-run the Script with Correct Number Input${Font_Suffix}"
