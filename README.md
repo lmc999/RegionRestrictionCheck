@@ -132,7 +132,7 @@ bash <(curl -L -s check.unlock.media) -I eth0
 
 ##### 选择脚本语言为英文：
 ````bash
-bash <(curl -L -s check.unlock.media) -L e
+bash <(curl -L -s check.unlock.media) -E
 ````
 
 **或者直接运行以下Docker命令** (兼容ARM架构)
