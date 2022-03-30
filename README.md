@@ -140,6 +140,12 @@ bash <(curl -L -s check.unlock.media) -E
 docker run --rm -ti --net=host lmc999/regioncheck && docker rmi lmc999/regioncheck
 ````
 
+## 赞助
+如果觉得脚本对你有帮助，可以考虑请作者喝一箱健力宝
+
+![image](https://i.imgur.com/HHbZgUsl.jpg)
+
+![image](https://i.imgur.com/MWXifObl.jpg)
 
 ## 交流
 脚本使用过程中出现bug欢迎提交issue
