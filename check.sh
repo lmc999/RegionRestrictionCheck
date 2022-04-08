@@ -61,9 +61,9 @@ countRunTimes() {
 	else
 		count_file=$(mktemp --suffix=RRC)
 	fi
-	RunTimes=$(curl -s --max-time 10 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Flmc999%2FRegionRestrictionCheck%2Fmain%2Fcheck.sh&count_bg=%2379C83D&title_bg=%2300B1FF&icon=&icon_color=%23E7E7E7&title=script+run+times&edge_flat=false" >"${count_file}")
+	RunTimes=$(curl -s --max-time 10 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcheck.unclock.media&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visit&edge_flat=false" >"${count_file}")
 	TodayRunTimes=$(cat "${count_file}" | tail -3 | head -n 1 | awk '{print $5}')
-	TotalRunTimes=$(cat "${count_file}" | tail -3 | head -n 1 | awk '{print $7}')
+	TotalRunTimes=$[ $(cat "${count_file}" | tail -3 | head -n 1 | awk '{print $7}') + 2527395]
 }
 countRunTimes
 
