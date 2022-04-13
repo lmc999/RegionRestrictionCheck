@@ -2645,6 +2645,25 @@ function MediaUnlockTest_Funimation() {
 
 }
 
+function MediaUnlockTest_Spotify() {
+	local tmpresult=$(curl $useNIC $xForward -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://spclient.wg.spotify.com/signup/public/v1/account" -d "birth_day=11&birth_month=11&birth_year=2000&collect_personal_info=undefined&creation_flow=&creation_point=https%3A%2F%2Fwww.spotify.com%2Fhk-en%2F&displayname=Gay%20Lord&gender=male&iagree=1&key=a1e486e2729f46d6bb368d6b2bcda326&platform=www&referrer=&send-email=0&thirdpartyemail=0&identifier_token=AgE6YTvEzkReHNfJpO114514" -H "Accept-Language: en")
+	local region=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep '"country":' | cut -f4 -d'"')
+	local isLaunched=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep is_country_launched | cut -f1 -d',' | awk '{print $2}')
+	local StatusCode=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep status | cut -f1 -d',' | awk '{print $2}')
+	echo -n -e " Spotify Registration:\t\t\t->\c"
+	
+	if [ "$tmpresult" = "000" ]; then
+		echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+		return
+	elif [ "$StatusCode" = "320" ]; then
+		echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}No${Font_Suffix}\n"
+		return
+	elif [ "$StatusCode" = "311" ] && [ "$isLaunched" = "true" ]; then
+		echo -n -e "\r Spotify Registration:\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
+		return
+	fi
+}	
+
 function NA_UnlockTest() {
 	echo "===========[ North America ]==========="
 	MediaUnlockTest_Fox ${1}
@@ -2777,6 +2796,7 @@ function Global_UnlockTest() {
 	MediaUnlockTest_Viu.com ${1}
 	MediaUnlockTest_YouTube_CDN ${1}
 	MediaUnlockTest_NetflixCDN ${1}
+	MediaUnlockTest_Spotify ${1}
 	GameTest_Steam ${1}
 	echo "======================================="
 }
