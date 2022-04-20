@@ -2967,7 +2967,7 @@ function Goodbye() {
 		echo -e "${Font_SkyBlue}Lite系列优惠码(Tiny除外): ${Font_Suffix}"
 		echo -e "${Font_Green}年付七折【Lite-Annually-Recur-30OFF】 ${Font_Suffix}"
 		echo -e "${Font_Green}半年付八折【Lite-Semi-Annually-Recur-20OFF】 ${Font_Suffix}"
-		echo -e "${Font_Red}传送门：${Font_Suffix}https://www.dmit.io/aff.php?aff=3198"
+		echo -e "${Font_Red}传送门：${Font_Suffix}https://www.dmit.io/aff.php?aff=3198&gid=1"
 		echo -e "================================================"
 		echo -e ""
 		echo -e ""
