@@ -63,7 +63,7 @@ countRunTimes() {
 	fi
 	RunTimes=$(curl -s --max-time 10 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcheck.unclock.media&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visit&edge_flat=false" >"${count_file}")
 	TodayRunTimes=$(cat "${count_file}" | tail -3 | head -n 1 | awk '{print $5}')
-	TotalRunTimes=$[ $(cat "${count_file}" | tail -3 | head -n 1 | awk '{print $7}') + 2527395]
+	TotalRunTimes=$(($(cat "${count_file}" | tail -3 | head -n 1 | awk '{print $7}') + 2527395))
 }
 countRunTimes
 
@@ -2651,7 +2651,7 @@ function MediaUnlockTest_Spotify() {
 	local isLaunched=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep is_country_launched | cut -f1 -d',' | awk '{print $2}')
 	local StatusCode=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep status | cut -f1 -d',' | awk '{print $2}')
 	echo -n -e " Spotify Registration:\t\t\t->\c"
-	
+
 	if [ "$tmpresult" = "000" ]; then
 		echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
 		return
@@ -2662,7 +2662,7 @@ function MediaUnlockTest_Spotify() {
 		echo -n -e "\r Spotify Registration:\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
 		return
 	fi
-}	
+}
 
 function NA_UnlockTest() {
 	echo "===========[ North America ]==========="
@@ -2939,8 +2939,55 @@ function CheckV6() {
 	fi
 }
 
-function Goodbye() {
+function AD_1() {
+	echo -e "${Font_SkyBlue}【荐鸡时刻】${Font_Suffix}"
+	echo -e "================================================"
+	echo -e "${Font_Yellow}DMIT HKG Lite系列路由优化! 三网去回程直连升级!${Font_Suffix}"
+	echo ""
+	echo -e "${Font_SkyBlue}✅ 三网回程CMI${Font_Suffix}"
+	echo -e "${Font_SkyBlue}✅ 电信联通去程CN2${Font_Suffix}"
+	echo -e "${Font_SkyBlue}✅ 端口带宽1Gbps起${Font_Suffix}"
+	echo ""
+	echo -e "${Font_SkyBlue}Lite系列优惠码(Tiny除外): ${Font_Suffix}"
+	echo -e "${Font_Green}年付七折【Lite-Annually-Recur-30OFF】 ${Font_Suffix}"
+	echo -e "${Font_Green}半年付八折【Lite-Semi-Annually-Recur-20OFF】 ${Font_Suffix}"
+	echo -e "${Font_Red}传送门：${Font_Suffix}https://www.dmit.io/aff.php?aff=3198&gid=1"
+	echo -e "================================================"
+}
 
+function AD_2() {
+	echo -e "${Font_SkyBlue}【荐鸡时刻】${Font_Suffix}"
+	echo -e "================================================"
+	echo -e "${Font_Yellow}WikiHost香港BGP 无限流量VPS${Font_Suffix}"
+	echo ""
+	echo -e "${Font_SkyBlue}✅ 三网回程CMI${Font_Suffix}"
+	echo -e "${Font_SkyBlue}✅ 每日免费备份${Font_Suffix}"
+	echo -e "${Font_SkyBlue}✅ 上下行取最大值者计算流量${Font_Suffix}"
+	echo -e "${Font_SkyBlue}✅ 端口带宽1Gbps,超出流量后降级1-5Mbps @无限流量${Font_Suffix}"
+	echo ""
+	echo -e "${Font_Green}年付91折优惠码【SX2RG2SFJ9】 ${Font_Suffix}"
+	echo -e "${Font_Red}传送门：${Font_Suffix}https://idc.wiki/aff.php?aff=2380?productid=1&gid=58"
+	echo -e "================================================"
+}
+
+function AD_3() {
+	echo -e "${Font_SkyBlue}【荐鸡时刻】${Font_Suffix}"
+	echo -e "================================================"
+	echo -e "${Font_Yellow}DMIT HKG Lite系列路由优化! 三网去回程直连升级!${Font_Suffix}"
+	echo ""
+	echo -e "${Font_SkyBlue}✅ 三网回程CMI${Font_Suffix}"
+	echo -e "${Font_SkyBlue}✅ 电信联通去程CN2${Font_Suffix}"
+	echo -e "${Font_SkyBlue}✅ 端口带宽1Gbps起${Font_Suffix}"
+	echo ""
+	echo -e "${Font_SkyBlue}Lite系列优惠码(Tiny除外): ${Font_Suffix}"
+	echo -e "${Font_Green}年付七折【Lite-Annually-Recur-30OFF】 ${Font_Suffix}"
+	echo -e "${Font_Green}半年付八折【Lite-Semi-Annually-Recur-20OFF】 ${Font_Suffix}"
+	echo -e "${Font_Red}传送门：${Font_Suffix}https://www.dmit.io/aff.php?aff=3198&gid=1"
+	echo -e "================================================"
+}
+
+function Goodbye() {
+	ADN=$(echo $(($RANDOM%2+1)))
 	if [[ "$language" == "e" ]]; then
 		echo -e "${Font_Green}Testing Done! Thanks for Using This Script! ${Font_Suffix}"
 		echo -e ""
@@ -2956,19 +3003,7 @@ function Goodbye() {
 		echo -e ""
 		echo -e "${Font_Yellow}检测脚本当天运行次数: ${TodayRunTimes}; 共计运行次数: ${TotalRunTimes} ${Font_Suffix}"
 		echo -e ""
-		echo -e "${Font_SkyBlue}【荐鸡时刻】${Font_Suffix}"
-		echo -e "================================================"
-		echo -e "${Font_Yellow}DMIT HKG Lite系列路由优化! 三网去回程直连升级!${Font_Suffix}" 
-		echo ""
-		echo -e "${Font_SkyBlue}✅ 三网回程CMI${Font_Suffix}" 
-		echo -e "${Font_SkyBlue}✅ 电信联通去程CN2${Font_Suffix}"
-		echo -e "${Font_SkyBlue}✅ 端口带宽1Gbps起${Font_Suffix}"
-		echo ""
-		echo -e "${Font_SkyBlue}Lite系列优惠码(Tiny除外): ${Font_Suffix}"
-		echo -e "${Font_Green}年付七折【Lite-Annually-Recur-30OFF】 ${Font_Suffix}"
-		echo -e "${Font_Green}半年付八折【Lite-Semi-Annually-Recur-20OFF】 ${Font_Suffix}"
-		echo -e "${Font_Red}传送门：${Font_Suffix}https://www.dmit.io/aff.php?aff=3198&gid=1"
-		echo -e "================================================"
+		AD_$ADN
 		echo -e ""
 		echo -e ""
 		echo -e ""
