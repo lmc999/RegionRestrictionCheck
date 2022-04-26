@@ -73,7 +73,7 @@ iOS运行方法请参考[此处](https://github.com/lmc999/RegionRestrictionChec
 
 + 新增FOD解锁判断
 
-+ ~新增TikTok区域判断~ 由于大部分 IP 的 Tiktok 检测时间过长，已将该检测移除出脚本，需要检测 Tiktok 区域请移步项目: https://github.com/lmc999/TikTokCheck
++ ~新增TikTok区域判断~ 由于大部分 IP 的 Tiktok 检测时间过长，已将该检测移除出脚本，需要检测 Tiktok 区域请移步项目: [TikTokCheck](https://github.com/lmc999/TikTokCheck)
 
 + 优化YouTube判断增加Premium是否可用判断
 
