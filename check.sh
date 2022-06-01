@@ -499,13 +499,13 @@ function MediaUnlockTest_Dazn() {
 
 function MediaUnlockTest_HuluJP() {
     echo -n -e " Hulu Japan:\t\t\t\t->\c"
-    local result=$(curl $useNIC $xForward -${1} -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://id.hulu.jp" | grep 'login')
+    local result=$(curl $useNIC $xForward -${1} -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://id.hulu.jp" | grep 'restrict')
 
     if [ -n "$result" ]; then
-        echo -n -e "\r Hulu Japan:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        echo -n -e "\r Hulu Japan:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     else
-        echo -n -e "\r Hulu Japan:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        echo -n -e "\r Hulu Japan:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     fi
 
@@ -2664,6 +2664,71 @@ function MediaUnlockTest_Spotify() {
     fi
 }
 
+function MediaUnlockTest_VideoMarket() {
+
+    local token=$(curl -X POST -s "https://api-p.videomarket.jp/v2/authorize/access_token" -d 'grant_type=client_credentials&client_id=1eolxdrti3t58m2f2k8yi0kli105743b6f8c8295&client_secret=lco0nndn3l9tcbjdfdwlswmee105743b739cfb5a' | python -m json.tool 2>/dev/null | grep access_token | cut -f4 -d'"')
+    local Auth="X-Authorization: $token"
+    local playkey=$(curl -s -X POST "https://api-p.videomarket.jp/v2/api/play/keyissue" -d 'fullStoryId=118008001&playChromeCastFlag=false&loginFlag=0' -H "$Auth" | python -m json.tool 2>/dev/null | grep playKey | cut -f4 -d'"')
+    local result=$(curl $useNIC $xForward -${1} ${ssll} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://api-p.videomarket.jp/v2/api/play/keyauth?playKey=${playkey}&deviceType=3&bitRate=0&loginFlag=0&connType=" -H "$Auth")
+    echo -n -e " VideoMarket:\t\t\t\t->\c"
+    if [ "$result" = "000" ] && [ "$1" == "6" ]; then
+        echo -n -e "\r VideoMarket:\t\t\t\t${Font_Red}IPv6 Not Supported${Font_Suffix}\n"
+    elif [ "$result" = "000" ] && [ "$1" == "4" ]; then
+        echo -n -e "\r VideoMarket:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r VideoMarket:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    elif [ "$result" = "408" ]; then
+        echo -n -e "\r VideoMarket:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"    
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r VideoMarket:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r VideoMarket:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+    fi
+    
+}
+
+function MediaUnlockTest_GYAO() {
+	echo -n -e " GYAO!:\t\t\t\t\t->\c"
+	if [ "$1" == "6" ]; then
+        echo -n -e "\r GYAO!:\t\t\t\t\t${Font_Red}IPv6 Not Supported${Font_Suffix}\n"
+		return
+	fi
+	local tmpresult=$(curl $useNIC $xForward -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 'https://gyao.yahoo.co.jp/apis/playback/graphql?appId=dj00aiZpPUNJeDh2cU1RazU3UCZzPWNvbnN1bWVyc2VjcmV0Jng9NTk-&query=%20query%20Playback(%24videoId%3A%20ID!%2C%20%24logicaAgent%3A%20LogicaAgent!%2C%20%24clientSpaceId%3A%20String!%2C%20%24os%3A%20Os!%2C%20%24device%3A%20Device!)%20%7B%20content(%20parameter%3A%20%7B%20contentId%3A%20%24videoId%20logicaAgent%3A%20%24logicaAgent%20clientSpaceId%3A%20%24clientSpaceId%20os%3A%20%24os%20device%3A%20%24device%20view%3A%20WEB%20%7D%20)%20%7B%20tracking%20%7B%20streamLog%20vrLog%20stLog%20%7D%20inStreamAd%20%7B%20forcePlayback%20source%20%7B%20__typename%20...%20on%20YjAds%20%7B%20ads%20%7B%20location%20time%20adRequests%20%7B%20__typename%20...%20on%20YjAdOnePfWeb%20%7B%20adDs%20placementCategoryId%20%7D%20...%20on%20YjAdOnePfProgrammaticWeb%20%7B%20adDs%20%7D%20...%20on%20YjAdAmobee%20%7B%20url%20%7D%20...%20on%20YjAdGam%20%7B%20url%20%7D%20%7D%20%7D%20%7D%20...%20on%20Vmap%20%7B%20url%20%7D%20...%20on%20CatchupVmap%20%7B%20url%20siteId%20%7D%20%7D%20%7D%20video%20%7B%20id%20title%20delivery%20%7B%20id%20drm%20%7D%20duration%20images%20%7B%20url%20width%20height%20%7D%20cpId%20playableAge%20maxPixel%20embeddingPermission%20playableAgents%20gyaoUrl%20%7D%20%7D%20%7D%20&variables=%7B%22videoId%22%3A%225fb4e68c-aef7-4f63-88e9-8cfeb35e9065%22%2C%22logicaAgent%22%3A%22PC_WEB%22%2C%22clientSpaceId%22%3A%221183050133%22%2C%22os%22%3A%22UNKNOWN%22%2C%22device%22%3A%22PC%22%7D')
+	local result=$(echo $tmpresult | python -m json.tool 2>/dev/null)
+	local isOutsideJapan=$(echo $result | grep "not in japan")
+	if [ -n "result" ] && [ -n "$isOutsideJapan" ];then
+		echo -n -e "\r GYAO!:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+	elif [ -n "result" ] && [ -z "$isOutsideJapan" ];then
+		echo -n -e "\r GYAO!:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+	else
+		echo -n -e "\r GYAO!:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+	fi
+}
+
+function MediaUnlockTest_J:COM_ON_DEMAND() {
+	echo -n -e " J:com On Demand:\t\t\t->\c"
+	local result=$(curl $useNIC $xForward -${1} ${ssll} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://id.zaq.ne.jp")
+	if [ "$result" = "000" ]; then
+        echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+    elif [ "$result" = "404" ]; then
+        echo -n -e "\r J:com On Demand:\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+    fi
+}
+
+function MediaUnlockTest_music.jp() {
+	echo -n -e " music.jp:\t\t\t\t->\c"
+	local result=$(curl $useNIC $xForward -${1} ${ssll} --user-agent "${UA_Browser}" -sL --max-time 10 "https://overseaauth.music-book.jp/globalIpcheck.js")
+	if [ -n "$result" ]; then
+        echo -n -e "\r music.jp:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    else
+        echo -n -e "\r music.jp:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    fi
+}
+	
 function NA_UnlockTest() {
     echo "===========[ North America ]==========="
     MediaUnlockTest_Fox ${1}
@@ -2763,15 +2828,19 @@ function JP_UnlockTest() {
     MediaUnlockTest_DMM ${1}
     MediaUnlockTest_AbemaTV_IPTest ${1}
     MediaUnlockTest_Niconico ${1}
+	MediaUnlockTest_music.jp ${1}
     MediaUnlockTest_Telasa ${1}
     MediaUnlockTest_Paravi ${1}
     MediaUnlockTest_unext ${1}
     MediaUnlockTest_HuluJP ${1}
     MediaUnlockTest_TVer ${1}
+	MediaUnlockTest_GYAO ${1}
     MediaUnlockTest_wowow ${1}
+    MediaUnlockTest_VideoMarket ${1}
     MediaUnlockTest_FOD ${1}
-    MediaUnlockTest_Radiko ${1}
+	MediaUnlockTest_Radiko ${1}
     MediaUnlockTest_DAM ${1}
+    MediaUnlockTest_J:COM_ON_DEMAND ${1}
     ShowRegion Game
     MediaUnlockTest_Kancolle ${1}
     MediaUnlockTest_UMAJP ${1}
