@@ -1854,16 +1854,16 @@ function MediaUnlockTest_NBATV() {
 }
 
 function MediaUnlockTest_ATTNOW() {
-    echo -n -e " AT&T NOW:\t\t\t\t->\c"
+    echo -n -e " Directv Stream:\t\t\t->\c"
     local result=$(curl $useNIC $xForward -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.atttvnow.com/")
     if [ "$result" = "000" ]; then
-        echo -n -e "\r AT&T NOW:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r Directv Stream:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     elif [ "$result" = "200" ]; then
-        echo -n -e "\r AT&T NOW:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        echo -n -e "\r Directv Stream:\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     elif [ "$result" = "403" ]; then
-        echo -n -e "\r AT&T NOW:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        echo -n -e "\r Directv Stream:\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
 
@@ -2745,13 +2745,13 @@ function NA_UnlockTest() {
     MediaUnlockTest_PlutoTV ${1}
     MediaUnlockTest_AcornTV ${1}
     MediaUnlockTest_SHOWTIME ${1}
-    MediaUnlockTest_ATTNOW ${1}
     MediaUnlockTest_encoreTVB ${1}
     MediaUnlockTest_CineMax ${1}
     MediaUnlockTest_Funimation ${1}
     MediaUnlockTest_DiscoveryPlus ${1}
     MediaUnlockTest_ParamountPlus ${1}
     MediaUnlockTest_PeacockTV ${1}
+    MediaUnlockTest_ATTNOW ${1}
     ShowRegion CA
     MediaUnlockTest_CBCGem ${1}
     MediaUnlockTest_Crave ${1}
