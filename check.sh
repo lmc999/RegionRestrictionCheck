@@ -349,7 +349,7 @@ function MediaUnblockTest_BilibiliAnime() {
                 echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Southeastasia${Font_Suffix}\n"
                 return
             fi
-        elif [ "${southeastasia}" = "10004001" || "${southeastasia}" = "10003003" ]; then
+        elif [ "${southeastasia}" = "10004001" -o "${southeastasia}" = "10003003" ]; then
             echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Intl${Font_Suffix}\n"
             return
         else
