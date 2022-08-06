@@ -353,7 +353,7 @@ function MediaUnblockTest_BilibiliAnime() {
             echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Intl${Font_Suffix}\n"
             return
         else
-            echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Red}Failed${Font_Suffix} ${Font_SkyBlue}(${mainland})${Font_Suffix}\n"
+            echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Red}Failed${Font_Suffix} ${Font_SkyBlue}(${southeastasia})${Font_Suffix}\n"
             return
         fi
         
