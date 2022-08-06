@@ -298,7 +298,7 @@ function MediaUnblockTest_BilibiliAnime() {
     echo -n -e " Bilibili Anime Region:\t\t\t->\c"
     local is_global=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://www.bilibili.tv" 2>&1)
     if [[ "$is_global" == "curl"* ]]; then
-        echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
     if [ -z "$is_global" ]; then
@@ -306,19 +306,19 @@ function MediaUnblockTest_BilibiliAnime() {
         local mainland=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://api.bilibili.com/pgc/player/web/playurl?avid=82846771&qn=0&type=&otype=json&ep_id=307247&fourk=1&fnver=0&fnval=16&session=${randsession}&module=bangumi" 2>&1)
         local mainland="$(echo "${mainland}" | python3 -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
         if [ "${mainland}" = "0" ]; then
-            echo -n -e "\r Bilibili Anime Region:\t\t${Font_Green}Mainland${Font_Suffix}\n"
+            echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Mainland${Font_Suffix}\n"
             return
         elif [ "${mainland}" = "-10403" ]; then
             local taiwan=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://api.bilibili.com/pgc/player/web/playurl?avid=50762638&cid=100279344&qn=0&type=&otype=json&ep_id=268176&fourk=1&fnver=0&fnval=16&session=${randsession}&module=bangumi" 2>&1)
             local taiwan="$(echo "${taiwan}" | python3 -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
             if [ "${taiwan}" = "0" ]; then
-                echo -n -e "\r Bilibili Anime Region:\t\t${Font_Green}Taiwan${Font_Suffix}\n"
+                echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Taiwan${Font_Suffix}\n"
                 return
             elif [ "${taiwan}" = "-10403" ]; then
                 local result=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://api.bilibili.com/pgc/player/web/playurl?avid=18281381&cid=29892777&qn=0&type=&otype=json&ep_id=183799&fourk=1&fnver=0&fnval=16&session=${randsession}&module=bangumi" 2>&1)
                 local result="$(echo "${result}" | python3 -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
                 if [ "${result}" = "0" ]; then
-                    echo -n -e "\r Bilibili Anime Region:\t\t${Font_Green}Hongkong/Macau${Font_Suffix}\n"
+                    echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Hongkong/Macau${Font_Suffix}\n"
                     return
                 elif [ "${result}" = "-10403" ]; then
                     echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -343,14 +343,14 @@ function MediaUnblockTest_BilibiliAnime() {
             local thai=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://api.bilibili.tv/intl/gateway/web/playurl?s_locale=en_US&platform=web&ep_id=10077726" 2>&1)
             local thai="$(echo "${thai}" | python3 -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
             if [ "${thai}" = "0" ]; then
-                echo -n -e "\r Bilibili Anime Region:\t\t${Font_Green}Southeastasia(TH)${Font_Suffix}\n"
+                echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Southeastasia(TH)${Font_Suffix}\n"
                 return
             else
-                echo -n -e "\r Bilibili Anime Region:\t\t${Font_Green}Southeastasia${Font_Suffix}\n"
+                echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Southeastasia${Font_Suffix}\n"
                 return
             fi
         elif [ "${southeastasia}" = "10004001" || "${southeastasia}" = "10003003" ]; then
-            echo -n -e "\r Bilibili Anime Region:\t\t${Font_Green}Intl${Font_Suffix}\n"
+            echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Intl${Font_Suffix}\n"
             return
         else
             echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Red}Failed${Font_Suffix} ${Font_SkyBlue}(${mainland})${Font_Suffix}\n"
@@ -358,7 +358,7 @@ function MediaUnblockTest_BilibiliAnime() {
         fi
         
     fi
-    echo -n -e "\r Bilibili Anime Region:\t\t${Font_Green}Failed (Network Connection)${Font_Suffix}\n"
+    echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Failed (Network Connection)${Font_Suffix}\n"
 }
 
 # 流媒体解锁测试-Abema.TV
