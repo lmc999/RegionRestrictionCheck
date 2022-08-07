@@ -304,19 +304,19 @@ function MediaUnblockTest_BilibiliAnime() {
     if [ -z "$is_global" ]; then
         local randsession="$(cat /dev/urandom | head -n 32 | md5sum | head -c 32)"
         local mainland=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://api.bilibili.com/pgc/player/web/playurl?avid=82846771&qn=0&type=&otype=json&ep_id=307247&fourk=1&fnver=0&fnval=16&session=${randsession}&module=bangumi" 2>&1)
-        local mainland="$(echo "${mainland}" | python3 -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
+        local mainland="$(echo "${mainland}" | python -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
         if [ "${mainland}" = "0" ]; then
             echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Mainland${Font_Suffix}\n"
             return
         elif [ "${mainland}" = "-10403" ]; then
             local taiwan=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://api.bilibili.com/pgc/player/web/playurl?avid=50762638&cid=100279344&qn=0&type=&otype=json&ep_id=268176&fourk=1&fnver=0&fnval=16&session=${randsession}&module=bangumi" 2>&1)
-            local taiwan="$(echo "${taiwan}" | python3 -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
+            local taiwan="$(echo "${taiwan}" | python -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
             if [ "${taiwan}" = "0" ]; then
                 echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Taiwan${Font_Suffix}\n"
                 return
             elif [ "${taiwan}" = "-10403" ]; then
                 local result=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://api.bilibili.com/pgc/player/web/playurl?avid=18281381&cid=29892777&qn=0&type=&otype=json&ep_id=183799&fourk=1&fnver=0&fnval=16&session=${randsession}&module=bangumi" 2>&1)
-                local result="$(echo "${result}" | python3 -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
+                local result="$(echo "${result}" | python -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
                 if [ "${result}" = "0" ]; then
                     echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Hongkong/Macau${Font_Suffix}\n"
                     return
@@ -338,10 +338,10 @@ function MediaUnblockTest_BilibiliAnime() {
 
     else
         local southeastasia=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://api.bilibili.tv/intl/gateway/web/playurl?s_locale=en_US&platform=web&ep_id=347666" 2>&1)
-        local southeastasia="$(echo "${southeastasia}" | python3 -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
+        local southeastasia="$(echo "${southeastasia}" | python -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
         if [ "${southeastasia}" = "0" ]; then
             local thai=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://api.bilibili.tv/intl/gateway/web/playurl?s_locale=en_US&platform=web&ep_id=10077726" 2>&1)
-            local thai="$(echo "${thai}" | python3 -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
+            local thai="$(echo "${thai}" | python -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
             if [ "${thai}" = "0" ]; then
                 echo -n -e "\r Bilibili Anime Region:\t\t\t${Font_Green}Southeastasia(TH)${Font_Suffix}\n"
                 return
