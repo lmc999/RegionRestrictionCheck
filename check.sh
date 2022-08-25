@@ -10,7 +10,7 @@ Font_SkyBlue="\033[36m"
 Font_White="\033[37m"
 Font_Suffix="\033[0m"
 
-while getopts ":I:M:E:X:" optname; do
+while getopts ":I:M:EX:" optname; do
     case "$optname" in
     "I")
         iface="$OPTARG"
