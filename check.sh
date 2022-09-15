@@ -1148,7 +1148,7 @@ function MediaUnlockTest_BritBox() {
 
 function MediaUnlockTest_PrimeVideo_Region() {
     echo -n -e " Amazon Prime Video:\t\t\t->\c"
-    local tmpresult=$(curl $useNIC $xForward -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://www.primevideo.com")
+    local tmpresult=$(curl $useNIC $xForward -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://www.primevideo.com/hp/video/offers/nonprimehomepage/ref=dv_web_force_root/355-3480167-2378522?_encoding=UTF8&dvah=nonprimehomepage")
 
     if [[ "$tmpresult" = "curl"* ]]; then
         echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
