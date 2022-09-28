@@ -516,7 +516,7 @@ function MediaUnlockTest_HuluJP() {
 
 function MediaUnlockTest_MyTVSuper() {
     echo -n -e " MyTVSuper:\t\t\t\t->\c"
-    local result=$(curl $useNIC $xForward -s -${1} --max-time 10 "https://www.mytvsuper.com/api/auth/getSession/self/" | python -m json.tool | grep 'region' | awk '{print $2}')
+    local result=$(curl $useNIC $xForward -s -${1} --max-time 10 "https://www.mytvsuper.com/api/auth/getSession/self/" | python -m json.tool 2>/dev/null | grep 'region' | awk '{print $2}')
 
     if [[ "$result" == "1" ]]; then
         echo -n -e "\r MyTVSuper:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
