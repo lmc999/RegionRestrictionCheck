@@ -130,7 +130,7 @@ bash <(curl -L -s check.unlock.media) -M 6
 bash <(curl -L -s check.unlock.media) -I eth0
 ````
 
-##### 通过Socks5或HTTP代理进行检测：
+##### 通过SOCKS5或HTTP代理进行检测：
 ````bash
 bash <(curl -L -s check.unlock.media) -P socks5://127.0.0.1:8080
 ````
