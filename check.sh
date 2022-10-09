@@ -186,9 +186,9 @@ checkDependencies() {
 }
 checkDependencies
 
-local_ipv4=$(curl $useNIC $usePROXY -4 -s --max-time 10 api64.ipify.org)
+local_ipv4=$(curl $useNIC $usePROXY -4 -s --max-time 10 api4.ipify.org)
 local_ipv4_asterisk=$(awk -F"." '{print $1"."$2".*.*"}' <<<"${local_ipv4}")
-local_ipv6=$(curl $useNIC $usePROXY -6 -s --max-time 20 api64.ipify.org)
+local_ipv6=$(curl $useNIC $usePROXY -6 -s --max-time 20 api6.ipify.org)
 local_ipv6_asterisk=$(awk -F":" '{print $1":"$2":"$3":*:*"}' <<<"${local_ipv6}")
 local_isp4=$(curl $useNIC $usePROXY -s -4 --max-time 10 --user-agent "${UA_Browser}" "https://api.ip.sb/geoip/${local_ipv4}" | cut -f1 -d"," | cut -f4 -d '"')
 local_isp6=$(curl $useNIC $usePROXY -s -6 --max-time 10 --user-agent "${UA_Browser}" "https://api.ip.sb/geoip/${local_ipv6}" | cut -f1 -d"," | cut -f4 -d '"')
