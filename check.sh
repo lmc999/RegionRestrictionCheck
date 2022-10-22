@@ -2595,7 +2595,7 @@ function MediaUnlockTest_Channel7() {
 
 function MediaUnlockTest_Channel10() {
     echo -n -e " Channel 10:\t\t\t\t->\c"
-    local tmpresult=$(curl $useNIC $xForward -${1} ${ssll} -sL --max-time 10 "https://10play.com.au/geo-web" 2>&1)
+    local tmpresult=$(curl $useNIC $xForward -${1} ${ssll} -sL --max-time 10 "https://e410fasadvz.global.ssl.fastly.net/geo" 2>&1)
     if [[ "$tmpresult" == "curl"* ]] && [[ "$1" == "6" ]]; then
         echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
     elif [[ "$tmpresult" == "curl"* ]]; then
