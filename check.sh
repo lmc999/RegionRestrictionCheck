@@ -770,12 +770,12 @@ function MediaUnlockTest_HBOMax() {
 
 function MediaUnlockTest_Channel4() {
     echo -n -e " Channel 4:\t\t\t\t->\c"
-    local result=$(curl $useNIC $xForward -${1} ${ssll} -s --max-time 10 "https://ais.channel4.com/simulcast/C4?client=c4" | grep 'status' | cut -f2 -d'"')
+    local result=$(curl $useNIC $xForward -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.channel4.com/simulcast/channels/C4")
 
-    if [[ "$result" == "ERROR" ]]; then
+    if [[ "$result" == "403" ]]; then
         echo -n -e "\r Channel 4:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
-    elif [[ "$result" == "OK" ]]; then
+    elif [[ "$result" == "200" ]]; then
         echo -n -e "\r Channel 4:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     fi
