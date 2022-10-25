@@ -2818,7 +2818,7 @@ function TW_UnlockTest() {
     MediaUnlockTest_Catchplay ${1}
     MediaUnlockTest_HBOGO_ASIA ${1}
     MediaUnlockTest_BahamutAnime ${1}
-    MediaUnlockTest_ElevenSportsTW ${1}
+    #MediaUnlockTest_ElevenSportsTW ${1}
     MediaUnlockTest_BilibiliTW ${1}
     echo "======================================="
 }
@@ -2915,7 +2915,7 @@ function Sport_UnlockTest() {
     MediaUnlockTest_FuboTV ${1}
     MediaUnlockTest_MolaTV ${1}
     MediaUnlockTest_SetantaSports ${1}
-    MediaUnlockTest_ElevenSportsTW ${1}
+    #MediaUnlockTest_ElevenSportsTW ${1}
     MediaUnlockTest_OptusSports ${1}
     MediaUnlockTest_BeinConnect ${1}
     MediaUnlockTest_EurosportRO ${1}
@@ -3011,6 +3011,8 @@ function CheckV6() {
 function Goodbye() {
     if [ "${num}" == 1 ]; then
         ADN=TW
+	elif [ "${num}" == 4 ]; then
+		AND=US
     else
         ADN=$(echo $(($RANDOM % 2 + 1)))
     fi
