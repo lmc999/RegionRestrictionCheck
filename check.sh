@@ -2728,6 +2728,21 @@ function MediaUnlockTest_music.jp() {
         echo -n -e "\r music.jp:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     fi
 }
+
+function MediaUnlockTest_Instagram.Music() {
+
+    local cookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '14p')
+    local result=$(curl $useNIC $xForward -${1} ${ssll} -s --user-agent "${UA_Browser}" --max-time 10 -H "X-IG-App-ID: 936619743392459" -H "X-IG-WWW-Claim: 0" -b "$cookie" "https://i.instagram.com/api/v1/media/2924384735484795396/info/" | python -m json.tool 2>/dev/null | grep '"should_mute_audio"' | awk '{print $2}' | cut -f1 -d',')
+    echo -n -e " Instagram Licensed Music:\t\t->\c"
+    if [[ "$result" == "false" ]]; then
+        echo -n -e "\r Instagram Licensed Music:\t\t${Font_Green}Yes${Font_Suffix}\n"
+    elif [[ "$result" == "true" ]]; then
+        echo -n -e "\r Instagram Licensed Music:\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r Instagram Licensed Music:\t\t${Font_Red}Failed${Font_Suffix}\n"
+    fi
+    
+}
 	
 function NA_UnlockTest() {
     echo "===========[ North America ]==========="
@@ -2866,6 +2881,7 @@ function Global_UnlockTest() {
     MediaUnlockTest_YouTube_CDN ${1}
     MediaUnlockTest_NetflixCDN ${1}
     MediaUnlockTest_Spotify ${1}
+    MediaUnlockTest_Instagram.Music ${1}
     GameTest_Steam ${1}
     echo "======================================="
 }
