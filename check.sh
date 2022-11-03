@@ -109,6 +109,8 @@ checkCPU() {
         arch=_arm
     elif [[ "$CPUArch" == "x86_64" ]] && [ -n "$ifMacOS" ]; then
         arch=_darwin
+    else
+        arch=unsupported
     fi
 }
 checkCPU
@@ -833,6 +835,10 @@ function MediaUnlockTest_iQYI_Region() {
 }
 
 function MediaUnlockTest_HuluUS() {
+    if [[ "$arch" == "unsupported" ]]; then
+        echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: Unsupported CPU)${Font_Suffix}\n"
+        return
+    fi
     if [[ "$1" == "4" ]]; then
         curl $useNIC $xForward -fsL -o ./Hulu4.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu4${arch}.sh.x >/dev/null 2>&1
         chmod +x ./Hulu4.sh.x
@@ -845,13 +851,14 @@ function MediaUnlockTest_HuluUS() {
 
     local result=$?
 
-    
     if [[ "$result" == "1" ]]; then
         echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     elif [[ "$result" == "0" ]]; then
         echo -n -e "\r Hulu:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
     elif [[ "$result" == "10" ]]; then
         echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+    else
+        echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
     fi
     rm -rf ./*.sh.x
 }
@@ -2572,7 +2579,7 @@ function MediaUnlockTest_Channel7() {
     local GetPlayURL=$(curl $useNIC $xForward -${1} ${ssll} -s --max-time 10 "https://csm-e-cen7uswxaws102j8-3stdkepcx398.tls1.yospace.com/csm/extlive/sevenprd01,SYD1.m3u8?appId=7plus&deviceType=web&platformType=web&ppId=fb6be76a8ae5ab97ae0cada9ce9c88675f1cea6c2bcf3da2c1ac1ae272994795&videoType=live&accountId=5650355166001&advertId=null&uaId=null&optinDeviceType=&optinAdTracking=0&tvid=null&pc=1000&deviceId=ab12092a-c770-41ee-b979-36712f130d49&mstatus=true&hl=zh&ozid=bfd6acf2-8319-4104-8745-35727d80eb77&vid=5652239841001&yo.hb=5000&pp=csai-web&custParams=rc%25253D1%252526y%25253D4%252526c%25253Dn%252526dpc%25253D2010%252526seriesid%25253D7NNS&y=4&c=n&dpc=2010&rc=1&yo.pp=aGRudHM9ZXhwPTE2MzgxNzE1ODF-YWNsPS8qfmhtYWM9NmNjZmU3NzZlNGZkNDFlYmI4YjRlMDVkOGY4YmQxMDkzN2NmYjMxMTMzZTRjZDE5ZTlkOTczOGNkOTBjZjhjNQ&yo.oh=Y3NtLWUtbjdhdXMtZWIudGxzMS55b3NwYWNlLmNvbQ==" >~/chanel7.txt 2>&1)
     if [[ "$GetPlayURL" == "curl"* ]] && [[ "$1" == "6" ]]; then
         echo -n -e "\r Channel 7:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
-    elif [[ "$GetPlayURL" == "curl"* ]]; then
+    elif [[ "$GetPlayURL" == "curl"* ]] || [[ -z "$GetPlayURL" ]]; then
         echo -n -e "\r Channel 7:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -2594,7 +2601,7 @@ function MediaUnlockTest_Channel7() {
 }
 
 function MediaUnlockTest_Channel10() {
-    
+
     local tmpresult=$(curl $useNIC $xForward -${1} ${ssll} -sL --max-time 10 "https://e410fasadvz.global.ssl.fastly.net/geo" 2>&1)
     if [[ "$tmpresult" == "curl"* ]] && [[ "$1" == "6" ]]; then
         echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
