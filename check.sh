@@ -2741,10 +2741,18 @@ function NA_UnlockTest() {
 function EU_UnlockTest() {
     echo "===============[ Europe ]=============="
     local result=$(
-    MediaUnlockTest_RakutenTV ${1}
-    MediaUnlockTest_Funimation ${1}
-    MediaUnlockTest_HBO_Nordic ${1}
-    MediaUnlockTest_HBOGO_EUROPE ${1}
+    {
+        MediaUnlockTest_RakutenTV ${1}
+    }&
+    {
+        MediaUnlockTest_Funimation ${1}
+    }&
+    {
+        MediaUnlockTest_HBO_Nordic ${1}
+    }&
+    {
+        MediaUnlockTest_HBOGO_EUROPE ${1}
+    }&
     )
     wait
     echo -e "$(echo -n -e "${result}" | grep "Rakuten TV:")"
@@ -3184,13 +3192,11 @@ function OA_UnlockTest() {
     wait
     echo -e "$(echo -n -e "${result2}" | grep "Stan:")"
     echo -e "$(echo -n -e "${result2}" | grep "Binge:")"
-    #echo -e "$(echo -n -e "${result2}" | grep "Docplay:")"
     MediaUnlockTest_Docplay ${1}
     echo -e "$(echo -n -e "${result2}" | grep "Channel 7:")"
     echo -e "$(echo -n -e "${result2}" | grep "Channel 9:")"
     echo -e "$(echo -n -e "${result2}" | grep "Channel 10:")"
     echo -e "$(echo -n -e "${result2}" | grep "ABC iView:")"
-    #echo -e "$(echo -n -e "${result2}" | grep "Kayo Sports:")"
     MediaUnlockTest_KayoSports ${1}
     echo -e "$(echo -n -e "${result2}" | grep "Optus Sports:")"
     echo -e "$(echo -n -e "${result2}" | grep "SBS on Demand:")"
