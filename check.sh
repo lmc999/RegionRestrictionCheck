@@ -109,8 +109,6 @@ checkCPU() {
         arch=_arm
     elif [[ "$CPUArch" == "x86_64" ]] && [ -n "$ifMacOS" ]; then
         arch=_darwin
-    else
-        arch=unsupported
     fi
 }
 checkCPU
@@ -835,34 +833,25 @@ function MediaUnlockTest_iQYI_Region() {
 }
 
 function MediaUnlockTest_HuluUS() {
-    if [[ "$arch" == "unsupported" ]]; then
-        echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: Unsupported CPU)${Font_Suffix}\n"
-        return
-    fi
     if [[ "$1" == "4" ]]; then
-        curl $useNIC $usePROXY $xForward -fsL -o ./Hulu4.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu4${arch}.sh.x >/dev/null 2>&1
+        curl $useNIC $xForward -fsL -o ./Hulu4.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu4${arch}.sh.x >/dev/null 2>&1
         chmod +x ./Hulu4.sh.x
         ./Hulu4.sh.x >/dev/null 2>&1
     elif [[ "$1" == "6" ]]; then
-        curl $useNIC $usePROXY $xForward -fsL -o ./Hulu6.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu6${arch}.sh.x >/dev/null 2>&1
+        curl $useNIC $xForward -fsL -o ./Hulu6.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu6${arch}.sh.x >/dev/null 2>&1
         chmod +x ./Hulu6.sh.x
         ./Hulu6.sh.x >/dev/null 2>&1
     fi
 
     local result=$?
 
+    
     if [[ "$result" == "1" ]]; then
         echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-        return
     elif [[ "$result" == "0" ]]; then
         echo -n -e "\r Hulu:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-        return
     elif [[ "$result" == "10" ]]; then
         echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
-        return
-    else
-        echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
-        return
     fi
     rm -rf ./*.sh.x
 }
