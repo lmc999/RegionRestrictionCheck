@@ -112,6 +112,7 @@ Bandar Seri Begawan | Brunei | BWN
 Bangalore | India | BLR
 Bangda | China | BPX
 Bangkok | Thailand | BKK
+Bangkok | Thailand | DMK
 Bangor, ME | USA | BGR
 Bangui | Central African Republic | BGF
 Banjul | Gambia | BJL
