@@ -109,6 +109,10 @@ checkCPU() {
         arch=_arm
     elif [[ "$CPUArch" == "x86_64" ]] && [ -n "$ifMacOS" ]; then
         arch=_darwin
+    elif [[ "$CPUArch" == "x86_64" ]]; then
+        arch=""
+    else
+        arch=other
     fi
 }
 checkCPU
@@ -802,6 +806,10 @@ function MediaUnlockTest_iQYI_Region() {
 }
 
 function MediaUnlockTest_HuluUS() {
+    if [[ "$arch" == "other" ]]; then
+        echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}Failed (Unsupported CPU Architecture)${Font_Suffix}\n"
+        return
+    fi
     if [[ "$1" == "4" ]]; then
         curl $useNIC $xForward -fsL -o ./Hulu4.sh.x https://github.com/lmc999/RegionRestrictionCheck/raw/main/binary/Hulu4${arch}.sh.x >/dev/null 2>&1
         chmod +x ./Hulu4.sh.x
