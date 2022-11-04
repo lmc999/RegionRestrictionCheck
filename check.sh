@@ -3081,9 +3081,6 @@ function Global_UnlockTest() {
         MediaUnlockTest_YouTube_CDN ${1}
     }&
     {
-        MediaUnlockTest_NetflixCDN ${1}
-    }&
-    {
         MediaUnlockTest_Spotify ${1}
     }&
     {
@@ -3104,7 +3101,14 @@ function Global_UnlockTest() {
     echo -e "$(echo -n -e "${result}" | grep "iQyi")"
     echo -e "$(echo -n -e "${result}" | grep "Viu")"
     echo -e "$(echo -n -e "${result}" | grep -E "YouTube CDN:|YouTube Region:")"
-    echo -e "$(echo -n -e "${result}" | grep "Netflix Preferred CDN:")"
+    wait
+    local result2=$(
+    {
+        MediaUnlockTest_NetflixCDN ${1}
+    }&
+    )
+    wait
+    echo -e "$(echo -n -e "${result2}" | grep "Netflix Preferred CDN:")"
     echo -e "$(echo -n -e "${result}" | grep "Spotify")"
     echo -e "$(echo -n -e "${result}" | grep "Instagram")"
     echo -e "$(echo -n -e "${result}" | grep "Steam")"
