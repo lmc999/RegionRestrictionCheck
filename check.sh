@@ -2881,7 +2881,7 @@ function Global_UnlockTest() {
     MediaUnlockTest_YouTube_CDN ${1}
     MediaUnlockTest_NetflixCDN ${1}
     MediaUnlockTest_Spotify ${1}
-    MediaUnlockTest_Instagram.Music ${1}
+    #MediaUnlockTest_Instagram.Music ${1}
     GameTest_Steam ${1}
     echo "======================================="
 }
