@@ -1295,7 +1295,7 @@ function MediaUnlockTest_LiTV() {
 
 function MediaUnlockTest_FuboTV() {
     echo -n -e " Fubo TV:\t\t\t\t->\c"
-    local tmpresult=$(curl --user-agent "${UA_Browser}" $useNIC $xForward -${1} ${ssll} -s --max-time 10 "https://api.fubo.tv/v3/plan-manager/plans")
+    local tmpresult=$(curl $useNIC $xForward -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://api.fubo.tv/v3/plan-manager/plans")
     if [ -n "$tmpresult" ]; then
         local result=$(echo $tmpresult | grep 'NO_SERVICE_IN_COUNTRY')
         if [ -n "$result" ]; then
@@ -2760,7 +2760,6 @@ function NA_UnlockTest() {
     MediaUnlockTest_AcornTV ${1}
     MediaUnlockTest_SHOWTIME ${1}
     MediaUnlockTest_encoreTVB ${1}
-    MediaUnlockTest_CineMax ${1}
     MediaUnlockTest_Funimation ${1}
     MediaUnlockTest_DiscoveryPlus ${1}
     MediaUnlockTest_ParamountPlus ${1}
