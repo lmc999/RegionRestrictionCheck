@@ -1295,15 +1295,14 @@ function MediaUnlockTest_LiTV() {
 
 function MediaUnlockTest_FuboTV() {
     echo -n -e " Fubo TV:\t\t\t\t->\c"
-    local tmpresult=$(curl $useNIC $xForward -${1} ${ssll} -s --max-time 10 "https://www.fubo.tv/welcome" | gunzip 2>/dev/null)
-
-    local result=$(echo $tmpresult | grep 'countryCode' | sed 's/.*countryCode//' | cut -f3 -d'"')
-    if [ -n "$result" ]; then
-        if [[ "$result" == "USA" ]]; then
-            echo -n -e "\r Fubo TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    local tmpresult=$(curl $useNIC $xForward -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://api.fubo.tv/v3/plan-manager/plans")
+    if [ -n "$tmpresult" ]; then
+        local result=$(echo $tmpresult | grep 'NO_SERVICE_IN_COUNTRY')
+        if [ -n "$result" ]; then
+            echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
             return
         else
-            echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+            echo -n -e "\r Fubo TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
             return
         fi
     else
@@ -2761,7 +2760,6 @@ function NA_UnlockTest() {
     MediaUnlockTest_AcornTV ${1}
     MediaUnlockTest_SHOWTIME ${1}
     MediaUnlockTest_encoreTVB ${1}
-    MediaUnlockTest_CineMax ${1}
     MediaUnlockTest_Funimation ${1}
     MediaUnlockTest_DiscoveryPlus ${1}
     MediaUnlockTest_ParamountPlus ${1}
