@@ -2750,7 +2750,6 @@ function NA_UnlockTest() {
     MediaUnlockTest_ESPNPlus ${1}
     MediaUnlockTest_EPIX ${1}
     MediaUnlockTest_Starz ${1}
-    MediaUnlockTest_HBONow ${1}
     MediaUnlockTest_HBOMax ${1}
     MediaUnlockTest_BritBox ${1}
     MediaUnlockTest_NBATV ${1}
