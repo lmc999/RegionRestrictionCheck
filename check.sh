@@ -2742,7 +2742,57 @@ function MediaUnlockTest_Instagram.Music() {
     fi
     
 }
-	
+
+function MediaUnlockTest_Popcornflix(){
+    echo -n -e " Popcornflix:\t\t\t\t->\c"
+    local result=$(curl $useNIC $xForward -${1} ${ssll} -s --user-agent "${UA_Browser}" --write-out %{http_code} --output /dev/null --max-time 10 "https://popcornflix-prod.cloud.seachange.com/cms/popcornflix/clientconfiguration/versions/2")
+    if [ "$result" = "000" ] && [ "$1" == "6" ]; then
+        echo -n -e "\r Popcornflix:\t\t\t\t${Font_Red}IPv6 Not Supported${Font_Suffix}\n"
+    elif [ "$result" = "000" ] && [ "$1" == "4" ]; then
+        echo -n -e "\r Popcornflix:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r Popcornflix:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r Popcornflix:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    else
+        echo -n -e "\r Popcornflix:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+    fi
+}
+
+function MediaUnlockTest_TubiTV(){
+    echo -n -e " Tubi TV:\t\t\t\t->\c"
+    local tmpresult=$(curl $useNIC $xForward -${1} ${ssll} -sS --user-agent "${UA_Browser}" --max-time 10 "https://tubitv.com/home")
+    if [[ "$tmpresult" == "curl"* ]]; then
+        echo -n -e "\r Tubi TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+    local result=$(echo $tmpresult | grep '302 Found')
+    if [ -n "$result" ]; then
+        echo -n -e "\r Tubi TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r Tubi TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    fi
+}
+
+function MediaUnlockTest_Philo(){
+    echo -n -e " Philo:\t\t\t\t\t->\c"
+    local tmpresult=$(curl $useNIC $xForward -${1} ${ssll} -fsSL --user-agent "${UA_Browser}" --max-time 10 "https://content-us-east-2-fastly-b.www.philo.com/geo" 2>&1)
+    if [[ "$tmpresult" == "curl"* ]] && [ "$1" == "6" ]; then
+        echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}IPv6 Not Supported${Font_Suffix}\n"
+        return
+    elif [[ "$tmpresult" == "curl"* ]]; then
+        echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+
+    local result=$(echo $tmpresult | grep '"status": "FAIL"')
+    if [ -n "$result" ]; then
+        echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r Philo:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    fi
+}
+
 function NA_UnlockTest() {
     echo "===========[ North America ]==========="
     MediaUnlockTest_Fox ${1}
@@ -2750,10 +2800,12 @@ function NA_UnlockTest() {
     MediaUnlockTest_ESPNPlus ${1}
     MediaUnlockTest_EPIX ${1}
     MediaUnlockTest_Starz ${1}
+    MediaUnlockTest_Philo ${1}
     MediaUnlockTest_HBOMax ${1}
     MediaUnlockTest_BritBox ${1}
     MediaUnlockTest_NBATV ${1}
     MediaUnlockTest_FuboTV ${1}
+    MediaUnlockTest_TubiTV ${1}
     MediaUnlockTest_SlingTV ${1}
     MediaUnlockTest_PlutoTV ${1}
     MediaUnlockTest_AcornTV ${1}
@@ -2763,6 +2815,7 @@ function NA_UnlockTest() {
     MediaUnlockTest_DiscoveryPlus ${1}
     MediaUnlockTest_ParamountPlus ${1}
     MediaUnlockTest_PeacockTV ${1}
+    MediaUnlockTest_Popcornflix ${1}
     MediaUnlockTest_ATTNOW ${1}
     ShowRegion CA
     MediaUnlockTest_CBCGem ${1}
