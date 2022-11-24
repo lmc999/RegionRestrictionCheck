@@ -2879,7 +2879,7 @@ function MediaUnlockTest_TLCGO(){
 }
 
 function MediaUnlockTest_Wavve() {
-	echo -n -e " Wavve:\t\t\t\t\t->\c"
+    echo -n -e " Wavve:\t\t\t\t\t->\c"
     local result1=$(curl $useNIC $xForward -${1} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://apis.wavve.com/fz/streaming?device=pc&partner=pooq&apikey=E5F3E0D30947AA5440556471321BB6D9&credential=none&service=wavve&pooqzone=none&region=kor&drm=pr&targetage=all&contentid=MV_C3001_C300000012559&contenttype=movie&hdr=sdr&videocodec=avc&audiocodec=ac3&issurround=n&format=normal&withinsubtitle=n&action=dash&protocol=dash&quality=auto&deviceModelId=Windows%2010&guid=1a8e9c88-6a3b-11ed-8584-eed06ef80652&lastplayid=none&authtype=cookie&isabr=y&ishevc=n" 2>&1)
     if [[ "$result1" == "000" ]] && [ "$1" == "6" ]; then
         echo -n -e "\r Wavve:\t\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
@@ -2888,7 +2888,7 @@ function MediaUnlockTest_Wavve() {
         echo -n -e "\r Wavve:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
-	if [[ "$result1" == "200" ]]; then
+    if [[ "$result1" == "200" ]]; then
         echo -n -e "\r Wavve:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
     else
         echo -n -e "\r Wavve:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -2896,7 +2896,7 @@ function MediaUnlockTest_Wavve() {
 }
 
 function MediaUnlockTest_Tving() {
-	echo -n -e " Tving:\t\t\t\t\t->\c"
+    echo -n -e " Tving:\t\t\t\t\t->\c"
     local tmpresult=$(curl $useNIC $xForward -${1} --user-agent "${UA_Browser}" -fSsL --max-time 10 "https://api.tving.com/v2a/media/stream/info?apiKey=1e7952d0917d6aab1f0293a063697610&mediaCode=RV60891248" 2>&1)
     if [[ "$tmpresult" == "curl"* ]] && [ "$1" == "6" ]; then
         echo -n -e "\r Tving:\t\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
@@ -2906,7 +2906,7 @@ function MediaUnlockTest_Tving() {
         return
     fi
     local result1=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep 'play')
-	if [ -z "$result1" ]; then
+    if [ -z "$result1" ]; then
         echo -n -e "\r Tving:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     else
         echo -n -e "\r Tving:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
@@ -2914,7 +2914,7 @@ function MediaUnlockTest_Tving() {
 }
 
 function MediaUnlockTest_CoupangPlay() {
-	echo -n -e " Coupang Play:\t\t\t\t->\c"
+    echo -n -e " Coupang Play:\t\t\t\t->\c"
     local tmpresult=$(curl $useNIC $xForward -${1} --user-agent "${UA_Browser}" -fSsi --max-time 10 "https://www.coupangplay.com/ " 2>&1)
     if [[ "$tmpresult" == "curl"* ]] && [ "$1" == "6" ]; then
         echo -n -e "\r Coupang Play:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
@@ -2924,7 +2924,7 @@ function MediaUnlockTest_CoupangPlay() {
         return
     fi
     local result1=$(echo "$tmpresult" | grep 'Location' | awk '{print $2}' )
-	if [[ "$result1" == "/"* ]]; then
+    if [[ "$result1" == "/"* ]]; then
         echo -n -e "\r Coupang Play:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
     else
         echo -n -e "\r Coupang Play:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -2932,7 +2932,7 @@ function MediaUnlockTest_CoupangPlay() {
 }
 
 function MediaUnlockTest_NaverTV() {
-	echo -n -e " Naver TV:\t\t\t\t->\c"
+    echo -n -e " Naver TV:\t\t\t\t->\c"
     local tmpresult=$(curl $useNIC $xForward -${1} --user-agent "${UA_Browser}" -fSsL --max-time 10 "https://tv.naver.com/v/31030608 " 2>&1)
     if [[ "$tmpresult" == "curl"* ]] && [ "$1" == "6" ]; then
         echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
@@ -2942,7 +2942,7 @@ function MediaUnlockTest_NaverTV() {
         return
     fi
     local result1=$(echo "$tmpresult" | grep 'nation_error' | grep 'display:none' )
-	if [ -z "$result1" ]; then
+    if [ -z "$result1" ]; then
         echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     else
         echo -n -e "\r Naver TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
@@ -2950,7 +2950,7 @@ function MediaUnlockTest_NaverTV() {
 }
 
 function MediaUnlockTest_Afreeca() {
-	echo -n -e " Afreeca TV:\t\t\t\t->\c"
+    echo -n -e " Afreeca TV:\t\t\t\t->\c"
     local tmpresult=$(curl $useNIC $xForward -${1} --user-agent "${UA_Browser}" -fSsL --max-time 10 "https://vod.afreecatv.com/player/94844779 " 2>&1)
     if [[ "$tmpresult" == "curl"* ]] && [ "$1" == "6" ]; then
         echo -n -e "\r Afreeca TV:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
@@ -2960,7 +2960,7 @@ function MediaUnlockTest_Afreeca() {
         return
     fi
     local result1=$(echo "$tmpresult" | grep "document.location.href='https://vod.afreecatv.com'" )
-	if [ -z "$result1" ]; then
+    if [ -z "$result1" ]; then
         echo -n -e "\r Afreeca TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
     else
         echo -n -e "\r Afreeca TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -2968,7 +2968,7 @@ function MediaUnlockTest_Afreeca() {
 }
 
 function MediaUnlockTest_KBSDomestic() {
-	echo -n -e " KBS Domestic:\t\t\t\t->\c"
+    echo -n -e " KBS Domestic:\t\t\t\t->\c"
     local tmpresult=$(curl $useNIC $xForward -${1} --user-agent "${UA_Browser}" -fSsL --max-time 10 "https://vod.kbs.co.kr/index.html?source=episode&sname=vod&stype=vod&program_code=T2022-0690&program_id=PS-2022164275-01-000&broadcast_complete_yn=N&local_station_code=00&section_code=03 " 2>&1)
     if [[ "$tmpresult" == "curl"* ]] && [ "$1" == "6" ]; then
         echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
@@ -2978,7 +2978,7 @@ function MediaUnlockTest_KBSDomestic() {
         return
     fi
     local result1=$(echo "$tmpresult" | grep "ipck" | grep 'Domestic\\\":true' )
-	if [ -z "$result1" ]; then
+    if [ -z "$result1" ]; then
         echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     else
         echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
@@ -2986,7 +2986,7 @@ function MediaUnlockTest_KBSDomestic() {
 }
 
 function MediaUnlockTest_KBSAmerican() {
-	echo -n -e " KBS American:\t\t\t\t->\c"
+    echo -n -e " KBS American:\t\t\t\t->\c"
     local tmpresult=$(curl $useNIC $xForward -${1} --user-agent "${UA_Browser}" -fSsL --max-time 10 "https://vod.kbs.co.kr/index.html?source=episode&sname=vod&stype=vod&program_code=T2022-0690&program_id=PS-2022164275-01-000&broadcast_complete_yn=N&local_station_code=00&section_code=03 " 2>&1)
     if [[ "$tmpresult" == "curl"* ]] && [ "$1" == "6" ]; then
         echo -n -e "\r KBS American:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
@@ -2996,7 +2996,7 @@ function MediaUnlockTest_KBSAmerican() {
         return
     fi
     local result1=$(echo "$tmpresult" | grep "ipck" | grep 'American\\\":true' )
-	if [ -z "$result1" ]; then
+    if [ -z "$result1" ]; then
         echo -n -e "\r KBS American:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     else
         echo -n -e "\r KBS American:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
@@ -3004,7 +3004,7 @@ function MediaUnlockTest_KBSAmerican() {
 }
 
 function MediaUnlockTest_KOCOWA() {
-	echo -n -e " KOCOWA:\t\t\t\t->\c"
+    echo -n -e " KOCOWA:\t\t\t\t->\c"
     local result1=$(curl $useNIC $xForward -${1} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.kocowa.com/" 2>&1)
     if [[ "$result1" == "000" ]] && [ "$1" == "6" ]; then
         echo -n -e "\r KOCOWA:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
@@ -3013,7 +3013,7 @@ function MediaUnlockTest_KOCOWA() {
         echo -n -e "\r KOCOWA:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
-	if [[ "$result1" == "200" ]]; then
+    if [[ "$result1" == "200" ]]; then
         echo -n -e "\r KOCOWA:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
     else
         echo -n -e "\r KOCOWA:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
