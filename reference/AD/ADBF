@@ -1,0 +1,23 @@
+#!/bin/bash
+shopt -s expand_aliases
+Font_Black="\033[30m"
+Font_Red="\033[31m"
+Font_Green="\033[32m"
+Font_Yellow="\033[33m"
+Font_Blue="\033[34m"
+Font_Purple="\033[35m"
+Font_SkyBlue="\033[36m"
+Font_White="\033[37m"
+Font_Suffix="\033[0m"
+
+echo -e "${Font_SkyBlue}【荐鸡时刻】${Font_Suffix}"
+echo -e "================================================"
+echo -e "${Font_Yellow}DMIT 黑色星期五疯狂优惠!${Font_Suffix}"
+echo ""
+echo -e "${Font_SkyBlue}✅ 高达30%全区域折扣${Font_Suffix}"
+echo -e "${Font_SkyBlue}✅ 买多省多${Font_Suffix}"
+echo -e "${Font_SkyBlue}✅ 买一送一${Font_Suffix}"
+echo -e "${Font_SkyBlue}✅ 批量采购优惠${Font_Suffix}"
+echo ""
+echo -e "${Font_Red}传送门：${Font_Suffix}https://www.dmit.io/aff.php?aff=3198"
+echo -e "================================================"
