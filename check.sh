@@ -3422,7 +3422,8 @@ function Goodbye() {
 	elif [ "${num}" == 4 ]; then
 		AND=US
     else
-        ADN=$(echo $(($RANDOM % 2 + 1)))
+        #ADN=$(echo $(($RANDOM % 2 + 1)))
+        ADN=BF
     fi
 
     if [[ "$language" == "e" ]]; then
