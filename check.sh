@@ -3687,6 +3687,7 @@ function RunScript() {
             SA_UnlockTest 4
             EU_UnlockTest 4
             OA_UnlockTest 4
+	    KR_UnlockTest 4
         fi
         CheckV6
         if [[ "$isv6" -eq 1 ]]; then
@@ -3698,6 +3699,7 @@ function RunScript() {
             SA_UnlockTest 6
             EU_UnlockTest 6
             OA_UnlockTest 6
+	    KR_UnlockTest 6
         fi
         Goodbye
     fi
