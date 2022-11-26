@@ -2636,7 +2636,7 @@ function MediaUnlockTest_Funimation() {
         echo -n -e "\r Funimation:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
         return
     fi
-
+    echo -n -e "\r Funimation:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Spotify() {
@@ -3098,11 +3098,12 @@ function MediaUnlockTest_SkyShowTime(){
         echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
-    local result1=$(echo "$tmpresult" | grep 'Location' | head -1 | awk '{print $2}' )
+    
+    local result1=$(echo "$tmpresult" | grep 'location' | head -1 | awk '{print $2}' )
     if [[ "$result1" == *"where-can-i-stream"* ]]; then
     	echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     else
-    	$region1=$(echo "$result1" | sed 's#https://www.skyshowtime.com/\([0-9a-zA-Z][0-9a-zA-Z]\)?#\1#i' | tr [:lower:] [:upper:] )
+    	local region1=$(echo -n "$result1" | sed 's#https://www.skyshowtime.com/\([0-9a-zA-Z][0-9a-zA-Z]\)?\r#\1#i' | tr [:lower:] [:upper:] )
         echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Green}Yes (Region: ${region1})${Font_Suffix}\n"
     fi
 }
@@ -3153,8 +3154,9 @@ function EU_UnlockTest() {
     MediaUnlockTest_RakutenTV ${1}
     MediaUnlockTest_Funimation ${1}
     MediaUnlockTest_SkyShowTime ${1}
-    MediaUnlockTest_HBO_Nordic ${1}
-    MediaUnlockTest_HBOGO_EUROPE ${1}
+    MediaUnlockTest_HBOMax ${1}
+    # MediaUnlockTest_HBO_Nordic ${1}
+    # MediaUnlockTest_HBOGO_EUROPE ${1}
     ShowRegion GB
     MediaUnlockTest_SkyGo ${1}
     MediaUnlockTest_BritBox ${1}
@@ -3175,16 +3177,16 @@ function EU_UnlockTest() {
     MediaUnlockTest_NLZIET ${1}
     MediaUnlockTest_videoland ${1}
     MediaUnlockTest_NPO_Start_Plus ${1}
-    ShowRegion ES
-    MediaUnlockTest_HBO_Spain ${1}
+    # ShowRegion ES
+    # MediaUnlockTest_HBO_Spain ${1}
     MediaUnlockTest_PANTAYA ${1}
     ShowRegion IT
     MediaUnlockTest_RaiPlay ${1}
     ShowRegion RU
     #MediaUnlockTest_MegogoTV ${1}
     MediaUnlockTest_Amediateka ${1}
-    ShowRegion PT
-    MediaUnlockTest_HBO_Portugal ${1}
+    # ShowRegion PT
+    # MediaUnlockTest_HBO_Portugal ${1}
     echo "======================================="
 }
 
