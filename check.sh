@@ -2636,7 +2636,7 @@ function MediaUnlockTest_Funimation() {
         echo -n -e "\r Funimation:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
         return
     fi
-
+    echo -n -e "\r Funimation:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Spotify() {
@@ -3093,21 +3093,18 @@ function MediaUnlockTest_NFLPlus() {
 
 function MediaUnlockTest_SkyShowTime(){
     echo -n -e " SkyShowTime:\t\t\t\t->\c"
-    local availableRegion=(BE BG CZ DK DE EE IE GR ES FR IT CY LV LT LU HU MT NL AT PL PT RO SI SK FI SE GB HR LI NO IS)
-    local tmpresult1=$(curl $useNIC $xForward -${1} ${ssll} -fsSL --user-agent "${UA_Browser}" --max-time 10 "https://init.clients.skyshowtime.com/" 2>&1)
-    local tmpresult2=$(curl $useNIC $xForward -${1} ${ssll} -fsSL --user-agent "${UA_Browser}" --max-time 10 "https://geolocation.onetrust.com/cookieconsentpub/v1/geo/location" 2>&1)
-    if [[ "$tmpresult1" == "curl"* ]] || [[ "$tmpresult2" == "curl"* ]]; then
+    local tmpresult=$(curl $useNIC $xForward -${1} --user-agent "${UA_Browser}" -fSsi --max-time 10 "https://www.skyshowtime.com/" -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' 2>&1)
+    if [[ "$tmpresult" == "curl"* ]]; then
         echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
-    local region1=$(echo $tmpresult1 | python -m json.tool 2>/dev/null | grep '"country-code":' | cut -f1 -d',' | awk '{print $2}' | sed 's/"//g')
-    local region2=$(echo $tmpresult2 | sed 's/jsonFeed(//g' | sed 's/);//g' | python -m json.tool 2>/dev/null | grep '"country":' | cut -f1 -d',' | awk '{print $2}' | sed 's/"//g')
-    if [ -z "$region1" ] || [ -z "$region2" ]; then
-        echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
-    elif [[ "${availableRegion[@]}" =~ "${region1}" ]] && [[ "${availableRegion[@]}" =~ "${region2}" ]]; then
-        echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Green}Yes (Region: $region1)${Font_Suffix}\n"
+    
+    local result1=$(echo "$tmpresult" | grep 'location' | head -1 | awk '{print $2}' )
+    if [[ "$result1" == *"where-can-i-stream"* ]]; then
+    	echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     else
-        echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    	local region1=$(echo -n "$result1" | sed 's#https://www.skyshowtime.com/\([0-9a-zA-Z][0-9a-zA-Z]\)?\r#\1#i' | tr [:lower:] [:upper:] )
+        echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Green}Yes (Region: ${region1})${Font_Suffix}\n"
     fi
 }
 
@@ -3157,8 +3154,9 @@ function EU_UnlockTest() {
     MediaUnlockTest_RakutenTV ${1}
     MediaUnlockTest_Funimation ${1}
     MediaUnlockTest_SkyShowTime ${1}
-    MediaUnlockTest_HBO_Nordic ${1}
-    MediaUnlockTest_HBOGO_EUROPE ${1}
+    MediaUnlockTest_HBOMax ${1}
+    # MediaUnlockTest_HBO_Nordic ${1}
+    # MediaUnlockTest_HBOGO_EUROPE ${1}
     ShowRegion GB
     MediaUnlockTest_SkyGo ${1}
     MediaUnlockTest_BritBox ${1}
@@ -3179,16 +3177,16 @@ function EU_UnlockTest() {
     MediaUnlockTest_NLZIET ${1}
     MediaUnlockTest_videoland ${1}
     MediaUnlockTest_NPO_Start_Plus ${1}
-    ShowRegion ES
-    MediaUnlockTest_HBO_Spain ${1}
+    # ShowRegion ES
+    # MediaUnlockTest_HBO_Spain ${1}
     MediaUnlockTest_PANTAYA ${1}
     ShowRegion IT
     MediaUnlockTest_RaiPlay ${1}
     ShowRegion RU
     #MediaUnlockTest_MegogoTV ${1}
     MediaUnlockTest_Amediateka ${1}
-    ShowRegion PT
-    MediaUnlockTest_HBO_Portugal ${1}
+    # ShowRegion PT
+    # MediaUnlockTest_HBO_Portugal ${1}
     echo "======================================="
 }
 
