@@ -1231,6 +1231,7 @@ Seattle, WA | USA | SEA
 Semipalatinsk | Kazakhstan | PLX
 Seoul, Korea | Republic of | GMP
 Seoul, Korea | Republic of | ICN
+Seoul, Korea | Republic of | SSN
 Sept-Iles, PQ | Canada | YZV
 Seville | Spain | SVQ
 Shanghai | China | PVG
