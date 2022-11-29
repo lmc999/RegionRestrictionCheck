@@ -3177,7 +3177,7 @@ function EU_UnlockTest() {
     MediaUnlockTest_NLZIET ${1}
     MediaUnlockTest_videoland ${1}
     MediaUnlockTest_NPO_Start_Plus ${1}
-    # ShowRegion ES
+    ShowRegion ES
     # MediaUnlockTest_HBO_Spain ${1}
     MediaUnlockTest_PANTAYA ${1}
     ShowRegion IT
