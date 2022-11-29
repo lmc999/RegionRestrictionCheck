@@ -2649,7 +2649,7 @@ function MediaUnlockTest_Spotify() {
     if [ "$tmpresult" = "000" ]; then
         echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
-    elif [ "$StatusCode" = "320" ]; then
+    elif [ "$StatusCode" = "320" ] || [ "$StatusCode" = "120" ]; then
         echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     elif [ "$StatusCode" = "311" ] && [ "$isLaunched" = "true" ]; then
