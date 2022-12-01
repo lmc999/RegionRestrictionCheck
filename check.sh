@@ -2649,7 +2649,7 @@ function MediaUnlockTest_Spotify() {
     if [ "$tmpresult" = "000" ]; then
         echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
-    elif [ "$StatusCode" = "320" ]; then
+    elif [ "$StatusCode" = "320" ] || [ "$StatusCode" = "120" ]; then
         echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     elif [ "$StatusCode" = "311" ] && [ "$isLaunched" = "true" ]; then
@@ -3177,7 +3177,7 @@ function EU_UnlockTest() {
     MediaUnlockTest_NLZIET ${1}
     MediaUnlockTest_videoland ${1}
     MediaUnlockTest_NPO_Start_Plus ${1}
-    # ShowRegion ES
+    ShowRegion ES
     # MediaUnlockTest_HBO_Spain ${1}
     MediaUnlockTest_PANTAYA ${1}
     ShowRegion IT
