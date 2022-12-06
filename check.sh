@@ -3418,7 +3418,7 @@ function Goodbye() {
     if [ "${num}" == 1 ]; then
         ADN=TW
 	elif [ "${num}" == 4 ]; then
-		AND=US
+		ADN=US
     else
         ADN=$(echo $(($RANDOM % 2 + 1)))
     fi
