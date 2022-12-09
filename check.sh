@@ -62,8 +62,10 @@ fi
 
 UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36"
 UA_Dalvik="Dalvik/2.1.0 (Linux; U; Android 9; ALP-AL00 Build/HUAWEIALP-AL00)"
-WOWOW_Cookie=$(curl -s "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | awk 'NR==3')
+Media_Cookie=$(curl -s "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies")
+WOWOW_Cookie=$(echo "$Media_Cookie" | awk 'NR==3')
 TVer_Cookie="Accept: application/json;pk=BCpkADawqM0_rzsjsYbC1k1wlJLU4HiAtfzjxdUmfvvLUQB-Ax6VA-p-9wOEZbCEm3u95qq2Y1CQQW1K9tPaMma9iAqUqhpISCmyXrgnlpx9soEmoVNuQpiyGsTpePGumWxSs1YoKziYB6Wz"
+IATACode=$(curl -s "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt")
 
 countRunTimes() {
     if [ "$is_busybox" == 1 ]; then
@@ -441,7 +443,7 @@ function MediaUnlockTest_DisneyPlus() {
     fi
 
     local assertion=$(echo $PreAssertion | python -m json.tool 2>/dev/null | grep assertion | cut -f4 -d'"')
-    local PreDisneyCookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '1p')
+    local PreDisneyCookie=$(echo "$Media_Cookie" | sed -n '1p')
     local disneycookie=$(echo $PreDisneyCookie | sed "s/DISNEYASSERTION/${assertion}/g")
     local TokenContent=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://disney.api.edge.bamgrid.com/token" -H "authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -d "$disneycookie")
     local isBanned=$(echo $TokenContent | python -m json.tool 2>/dev/null | grep 'forbidden-location')
@@ -452,7 +454,7 @@ function MediaUnlockTest_DisneyPlus() {
         return
     fi
 
-    local fakecontent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '8p')
+    local fakecontent=$(echo "$Media_Cookie" | sed -n '8p')
     local refreshToken=$(echo $TokenContent | python -m json.tool 2>/dev/null | grep 'refresh_token' | awk '{print $2}' | cut -f2 -d'"')
     local disneycontent=$(echo $fakecontent | sed "s/ILOVEDISNEY/${refreshToken}/g")
     local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -X POST -sSL --max-time 10 "https://disney.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -d "$disneycontent" 2>&1)
@@ -1120,8 +1122,8 @@ function MediaUnlockTest_YouTube_CDN() {
         echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Yellow}Associated with [$CDN_ISP]${Font_Suffix}\n"
         return
     elif [ -n "$iata" ]; then
-        local lineNo=$(curl $useNIC $usePROXY $xForward -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt" | cut -f3 -d"|" | sed -n "/${iata}/=")
-        local location=$(curl $useNIC $usePROXY $xForward -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
+        local lineNo=$(echo "$IATACode" | cut -f3 -d"|" | sed -n "/${iata}/=")
+        local location=$(echo "$IATACode" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
         echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Green}$location${Font_Suffix}\n"
         return
     else
@@ -1921,15 +1923,16 @@ function MediaUnlockTest_NetflixCDN() {
 
     local CDN_ISP=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -s --max-time 20 "https://api.ip.sb/geoip/$CDNIP" | python -m json.tool 2>/dev/null | grep 'isp' | cut -f4 -d'"')
     local iata=$(echo $CDNAddr | cut -f3 -d"-" | sed 's/.\{3\}$//' | tr [:lower:] [:upper:])
-    local isIataFound1=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt" | grep $iata)
-    local isIataFound2=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt" | grep $iata)
+    local isIataFound1=$(echo "$IATACode" | grep $iata)
+    local IATACode2=$(curl -s "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt")
+    local isIataFound2=$(echo "$IATACode2" | grep $iata)
 
     if [ -n "$isIataFound1" ]; then
-        local lineNo=$(curl $useNIC $usePROXY $xForward -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt" | cut -f3 -d"|" | sed -n "/${iata}/=")
-        local location=$(curl $useNIC $usePROXY $xForward -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
+        local lineNo=$(echo "$IATACode" | cut -f3 -d"|" | sed -n "/${iata}/=")
+        local location=$(echo "$IATACode" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
     elif [ -z "$isIataFound1" ] && [ -n "$isIataFound2" ]; then
-        local lineNo=$(curl $useNIC $usePROXY $xForward -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt" | awk '{print $1}' | sed -n "/${iata}/=")
-        local location=$(curl $useNIC $usePROXY $xForward -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt" | awk "NR==${lineNo}" | cut -f2 -d"," | sed -e 's/^[[:space:]]*//' | tr [:upper:] [:lower:] | sed 's/\b[a-z]/\U&/g')
+        local lineNo=$(echo "$IATACode2" | awk '{print $1}' | sed -n "/${iata}/=")
+        local location=$(echo "$IATACode2" | awk "NR==${lineNo}" | cut -f2 -d"," | sed -e 's/^[[:space:]]*//' | tr [:upper:] [:lower:] | sed 's/\b[a-z]/\U&/g')
     fi
 
     if [ -n "$location" ] && [[ "$CDN_ISP" == "Netflix Streaming Services" ]]; then
@@ -2031,7 +2034,7 @@ function MediaUnlockTest_ElevenSportsTW() {
 
 function MediaUnlockTest_StarPlus() {
     echo -n -e " Star+:\t\t\t\t\t->\c"
-    local starcontent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '10p')
+    local starcontent=$(echo "$Media_Cookie" | sed -n '10p')
     local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -X POST -sSL --max-time 10 "https://star.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: c3RhciZicm93c2VyJjEuMC4w.COknIGCR7I6N0M5PGnlcdbESHGkNv7POwhFNL-_vIdg" -d "$starcontent" 2>&1)
     local previewcheck=$(curl $useNIC $usePROXY $xForward -${1} -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.starplus.com/login")
     local isUnavailable=$(echo $previewcheck | grep unavailable)
@@ -2123,7 +2126,7 @@ function MediaUnlockTest_DiscoveryPlus() {
 
 function MediaUnlockTest_ESPNPlus() {
     echo -n -e " ESPN+:${Font_SkyBlue}[Sponsored by Jam]${Font_Suffix}\t\t->\c"
-    local espncookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '11p')
+    local espncookie=$(echo "$Media_Cookie" | sed -n '11p')
     local TokenContent=$(curl -${1} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://espn.api.edge.bamgrid.com/token" -H "authorization: Bearer ZXNwbiZicm93c2VyJjEuMC4w.ptUt7QxsteaRruuPmGZFaJByOoqKvDP2a5YkInHrc7c" -d "$espncookie")
     local isBanned=$(echo $TokenContent | python -m json.tool 2>/dev/null | grep 'forbidden-location')
     local is403=$(echo $TokenContent | grep '403 ERROR')
@@ -2133,7 +2136,7 @@ function MediaUnlockTest_ESPNPlus() {
         return
     fi
 
-    local fakecontent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '10p')
+    local fakecontent=$(echo "$Media_Cookie" | sed -n '10p')
     local refreshToken=$(echo $TokenContent | python -m json.tool 2>/dev/null | grep 'refresh_token' | awk '{print $2}' | cut -f2 -d'"')
     local espncontent=$(echo $fakecontent | sed "s/ILOVESTAR/${refreshToken}/g")
     local tmpresult=$(curl -${1} --user-agent "${UA_Browser}" -X POST -sSL --max-time 10 "https://espn.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: ZXNwbiZicm93c2VyJjEuMC4w.ptUt7QxsteaRruuPmGZFaJByOoqKvDP2a5YkInHrc7c" -d "$espncontent" 2>&1)
@@ -2254,8 +2257,8 @@ function MediaUnlockTest_KayoSports() {
 
 function MediaUnlockTest_NeonTV() {
     echo -n -e " Neon TV:\t\t\t\t->\c"
-    local NeonHeader=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '12p')
-    local NeonContent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '13p')
+    local NeonHeader=$(echo "$Media_Cookie" | sed -n '12p')
+    local NeonContent=$(echo "$Media_Cookie" | sed -n '13p')
     local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -sS -X POST "https://api.neontv.co.nz/api/client/gql?" -H "content-type: application/json" -H "$NeonHeader" -d "$NeonContent")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Neon TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2735,7 +2738,7 @@ function MediaUnlockTest_music.jp() {
 
 function MediaUnlockTest_Instagram.Music() {
 
-    local cookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '14p')
+    local cookie=$(echo "$Media_Cookie" | sed -n '14p')
     local result=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -s --user-agent "${UA_Browser}" --max-time 10 -H "X-IG-App-ID: 936619743392459" -H "X-IG-WWW-Claim: 0" -b "$cookie" "https://i.instagram.com/api/v1/media/2924384735484795396/info/" | python -m json.tool 2>/dev/null | grep '"should_mute_audio"' | awk '{print $2}' | cut -f1 -d',')
     echo -n -e " Instagram Licensed Music:\t\t->\c"
     if [[ "$result" == "false" ]]; then
