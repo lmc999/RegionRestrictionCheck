@@ -62,10 +62,10 @@ fi
 
 UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36"
 UA_Dalvik="Dalvik/2.1.0 (Linux; U; Android 9; ALP-AL00 Build/HUAWEIALP-AL00)"
-Media_Cookie=$(curl -s "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies")
+Media_Cookie=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies")
 WOWOW_Cookie=$(echo "$Media_Cookie" | awk 'NR==3')
 TVer_Cookie="Accept: application/json;pk=BCpkADawqM0_rzsjsYbC1k1wlJLU4HiAtfzjxdUmfvvLUQB-Ax6VA-p-9wOEZbCEm3u95qq2Y1CQQW1K9tPaMma9iAqUqhpISCmyXrgnlpx9soEmoVNuQpiyGsTpePGumWxSs1YoKziYB6Wz"
-IATACode=$(curl -s "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt")
+IATACode=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt")
 
 countRunTimes() {
     if [ "$is_busybox" == 1 ]; then
@@ -1123,7 +1123,7 @@ function MediaUnlockTest_YouTube_CDN() {
         return
     elif [ -n "$iata" ]; then
         local lineNo=$(echo "$IATACode" | cut -f3 -d"|" | sed -n "/${iata}/=")
-        local location=$(echo "$IATACode" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
+        local location=$(echo "$IATACode" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed 's/[ \t]*$//g')
         echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Green}$location${Font_Suffix}\n"
         return
     else
@@ -1924,19 +1924,19 @@ function MediaUnlockTest_NetflixCDN() {
     local CDN_ISP=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -s --max-time 20 "https://api.ip.sb/geoip/$CDNIP" | python -m json.tool 2>/dev/null | grep 'isp' | cut -f4 -d'"')
     local iata=$(echo $CDNAddr | cut -f3 -d"-" | sed 's/.\{3\}$//' | tr [:lower:] [:upper:])
     local isIataFound1=$(echo "$IATACode" | grep $iata)
-    local IATACode2=$(curl -s "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt")
+    local IATACode2=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt")
     local isIataFound2=$(echo "$IATACode2" | grep $iata)
 
     if [ -n "$isIataFound1" ]; then
         local lineNo=$(echo "$IATACode" | cut -f3 -d"|" | sed -n "/${iata}/=")
-        local location=$(echo "$IATACode" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
+        local location=$(echo "$IATACode" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed 's/[ \t]*$//g')
     elif [ -z "$isIataFound1" ] && [ -n "$isIataFound2" ]; then
         local lineNo=$(echo "$IATACode2" | awk '{print $1}' | sed -n "/${iata}/=")
-        local location=$(echo "$IATACode2" | awk "NR==${lineNo}" | cut -f2 -d"," | sed -e 's/^[[:space:]]*//' | tr [:upper:] [:lower:] | sed 's/\b[a-z]/\U&/g')
+        local location=$(echo "$IATACode2" | awk "NR==${lineNo}" | cut -f2 -d"," | sed 's/[ \t]*$//g' | tr [:upper:] [:lower:] | sed 's/\b[a-z]/\U&/g')
     fi
 
     if [ -n "$location" ] && [[ "$CDN_ISP" == "Netflix Streaming Services" ]]; then
-        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Green}$location ${Font_Suffix}\n"
+        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Green}$location${Font_Suffix}\n"
         rm -rf ~/v6_addr.txt
         return
     elif [ -n "$location" ] && [[ "$CDN_ISP" != "Netflix Streaming Services" ]]; then
