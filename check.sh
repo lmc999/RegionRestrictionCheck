@@ -3477,6 +3477,10 @@ function CheckV6() {
 function Goodbye() {
     if [ "${num}" == 1 ]; then
         ADN=TW
+    elif [ "${num}" == 3 ]; then
+        ADN=JP
+    elif [ "${num}" == 8 ]; then
+        ADN=KR
     elif [ "${num}" == 4 ]; then
         ADN=US
     else
