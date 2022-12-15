@@ -1225,6 +1225,32 @@ function MediaUnlockTest_DMM() {
 
 }
 
+function MediaUnlockTest_DMMTV() {
+    echo -n -e " DMM TV:\t\t\t\t->\c"
+    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 -X POST -d '{"player_name":"dmmtv_browser","player_version":"0.0.0","content_type_detail":"VOD_SVOD","content_id":"11uvjcm4fw2wdu7drtd1epnvz","purchase_product_id":null}' "https://api.beacon.dmm.com/v1/streaming/start")
+
+    if [[ "$tmpresult" = "curl"* ]]; then
+        echo -n -e "\r DMM TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+
+    local checkfailed=$(echo $tmpresult | grep 'FOREIGN')
+    if [ -n "$checkfailed" ]; then
+        echo -n -e "\r DMM TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+
+    local checksuccess=$(echo $tmpresult | grep 'UNAUTHORIZED')
+    if [ -n "$checksuccess" ]; then
+        echo -n -e "\r DMM TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        return
+    else
+        echo -n -e "\r DMM TV:\t\t\t\t${Font_Red}Unsupported${Font_Suffix}\n"
+        return
+    fi
+
+}
+
 function MediaUnlockTest_Catchplay() {
     echo -n -e " CatchPlay+:\t\t\t\t->\c"
     local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -s --max-time 10 "https://sunapi.catchplay.com/geo" -H "authorization: Basic NTQ3MzM0NDgtYTU3Yi00MjU2LWE4MTEtMzdlYzNkNjJmM2E0Ok90QzR3elJRR2hLQ01sSDc2VEoy")
@@ -3229,6 +3255,7 @@ function TW_UnlockTest() {
 function JP_UnlockTest() {
     echo "===============[ Japan ]==============="
     MediaUnlockTest_DMM ${1}
+    MediaUnlockTest_DMMTV ${1}
     MediaUnlockTest_AbemaTV_IPTest ${1}
     MediaUnlockTest_Niconico ${1}
 	MediaUnlockTest_music.jp ${1}
