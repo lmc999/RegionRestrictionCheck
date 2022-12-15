@@ -410,7 +410,7 @@ function MediaUnlockTest_BBCiPLAYER() {
 
 function MediaUnlockTest_Netflix() {
     echo -n -e " Netflix:\t\t\t\t->\c"
-    local result1=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/81215567" 2>&1)
+    local result1=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/81280792" 2>&1)
 
     if [[ "$result1" == "404" ]]; then
         echo -n -e "\r Netflix:\t\t\t\t${Font_Yellow}Originals Only${Font_Suffix}\n"
@@ -3480,6 +3480,10 @@ function CheckV6() {
 function Goodbye() {
     if [ "${num}" == 1 ]; then
         ADN=TW
+    elif [ "${num}" == 3 ]; then
+        ADN=JP
+    elif [ "${num}" == 8 ]; then
+        ADN=KR
     elif [ "${num}" == 4 ]; then
         ADN=US
     else
