@@ -2740,7 +2740,7 @@ function MediaUnlockTest_J:COM_ON_DEMAND() {
 	local result=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://id.zaq.ne.jp")
 	if [ "$result" = "000" ]; then
         echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-    elif [ "$result" = "404" ]; then
+    elif [ "$result" = "502" ]; then
         echo -n -e "\r J:com On Demand:\t\t\t${Font_Green}Yes${Font_Suffix}\n"
     elif [ "$result" = "403" ]; then
         echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}No${Font_Suffix}\n"
