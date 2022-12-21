@@ -3193,7 +3193,7 @@ function HK_UnlockTest() {
     )
     wait
     echo "$result" | grep "Now E:"
-    echo "$result" | grep "Viu.TV："
+    echo "$result" | grep "Viu.TV:"
     echo "$result" | grep "MyTVSuper:"
     echo "$result" | grep "HBO GO Asia:"
     echo "$result" | grep "BiliBili Hongkong/Macau/Taiwan:"
