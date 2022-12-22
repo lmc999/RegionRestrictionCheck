@@ -3020,6 +3020,14 @@ function MediaUnlockTest_SkyShowTime(){
     fi
 }
 
+function echo_Result() {
+    for((i=0;i<${#array[@]};i++)) 
+    do
+        echo "$result" | grep "${array[i]}"
+        sleep 0.05
+    done;
+}
+
 function NA_UnlockTest() {
     echo "===========[ North America ]==========="
     local result=$(
@@ -3034,17 +3042,11 @@ function NA_UnlockTest() {
     MediaUnlockTest_HBOMax ${1} &
     )
     wait
-    echo "$result" | grep "FOX:"
-    echo "$result" | grep "Hulu:"
-    echo "$result" | grep "NFL+"
-    echo "$result" | grep "ESPN+:"
-    echo "$result" | grep "Epix:"
-    echo "$result" | grep "Starz:"
-    echo "$result" | grep "Philo:"
-    echo "$result" | grep "FXNOW:"
+    local array=("FOX:" "Hulu:" "NFL+" "ESPN+:" "Epix:" "Starz:" "Philo:" "FXNOW:")
+    echo_Result ${result} ${array}
     MediaUnlockTest_TLCGO ${1}
     echo "$result" | grep "HBO Max:"
-    local result2=$(
+    local result=$(
     MediaUnlockTest_Shudder ${1} &
     MediaUnlockTest_BritBox ${1} &
     MediaUnlockTest_Crackle ${1} &
@@ -3055,16 +3057,12 @@ function NA_UnlockTest() {
     MediaUnlockTest_TubiTV ${1} &
     )
     wait
-    echo "$result2" | grep "Shudder:"
-    echo "$result2" | grep "BritBox:"
-    echo "$result2" | grep "Crackle:"
-    echo "$result2" | grep "CW TV:"
-    echo "$result2" | grep "A&E TV:"
-    echo "$result2" | grep "NBA TV:"
+    local array=("Shudder:" "BritBox:" "Crackle:" "CW TV:" "A&E TV:" "NBA TV:")
+    echo_Result ${result} ${array}
     MediaUnlockTest_NBCTV ${1}
-    echo "$result2" | grep "Fubo TV:"
-    echo "$result2" | grep "Tubi TV:"
-    local result3=$(
+    echo "$result" | grep "Fubo TV:"
+    echo "$result" | grep "Tubi TV:"
+    local result=$(
     MediaUnlockTest_SlingTV ${1} &
     MediaUnlockTest_PlutoTV ${1} &
     MediaUnlockTest_AcornTV ${1} &
@@ -3081,30 +3079,17 @@ function NA_UnlockTest() {
     MediaUnlockTest_KOCOWA ${1} &
     )
     wait
-    echo "$result3" | grep "Sling TV:"
-    echo "$result3" | grep "Pluto TV:"
-    echo "$result3" | grep "Acorn TV:"
-    echo "$result3" | grep "SHOWTIME:"
-    echo "$result3" | grep "encoreTVB:"
-    echo "$result3" | grep "Funimation:"
-    echo "$result3" | grep "Discovery"
-    echo "$result3" | grep "Paramount+:"
-    echo "$result3" | grep "Peacock TV:"
-    echo "$result3" | grep "Popcornflix:"
-    echo "$result3" | grep "Crunchyroll:"
-    echo "$result3" | grep "Directv Stream:"
-    echo "$result3" | grep "KBS American:"
-    echo "$result3" | grep "KOCOWA:"
+    local array=("Sling TV:" "Pluto TV:" "Acorn TV:" "SHOWTIME:" "encoreTVB:" "Funimation:" "Discovery" "Paramount+:" "Peacock TV:" "Popcornflix:" "Crunchyroll:" "Directv Stream:" "KBS American:" "KOCOWA:") 
+    echo_Result ${result} ${array}
     ShowRegion CA
-    local result4=$(
+    local result=$(
     MediaUnlockTest_CBCGem ${1} &
     MediaUnlockTest_Crave ${1} &
     )
     wait
-    echo "$result4" | grep "CBC Gem:"
-    echo "$result4" | grep "Crave:"
+    echo "$result" | grep "CBC Gem:"
+    echo "$result" | grep "Crave:"
     echo "======================================="
-    sleep 1
 }
 
 function EU_UnlockTest() {
@@ -3118,12 +3103,10 @@ function EU_UnlockTest() {
     # MediaUnlockTest_HBOGO_EUROPE ${1}
     )
     wait
-    echo "$result" | grep "Rakuten TV:"
-    echo "$result" | grep "Funimation:"
-    echo "$result" | grep "SkyShowTime:"
-    echo "$result" | grep "HBO Max:"
+    local array=("Rakuten TV:" "Funimation:" "SkyShowTime:" "HBO Max:") 
+    echo_Result ${result} ${array}
     ShowRegion GB
-    local result2=$(
+    local result=$(
     MediaUnlockTest_SkyGo ${1} &
     MediaUnlockTest_BritBox ${1} &
     MediaUnlockTest_ITVHUB ${1} &
@@ -3133,15 +3116,10 @@ function EU_UnlockTest() {
     MediaUnlockTest_DiscoveryPlusUK ${1} &
     )
     wait
-    echo "$result2" | grep "Sky Go:"
-    echo "$result2" | grep "BritBox:"
-    echo "$result2" | grep "ITV Hub:"
-    echo "$result2" | grep "Channel 4:"
-    echo "$result2" | grep "Channel 5"
-    echo "$result2" | grep "BBC iPLAYER:"
-    echo "$result2" | grep "Discovery+ UK:"
+    local array=("Sky Go:" "BritBox:" "ITV Hub:" "Channel 4:" "Channel 5" "BBC iPLAYER:" "Discovery+ UK:") 
+    echo_Result ${result} ${array}
     ShowRegion FR
-    local result3=$(
+    local result=$(
     MediaUnlockTest_Salto ${1} &
     MediaUnlockTest_CanalPlus ${1} &
     MediaUnlockTest_Molotov ${1} &
@@ -3150,15 +3128,13 @@ function EU_UnlockTest() {
     MediaUnlockTest_ZDF ${1} &
     )
     wait
-    echo "$result3" | grep "Salto:"
-    echo "$result3" | grep "Canal+:"
-    echo "$result3" | grep "Molotov:"
+    local array=("Salto:" "Canal+:" "Molotov:")
+    echo_Result ${result} ${array}
     ShowRegion DE
-    echo "$result3" | grep "Joyn:"
-    echo "$result3" | grep "Sky:"
-    echo "$result3" | grep "ZDF:"
+    local array=("Joyn:" "Sky:" "ZDF:") 
+    echo_Result ${result} ${array}
     ShowRegion NL
-    local result4=$(
+    local result=$(
     MediaUnlockTest_NLZIET ${1} &
     MediaUnlockTest_videoland ${1} &
     MediaUnlockTest_NPO_Start_Plus ${1} &
@@ -3169,17 +3145,15 @@ function EU_UnlockTest() {
     MediaUnlockTest_Amediateka ${1} &
     )
     wait
-    echo "$result4" | grep "NLZIET:"
-    echo "$result4" | grep "videoland:"
-    echo "$result4" | grep "NPO Start Plus:"
+    local array=("NLZIET:" "videoland:" "NPO Start Plus:") 
+    echo_Result ${result} ${array}
     ShowRegion ES
-    echo "$result4" | grep "PANTAYA:"
+    echo "$result" | grep "PANTAYA:"
     ShowRegion IT
-    echo "$result4" | grep "Rai Play:"
+    echo "$result" | grep "Rai Play:"
     ShowRegion RU
-    echo "$result4" | grep "Amediateka:"
+    echo "$result" | grep "Amediateka:"
     echo "======================================="
-    sleep 1
 }
 
 function HK_UnlockTest() {
@@ -3192,13 +3166,9 @@ function HK_UnlockTest() {
     MediaUnlockTest_BilibiliHKMCTW ${1} &
     )
     wait
-    echo "$result" | grep "Now E:"
-    echo "$result" | grep "Viu.TV:"
-    echo "$result" | grep "MyTVSuper:"
-    echo "$result" | grep "HBO GO Asia:"
-    echo "$result" | grep "BiliBili Hongkong/Macau/Taiwan:"
+    local array=("Now E:" "Viu.TV:" "MyTVSuper:" "HBO GO Asia:" "BiliBili Hongkong/Macau/Taiwan:")
+    echo_Result ${result} ${array}
     echo "======================================="
-    sleep 1
 }
 
 function TW_UnlockTest() {
@@ -3217,18 +3187,9 @@ function TW_UnlockTest() {
     MediaUnlockTest_BilibiliTW ${1} &
     )
     wait
-    echo "$result" | grep "KKTV:"
-    echo "$result" | grep "LiTV:"
-    echo "$result" | grep "MyVideo:"
-    echo "$result" | grep "4GTV.TV:"
-    echo "$result" | grep "LineTV.TW:"
-    echo "$result" | grep "Hami Video:"
-    echo "$result" | grep "CatchPlay+:"
-    echo "$result" | grep "HBO GO Asia:"
-    echo "$result" | grep "Bahamut Anime:"
-    echo "$result" | grep "Bilibili Taiwan Only:"
+    local array=("KKTV:" "LiTV:" "MyVideo:" "4GTV.TV:" "LineTV.TW:" "Hami Video:" "CatchPlay+:" "HBO GO Asia:" "Bahamut Anime:" "Bilibili Taiwan Only:")
+    echo_Result ${result} ${array}
     echo "======================================="
-    sleep 1
 }
 
 function JP_UnlockTest() {
@@ -3245,16 +3206,9 @@ function JP_UnlockTest() {
     MediaUnlockTest_HuluJP ${1} &
     )
     wait
-    echo "$result" | grep "DMM:"
-    echo "$result" | grep "DMM TV:"
-    echo "$result" | grep "Abema.TV:"
-    echo "$result" | grep "Niconico:"
-    echo "$result" | grep "music.jp:"
-    echo "$result" | grep "Telasa:"
-    echo "$result" | grep "Paravi:"
-    echo "$result" | grep "U-NEXT:"
-    echo "$result" | grep "Hulu Japan:"
-    local result2=$(
+    local array=("DMM:" "DMM TV:" "Abema.TV:" "Niconico:" "music.jp:" "Telasa:" "Paravi:" "U-NEXT:" "Hulu Japan:") 
+    echo_Result ${result} ${array}
+    local result=$(
     MediaUnlockTest_TVer ${1} &
     MediaUnlockTest_GYAO ${1} &
     MediaUnlockTest_wowow ${1} &
@@ -3265,16 +3219,10 @@ function JP_UnlockTest() {
     MediaUnlockTest_J:COM_ON_DEMAND ${1} &
     )
     wait
-    echo "$result2" | grep "TVer:"
-    echo "$result2" | grep "GYAO!:"
-    echo "$result2" | grep "WOWOW:"
-    echo "$result2" | grep "VideoMarket:"
-    echo "$result2" | grep "FOD(Fuji TV):"
-    echo "$result2" | grep "Radiko:"
-    echo "$result2" | grep "Karaoke@DAM:"
-    echo "$result2" | grep "J:com On Demand:"
+    local array=("TVer:" "GYAO!:" "WOWOW:" "VideoMarket:" "FOD(Fuji TV):" "Radiko:" "Karaoke@DAM:" "J:com On Demand:") 
+    echo_Result ${result} ${array}
     ShowRegion Game
-    local result3=$(
+    local result=$(
     MediaUnlockTest_Kancolle ${1} &
     MediaUnlockTest_UMAJP ${1} &
     MediaUnlockTest_KonosubaFD ${1} &
@@ -3283,14 +3231,9 @@ function JP_UnlockTest() {
     MediaUnlockTest_ProjectSekai ${1} &
     )
     wait
-    echo "$result3" | grep "Kancolle Japan:"
-    echo "$result3" | grep "Pretty Derby Japan:"
-    echo "$result3" | grep "Konosuba Fantastic Days:"
-    echo "$result3" | grep "Princess Connect Re:Dive Japan:"
-    echo "$result3" | grep "World Flipper Japan:"
-    echo "$result3" | grep "Project Sekai: Colorful Stage:"
+    local array=("Kancolle Japan:" "Pretty Derby Japan:" "Konosuba Fantastic Days:" "Princess Connect Re:Dive Japan:" "World Flipper Japan:" "Project Sekai: Colorful Stage:") 
+    echo_Result ${result} ${array}
     echo "======================================="
-    sleep 1
 
 }
 
@@ -3314,21 +3257,9 @@ function Global_UnlockTest() {
     GameTest_Steam ${1} &
     )
     wait
-    echo "$result" | grep "Dazn:"
-    echo "$result" | grep "HotStar:"
-    echo "$result" | grep "Disney+:"
-    echo "$result" | grep "Netflix:"
-    echo "$result" | grep "YouTube Premium:"
-    echo "$result" | grep "Amazon Prime Video:"
-    echo "$result" | grep "TVBAnywhere+:"
-    echo "$result" | grep "iQyi Oversea Region:"
-    echo "$result" | grep "Viu.com:"
-    echo "$result" | grep -E "YouTube CDN:|YouTube Region:"
-    echo "$result" | grep "Netflix Preferred CDN:"
-    echo "$result" | grep "Spotify Registration:"
-    echo "$result" | grep "Steam Currency:"
+    local array=("Dazn:" "HotStar:" "Disney+:" "Netflix:" "YouTube Premium:" "Amazon Prime Video:" "Amazon Prime Video:" "TVBAnywhere+:" "iQyi Oversea Region:" "Viu.com:" "YouTube CDN:" "YouTube Region:" "Netflix Preferred CDN:" "Spotify Registration:" "Steam Currency:")
+    echo_Result ${result} ${array}
     echo "======================================="
-    sleep 1
 }
 
 function SA_UnlockTest() {
@@ -3340,12 +3271,9 @@ function SA_UnlockTest() {
     MediaUnlockTest_Funimation ${1} &
     )
     wait
-    echo "$result" | grep "Star+:"
-    echo "$result" | grep "HBO Max:"
-    echo "$result" | grep "DirecTV Go:"
-    echo "$result" | grep "Funimation:"
+    local array=("Star+:" "HBO Max:" "DirecTV Go:" "Funimation:") 
+    echo_Result ${result} ${array}
     echo "======================================="
-    sleep 1
 }
 
 function OA_UnlockTest() {
@@ -3359,14 +3287,10 @@ function OA_UnlockTest() {
     MediaUnlockTest_ParamountPlus ${1} &
     )
     wait
-    echo "$result" | grep "NBA TV:"
-    echo "$result" | grep "Acorn TV:"
-    echo "$result" | grep "SHOWTIME:"
-    echo "$result" | grep "BritBox:"
-    echo "$result" | grep "Funimation:"
-    echo "$result" | grep "Paramount+:"
+    local array=("NBA TV:" "Acorn TV:" "SHOWTIME:" "BritBox:" "Funimation:" "Paramount+:") 
+    echo_Result ${result} ${array}
     ShowRegion AU
-    local result2=$(
+    local result=$(
     MediaUnlockTest_Stan ${1} &
     MediaUnlockTest_Binge ${1} &
     MediaUnlockTest_Channel7 ${1} &
@@ -3377,30 +3301,25 @@ function OA_UnlockTest() {
     MediaUnlockTest_SBSonDemand ${1} &
     )
     wait
-    echo "$result2" | grep "Stan:"
-    echo "$result2" | grep "Binge:"
+    echo "$result" | grep "Stan:"
+    echo "$result" | grep "Binge:"
     MediaUnlockTest_Docplay ${1}
-    echo "$result2" | grep "Channel 7:"
-    echo "$result2" | grep "Channel 9:"
-    echo "$result2" | grep "Channel 10:"
-    echo "$result2" | grep "ABC iView:"
+    local array=("Channel 7:" "Channel 9:" "Channel 10:" "ABC iView:") 
+    echo_Result ${result} ${array}
     MediaUnlockTest_KayoSports ${1}
-    echo "$result2" | grep "Optus Sports:"
-    echo "$result2" | grep "SBS on Demand:"
+    echo "$result" | grep "Optus Sports:"
+    echo "$result" | grep "SBS on Demand:"
     ShowRegion NZ
-    local result3=$(
+    local result=$(
     MediaUnlockTest_NeonTV ${1} &
     MediaUnlockTest_SkyGONZ ${1} &
     MediaUnlockTest_ThreeNow ${1} &
     MediaUnlockTest_MaoriTV ${1} &
     )
     wait
-    echo "$result3" | grep "Neon TV:"
-    echo "$result3" | grep "SkyGo NZ:"
-    echo "$result3" | grep "ThreeNow:"
-    echo "$result3" | grep "Maori TV:"
+    local array=("Neon TV:" "SkyGo NZ:" "ThreeNow:" "Maori TV:") 
+    echo_Result ${result} ${array}
     echo "======================================="
-    sleep 1
 }
 
 function KR_UnlockTest() {
@@ -3415,15 +3334,9 @@ function KR_UnlockTest() {
     MediaUnlockTest_KOCOWA ${1} &
     )
     wait
-    echo "$result" | grep "Wavve:"
-    echo "$result" | grep "Tving:"
-    echo "$result" | grep "Coupang Play:"
-    echo "$result" | grep "Naver TV:"
-    echo "$result" | grep "Afreeca TV:"
-    echo "$result" | grep "KBS Domestic:"
-    echo "$result" | grep "KOCOWA:"
+    local array=("Wavve:" "Tving:" "Coupang Play:" "Naver TV:" "Afreeca TV:" "KBS Domestic:" "KOCOWA:") 
+    echo_Result ${result} ${array}
     echo "======================================="
-    sleep 1
 }
 
 function Sport_UnlockTest() {
@@ -3442,18 +3355,9 @@ function Sport_UnlockTest() {
     MediaUnlockTest_EurosportRO ${1} &
     )
     wait
-    echo "$result" | grep "Dazn:"
-    echo "$result" | grep "Star+:"
-    echo "$result" | grep "ESPN+:"
-    echo "$result" | grep "NBA TV:"
-    echo "$result" | grep "Fubo TV:"
-    echo "$result" | grep "Mola TV:"
-    echo "$result" | grep "Setanta Sports:"
-    echo "$result" | grep "Optus Sports:"
-    echo "$result" | grep "Bein Sports Connect:"
-    echo "$result" | grep "Eurosport RO:"
+    local array=("Dazn:" "Star+:" "ESPN+:" "NBA TV:" "Fubo TV:" "Mola TV:" "Setanta Sports:" "Optus Sports:" "Bein Sports Connect:" "Eurosport RO:") 
+    echo_Result ${result} ${array}
     echo "======================================="
-    sleep 1
 }
 
 function CheckPROXY() {
