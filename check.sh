@@ -1763,7 +1763,6 @@ function MediaUnlockTest_ProjectSekai() {
 }
 
 function MediaUnlockTest_KonosubaFD() {
-    echo -n -e " Konosuba Fantastic Days:\t\t->\c"
     local result=$(curl $useNIC $usePROXY $xForward -X POST --user-agent "User-Agent: pj0007/212 CFNetwork/1240.0.4 Darwin/20.6.0" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://api.konosubafd.jp/api/masterlist")
     if [ "$result" = "000" ]; then
         echo -n -e "\r Konosuba Fantastic Days:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
