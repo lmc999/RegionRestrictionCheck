@@ -3024,7 +3024,7 @@ function echo_Result() {
     for((i=0;i<${#array[@]};i++)) 
     do
         echo "$result" | grep "${array[i]}"
-        sleep 0.05
+        sleep 0.03
     done;
 }
 
