@@ -3038,7 +3038,7 @@ function MediaUnlockTest_MathsSpot(){
     elif [[ "$result" == "Success" ]]; then
         echo -n -e "\r Maths Spot:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
     else
-    	echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed ($tmpresult2)${Font_Suffix}\n"
+    	echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
     fi
 }
 
