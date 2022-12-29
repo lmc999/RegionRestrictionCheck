@@ -1941,7 +1941,7 @@ function MediaUnlockTest_HBO_Portugal() {
 }
 
 function MediaUnlockTest_SkyGo() {
-    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -sL --max-time 10 "https://skyid.sky.com/authorise/skygo?response_type=token&client_id=sky&appearance=compact&redirect_uri=skygo://auth")
+    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} -sL --max-time 10 "https://skyid.sky.com/authorise/skygo?response_type=token&client_id=sky&appearance=compact&redirect_uri=skygo://auth")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Sky Go:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -3356,10 +3356,10 @@ function KR_UnlockTest() {
     MediaUnlockTest_NaverTV ${1} &
     MediaUnlockTest_Afreeca ${1} &
     MediaUnlockTest_KBSDomestic ${1} &
-    MediaUnlockTest_KOCOWA ${1} &
+    #MediaUnlockTest_KOCOWA ${1} &
     )
     wait
-    local array=("Wavve:" "Tving:" "Coupang Play:" "Naver TV:" "Afreeca TV:" "KBS Domestic:" "KOCOWA:") 
+    local array=("Wavve:" "Tving:" "Coupang Play:" "Naver TV:" "Afreeca TV:" "KBS Domestic:") 
     echo_Result ${result} ${array}
     echo "======================================="
 }
