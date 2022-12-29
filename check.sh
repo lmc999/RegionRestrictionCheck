@@ -62,7 +62,9 @@ fi
 
 UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36"
 UA_Dalvik="Dalvik/2.1.0 (Linux; U; Android 9; ALP-AL00 Build/HUAWEIALP-AL00)"
-WOWOW_Cookie=$(curl -s "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | awk 'NR==3')
+Media_Cookie=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies")
+IATACode=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt")
+WOWOW_Cookie=$(echo "$Media_Cookie" | awk 'NR==3')
 TVer_Cookie="Accept: application/json;pk=BCpkADawqM0_rzsjsYbC1k1wlJLU4HiAtfzjxdUmfvvLUQB-Ax6VA-p-9wOEZbCEm3u95qq2Y1CQQW1K9tPaMma9iAqUqhpISCmyXrgnlpx9soEmoVNuQpiyGsTpePGumWxSs1YoKziYB6Wz"
 
 countRunTimes() {
@@ -427,7 +429,7 @@ function MediaUnlockTest_DisneyPlus() {
     fi
 
     local assertion=$(echo $PreAssertion | python -m json.tool 2>/dev/null | grep assertion | cut -f4 -d'"')
-    local PreDisneyCookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '1p')
+    local PreDisneyCookie=$(echo "$Media_Cookie" | sed -n '1p')
     local disneycookie=$(echo $PreDisneyCookie | sed "s/DISNEYASSERTION/${assertion}/g")
     local TokenContent=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://disney.api.edge.bamgrid.com/token" -H "authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -d "$disneycookie")
     local isBanned=$(echo $TokenContent | python -m json.tool 2>/dev/null | grep 'forbidden-location')
@@ -438,7 +440,7 @@ function MediaUnlockTest_DisneyPlus() {
         return
     fi
 
-    local fakecontent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '8p')
+    local fakecontent=$(echo "$Media_Cookie" | sed -n '8p')
     local refreshToken=$(echo $TokenContent | python -m json.tool 2>/dev/null | grep 'refresh_token' | awk '{print $2}' | cut -f2 -d'"')
     local disneycontent=$(echo $fakecontent | sed "s/ILOVEDISNEY/${refreshToken}/g")
     local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -X POST -sSL --max-time 10 "https://disney.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -d "$disneycontent" 2>&1)
@@ -1078,11 +1080,9 @@ function MediaUnlockTest_YouTube_CDN() {
         echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Yellow}Associated with [$CDN_ISP]${Font_Suffix}\n"
         return
     elif [ -n "$iata" ]; then
-        wget -q https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt
-        local lineNo=$(cat IATACode.txt | cut -f3 -d"|" | sed -n "/${iata}/=")
-        local location=$(cat IATACode.txt | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
+        local lineNo=$(echo "$IATACode" | cut -f3 -d"|" | sed -n "/${iata}/=")
+        local location=$(echo "$IATACode" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
         echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Green}$location${Font_Suffix}\n"
-        rm -rf IATACode.txt
         return
     else
         echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Undetectable${Font_Suffix}\n"
@@ -1763,7 +1763,6 @@ function MediaUnlockTest_ProjectSekai() {
 }
 
 function MediaUnlockTest_KonosubaFD() {
-    echo -n -e " Konosuba Fantastic Days:\t\t->\c"
     local result=$(curl $useNIC $usePROXY $xForward -X POST --user-agent "User-Agent: pj0007/212 CFNetwork/1240.0.4 Darwin/20.6.0" -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://api.konosubafd.jp/api/masterlist")
     if [ "$result" = "000" ]; then
         echo -n -e "\r Konosuba Fantastic Days:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1873,37 +1872,30 @@ function MediaUnlockTest_NetflixCDN() {
     local CDN_ISP=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -s --max-time 20 "https://api.ip.sb/geoip/$CDNIP" | python -m json.tool 2>/dev/null | grep 'isp' | cut -f4 -d'"')
     local iata=$(echo $CDNAddr | cut -f3 -d"-" | sed 's/.\{3\}$//' | tr [:lower:] [:upper:])
 
-    wget -q https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt
-    wget -q https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt
+    local IATACode2=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt")
 
-    local isIataFound1=$(cat IATACode.txt | grep $iata)
-    local isIataFound2=$(cat IATACode2.txt | grep $iata)
+    local isIataFound1=$(echo "$IATACode" | grep $iata)
+    local isIataFound2=$(echo "$IATACode2" | grep $iata)
 
     if [ -n "$isIataFound1" ]; then
-        local lineNo=$(cat IATACode.txt | cut -f3 -d"|" | sed -n "/${iata}/=")
-        local location=$(cat IATACode.txt | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
+        local lineNo=$(echo "$IATACode" | cut -f3 -d"|" | sed -n "/${iata}/=")
+        local location=$(echo "$IATACode" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
     elif [ -z "$isIataFound1" ] && [ -n "$isIataFound2" ]; then
-        local lineNo=$(cat IATACode2.txt | awk '{print $1}' | sed -n "/${iata}/=")
-        local location=$(cat IATACode2.txt | awk "NR==${lineNo}" | cut -f2 -d"," | sed -e 's/^[[:space:]]*//' | tr [:upper:] [:lower:] | sed 's/\b[a-z]/\U&/g')
+        local lineNo=$(echo "$IATACode2" | awk '{print $1}' | sed -n "/${iata}/=")
+        local location=$(echo "$IATACode2" | awk "NR==${lineNo}" | cut -f2 -d"," | sed -e 's/^[[:space:]]*//' | tr [:upper:] [:lower:] | sed 's/\b[a-z]/\U&/g')
     fi
 
     if [ -n "$location" ] && [[ "$CDN_ISP" == "Netflix Streaming Services" ]]; then
         echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Green}$location ${Font_Suffix}\n"
         rm -rf ~/v6_addr.txt
-        rm -rf IATACode.txt
-        rm -rf IATACode2.txt
         return
     elif [ -n "$location" ] && [[ "$CDN_ISP" != "Netflix Streaming Services" ]]; then
         echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Yellow}Associated with [$CDN_ISP] in [$location]${Font_Suffix}\n"
         rm -rf ~/v6_addr.txt
-        rm -rf IATACode.txt
-        rm -rf IATACode2.txt
         return
     elif [ -n "$location" ] && [ -z "$CDN_ISP" ]; then
         echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}No ISP Info Founded${Font_Suffix}\n"
         rm -rf ~/v6_addr.txt
-        rm -rf IATACode.txt
-        rm -rf IATACode2.txt
         return
     fi
 }
@@ -1987,7 +1979,7 @@ function MediaUnlockTest_ElevenSportsTW() {
 }
 
 function MediaUnlockTest_StarPlus() {
-    local starcontent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '10p')
+    local starcontent=$(echo "$Media_Cookie" | sed -n '10p')
     local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -X POST -sSL --max-time 10 "https://star.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: c3RhciZicm93c2VyJjEuMC4w.COknIGCR7I6N0M5PGnlcdbESHGkNv7POwhFNL-_vIdg" -d "$starcontent" 2>&1)
     local previewcheck=$(curl $useNIC $usePROXY $xForward -${1} -s -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.starplus.com/login")
     local isUnavailable=$(echo $previewcheck | grep unavailable)
@@ -2075,7 +2067,7 @@ function MediaUnlockTest_DiscoveryPlus() {
 }
 
 function MediaUnlockTest_ESPNPlus() {
-    local espncookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '11p')
+    local espncookie=$(echo "$Media_Cookie" | sed -n '11p')
     local TokenContent=$(curl -${1} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://espn.api.edge.bamgrid.com/token" -H "authorization: Bearer ZXNwbiZicm93c2VyJjEuMC4w.ptUt7QxsteaRruuPmGZFaJByOoqKvDP2a5YkInHrc7c" -d "$espncookie")
     local isBanned=$(echo $TokenContent | python -m json.tool 2>/dev/null | grep 'forbidden-location')
     local is403=$(echo $TokenContent | grep '403 ERROR')
@@ -2085,7 +2077,7 @@ function MediaUnlockTest_ESPNPlus() {
         return
     fi
 
-    local fakecontent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '10p')
+    local fakecontent=$(echo "$Media_Cookie" | sed -n '10p')
     local refreshToken=$(echo $TokenContent | python -m json.tool 2>/dev/null | grep 'refresh_token' | awk '{print $2}' | cut -f2 -d'"')
     local espncontent=$(echo $fakecontent | sed "s/ILOVESTAR/${refreshToken}/g")
     local tmpresult=$(curl -${1} --user-agent "${UA_Browser}" -X POST -sSL --max-time 10 "https://espn.api.edge.bamgrid.com/graph/v1/device/graphql" -H "authorization: ZXNwbiZicm93c2VyJjEuMC4w.ptUt7QxsteaRruuPmGZFaJByOoqKvDP2a5YkInHrc7c" -d "$espncontent" 2>&1)
@@ -2200,8 +2192,8 @@ function MediaUnlockTest_KayoSports() {
 }
 
 function MediaUnlockTest_NeonTV() {
-    local NeonHeader=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '12p')
-    local NeonContent=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '13p')
+    local NeonHeader=$(echo "$Media_Cookie" | sed -n '12p')
+    local NeonContent=$(echo "$Media_Cookie" | sed -n '13p')
     local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -sS -X POST "https://api.neontv.co.nz/api/client/gql?" -H "content-type: application/json" -H "$NeonHeader" -d "$NeonContent")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Neon TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2597,9 +2589,9 @@ function MediaUnlockTest_Spotify() {
 }
 
 function MediaUnlockTest_VideoMarket() {
-    local token=$(curl -X POST -s "https://api-p.videomarket.jp/v2/authorize/access_token" -d 'grant_type=client_credentials&client_id=1eolxdrti3t58m2f2k8yi0kli105743b6f8c8295&client_secret=lco0nndn3l9tcbjdfdwlswmee105743b739cfb5a' | python -m json.tool 2>/dev/null | grep access_token | cut -f4 -d'"')
+    local token=$(curl -s --max-time 10 -X POST "https://api-p.videomarket.jp/v2/authorize/access_token" -d 'grant_type=client_credentials&client_id=1eolxdrti3t58m2f2k8yi0kli105743b6f8c8295&client_secret=lco0nndn3l9tcbjdfdwlswmee105743b739cfb5a' | python -m json.tool 2>/dev/null | grep access_token | cut -f4 -d'"')
     local Auth="X-Authorization: $token"
-    local playkey=$(curl -s -X POST "https://api-p.videomarket.jp/v2/api/play/keyissue" -d 'fullStoryId=118008001&playChromeCastFlag=false&loginFlag=0' -H "$Auth" | python -m json.tool 2>/dev/null | grep playKey | cut -f4 -d'"')
+    local playkey=$(curl -s --max-time 10 -X POST "https://api-p.videomarket.jp/v2/api/play/keyissue" -d 'fullStoryId=118008001&playChromeCastFlag=false&loginFlag=0' -H "$Auth" | python -m json.tool 2>/dev/null | grep playKey | cut -f4 -d'"')
     local result=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://api-p.videomarket.jp/v2/api/play/keyauth?playKey=${playkey}&deviceType=3&bitRate=0&loginFlag=0&connType=" -H "$Auth")
     if [ "$result" = "000" ] && [ "$1" == "6" ]; then
         echo -n -e "\r VideoMarket:\t\t\t\t${Font_Red}IPv6 Not Supported${Font_Suffix}\n"
@@ -2638,7 +2630,7 @@ function MediaUnlockTest_J:COM_ON_DEMAND() {
 	local result=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://id.zaq.ne.jp")
 	if [ "$result" = "000" ]; then
         echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-    elif [ "$result" = "404" ]; then
+    elif [ "$result" = "502" ]; then
         echo -n -e "\r J:com On Demand:\t\t\t${Font_Green}Yes${Font_Suffix}\n"
     elif [ "$result" = "403" ]; then
         echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -2657,7 +2649,7 @@ function MediaUnlockTest_music.jp() {
 }
 
 function MediaUnlockTest_Instagram.Music() {
-    local cookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '14p')
+    local cookie=$(echo "$Media_Cookie" | sed -n '14p')
     local result=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -s --user-agent "${UA_Browser}" --max-time 10 -H "X-IG-App-ID: 936619743392459" -H "X-IG-WWW-Claim: 0" -b "$cookie" "https://i.instagram.com/api/v1/media/2924384735484795396/info/" | python -m json.tool 2>/dev/null | grep '"should_mute_audio"' | awk '{print $2}' | cut -f1 -d',')
     echo -n -e " Instagram Licensed Music:\t\t->\c"
     if [[ "$result" == "false" ]]; then
@@ -3019,8 +3011,49 @@ function MediaUnlockTest_SkyShowTime(){
     fi
 }
 
+function MediaUnlockTest_MathsSpot() {
+    local tmpresult1=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -sS --max-time 10 "https://netv2.now.gg/v3/playtoken" 2>&1)
+    if [[ "$tmpresult1" == "curl"* ]] && [[ "$1" == "6" ]]; then
+        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+        return
+    elif [[ "$tmpresult1" == "curl"* ]]; then
+        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+    local blocked=$(echo "$tmpresult1" | grep 'Request blocked')
+    if [ -n "$blocked" ]; then
+    	echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}No (Proxy/VPN Detected)${Font_Suffix}\n"
+        return
+    fi
+    local playtoken=$(echo "$tmpresult1" | python -m json.tool 2>/dev/null | grep '"playToken":' | awk '{print $2}' | cut -f2 -d'"')
+    local region=$(echo "$tmpresult1" | python -m json.tool 2>/dev/null | grep '"countryCode":' | awk '{print $2}' | cut -f2 -d'"')
+    local host=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -sS --max-time 10 "https://mathsspot.com/2/api/play/v1/startSession?uaId=ua-KzV6fgcCBHQDU9DHCt2uG&uaSessionId=uasess-IdEux1e80EUstUlnnnHG0&appId=5349&initialOrientation=landscape&utmSource=NA&utmMedium=NA&utmCampaign=NA&deviceType=&playToken=${playtoken}&deepLinkUrl=&accessCode=" 2>&1)
+    local tmpresult2=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -sS --max-time 10 "https://mathsspot.com/2/api/play/v1/startSession?uaId=ua-KzV6fgcCBHQDU9DHCt2uG&uaSessionId=uasess-IdEux1e80EUstUlnnnHG0&appId=5349&initialOrientation=landscape&utmSource=NA&utmMedium=NA&utmCampaign=NA&deviceType=&playToken=${playtoken}&deepLinkUrl=&accessCode=" -H "x-ngg-fe-version: ${host}" 2>&1)
+    if [[ "$host" == "curl"* ]] || [[ "$tmpresult2" == "curl"* ]]; then
+        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+    local result=$(echo "$tmpresult2" | python -m json.tool 2>/dev/null | grep '"status":' | awk '{print $2}' | cut -f2 -d'"')
+    if [[ "$result" == "FailureServiceNotInRegion" ]]; then
+    	echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    elif [[ "$result" == "Success" ]]; then
+        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
+    else
+    	echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+    fi
+}
+
+function echo_Result() {
+    for((i=0;i<${#array[@]};i++)) 
+    do
+        echo "$result" | grep "${array[i]}"
+        sleep 0.03
+    done;
+}
+
 function NA_UnlockTest() {
     echo "===========[ North America ]==========="
+    local result=$(
     MediaUnlockTest_Fox ${1} &
     MediaUnlockTest_HuluUS ${1} &
     MediaUnlockTest_NFLPlus ${1} &
@@ -3029,17 +3062,30 @@ function NA_UnlockTest() {
     MediaUnlockTest_Starz ${1} &
     MediaUnlockTest_Philo ${1} &
     MediaUnlockTest_FXNOW ${1} &
-    MediaUnlockTest_TLCGO ${1} &
     MediaUnlockTest_HBOMax ${1} &
+    )
+    wait
+    local array=("FOX:" "Hulu:" "NFL+" "ESPN+:" "Epix:" "Starz:" "Philo:" "FXNOW:")
+    echo_Result ${result} ${array}
+    MediaUnlockTest_TLCGO ${1}
+    echo "$result" | grep "HBO Max:"
+    local result=$(
     MediaUnlockTest_Shudder ${1} &
     MediaUnlockTest_BritBox ${1} &
     MediaUnlockTest_Crackle ${1} &
     MediaUnlockTest_CWTV ${1} &
     MediaUnlockTest_AETV ${1} &
     MediaUnlockTest_NBATV ${1} &
-    MediaUnlockTest_NBCTV ${1} &
     MediaUnlockTest_FuboTV ${1} &
     MediaUnlockTest_TubiTV ${1} &
+    )
+    wait
+    local array=("Shudder:" "BritBox:" "Crackle:" "CW TV:" "A&E TV:" "NBA TV:")
+    echo_Result ${result} ${array}
+    MediaUnlockTest_NBCTV ${1}
+    echo "$result" | grep "Fubo TV:"
+    echo "$result" | grep "Tubi TV:"
+    local result=$(
     MediaUnlockTest_SlingTV ${1} &
     MediaUnlockTest_PlutoTV ${1} &
     MediaUnlockTest_AcornTV ${1} &
@@ -3054,24 +3100,38 @@ function NA_UnlockTest() {
     MediaUnlockTest_ATTNOW ${1} &
     MediaUnlockTest_KBSAmerican ${1} &
     MediaUnlockTest_KOCOWA ${1} &
+    MediaUnlockTest_MathsSpot ${1} &
+    )
     wait
+    local array=("Sling TV:" "Pluto TV:" "Acorn TV:" "SHOWTIME:" "encoreTVB:" "Funimation:" "Discovery" "Paramount+:" "Peacock TV:" "Popcornflix:" "Crunchyroll:" "Directv Stream:" "KBS American:" "KOCOWA:" "Maths Spot:") 
+    echo_Result ${result} ${array}
     ShowRegion CA
+    local result=$(
     MediaUnlockTest_CBCGem ${1} &
     MediaUnlockTest_Crave ${1} &
+    )
     wait
+    echo "$result" | grep "CBC Gem:"
+    echo "$result" | grep "Crave:"
     echo "======================================="
 }
 
 function EU_UnlockTest() {
     echo "===============[ Europe ]=============="
+    local result=$(
     MediaUnlockTest_RakutenTV ${1} &
     MediaUnlockTest_Funimation ${1} &
     MediaUnlockTest_SkyShowTime ${1} &
     MediaUnlockTest_HBOMax ${1} &
+    MediaUnlockTest_MathsSpot ${1} &
     # MediaUnlockTest_HBO_Nordic ${1}
     # MediaUnlockTest_HBOGO_EUROPE ${1}
+    )
     wait
+    local array=("Rakuten TV:" "Funimation:" "SkyShowTime:" "HBO Max:" "Maths Spot:") 
+    echo_Result ${result} ${array}
     ShowRegion GB
+    local result=$(
     MediaUnlockTest_SkyGo ${1} &
     MediaUnlockTest_BritBox ${1} &
     MediaUnlockTest_ITVHUB ${1} &
@@ -3079,51 +3139,66 @@ function EU_UnlockTest() {
     MediaUnlockTest_Channel5 ${1} &
     MediaUnlockTest_BBCiPLAYER ${1} &
     MediaUnlockTest_DiscoveryPlusUK ${1} &
+    )
     wait
+    local array=("Sky Go:" "BritBox:" "ITV Hub:" "Channel 4:" "Channel 5" "BBC iPLAYER:" "Discovery+ UK:") 
+    echo_Result ${result} ${array}
     ShowRegion FR
+    local result=$(
     MediaUnlockTest_Salto ${1} &
     MediaUnlockTest_CanalPlus ${1} &
     MediaUnlockTest_Molotov ${1} &
-    wait
-    ShowRegion DE
     MediaUnlockTest_Joyn ${1} &
     MediaUnlockTest_SKY_DE ${1} &
     MediaUnlockTest_ZDF ${1} &
+    )
     wait
+    local array=("Salto:" "Canal+:" "Molotov:")
+    echo_Result ${result} ${array}
+    ShowRegion DE
+    local array=("Joyn:" "Sky:" "ZDF:") 
+    echo_Result ${result} ${array}
     ShowRegion NL
+    local result=$(
     MediaUnlockTest_NLZIET ${1} &
     MediaUnlockTest_videoland ${1} &
     MediaUnlockTest_NPO_Start_Plus ${1} &
-    wait
-    ShowRegion ES
     # MediaUnlockTest_HBO_Spain ${1}
     MediaUnlockTest_PANTAYA ${1} &
-    wait
-    ShowRegion IT
     MediaUnlockTest_RaiPlay ${1} &
-    wait
-    ShowRegion RU
     #MediaUnlockTest_MegogoTV ${1}
     MediaUnlockTest_Amediateka ${1} &
+    )
     wait
-    # ShowRegion PT
-    # MediaUnlockTest_HBO_Portugal ${1}
+    local array=("NLZIET:" "videoland:" "NPO Start Plus:") 
+    echo_Result ${result} ${array}
+    ShowRegion ES
+    echo "$result" | grep "PANTAYA:"
+    ShowRegion IT
+    echo "$result" | grep "Rai Play:"
+    ShowRegion RU
+    echo "$result" | grep "Amediateka:"
     echo "======================================="
 }
 
 function HK_UnlockTest() {
     echo "=============[ Hong Kong ]============="
+    local result=$(
     MediaUnlockTest_NowE ${1} &
     MediaUnlockTest_ViuTV ${1} &
     MediaUnlockTest_MyTVSuper ${1} &
     MediaUnlockTest_HBOGO_ASIA ${1} &
     MediaUnlockTest_BilibiliHKMCTW ${1} &
+    )
     wait
+    local array=("Now E:" "Viu.TV:" "MyTVSuper:" "HBO GO Asia:" "BiliBili Hongkong/Macau/Taiwan:")
+    echo_Result ${result} ${array}
     echo "======================================="
 }
 
 function TW_UnlockTest() {
     echo "==============[ Taiwan ]==============="
+    local result=$(
     MediaUnlockTest_KKTV ${1} &
     MediaUnlockTest_LiTV ${1} &
     MediaUnlockTest_MyVideo ${1} &
@@ -3135,44 +3210,62 @@ function TW_UnlockTest() {
     MediaUnlockTest_BahamutAnime ${1} &
     #MediaUnlockTest_ElevenSportsTW ${1}
     MediaUnlockTest_BilibiliTW ${1} &
+    )
     wait
+    local array=("KKTV:" "LiTV:" "MyVideo:" "4GTV.TV:" "LineTV.TW:" "Hami Video:" "CatchPlay+:" "HBO GO Asia:" "Bahamut Anime:" "Bilibili Taiwan Only:")
+    echo_Result ${result} ${array}
     echo "======================================="
 }
 
 function JP_UnlockTest() {
     echo "===============[ Japan ]==============="
+    local result=$(
     MediaUnlockTest_DMM ${1} &
     MediaUnlockTest_DMMTV ${1} &
     MediaUnlockTest_AbemaTV_IPTest ${1} &
     MediaUnlockTest_Niconico ${1} &
-	MediaUnlockTest_music.jp ${1} &
+    MediaUnlockTest_music.jp ${1} &
     MediaUnlockTest_Telasa ${1} &
     MediaUnlockTest_Paravi ${1} &
     MediaUnlockTest_unext ${1} &
     MediaUnlockTest_HuluJP ${1} &
+    )
+    wait
+    local array=("DMM:" "DMM TV:" "Abema.TV:" "Niconico:" "music.jp:" "Telasa:" "Paravi:" "U-NEXT:" "Hulu Japan:") 
+    echo_Result ${result} ${array}
+    local result=$(
     MediaUnlockTest_TVer ${1} &
-	MediaUnlockTest_GYAO ${1} &
+    MediaUnlockTest_GYAO ${1} &
     MediaUnlockTest_wowow ${1} &
     MediaUnlockTest_VideoMarket ${1} &
     MediaUnlockTest_FOD ${1} &
-	MediaUnlockTest_Radiko ${1} &
+    MediaUnlockTest_Radiko ${1} &
     MediaUnlockTest_DAM ${1} &
     MediaUnlockTest_J:COM_ON_DEMAND ${1} &
+    )
     wait
+    local array=("TVer:" "GYAO!:" "WOWOW:" "VideoMarket:" "FOD(Fuji TV):" "Radiko:" "Karaoke@DAM:" "J:com On Demand:") 
+    echo_Result ${result} ${array}
     ShowRegion Game
+    local result=$(
     MediaUnlockTest_Kancolle ${1} &
     MediaUnlockTest_UMAJP ${1} &
     MediaUnlockTest_KonosubaFD ${1} &
     MediaUnlockTest_PCRJP ${1} &
     MediaUnlockTest_WFJP ${1} &
     MediaUnlockTest_ProjectSekai ${1} &
+    )
     wait
+    local array=("Kancolle Japan:" "Pretty Derby Japan:" "Konosuba Fantastic Days:" "Princess Connect Re:Dive Japan:" "World Flipper Japan:" "Project Sekai: Colorful Stage:") 
+    echo_Result ${result} ${array}
     echo "======================================="
+
 }
 
 function Global_UnlockTest() {
     echo ""
     echo "============[ Multination ]============"
+    local result=$(
     MediaUnlockTest_Dazn ${1} &
     MediaUnlockTest_HotStar ${1} &
     MediaUnlockTest_DisneyPlus ${1} &
@@ -3185,54 +3278,78 @@ function Global_UnlockTest() {
     MediaUnlockTest_YouTube_CDN ${1} &
     MediaUnlockTest_NetflixCDN ${1} &
     MediaUnlockTest_Spotify ${1} &
-    wait
     #MediaUnlockTest_Instagram.Music ${1}
-    GameTest_Steam ${1}
+    GameTest_Steam ${1} &
+    )
+    wait
+    local array=("Dazn:" "HotStar:" "Disney+:" "Netflix:" "YouTube Premium:" "Amazon Prime Video:" "TVBAnywhere+:" "iQyi Oversea Region:" "Viu.com:" "YouTube CDN:" "YouTube Region:" "Netflix Preferred CDN:" "Spotify Registration:" "Steam Currency:")
+    echo_Result ${result} ${array}
     echo "======================================="
 }
 
 function SA_UnlockTest() {
     echo "===========[ South America ]==========="
+    local result=$(
     MediaUnlockTest_StarPlus ${1} &
     MediaUnlockTest_HBOMax ${1} &
     MediaUnlockTest_DirecTVGO ${1} &
     MediaUnlockTest_Funimation ${1} &
+    )
     wait
+    local array=("Star+:" "HBO Max:" "DirecTV Go:" "Funimation:") 
+    echo_Result ${result} ${array}
     echo "======================================="
 }
 
 function OA_UnlockTest() {
     echo "==============[ Oceania ]=============="
+    local result=$(
     MediaUnlockTest_NBATV ${1} &
     MediaUnlockTest_AcornTV ${1} &
     MediaUnlockTest_SHOWTIME ${1} &
     MediaUnlockTest_BritBox ${1} &
     MediaUnlockTest_Funimation ${1} &
     MediaUnlockTest_ParamountPlus ${1} &
+    )
     wait
+    local array=("NBA TV:" "Acorn TV:" "SHOWTIME:" "BritBox:" "Funimation:" "Paramount+:") 
+    echo_Result ${result} ${array}
     ShowRegion AU
+    local result=$(
     MediaUnlockTest_Stan ${1} &
     MediaUnlockTest_Binge ${1} &
-    MediaUnlockTest_Docplay ${1} &
     MediaUnlockTest_Channel7 ${1} &
     MediaUnlockTest_Channel9 ${1} &
     MediaUnlockTest_Channel10 ${1} &
     MediaUnlockTest_ABCiView ${1} &
-    MediaUnlockTest_KayoSports ${1} &
     MediaUnlockTest_OptusSports ${1} &
     MediaUnlockTest_SBSonDemand ${1} &
+    )
     wait
+    echo "$result" | grep "Stan:"
+    echo "$result" | grep "Binge:"
+    MediaUnlockTest_Docplay ${1}
+    local array=("Channel 7:" "Channel 9:" "Channel 10:" "ABC iView:") 
+    echo_Result ${result} ${array}
+    MediaUnlockTest_KayoSports ${1}
+    echo "$result" | grep "Optus Sports:"
+    echo "$result" | grep "SBS on Demand:"
     ShowRegion NZ
+    local result=$(
     MediaUnlockTest_NeonTV ${1} &
     MediaUnlockTest_SkyGONZ ${1} &
     MediaUnlockTest_ThreeNow ${1} &
     MediaUnlockTest_MaoriTV ${1} &
+    )
     wait
+    local array=("Neon TV:" "SkyGo NZ:" "ThreeNow:" "Maori TV:") 
+    echo_Result ${result} ${array}
     echo "======================================="
 }
 
 function KR_UnlockTest() {
     echo "==============[ Korean ]==============="
+    local result=$(
     MediaUnlockTest_Wavve ${1} &
     MediaUnlockTest_Tving ${1} &
     MediaUnlockTest_CoupangPlay ${1} &
@@ -3240,12 +3357,16 @@ function KR_UnlockTest() {
     MediaUnlockTest_Afreeca ${1} &
     MediaUnlockTest_KBSDomestic ${1} &
     MediaUnlockTest_KOCOWA ${1} &
+    )
     wait
+    local array=("Wavve:" "Tving:" "Coupang Play:" "Naver TV:" "Afreeca TV:" "KBS Domestic:" "KOCOWA:") 
+    echo_Result ${result} ${array}
     echo "======================================="
 }
 
 function Sport_UnlockTest() {
     echo "===============[ Sport ]==============="
+    local result=$(
     MediaUnlockTest_Dazn ${1} &
     MediaUnlockTest_StarPlus ${1} &
     MediaUnlockTest_ESPNPlus ${1} &
@@ -3257,7 +3378,10 @@ function Sport_UnlockTest() {
     MediaUnlockTest_OptusSports ${1} &
     MediaUnlockTest_BeinConnect ${1} &
     MediaUnlockTest_EurosportRO ${1} &
+    )
     wait
+    local array=("Dazn:" "Star+:" "ESPN+:" "NBA TV:" "Fubo TV:" "Mola TV:" "Setanta Sports:" "Optus Sports:" "Bein Sports Connect:" "Eurosport RO:") 
+    echo_Result ${result} ${array}
     echo "======================================="
 }
 
