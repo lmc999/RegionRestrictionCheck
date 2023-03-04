@@ -404,14 +404,15 @@ function MediaUnlockTest_BBCiPLAYER() {
 
 function MediaUnlockTest_Netflix() {
     local result1=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/81280792" 2>&1)
-
-    if [[ "$result1" == "404" ]]; then
+    local result2=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/70143836" 2>&1)
+    
+    if [[ "$result1" == "404" ]] && [[ "$result2" == "404" ]]; then
         echo -n -e "\r Netflix:\t\t\t\t${Font_Yellow}Originals Only${Font_Suffix}\n"
         return
-    elif [[ "$result1" == "403" ]]; then
+    elif [[ "$result1" == "403" ]] && [[ "$result2" == "403" ]]; then
         echo -n -e "\r Netflix:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
-    elif [[ "$result1" == "200" ]]; then
+    elif [[ "$result1" == "200" ]] || [[ "$result2" == "200" ]]; then
         local region=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -fs --max-time 10 --write-out %{redirect_url} --output /dev/null "https://www.netflix.com/title/80018499" 2>&1 | cut -d '/' -f4 | cut -d '-' -f1 | tr [:lower:] [:upper:])
         if [[ ! -n "$region" ]]; then
             region="US"
