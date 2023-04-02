@@ -3691,13 +3691,6 @@ function Goodbye() {
         echo -e ""
         #bash <(curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/AD/AD${ADN})
         bash <(curl -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/AD/ADDV)
-        echo -e ""
-        echo -e ""
-        echo -e ""
-        echo -e ""
-        echo -e "${Font_Yellow}由于大部分 IP 的 Tiktok 检测时间过长，已将该检测移除出脚本${Font_Suffix}"
-        echo -e "${Font_Yellow}需要检测 Tiktok 区域请移步项目: https://github.com/lmc999/TikTokCheck${Font_Suffix}"
-
     fi
 }
 
