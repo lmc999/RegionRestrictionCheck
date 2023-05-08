@@ -18,7 +18,7 @@ echo -e "${Font_Green}✅${Font_Suffix} 泰国"
 echo -e "${Font_Green}✅${Font_Suffix} 美国"
 echo -e "${Font_Green}✅${Font_Suffix} 澳洲"
 echo -e "${Font_Green}✅${Font_Suffix} 英国"
-echo -e "${Font_Green}✅${Font_Suffix} 德国
+echo -e "${Font_Green}✅${Font_Suffix} 德国"
 echo -e "${Font_Green}✅${Font_Suffix} 法国"
 echo -e "${Font_Green}✅${Font_Suffix} 巴西"
 echo -e "${Font_Green}✅${Font_Suffix} 智利"
