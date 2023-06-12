@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 shopt -s expand_aliases
 Font_Black="\033[30m"
 Font_Red="\033[31m"
