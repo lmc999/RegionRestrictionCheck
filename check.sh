@@ -3195,6 +3195,24 @@ function MediaUnlockTest_TV360(){
   fi
 }
 
+function MediaUnlockTest_MeWatch(){
+  local tmpresult=$(curl -s $useNIC $usePROXY $xForward -${1} ${ssll} --max-time 10 https://cdn.mewatch.sg/api/items/97098/videos?delivery=stream%2Cprogressive&ff=idp%2Cldp%2Crpt%2Ccd&lang=en&resolution=External&segments=all)
+  local checkfail=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep 8002)
+  if [ -n "$tmpresult" ] && [ -z "$checkfail" ]; then
+    echo -n -e "\r MeWatch:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    return
+  elif [ -n "$checkfail" ]; then
+    echo -n -e "\r MeWatch:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    return
+  elif [ -z "$tmpresult" ] && [[ "$1" == "6" ]]; then
+    echo -n -e "\r MeWatch:\t\t\t\t${Font_Red}IPv6 Not Supported${Font_Suffix}\n"
+    return
+  else
+    echo -n -e "\r MeWatch:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+    return
+  fi
+}
+
 function echo_Result() {
     for((i=0;i<${#array[@]};i++)) 
     do
@@ -3526,7 +3544,15 @@ function SEA_UnlockTest(){
     wait
     local array=("HBO GO Asia:" "B-Global SouthEastAsia:") 
     echo_Result ${result} ${array}
-    # ShowRegion SG
+
+    ShowRegion SG
+    local result=$(
+    MediaUnlockTest_MeWatch ${1} &
+    )
+    wait
+    local array=("MeWatch:") 
+    echo_Result ${result} ${array}
+  
     ShowRegion TH
     local result=$(
     MediaUnlockTest_AISPlay ${1} &
@@ -3535,6 +3561,7 @@ function SEA_UnlockTest(){
     wait
     local array=("AIS Play:" "B-Global Thailand Only:") 
     echo_Result ${result} ${array}
+    
     ShowRegion ID
     local result=$(
     MediaUnblockTest_BGlobalID ${1} &
