@@ -1054,7 +1054,7 @@ function MediaUnlockTest_YouTube_Premium() {
     fi
     local isNotAvailable=$(echo $tmpresult | grep 'Premium is not available in your country')
     local region=$(echo $tmpresult | grep "countryCode" | sed 's/.*"countryCode"//' | cut -f2 -d'"')
-    local isAvailable=$(echo $tmpresult | grep 'manageSubscriptionButton')
+    local isAvailable=$(echo $tmpresult | grep '/month')
 
     if [ -n "$isNotAvailable" ]; then
         echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}No${Font_Suffix} \n"
@@ -1079,15 +1079,17 @@ function MediaUnlockTest_YouTube_CDN() {
         return
     fi
 
-    local iata=$(echo $tmpresult | grep router | cut -f2 -d'"' | cut -f2 -d"." | sed 's/.\{2\}$//' | tr [:lower:] [:upper:])
-    local checkfailed=$(echo $tmpresult | grep "=>")
-    if [ -z "$iata" ] && [ -n "$checkfailed" ]; then
-        CDN_ISP=$(echo $checkfailed | awk '{print $3}' | cut -f1 -d"-" | tr [:lower:] [:upper:])
-        echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Yellow}Associated with [$CDN_ISP]${Font_Suffix}\n"
-        return
-    elif [ -n "$iata" ]; then
+    local iata=$(echo $tmpresult | grep '=>'| awk "NR==1" | awk '{print $3}' | cut -f2 -d'-' | cut -c 1-3 | tr [:lower:] [:upper:])
+    if [ -n "$iata" ] && [ ${#iata} -eq 3 ]; then
         local lineNo=$(echo "$IATACode" | cut -f3 -d"|" | sed -n "/${iata}/=")
         local location=$(echo "$IATACode" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
+    fi
+    local isIDC=$(echo $tmpresult | grep "router")
+    if [ -n "$iata" ] && [ -z "$isIDC" ]; then
+        local CDN_ISP=$(echo $tmpresult | awk "NR==1" | awk '{print $3}' | cut -f1 -d"-" | tr [:lower:] [:upper:])
+        echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Yellow}$CDN_ISP in $location${Font_Suffix}\n"
+        return
+    elif [ -n "$iata" ] && [ -n "$isIDC" ]; then
         echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Green}$location${Font_Suffix}\n"
         return
     else
@@ -3150,8 +3152,7 @@ function MediaUnlockTest_AISPlay() {
 
 function OpenAITest(){
     local result1=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -sL --max-time 10 "https://chat.openai.com" | grep 'Sorry, you have been blocked')
-    local result2=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -sI --max-time 10 "https://chat.openai.com" | grep 'cf-mitigated: challenge')
-    if [ -z "$result1" ] && [ -n "$result2" ]; then
+    if [ -z "$result1" ]; then
         echo -n -e "\r ChatGPT:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     else
