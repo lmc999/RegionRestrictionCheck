@@ -3151,7 +3151,7 @@ function MediaUnlockTest_AISPlay() {
 }
 
 function OpenAITest(){
-    local result1=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -sL --max-time 10 "https://chat.openai.com" | grep 'Sorry, you have been blocked')
+    local result1=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -sL --max-time 10 "https://chat.openai.com" | grep 'Unable to load site')
     if [ -z "$result1" ]; then
         echo -n -e "\r ChatGPT:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
