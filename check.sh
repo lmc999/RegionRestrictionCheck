@@ -2708,7 +2708,7 @@ function MediaUnlockTest_Philo(){
     elif [[ "$result" == 'SUCCESS' ]]; then
         echo -n -e "\r Philo:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
     else
-        echo -n -e "\r Philo:\t\t\t\t\t${Font_Green}Failed${Font_Suffix}\n"
+        echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
     fi
 }
 
