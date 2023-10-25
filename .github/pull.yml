@@ -1,0 +1,11 @@
+version: "1"
+rules:
+  - base: upstream/main
+    upstream: lmc999:main
+    mergeMethod: hardreset
+  - base: main
+    upstream: upstream/master
+    mergeMethod: merge
+    conflictReviewers:
+      - sunziping2016
+label: ":arrow_heading_down: pull"
