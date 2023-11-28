@@ -3170,10 +3170,10 @@ function OpenAITest(){
         echo -n -e "\r ChatGPT:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     elif [ -z "$result1" ] && [ -n "$result2" ]; then
-        echo -n -e "\r ChatGPT:\t\t\t\t${Font_Yellow}Only Available on Web Browser${Font_Suffix}\n"
+        echo -n -e "\r ChatGPT:\t\t\t\t${Font_Yellow}Only Available with Web Browser${Font_Suffix}\n"
         return
     elif [ -n "$result1" ] && [ -z "$result2" ]; then
-        echo -n -e "\r ChatGPT:\t\t\t\t${Font_Yellow}Only Available on Mobile Device${Font_Suffix}\n"
+        echo -n -e "\r ChatGPT:\t\t\t\t${Font_Yellow}Only Available with Mobile APP${Font_Suffix}\n"
         return
     else
         echo -n -e "\r ChatGPT:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
