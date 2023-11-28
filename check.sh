@@ -64,6 +64,7 @@ UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 UA_Dalvik="Dalvik/2.1.0 (Linux; U; Android 9; ALP-AL00 Build/HUAWEIALP-AL00)"
 Media_Cookie=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies")
 IATACode=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt")
+IATACode2=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt" 2>&1)
 TVer_Cookie="Accept: application/json;pk=BCpkADawqM0_rzsjsYbC1k1wlJLU4HiAtfzjxdUmfvvLUQB-Ax6VA-p-9wOEZbCEm3u95qq2Y1CQQW1K9tPaMma9iAqUqhpISCmyXrgnlpx9soEmoVNuQpiyGsTpePGumWxSs1YoKziYB6Wz"
 
 countRunTimes() {
@@ -1080,10 +1081,17 @@ function MediaUnlockTest_YouTube_CDN() {
     fi
 
     local iata=$(echo $tmpresult | grep '=>'| awk "NR==1" | awk '{print $3}' | cut -f2 -d'-' | cut -c 1-3 | tr [:lower:] [:upper:])
-    if [ -n "$iata" ] && [ ${#iata} -eq 3 ]; then
+
+    local isIataFound1=$(echo "$IATACode" | grep $iata)
+    local isIataFound2=$(echo "$IATACode2" | grep $iata)
+    if [ -n "$isIataFound1" ]; then
         local lineNo=$(echo "$IATACode" | cut -f3 -d"|" | sed -n "/${iata}/=")
         local location=$(echo "$IATACode" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
+    elif [ -z "$isIataFound1" ] && [ -n "$isIataFound2" ]; then
+        local lineNo=$(echo "$IATACode2" | awk '{print $1}' | sed -n "/${iata}/=")
+        local location=$(echo "$IATACode2" | awk "NR==${lineNo}" | cut -f2 -d"," | sed -e 's/^[[:space:]]*//' | tr [:upper:] [:lower:] | sed 's/\b[a-z]/\U&/g')
     fi
+    
     local isIDC=$(echo $tmpresult | grep "router")
     if [ -n "$iata" ] && [ -z "$isIDC" ]; then
         local CDN_ISP=$(echo $tmpresult | awk "NR==1" | awk '{print $3}' | cut -f1 -d"-" | tr [:lower:] [:upper:])
@@ -1880,7 +1888,7 @@ function MediaUnlockTest_NetflixCDN() {
     local CDN_ISP=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -s --max-time 20 "https://api.ip.sb/geoip/$CDNIP" 2>&1 | python -m json.tool 2>/dev/null | grep 'isp' | cut -f4 -d'"')
     local iata=$(echo $CDNAddr | cut -f3 -d"-" | sed 's/.\{3\}$//' | tr [:lower:] [:upper:])
 
-    local IATACode2=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt" 2>&1)
+    #local IATACode2=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt" 2>&1)
 
     local isIataFound1=$(echo "$IATACode" | grep $iata)
     local isIataFound2=$(echo "$IATACode2" | grep $iata)
@@ -3151,13 +3159,26 @@ function MediaUnlockTest_AISPlay() {
 }
 
 function OpenAITest(){
-    local result1=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -sL --max-time 10 "https://chat.openai.com" | grep 'Sorry, you have been blocked')
-    if [ -z "$result1" ]; then
+    local tmpresult1=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -s --max-time 10 'https://api.openai.com/compliance/cookie_requirements'   -H 'authority: api.openai.com'   -H 'accept: */*'   -H 'accept-language: zh-CN,zh;q=0.9'   -H 'authorization: Bearer null'   -H 'content-type: application/json'   -H 'origin: https://platform.openai.com'   -H 'referer: https://platform.openai.com/'   -H 'sec-ch-ua: "Microsoft Edge";v="119", "Chromium";v="119", "Not?A_Brand";v="24"'   -H 'sec-ch-ua-mobile: ?0'   -H 'sec-ch-ua-platform: "Windows"'   -H 'sec-fetch-dest: empty'   -H 'sec-fetch-mode: cors'   -H 'sec-fetch-site: same-site'   -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0')
+    local tmpresult2=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -s --max-time 10 'https://ios.chat.openai.com/' -H 'authority: ios.chat.openai.com'   -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'   -H 'accept-language: zh-CN,zh;q=0.9' -H 'sec-ch-ua: "Microsoft Edge";v="119", "Chromium";v="119", "Not?A_Brand";v="24"'   -H 'sec-ch-ua-mobile: ?0'   -H 'sec-ch-ua-platform: "Windows"'   -H 'sec-fetch-dest: document'   -H 'sec-fetch-mode: navigate'   -H 'sec-fetch-site: none'   -H 'sec-fetch-user: ?1'   -H 'upgrade-insecure-requests: 1'   -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0')
+    local result1=$(echo $tmpresult1 | grep unsupported_country)
+    local result2=$(echo $tmpresult2 | grep VPN)
+    if [ -z "$result2" ] && [ -z "$result1" ] && [ -n "$tmpresult2" ] && [ -n "$tmpresult1" ]; then
         echo -n -e "\r ChatGPT:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
-    else
+    elif [ -n "$result2" ] && [ -n "$result1" ]; then
         echo -n -e "\r ChatGPT:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
+    elif [ -z "$result1" ] && [ -n "$result2" ]; then
+        echo -n -e "\r ChatGPT:\t\t\t\t${Font_Yellow}Only Available on Web Browser${Font_Suffix}\n"
+        return
+    elif [ -n "$result1" ] && [ -z "$result2" ]; then
+        echo -n -e "\r ChatGPT:\t\t\t\t${Font_Yellow}Only Available on Mobile Device${Font_Suffix}\n"
+        return
+    else
+        echo -n -e "\r ChatGPT:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+        return
+    
     fi
 }
 
