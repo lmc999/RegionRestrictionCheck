@@ -1055,7 +1055,7 @@ function MediaUnlockTest_YouTube_Premium() {
     fi
     local isNotAvailable=$(echo $tmpresult | grep 'Premium is not available in your country')
     local region=$(echo $tmpresult | grep "countryCode" | sed 's/.*"countryCode"//' | cut -f2 -d'"')
-    local isAvailable=$(echo $tmpresult | grep '/month')
+    local isAvailable=$(echo $tmpresult | grep 'ad-free')
 
     if [ -n "$isNotAvailable" ]; then
         echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}No${Font_Suffix} \n"
