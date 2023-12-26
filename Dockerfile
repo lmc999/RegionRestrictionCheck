@@ -6,4 +6,6 @@ COPY check.sh /check.sh
 
 RUN chmod +x /check.sh
 
+CMD ["-E", "-S"]
+
 ENTRYPOINT ["/bin/bash", "-l", "-c", "/check.sh"]
