@@ -67,27 +67,28 @@ This script was modified based on [CoiaPrant/MediaUnlock_Test](https://github.co
 
 **General Use**
 ````bash
-bash <(curl -L -s https://git.io/JRw8R) -E
+bash <(curl -L -s https://rb.gy/y1ddzk) -E
 ````
 
 **Test IPv4 Result Only**
 ````bash
-bash <(curl -L -s https://git.io/JRw8R) -E -M 4
+bash <(curl -L -s https://rb.gy/y1ddzk) -E -M 4
 ````
 
 **Test IPv6 Result Only**
 ````bash
-bash <(curl -L -s https://git.io/JRw8R) -E -M 6
+bash <(curl -L -s https://rb.gy/y1ddzk) -E -M 6
 ````
 
 **Specify a Certain Interface to be Tested**
 ````bash
-bash <(curl -L -s https://git.io/JRw8R) -E -I eth0
+bash <(curl -L -s https://rb.gy/y1ddzk) -E -I eth0
 ````
 
 **Or run in docker**
+## TODO setup own docker image
 ````docker
-docker run --rm -ti --net=host lmc999/regioncheck && docker rmi lmc999/regioncheck
+docker run --rm -ti --net=host pivanko/regioncheck && docker rmi pivanko/regioncheck
 ````
 
 

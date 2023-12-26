@@ -1,17 +1,17 @@
 <p align="center">
-<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Flmc999%2FRegionRestrictionCheck&count_bg=%230AC995&title_bg=%23004BF9&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false"/></a>
+<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fbere333a%2FRegionRestrictionCheck&count_bg=%230AC995&title_bg=%23004BF9&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false"/></a>
 <a href="/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="license" /></a>  
 </p>
 
 ## For English user please see
-### [Introduction](https://github.com/lmc999/RegionRestrictionCheck/blob/main/README_EN.md)
+### [Introduction](https://github.com/bere333a/RegionRestrictionCheck/blob/main/README.md)
 
 ## 脚本介绍
 本脚本基于[CoiaPrant/MediaUnlock_Test](https://github.com/CoiaPrant/MediaUnlock_Test)代码进行修改
 
 **支持OS/Platform：CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android with Termux**
 
-iOS运行方法请参考[此处](https://github.com/lmc999/RegionRestrictionCheck/wiki/iOS%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC%E6%96%B9%E6%B3%95)
+iOS运行方法请参考[此处](https://github.com/bere333a/RegionRestrictionCheck/wiki/iOS%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC%E6%96%B9%E6%B3%95)
 
 + 优化了Disneyplus的判断准确性
 
@@ -137,7 +137,7 @@ bash <(curl -L -s check.unlock.media) -E
 
 **或者直接运行以下Docker命令** (兼容ARM架构)
 ````docker
-docker run --rm -ti --net=host lmc999/regioncheck && docker rmi lmc999/regioncheck
+docker run --rm -ti --net=host pivanko/regioncheck && docker rmi pivanko/regioncheck
 ````
 
 ## 赞助
