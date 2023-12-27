@@ -3251,6 +3251,22 @@ function MediaUnlockTest_MeWatch(){
   fi
 }
 
+function MediaUnlockTest_trueID(){
+    local tmpresult=$(curl -s $useNIC $usePROXY $xForward -${1} ${ssll} --max-time 10 'https://tv.trueid.net/api/stream/checkedPlay?channelId=nQlqONGyoa4&lang=th&country=th'   -H 'authority: tv.trueid.net'   -H 'accept: application/json, text/plain, */*'   -H 'accept-language: zh-CN,zh;q=0.9'   -H 'authorization: Basic MTM4MDY0NGUwZjFmYjZiMTRjODI4OTRhMGM2ODJkMTQ3ZTAxNWM5ZDoxZmI2YjE0YzgyODk0YTBjNjgyZDE0N2UwMTVjOWQ='   -H 'cache-control: no-cache'   -H 'cookie: 5185546544a5daed75782b85be6cffd9=28ce75e1c388316c82f2961b3d3efc42; visid_incap_2624018=NRohTNkSTby8kADOzdHzqBejimUAAAAAQUIPAAAAAADmCJPTW89qFxekZG4O9yMx; incap_ses_257_2624018=89YDAN8bBHiJyHq71gyRAxejimUAAAAA2S8jpDudRGFtx30x4MihXQ==; _gid=GA1.2.120310574.1703584558; visid_incap_2679318=uiazKRp0Q36sf9h/+dqSyCCjimUAAAAAQUIPAAAAAABzz+3jjhslSLwbfUYdyF1t; nlbi_2679318=GvspQ+MV0kFLB1RcYwCYNQAAAAAix592380HiAHUn7OLO6jc; incap_ses_257_2679318=Gvc4AqMlmgtQzHq71gyRAyCjimUAAAAARKQKXmHZujfY7NJZRFUb4A==; _gcl_au=1.1.1031413749.1703584560; __gads=ID=672ef2a3053a99c1:T=1703584545:RT=1703584545:S=ALNI_MaxuM0jsUxFGyz6wa1W7GH4Gwz3CA; __gpi=UID=00000cc34149ff9a:T=1703584545:RT=1703584545:S=ALNI_MbJQgassMuujyHRoXFJDZKFw2g1Sw; sessioncenter=s%3A3XuDVmHGdpluo5wOtcTN5eJzeBaUCHrv.dfWevF34GPz6wgYVoXozrF2JyJTo7IqDgW%2F99efIJps; _cbclose=1; _cbclose26068=1; _uid26068=FA9B6484.1; _ctout26068=1; verify=test; _cc_id=483af3c15f2d5ac5544e3ae6449b9b2c; panoramaId_expiry=1704189350238; panoramaId=64f308a44f1b49cdc86d9d24b06c185ca02cf09a9f00eb6f1978c4ab15bcb870; panoramaIdType=panoDevice; _fbp=fb.1.1703584564048.498517901; _tt_enable_cookie=1; _ttp=e9e7H7NctWhVW4CMOymT54bseo-; __lt__cid=a9df798b-301a-4b88-b849-625e52ed5c31; __lt__sid=96c37b29-2e76cf89; afUserId=29409b73-b13f-40a8-9474-d8bf108fa108-p; AF_SYNC=1703584568452; OptanonConsent=isIABGlobal=false&datestamp=Tue+Dec+26+2023+17%3A56%3A08+GMT%2B0800+(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)&version=6.13.0&hosts=&landingPath=https%3A%2F%2Ftv.trueid.net%2Fth-th&groups=C0001%3A1%2CC0002%3A1%2CC0003%3A1%2CC0004%3A1%2CC0005%3A1; cto_bundle=mDzQN19JSXMxUTJmek84TTU3OWFpMGh3WVBGWDkxcDFJdWIwQnRnZVBNdENyYnE0ZElyT1ZrQzIlMkJ0a1Nna3pEblRsSUd6c1VDWFRQNmhxVGZlMUh1OTY5OXY2dklZdUNnQm1PV0FpN3cyZUVWSCUyRiUyRll1QTdCVlRTYkpCUmtVdzlSMmxyY2RTRjhFR0l4S0tnT05zTWI0ZWI1RGclM0QlM0Q; _ga_R05PJC3ZG8=GS1.1.1703584559.1.1.1703584749.60.0.0; visit_time=186; _ga=GA1.2.1702094718.1703584558'   -H 'pragma: no-cache'   -H 'referer: https://tv.trueid.net/th-th'   -H 'sec-ch-ua: "Not_A Brand";v="8", "Chromium";v="120", "Microsoft Edge";v="120"'   -H 'sec-ch-ua-mobile: ?0'   -H 'sec-ch-ua-platform: "Windows"'   -H 'sec-fetch-dest: empty'   -H 'sec-fetch-mode: cors'   -H 'sec-fetch-site: same-origin'   -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0')
+    local isBlocked=$(echo $tmpresult | grep 'geoblock')
+    local isOK=$(echo $tmpresult | grep '"billboardType":"LOADING"')
+    if [ -n "$isBlocked" ]; then
+        echo -n -e "\r trueID:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return 
+    elif [ -n "$isOK" ]; then
+        echo -n -e "\r trueID:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        return
+    else
+        echo -n -e "\r trueID:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+        return
+    fi
+}
+
 function echo_Result() {
     for((i=0;i<${#array[@]};i++)) 
     do
@@ -3595,10 +3611,11 @@ function SEA_UnlockTest(){
     ShowRegion TH
     local result=$(
     MediaUnlockTest_AISPlay ${1} &
+    MediaUnlockTest_trueID ${1} &
     MediaUnblockTest_BGlobalTH ${1} &
     )
     wait
-    local array=("AIS Play:" "B-Global Thailand Only:") 
+    local array=("AIS Play:" "trueID:" "B-Global Thailand Only:") 
     echo_Result ${result} ${array}
     
     ShowRegion ID
