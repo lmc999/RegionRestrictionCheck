@@ -619,17 +619,13 @@ function MediaUnlockTest_Paravi() {
 }
 
 function MediaUnlockTest_wowow() {
-    local tmpresult=$(curl $useNIC $usePROXY $xForward --user-agent "${UA_Browser}" -${1} -s -X POST --max-time 10 -d '{"meta_id":79408,"vuid":"92103b2769ca4362b2f8ded33228d5c3","device_code":1,"app_id":1,"ua":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36","user_id":3690522,"wol_access_token":"1685025374WMwI8VibQdysjJnt966Kn8BiPetNWl6CFB"}' -H "Content-Type: application/json;charset=UTF-8" "https://mapi.wowow.co.jp/api/v1/playback/auth" 2>&1)
-    if [[ "$tmpresult" == "curl"* ]]; then
-        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        return
-    fi
-
-    checkfailed=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep code | awk '{print $2}' | cut -f1 -d',')
-    if [[ "$checkfailed" == "2055" ]]; then
+    local tmpresult=$(curl $useNIC $usePROXY $xForward -s --max-time 10 'https://mapi.wowow.co.jp/api/v1/playback/auth'   -H 'Accept: application/json, text/plain, */*'   -H 'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6'   -H 'Connection: keep-alive'   -H 'Content-Type: application/json;charset=UTF-8'   -H 'Origin: https://wod.wowow.co.jp'   -H 'Referer: https://wod.wowow.co.jp/'   -H 'Sec-Fetch-Dest: empty'   -H 'Sec-Fetch-Mode: cors'   -H 'Sec-Fetch-Site: same-site'   -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'   -H 'X-Requested-With: XMLHttpRequest'   -H 'sec-ch-ua: "Not_A Brand";v="8", "Chromium";v="120", "Microsoft Edge";v="120"'   -H 'sec-ch-ua-mobile: ?0'   -H 'sec-ch-ua-platform: "Windows"'   --data-raw '{"meta_id":118554,"vuid":"95bfe55055264594a399035ad4fc7e5b","device_code":1,"app_id":1,"ua":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}' 2>&1)
+    local isBlocked=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep 'VPN')
+    local isOK=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep 'playback_session_id')
+    if [ -n "$isBlocked" ]; then
         echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
-    elif [[ "$checkfailed" == "2041" ]]; then
+    elif [ -n "$isOK" ]; then
         echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     else
