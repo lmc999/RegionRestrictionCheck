@@ -517,9 +517,9 @@ function MediaUnlockTest_HuluJP() {
 }
 
 function MediaUnlockTest_MyTVSuper() {
-    local result=$(curl $useNIC $usePROXY $xForward -s -${1} --max-time 10 "https://www.mytvsuper.com/api/auth/getSession/self/" 2>&1 | python -m json.tool 2>/dev/null | grep 'region' | awk '{print $2}')
+    local result=$(curl $useNIC $usePROXY $xForward -s -${1} --max-time 10 "https://www.mytvsuper.com/api/auth/getSession/self/" 2>&1 | sed -n 's/.*"country_code":"\([A-Z]*\)".*/\1/p')
 
-    if [[ "$result" == "1" ]]; then
+    if [[ "$result" == "HK" ]]; then
         echo -n -e "\r MyTVSuper:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     else
