@@ -534,25 +534,18 @@ function MediaUnlockTest_MyTVSuper() {
 
 function MediaUnlockTest_NowE() {
 
-    local result=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -s --max-time 10 -X POST -H "Content-Type: application/json" -d '{"contentId":"202105121370235","contentType":"Vod","pin":"","deviceId":"W-60b8d30a-9294-d251-617b-c12f9d0c","deviceType":"WEB"}' "https://webtvapi.nowe.com/16/1/getVodURL" | python -m json.tool 2>/dev/null | grep 'responseCode' | awk '{print $2}' | cut -f2 -d'"' 2>&1)
+    local result=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 'https://ewcdn04.nowe.com/session/16-5-d5e3774-2106035143489306129/Content/DASH_VOS3/Live/channel(VOS_CH099)/manifest.mpd?token=7b7ede10fb9871b60f5f437b46dce761_1709310300' -H 'host: ewcdn04.nowe.com' -H 'connection: keep-alive' -H 'sec-ch-ua: "Chromium";v="122", "Not(A:Brand";v="24", "Microsoft Edge";v="122"' -H 'accept-language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-ch-ua-mobile: ?0' -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0' -H 'accept: */*' -H 'sec-fetch-site: same-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'origin: https://www.nowe.com' -H 'referer: https://www.nowe.com/')
 
-    if [[ "$result" == "SUCCESS" ]]; then
+    if [[ "$result" == "200" ]]; then
         echo -n -e "\r Now E:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
-    elif [[ "$result" == "PRODUCT_INFORMATION_INCOMPLETE" ]]; then
-        echo -n -e "\r Now E:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-        return
-    elif [[ "$result" == "GEO_CHECK_FAIL" ]]; then
+    elif [[ "$result" == "403" ]]; then
         echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     else
-        echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+        echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
         return
     fi
-
-    echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-    return
-
 }
 
 function MediaUnlockTest_ViuTV() {
