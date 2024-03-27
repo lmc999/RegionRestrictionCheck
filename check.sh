@@ -403,8 +403,8 @@ function MediaUnlockTest_BBCiPLAYER() {
 }
 
 function MediaUnlockTest_Netflix() {
-    local tmpresult1=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -fsL  --max-time 10 "https://www.netflix.com/title/81280792" 2>&1)
-    local tmpresult2=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -fsL  --max-time 10 "https://www.netflix.com/title/70143836" 2>&1)
+    local tmpresult1=$(curl $useNIC $usePROXY $xForward -${1} -fsL  --max-time 10 "https://www.netflix.com/title/81280792" 2>&1)
+    local tmpresult2=$(curl $useNIC $usePROXY $xForward -${1} -fsL  --max-time 10 "https://www.netflix.com/title/70143836" 2>&1)
     local result1=$(echo $tmpresult1 | grep -oP '"isPlayable":\K(true|false)')
     local result2=$(echo $tmpresult2 | grep -oP '"isPlayable":\K(true|false)')
     
@@ -2807,7 +2807,8 @@ function MediaUnlockTest_CoupangPlay() {
 }
 
 function MediaUnlockTest_NaverTV() {
-    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -fSsL --max-time 10 "https://tv.naver.com/v/31030608" 2>&1)
+    local timestamp=$(date +%s%3N)
+    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} -s --max-time 10 "https://apis.naver.com/now_web2/now_web_api/v1/clips/31030608/meta-info?msgpad=${timestamp}&md=SCrXvFnuzUU4qaZbxG%2BVhc0gjCQ%3D" -H 'host: apis.naver.com' -H 'connection: keep-alive' -H 'sec-ch-ua: "Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"' -H 'accept: application/json, text/plain, */*' -H 'sec-ch-ua-mobile: ?0' -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://tv.naver.com' -H 'sec-fetch-site: same-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://tv.naver.com/v/31030608' -H 'accept-language: en,zh-CN;q=0.9,zh;q=0.8' 2>&1)
     if [[ "$tmpresult" == "curl"* ]] && [ "$1" == "6" ]; then
         echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
         return
@@ -2815,11 +2816,11 @@ function MediaUnlockTest_NaverTV() {
         echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
-    local result1=$(echo "$tmpresult" | grep 'nation_error' | grep 'display:none' )
-    if [ -z "$result1" ]; then
-        echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-    else
+    local result=$(echo "$tmpresult" | python -m json.tool 2>/dev/null | grep ctry | cut -f4 -d'"')
+    if [[ "$result" == "KR" ]]; then
         echo -n -e "\r Naver TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    else
+        echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     fi
 }
 
@@ -2854,6 +2855,19 @@ function MediaUnlockTest_KBSDomestic() {
         echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     else
         echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    fi
+}
+
+function MediaUnlockTest_Watcha() {
+    local result=$(curl $useNIC $usePROXY $xForward -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 'https://watcha.com/' -H 'host: watcha.com' -H 'connection: keep-alive' -H 'sec-ch-ua: "Chromium";v="122", "Not(A:Brand";v="24", "Microsoft Edge";v="122"' -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' -H 'accept-language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6' 2>&1)
+    if [ "$result" = "000" ]; then
+        echo -n -e "\r WATCHA:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r WATCHA:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    elif [ "$result" = "451" ]; then
+        echo -n -e "\r WATCHA:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r WATCHA:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
     fi
 }
 
@@ -3610,14 +3624,15 @@ function KR_UnlockTest() {
     local result=$(
     MediaUnlockTest_Wavve ${1} &
     MediaUnlockTest_Tving ${1} &
+    MediaUnlockTest_Watcha ${1} &
     MediaUnlockTest_CoupangPlay ${1} &
-    MediaUnlockTest_NaverTV ${1} &
+    #MediaUnlockTest_NaverTV ${1} &
     MediaUnlockTest_Afreeca ${1} &
     MediaUnlockTest_KBSDomestic ${1} &
     #MediaUnlockTest_KOCOWA ${1} &
     )
     wait
-    local array=("Wavve:" "Tving:" "Coupang Play:" "Naver TV:" "Afreeca TV:" "KBS Domestic:") 
+    local array=("Wavve:" "Tving:" "WATCHA:" "Coupang Play:" "Afreeca TV:" "KBS Domestic:") 
     echo_Result ${result} ${array}
     echo "======================================="
 }
