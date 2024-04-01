@@ -403,19 +403,17 @@ function MediaUnlockTest_BBCiPLAYER() {
 }
 
 function MediaUnlockTest_Netflix() {
-    local tmpresult1=$(curl $useNIC $usePROXY $xForward -${1} -fsL  --max-time 10 "https://www.netflix.com/title/81280792" 2>&1)
-    local tmpresult2=$(curl $useNIC $usePROXY $xForward -${1} -fsL  --max-time 10 "https://www.netflix.com/title/70143836" 2>&1)
-    local result1=$(echo $tmpresult1 | grep -oP '"isPlayable":\K(true|false)')
-    local result2=$(echo $tmpresult2 | grep -oP '"isPlayable":\K(true|false)')
+    local result1=$(curl $useNIC $usePROXY $xForward -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/81280792" -H 'host: www.netflix.com' -H 'connection: keep-alive' -H 'sec-ch-ua: "Chromium";v="122", "Not(A:Brand";v="24", "Microsoft Edge";v="122"' -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' -H 'accept-language: zh-CN,zh;q=0.9' 2>&1)
+    local result2=$(curl $useNIC $usePROXY $xForward -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/70143836" -H 'host: www.netflix.com' -H 'connection: keep-alive' -H 'sec-ch-ua: "Chromium";v="122", "Not(A:Brand";v="24", "Microsoft Edge";v="122"' -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' -H 'accept-language: zh-CN,zh;q=0.9' 2>&1)
     
-    if [[ "$result1" == "false" ]] && [[ "$result2" == "false" ]]; then
+    if [[ "$result1" == "404" ]] && [[ "$result2" == "404" ]]; then
         echo -n -e "\r Netflix:\t\t\t\t${Font_Yellow}Originals Only${Font_Suffix}\n"
         return
-    elif [ -z "$result1" ] && [ -z "$result2" ]; then
+    elif [[ "$result1" == "403" ]] && [[ "$result2" == "403" ]]; then
         echo -n -e "\r Netflix:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
-    elif [[ "$result1" == "true" ]] || [[ "$result2" == "true" ]]; then
-        local region=$(echo $tmpresult1 | grep -oP '"requestCountry":{"id":"\K\w\w' | head -n 1)
+    elif [[ "$result1" == "200" ]] || [[ "$result2" == "200" ]]; then
+        local region=$(curl -fsL  --max-time 10 "https://www.netflix.com/title/70143836" 2>&1 | grep -oP '"requestCountry":{"id":"\K\w\w' | head -n 1)
         echo -n -e "\r Netflix:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
         return
     else
@@ -725,7 +723,7 @@ function MediaUnlockTest_PlutoTV() {
 }
 
 function MediaUnlockTest_HBOMax() {
-    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -sS -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.hbomax.com/" 2>&1)
+    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -sS -o /dev/null -L --max-time 10 -w '%{url_effective}\n' "https://www.max.com/" 2>&1)
     if [[ "$tmpresult" == "curl"* ]]; then
         echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -1405,29 +1403,27 @@ function MediaUnlockTest_HBOGO_EUROPE() {
 }
 
 function MediaUnlockTest_EPIX() {
-    tmpToken=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -s -X POST --max-time 10 "https://api.epix.com/v2/sessions" -H "Content-Type: application/json" -d '{"device":{"guid":"e2add88e-2d92-4392-9724-326c2336013b","format":"console","os":"web","app_version":"1.0.2","model":"browser","manufacturer":"google"},"apikey":"f07debfcdf0f442bab197b517a5126ec","oauth":{"token":null}}' 2>&1)
+    tmpToken=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -s -X POST --max-time 10 'https://api.epix.com/v2/sessions' -X POST -H 'host: api.epix.com' -H 'connection: keep-alive' -H 'sec-ch-ua: "Chromium";v="122", "Not(A:Brand";v="24", "Microsoft Edge";v="122"' -H 'traceparent: 00-000000000000000015b7efdb572b7bf2-4aefaea90903bd1f-01' -H 'sec-ch-ua-mobile: ?0' -H 'x-datadog-origin: rum' -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0' -H 'x-datadog-sampling-priority: 1' -H 'accept: application/json' -H 'x-datadog-trace-id: 1564983120873880562' -H 'x-datadog-parent-id: 5399726519264460063' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://www.mgmplus.com' -H 'sec-fetch-site: cross-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://www.mgmplus.com/' -H 'accept-language: zh-CN,zh;q=0.9' -H 'content-type: application/json' -d '{"device":{"guid":"7a0baaaf-384c-45cd-a21d-310ca5d3002a","format":"console","os":"web","display_width":1865,"display_height":942,"app_version":"1.0.2","model":"browser","manufacturer":"google"},"apikey":"53e208a9bbaee479903f43b39d7301f7"}' 2>&1)
     if [ -z "$tmpToken" ]; then
-        echo -n -e "\r Epix:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
     elif [[ "$tmpToken" == "error code"* ]]; then
-        echo -n -e "\r Epix:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
 
     EpixToken=$(echo $tmpToken | python -m json.tool 2>/dev/null | grep 'session_token' | cut -f4 -d'"')
-    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -X POST -s --max-time 10 "https://api.epix.com/v2/movies/16921/play" -d '{}' -H "X-Session-Token: $EpixToken" 2>&1)
+    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -X POST -s --max-time 10 'https://api.epix.com/graphql' -X POST -H 'host: api.epix.com' -H 'connection: keep-alive' -H 'sec-ch-ua: "Chromium";v="122", "Not(A:Brand";v="24", "Microsoft Edge";v="122"' -H 'traceparent: 00-0000000000000000603047c112148412-32d64f8c890631ef-01' -H 'sec-ch-ua-mobile: ?0' -H 'x-datadog-origin: rum' -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0' -H 'x-datadog-sampling-priority: 1' -H 'accept: application/json' -H "x-session-token: ${EpixToken}" -H 'x-datadog-trace-id: 6931118721080787986' -H 'x-datadog-parent-id: 3663202811925377519' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://www.mgmplus.com' -H 'sec-fetch-site: cross-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://www.mgmplus.com/' -H 'accept-language: zh-CN,zh;q=0.9' -H 'content-type: application/json' -d '{"operationName":"PlayFlow","variables":{"id":"c2VyaWVzOzEwMTc=","supportedActions":["open_url","show_notice","start_billing","play_content","log_in","noop","confirm_provider","unlinked_provider"],"streamTypes":[{"encryptionScheme":"CBCS","packagingSystem":"DASH"},{"encryptionScheme":"CENC","packagingSystem":"DASH"},{"encryptionScheme":"NONE","packagingSystem":"HLS"},{"encryptionScheme":"SAMPLE_AES","packagingSystem":"HLS"}]},"query":"fragment ShowNotice on ShowNotice {\n  type\n  actions {\n    continuationContext\n    text\n    __typename\n  }\n  description\n  title\n  __typename\n}\n\nfragment OpenUrl on OpenUrl {\n  type\n  url\n  __typename\n}\n\nfragment Content on Content {\n  title\n  __typename\n}\n\nfragment Movie on Movie {\n  id\n  shortName\n  __typename\n}\n\nfragment Episode on Episode {\n  id\n  series {\n    shortName\n    __typename\n  }\n  seasonNumber\n  number\n  __typename\n}\n\nfragment Preroll on Preroll {\n  id\n  __typename\n}\n\nfragment ContentUnion on ContentUnion {\n  ...Content\n  ...Movie\n  ...Episode\n  ...Preroll\n  __typename\n}\n\nfragment PlayContent on PlayContent {\n  type\n  continuationContext\n  heartbeatToken\n  currentItem {\n    content {\n      ...ContentUnion\n      __typename\n    }\n    __typename\n  }\n  nextItem {\n    content {\n      ...ContentUnion\n      __typename\n    }\n    showNotice {\n      ...ShowNotice\n      __typename\n    }\n    showNoticeAt\n    __typename\n  }\n  amazonPlaybackData {\n    pid\n    playbackToken\n    materialType\n    __typename\n  }\n  playheadPosition\n  vizbeeStreamInfo {\n    customStreamInfo\n    __typename\n  }\n  closedCaptions {\n    ttml {\n      location\n      __typename\n    }\n    vtt {\n      location\n      __typename\n    }\n    xml {\n      location\n      __typename\n    }\n    __typename\n  }\n  hints {\n    duration\n    seekAllowed\n    trackingEnabled\n    trackingId\n    __typename\n  }\n  streams(types: $streamTypes) {\n    playlistUrl\n    closedCaptionsEmbedded\n    packagingSystem\n    encryptionScheme\n    videoQuality {\n      height\n      width\n      __typename\n    }\n    widevine {\n      authenticationToken\n      licenseServerUrl\n      __typename\n    }\n    playready {\n      authenticationToken\n      licenseServerUrl\n      __typename\n    }\n    fairplay {\n      authenticationToken\n      certificateUrl\n      licenseServerUrl\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment StartBilling on StartBilling {\n  type\n  __typename\n}\n\nfragment LogIn on LogIn {\n  type\n  __typename\n}\n\nfragment Noop on Noop {\n  type\n  __typename\n}\n\nfragment PreviewContent on PreviewContent {\n  type\n  title\n  description\n  stream {\n    sources {\n      hls {\n        location\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ConfirmProvider on ConfirmProvider {\n  type\n  __typename\n}\n\nfragment UnlinkedProvider on UnlinkedProvider {\n  type\n  __typename\n}\n\nquery PlayFlow($id: String!, $supportedActions: [PlayFlowActionEnum!]!, $context: String, $behavior: BehaviorEnum = DEFAULT, $streamTypes: [StreamDefinition!]) {\n  playFlow(\n    id: $id\n    supportedActions: $supportedActions\n    context: $context\n    behavior: $behavior\n  ) {\n    ...ShowNotice\n    ...OpenUrl\n    ...PlayContent\n    ...StartBilling\n    ...LogIn\n    ...Noop\n    ...PreviewContent\n    ...ConfirmProvider\n    ...UnlinkedProvider\n    __typename\n  }\n}"}' 2>&1)
 
-    local result=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep status | cut -f4 -d'"')
-    if [[ "$result" == "PROXY_DETECTED" ]]; then
-        echo -n -e "\r Epix:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    local isBlocked=$(echo $tmpresult | grep 'MGM+ is only available in the United States')
+    local isOK=$(echo $tmpresult | grep StartBilling)
+    if [ -n "$isBlocked" ]; then
+        echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
-    elif [[ "$result" == "GEO_BLOCKED" ]]; then
-        echo -n -e "\r Epix:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-        return
-    elif [[ "$result" == "NOT_SUBSCRIBED" ]]; then
-        echo -n -e "\r Epix:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    elif [ -n "$isOK" ]; then
+        echo -n -e "\r MGM+:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     else
-        echo -n -e "\r Epix:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+        echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
         return
     fi
 
@@ -3321,7 +3317,7 @@ function NA_UnlockTest() {
     MediaUnlockTest_HBOMax ${1} &
     )
     wait
-    local array=("FOX:" "Hulu:" "NFL+" "ESPN+:" "Epix:" "Starz:" "Philo:" "FXNOW:")
+    local array=("FOX:" "Hulu:" "NFL+" "ESPN+:" "MGM+:" "Starz:" "Philo:" "FXNOW:")
     echo_Result ${result} ${array}
     MediaUnlockTest_TLCGO ${1}
     echo "$result" | grep "HBO Max:"
@@ -3354,12 +3350,12 @@ function NA_UnlockTest() {
     MediaUnlockTest_Popcornflix ${1} &
     MediaUnlockTest_Crunchyroll ${1} &
     MediaUnlockTest_ATTNOW ${1} &
-    MediaUnlockTest_KBSAmerican ${1} &
+    #MediaUnlockTest_KBSAmerican ${1} &
     MediaUnlockTest_KOCOWA ${1} &
-    MediaUnlockTest_MathsSpot ${1} &
+    #MediaUnlockTest_MathsSpot ${1} &
     )
     wait
-    local array=("Sling TV:" "Pluto TV:" "Acorn TV:" "SHOWTIME:" "encoreTVB:" "Funimation:" "Discovery" "Paramount+:" "Peacock TV:" "Popcornflix:" "Crunchyroll:" "Directv Stream:" "KBS American:" "KOCOWA:" "Maths Spot:") 
+    local array=("Sling TV:" "Pluto TV:" "Acorn TV:" "SHOWTIME:" "encoreTVB:" "Funimation:" "Discovery" "Paramount+:" "Peacock TV:" "Popcornflix:" "Crunchyroll:" "Directv Stream:" "KOCOWA:") 
     echo_Result ${result} ${array}
     ShowRegion CA
     local result=$(
@@ -3379,12 +3375,12 @@ function EU_UnlockTest() {
     MediaUnlockTest_Funimation ${1} &
     MediaUnlockTest_SkyShowTime ${1} &
     MediaUnlockTest_HBOMax ${1} &
-    MediaUnlockTest_MathsSpot ${1} &
+    #MediaUnlockTest_MathsSpot ${1} &
     # MediaUnlockTest_HBO_Nordic ${1}
     # MediaUnlockTest_HBOGO_EUROPE ${1}
     )
     wait
-    local array=("Rakuten TV:" "Funimation:" "SkyShowTime:" "HBO Max:" "Maths Spot:") 
+    local array=("Rakuten TV:" "Funimation:" "SkyShowTime:" "HBO Max:") 
     echo_Result ${result} ${array}
     ShowRegion GB
     local result=$(
@@ -3401,7 +3397,7 @@ function EU_UnlockTest() {
     echo_Result ${result} ${array}
     ShowRegion FR
     local result=$(
-    MediaUnlockTest_Salto ${1} &
+    #MediaUnlockTest_Salto ${1} &
     MediaUnlockTest_CanalPlus ${1} &
     MediaUnlockTest_Molotov ${1} &
     MediaUnlockTest_Joyn ${1} &
@@ -3409,7 +3405,7 @@ function EU_UnlockTest() {
     MediaUnlockTest_ZDF ${1} &
     )
     wait
-    local array=("Salto:" "Canal+:" "Molotov:")
+    local array=("Canal+:" "Molotov:")
     echo_Result ${result} ${array}
     ShowRegion DE
     local array=("Joyn:" "Sky:" "ZDF:") 
