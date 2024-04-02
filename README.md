@@ -137,7 +137,7 @@ bash <(curl -L -s check.unlock.media) -E
 
 **或者直接运行以下Docker命令** (兼容ARM架构)
 ````docker
-docker run --rm -ti --net=host lmc999/regioncheck && docker rmi lmc999/regioncheck
+docker run --rm -ti --net=host lmc999/regioncheck && docker rmi lmc999/regioncheck > /dev/null 2>&1
 ````
 
 ## 赞助
