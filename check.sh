@@ -3343,7 +3343,7 @@ function NA_UnlockTest() {
     MediaUnlockTest_AcornTV ${1} &
     MediaUnlockTest_SHOWTIME ${1} &
     MediaUnlockTest_encoreTVB ${1} &
-    MediaUnlockTest_Funimation ${1} &
+    #MediaUnlockTest_Funimation ${1} &
     MediaUnlockTest_DiscoveryPlus ${1} &
     MediaUnlockTest_ParamountPlus ${1} &
     MediaUnlockTest_PeacockTV ${1} &
@@ -3355,7 +3355,7 @@ function NA_UnlockTest() {
     #MediaUnlockTest_MathsSpot ${1} &
     )
     wait
-    local array=("Sling TV:" "Pluto TV:" "Acorn TV:" "SHOWTIME:" "encoreTVB:" "Funimation:" "Discovery" "Paramount+:" "Peacock TV:" "Popcornflix:" "Crunchyroll:" "Directv Stream:" "KOCOWA:") 
+    local array=("Sling TV:" "Pluto TV:" "Acorn TV:" "SHOWTIME:" "encoreTVB:" "Discovery" "Paramount+:" "Peacock TV:" "Popcornflix:" "Crunchyroll:" "Directv Stream:" "KOCOWA:") 
     echo_Result ${result} ${array}
     ShowRegion CA
     local result=$(
@@ -3372,7 +3372,7 @@ function EU_UnlockTest() {
     echo "===============[ Europe ]=============="
     local result=$(
     MediaUnlockTest_RakutenTV ${1} &
-    MediaUnlockTest_Funimation ${1} &
+    #MediaUnlockTest_Funimation ${1} &
     MediaUnlockTest_SkyShowTime ${1} &
     MediaUnlockTest_HBOMax ${1} &
     #MediaUnlockTest_MathsSpot ${1} &
@@ -3380,7 +3380,7 @@ function EU_UnlockTest() {
     # MediaUnlockTest_HBOGO_EUROPE ${1}
     )
     wait
-    local array=("Rakuten TV:" "Funimation:" "SkyShowTime:" "HBO Max:") 
+    local array=("Rakuten TV:" "SkyShowTime:" "HBO Max:") 
     echo_Result ${result} ${array}
     ShowRegion GB
     local result=$(
@@ -3561,10 +3561,10 @@ function SA_UnlockTest() {
     MediaUnlockTest_StarPlus ${1} &
     MediaUnlockTest_HBOMax ${1} &
     MediaUnlockTest_DirecTVGO ${1} &
-    MediaUnlockTest_Funimation ${1} &
+    #MediaUnlockTest_Funimation ${1} &
     )
     wait
-    local array=("Star+:" "HBO Max:" "DirecTV Go:" "Funimation:") 
+    local array=("Star+:" "HBO Max:" "DirecTV Go:") 
     echo_Result ${result} ${array}
     echo "======================================="
 }
@@ -3576,11 +3576,11 @@ function OA_UnlockTest() {
     MediaUnlockTest_AcornTV ${1} &
     MediaUnlockTest_SHOWTIME ${1} &
     MediaUnlockTest_BritBox ${1} &
-    MediaUnlockTest_Funimation ${1} &
+    #MediaUnlockTest_Funimation ${1} &
     MediaUnlockTest_ParamountPlus ${1} &
     )
     wait
-    local array=("NBA TV:" "Acorn TV:" "SHOWTIME:" "BritBox:" "Funimation:" "Paramount+:") 
+    local array=("NBA TV:" "Acorn TV:" "SHOWTIME:" "BritBox:" "Paramount+:") 
     echo_Result ${result} ${array}
     ShowRegion AU
     local result=$(
