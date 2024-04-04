@@ -3314,6 +3314,17 @@ function MediaUnlockTest_Zee5(){
     fi
 }
 
+function MediaUnlockTest_EroGameSpace(){
+    local result=$(curl $usePROXY $xForward -${1} -sSL --max-time 3  "https://erogamescape.org" 2>/dev/null | grep '18歳')
+    if [ -n "$result" ]; then
+      echo -n -e "\r EroGameSpace:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        return
+    elif [ -z "$countrycode" ]; then
+        echo -n -e "\r EroGameSpace:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+}
+
 function echo_Result() {
     for((i=0;i<${#array[@]};i++)) 
     do
@@ -3547,6 +3558,8 @@ function JP_UnlockTest() {
     wait
     local array=("Kancolle Japan:" "Pretty Derby Japan:" "Konosuba Fantastic Days:" "Princess Connect Re:Dive Japan:" "World Flipper Japan:" "Project Sekai: Colorful Stage:") 
     echo_Result ${result} ${array}
+    ShowRegion Forum
+    MediaUnlockTest_EroGameSpace ${1}
     echo "======================================="
 
 }
