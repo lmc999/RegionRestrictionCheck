@@ -383,6 +383,19 @@ function MediaUnlockTest_Kancolle() {
     fi
 }
 
+function MediaUnlockTest_Lemino() {
+    local result=$(curl $useNIC $usePROXY $xForward -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 'https://if.lemino.docomo.ne.jp/v1/user/delivery/watch/ready'   -H 'accept: application/json, text/plain, */*'   -H 'accept-language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6'   -H 'content-type: application/json'   -H 'origin: https://lemino.docomo.ne.jp'   -H 'referer: https://lemino.docomo.ne.jp/'   -H 'sec-ch-ua: "Microsoft Edge";v="123", "Not:A-Brand";v="8", "Chromium";v="123"'   -H 'sec-ch-ua-mobile: ?0'   -H 'sec-ch-ua-platform: "Windows"'   -H 'sec-fetch-dest: empty'   -H 'sec-fetch-mode: cors'   -H 'sec-fetch-site: same-site'   -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 Edg/123.0.0.0'   -H 'x-service-token: f365771afd91452fa279863f240c233d'   -H 'x-trace-id: 556db33f-d739-4a82-84df-dd509a8aa179'   --data-raw '{"inflow_flows":[null,"crid://plala.iptvf.jp/group/b100ce3"],"play_type":1,"key_download_only":null,"quality":null,"groupcast":null,"avail_status":"1","terminal_type":3,"test_account":0,"content_list":[{"kind":"main","service_id":null,"cid":"00lm78dz30","lid":"a0lsa6kum1","crid":"crid://plala.iptvf.jp/vod/0000000000_00lm78dymn","preview":0,"trailer":0,"auto_play":0,"stop_position":0}]}' 2>&1)
+    if [ "$result" = "000" ]; then
+        echo -n -e "\r Lemino:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r Lemino:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    elif [ "$result" = "403" ]; then
+        echo -n -e "\r Lemino:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r Lemino:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+    fi
+}
+
 function MediaUnlockTest_BBCiPLAYER() {
     local tmpresult=$(curl $useNIC $usePROXY $xForward --user-agent "${UA_Browser}" -${1} ${ssll} -fsL --max-time 10 "https://open.live.bbc.co.uk/mediaselector/6/select/version/2.0/mediaset/pc/vpid/bbc_one_london/format/json/jsfunc/JS_callbacks0" 2>&1)
     if [ "${tmpresult}" = "000" ]; then
@@ -3317,10 +3330,27 @@ function MediaUnlockTest_Zee5(){
 function MediaUnlockTest_EroGameSpace(){
     local result=$(curl $usePROXY $xForward -${1} -sSL --max-time 3  "https://erogamescape.org" 2>/dev/null | grep '18歳')
     if [ -n "$result" ]; then
-      echo -n -e "\r EroGameSpace:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        echo -n -e "\r EroGameSpace:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     else
         echo -n -e "\r EroGameSpace:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+}
+
+function MediaUnlockTest_DAnimeStore(){
+    local tmpresult=$(curl $usePROXY $xForward -${1} -sSL --max-time 10 -sL 'https://animestore.docomo.ne.jp/animestore/reg_pc' 2>/dev/null)
+    if [ -z "$tmpresult" ]; then
+        echo -n -e "\r D Anime Store:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+
+    local isBlocked=$(echo $tmpresult | grep '海外')
+    if [ -n "$isBlocked" ];then
+        echo -n -e "\r D Anime Store:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    else
+        echo -n -e "\r D Anime Store:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     fi
 }
@@ -3536,15 +3566,17 @@ function JP_UnlockTest() {
     echo_Result ${result} ${array}
     local result=$(
     MediaUnlockTest_TVer ${1} &
+    MediaUnlockTest_Lemino ${1} &
     MediaUnlockTest_wowow ${1} &
     MediaUnlockTest_VideoMarket ${1} &
+    MediaUnlockTest_DAnimeStore ${1} &
     MediaUnlockTest_FOD ${1} &
     MediaUnlockTest_Radiko ${1} &
     MediaUnlockTest_DAM ${1} &
     MediaUnlockTest_J:COM_ON_DEMAND ${1} &
     )
     wait
-    local array=("TVer:" "WOWOW:" "VideoMarket:" "FOD(Fuji TV):" "Radiko:" "Karaoke@DAM:" "J:com On Demand:") 
+    local array=("TVer:" "Lemino:" "WOWOW:" "VideoMarket:" "D Anime Store:" "FOD(Fuji TV):" "Radiko:" "Karaoke@DAM:" "J:com On Demand:") 
     echo_Result ${result} ${array}
     ShowRegion Game
     local result=$(
