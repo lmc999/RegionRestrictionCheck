@@ -426,7 +426,7 @@ function MediaUnlockTest_Netflix() {
         echo -n -e "\r Netflix:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     elif [[ "$result1" == "200" ]] || [[ "$result2" == "200" ]]; then
-        local region=$(curl -fsL  --max-time 10 "https://www.netflix.com/title/70143836" 2>&1 | grep -oP '"requestCountry":{"id":"\K\w\w' | head -n 1)
+        local region=$(curl $useNIC $usePROXY $xForward -${1} --user-agent "${UA_Browser}" -fsL --max-time 10 "https://www.netflix.com/title/70143836" 2>&1 | grep -oP '"requestCountry":{"id":"\K\w\w' | head -n 1)
         echo -n -e "\r Netflix:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
         return
     else
