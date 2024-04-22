@@ -387,12 +387,33 @@ function MediaUnlockTest_Lemino() {
     local result=$(curl $useNIC $usePROXY $xForward -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 'https://if.lemino.docomo.ne.jp/v1/user/delivery/watch/ready'   -H 'accept: application/json, text/plain, */*'   -H 'accept-language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6'   -H 'content-type: application/json'   -H 'origin: https://lemino.docomo.ne.jp'   -H 'referer: https://lemino.docomo.ne.jp/'   -H 'sec-ch-ua: "Microsoft Edge";v="123", "Not:A-Brand";v="8", "Chromium";v="123"'   -H 'sec-ch-ua-mobile: ?0'   -H 'sec-ch-ua-platform: "Windows"'   -H 'sec-fetch-dest: empty'   -H 'sec-fetch-mode: cors'   -H 'sec-fetch-site: same-site'   -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 Edg/123.0.0.0'   -H 'x-service-token: f365771afd91452fa279863f240c233d'   -H 'x-trace-id: 556db33f-d739-4a82-84df-dd509a8aa179'   --data-raw '{"inflow_flows":[null,"crid://plala.iptvf.jp/group/b100ce3"],"play_type":1,"key_download_only":null,"quality":null,"groupcast":null,"avail_status":"1","terminal_type":3,"test_account":0,"content_list":[{"kind":"main","service_id":null,"cid":"00lm78dz30","lid":"a0lsa6kum1","crid":"crid://plala.iptvf.jp/vod/0000000000_00lm78dymn","preview":0,"trailer":0,"auto_play":0,"stop_position":0}]}' 2>&1)
     if [ "$result" = "000" ]; then
         echo -n -e "\r Lemino:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
     elif [ "$result" = "200" ]; then
         echo -n -e "\r Lemino:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        return
     elif [ "$result" = "403" ]; then
         echo -n -e "\r Lemino:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
     else
         echo -n -e "\r Lemino:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+        return
+    fi
+}
+
+function MediaUnlockTest_mora() {
+    local result=$(curl $useNIC $usePROXY $xForward -${1} -fsL --write-out %{http_code} --output /dev/null --max-time 10 'https://mora.jp/buy?__requestToken=1713764407153&returnUrl=https%3A%2F%2Fmora.jp%2Fpackage%2F43000087%2FTFDS01006B00Z%2F%3Ffmid%3DTOPRNKS%26trackMaterialNo%3D31168909&fromMoraUx=false&deleteMaterial=' -H 'host: mora.jp' 2>&1)
+    if [ "$result" = "000" ]; then
+        echo -n -e "\r Mora:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    elif [ "$result" = "200" ]; then
+        echo -n -e "\r Mora:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        return
+    elif [ "$result" = "500" ]; then
+        echo -n -e "\r Mora:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    else
+        echo -n -e "\r Mora:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+        return
     fi
 }
 
@@ -3555,14 +3576,13 @@ function JP_UnlockTest() {
     MediaUnlockTest_DMMTV ${1} &
     MediaUnlockTest_AbemaTV_IPTest ${1} &
     MediaUnlockTest_Niconico ${1} &
-    MediaUnlockTest_music.jp ${1} &
     MediaUnlockTest_Telasa ${1} &
     MediaUnlockTest_Paravi ${1} &
     MediaUnlockTest_unext ${1} &
     MediaUnlockTest_HuluJP ${1} &
     )
     wait
-    local array=("DMM:" "DMM TV:" "Abema.TV:" "Niconico:" "music.jp:" "Telasa:" "Paravi:" "U-NEXT:" "Hulu Japan:") 
+    local array=("DMM:" "DMM TV:" "Abema.TV:" "Niconico:" "Telasa:" "Paravi:" "U-NEXT:" "Hulu Japan:") 
     echo_Result ${result} ${array}
     local result=$(
     MediaUnlockTest_TVer ${1} &
@@ -3589,6 +3609,15 @@ function JP_UnlockTest() {
     )
     wait
     local array=("Kancolle Japan:" "Pretty Derby Japan:" "Konosuba Fantastic Days:" "Princess Connect Re:Dive Japan:" "World Flipper Japan:" "Project Sekai: Colorful Stage:") 
+    echo_Result ${result} ${array}
+
+    ShowRegion Music
+    local result=$(
+    MediaUnlockTest_mora ${1} &
+    MediaUnlockTest_music.jp ${1} &
+    )
+    wait
+    local array=("Mora:" "music.jp:") 
     echo_Result ${result} ${array}
     ShowRegion Forum
     MediaUnlockTest_EroGameSpace ${1}
