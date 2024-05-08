@@ -3462,12 +3462,13 @@ function NA_UnlockTest() {
     echo_Result ${result} ${array}
     ShowRegion CA
     local result=$(
+        MediaUnlockTest_HotStar ${1} &
         MediaUnlockTest_CBCGem ${1} &
         MediaUnlockTest_Crave ${1} &
     )
     wait
-    echo "$result" | grep "CBC Gem:"
-    echo "$result" | grep "Crave:"
+    local array=$("HotStar:" "CBC Gem:" "Crave:")
+    echo_Result ${result} ${array}
     echo "======================================="
 }
 
@@ -3488,6 +3489,7 @@ function EU_UnlockTest() {
     echo_Result ${result} ${array}
     ShowRegion GB
     local result=$(
+        MediaUnlockTest_HotStar ${1} &
         MediaUnlockTest_SkyGo ${1} &
         MediaUnlockTest_BritBox ${1} &
         MediaUnlockTest_ITVHUB ${1} &
@@ -3497,7 +3499,7 @@ function EU_UnlockTest() {
         MediaUnlockTest_DiscoveryPlusUK ${1} &
     )
     wait
-    local array=("Sky Go:" "BritBox:" "ITV Hub:" "Channel 4:" "Channel 5" "BBC iPLAYER:" "Discovery+ UK:")
+    local array=("HotStar:" "Sky Go:" "BritBox:" "ITV Hub:" "Channel 4:" "Channel 5" "BBC iPLAYER:" "Discovery+ UK:")
     echo_Result ${result} ${array}
     ShowRegion FR
     local result=$(
@@ -3544,13 +3546,14 @@ function HK_UnlockTest() {
     echo "=============[ Hong Kong ]============="
     local result=$(
         MediaUnlockTest_NowE ${1} &
+        MediaUnlockTest_Viu.com ${1} &
         MediaUnlockTest_ViuTV ${1} &
         MediaUnlockTest_MyTVSuper ${1} &
         MediaUnlockTest_HBOGO_ASIA ${1} &
         MediaUnlockTest_BilibiliHKMCTW ${1} &
     )
     wait
-    local array=("Now E:" "Viu.TV:" "MyTVSuper:" "HBO GO Asia:" "BiliBili Hongkong/Macau/Taiwan:")
+    local array=("Now E:" "Viu.com:" "Viu.TV:" "MyTVSuper:" "HBO GO Asia:" "BiliBili Hongkong/Macau/Taiwan:")
     echo_Result ${result} ${array}
     echo "======================================="
 }
@@ -3558,6 +3561,7 @@ function HK_UnlockTest() {
 function IN_UnlockTest() {
     echo "===============[ India ]==============="
     local result=$(
+        MediaUnlockTest_HotStar ${1} &
         MediaUnlockTest_Zee5 ${1} &
         MediaUnlockTest_SonyLiv ${1} &
         MediaUnlockTest_JioCinema ${1} &
@@ -3565,7 +3569,7 @@ function IN_UnlockTest() {
         MediaUnlockTest_NBATV ${1} &
     )
     wait
-    local array=("Zee5:" "SonyLiv:" "Jio Cinema:" "MX Player:" "NBA TV:")
+    local array=("HotStar:" "Zee5:" "SonyLiv:" "Jio Cinema:" "MX Player:" "NBA TV:")
     echo_Result ${result} ${array}
     echo "======================================="
 }
@@ -3652,14 +3656,14 @@ function Global_UnlockTest() {
     echo "============[ Multination ]============"
     local result=$(
         MediaUnlockTest_Dazn ${1} &
-        MediaUnlockTest_HotStar ${1} &
+        # MediaUnlockTest_HotStar ${1} &
         MediaUnlockTest_DisneyPlus ${1} &
         MediaUnlockTest_Netflix ${1} &
         MediaUnlockTest_YouTube_Premium ${1} &
         MediaUnlockTest_PrimeVideo_Region ${1} &
         MediaUnlockTest_TVBAnywhere ${1} &
         MediaUnlockTest_iQYI_Region ${1} &
-        MediaUnlockTest_Viu.com ${1} &
+        # MediaUnlockTest_Viu.com ${1} &
         MediaUnlockTest_YouTube_CDN ${1} &
         MediaUnlockTest_NetflixCDN ${1} &
         MediaUnlockTest_Spotify ${1} &
@@ -3670,7 +3674,7 @@ function Global_UnlockTest() {
         GameTest_Steam ${1} &
     )
     wait
-    local array=("Dazn:" "HotStar:" "Disney+:" "Netflix:" "YouTube Premium:" "Amazon Prime Video:" "TVBAnywhere+:" "iQyi Oversea Region:" "Viu.com:" "YouTube CDN:" "YouTube Region:" "Netflix Preferred CDN:" "Spotify Registration:" "Steam Currency:" "ChatGPT:" "Bing Region:" "Wikipedia Editability:" "Instagram Licensed Audio:")
+    local array=("Dazn:" "Disney+:" "Netflix:" "YouTube Premium:" "Amazon Prime Video:" "TVBAnywhere+:" "iQyi Oversea Region:" "YouTube CDN:" "YouTube Region:" "Netflix Preferred CDN:" "Spotify Registration:" "Steam Currency:" "ChatGPT:" "Bing Region:" "Wikipedia Editability:" "Instagram Licensed Audio:")
     echo_Result ${result} ${array}
     ShowRegion Forum
     RedditUnlockTest ${1}
@@ -3759,11 +3763,13 @@ function KR_UnlockTest() {
 function SEA_UnlockTest(){
     echo "==========[ SouthEastAsia ]============"
     local result=$(
+        MediaUnlockTest_Viu.com ${1} &
+        MediaUnlockTest_HotStar ${1} &
         MediaUnlockTest_HBOGO_ASIA ${1} &
         MediaUnblockTest_BGlobalSEA ${1} &
     )
     wait
-    local array=("HBO GO Asia:" "B-Global SouthEastAsia:")
+    local array=("Viu.com:" "HotStar:" "HBO GO Asia:" "B-Global SouthEastAsia:")
     echo_Result ${result} ${array}
 
     ShowRegion SG
