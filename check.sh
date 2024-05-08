@@ -1314,11 +1314,11 @@ function MediaUnlockTest_FuboTV() {
         echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
-    local result=$(echo $tmpresult | grep 'Forbidden IP')
+    local result=$(echo $tmpresult | grep 'No Subscription')
     if [ -n "$result" ]; then
-        echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-    else
         echo -n -e "\r Fubo TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    else
+        echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     fi
 }
 
