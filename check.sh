@@ -3465,7 +3465,7 @@ function NA_UnlockTest() {
         MediaUnlockTest_Crave ${1} &
     )
     wait
-    local array=$("HotStar:" "CBC Gem:" "Crave:")
+    local array=("HotStar:" "CBC Gem:" "Crave:")
     echo_Result ${result} ${array}
     echo "======================================="
 }
