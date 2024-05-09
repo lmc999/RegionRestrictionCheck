@@ -778,6 +778,25 @@ function MediaUnlockTest_HBOMax() {
 
 }
 
+function MediaUnlockTest_Showmax() {
+    local region=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -si 'https://www.showmax.com/' -H 'host: www.showmax.com' -H 'connection: keep-alive' -H 'sec-ch-ua: "Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"' -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' -H 'accept-language: zh-CN,zh;q=0.9' 2>&1 | grep 'activeTerritory'| awk -F'[=;]' '{print $2}')
+    if [[ "$region" == "curl"* ]]; then
+        echo -n -e "\r Showmax:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+    if [ -n "$region" ]; then
+        echo -n -e "\r Showmax:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
+        return
+    elif [ -z "$region" ]; then
+        echo -n -e "\r Showmax:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    else
+        echo -n -e "\r Showmax:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+
+}
+
 function MediaUnlockTest_Channel4() {
     local result=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.channel4.com/simulcast/channels/C4" 2>&1)
 
@@ -807,6 +826,24 @@ function MediaUnlockTest_ITVHUB() {
         return
     else
         echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}Failed (Unexpected Result: $result)${Font_Suffix}\n"
+        return
+    fi
+
+}
+
+function MediaUnlockTest_DSTV() {
+    local result=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://authentication.dstv.com/favicon.ico" 2>&1)
+    if [ "$result" = "000" ]; then
+        echo -n -e "\r DSTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    elif [ "$result" = "404" ]; then
+        echo -n -e "\r DSTV:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        return
+    elif [ "$result" = "403" ] || [ "$result" = "451" ]; then
+        echo -n -e "\r DSTV:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    else
+        echo -n -e "\r DSTV:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
 
@@ -3556,6 +3593,19 @@ function HK_UnlockTest() {
     echo "======================================="
 }
 
+function AF_UnlockTest() {
+    echo "==============[ Africa ]=============="
+    local result=$(
+        MediaUnlockTest_DSTV ${1} &
+        MediaUnlockTest_Showmax ${1} &
+        MediaUnlockTest_Viu.com ${1} &
+    )
+    wait
+    local array=("DSTV:" "Showmax:" "Viu.com:")
+    echo_Result ${result} ${array}
+    echo "======================================="
+}
+
 function IN_UnlockTest() {
     echo "===============[ India ]==============="
     local result=$(
@@ -4035,6 +4085,7 @@ function Start() {
         echo -e "${Font_SkyBlue}Input Number  [8]: [ Multination + Korean ]${Font_Suffix}"
         echo -e "${Font_SkyBlue}Input Number  [9]: [ Multination + SouthEast Asia ]${Font_Suffix}"
         echo -e "${Font_SkyBlue}Input Number  [10]: [ Multination + India ]${Font_Suffix}"
+        echo -e "${Font_SkyBlue}Input Number  [10]: [ Multination + Africa ]${Font_Suffix}"
         echo -e "${Font_SkyBlue}Input Number  [0]: [ Multination Only ]${Font_Suffix}"
         echo -e "${Font_SkyBlue}Input Number [99]: [ Sport Platforms ]${Font_Suffix}"
         read -p "Please Input the Correct Number or Press ENTER:" num
@@ -4050,6 +4101,7 @@ function Start() {
         echo -e "${Font_SkyBlue}输入数字  [8]: [ 跨国平台+韩国平台 ]检测${Font_Suffix}"
         echo -e "${Font_SkyBlue}输入数字  [9]: [跨国平台+东南亚平台]检测${Font_Suffix}"
         echo -e "${Font_SkyBlue}输入数字 [10]: [ 跨国平台+印度平台 ]检测${Font_Suffix}"
+        echo -e "${Font_SkyBlue}输入数字 [11]: [ 跨国平台+非洲平台 ]检测${Font_Suffix}"
         echo -e "${Font_SkyBlue}输入数字  [0]: [   只进行跨国平台  ]检测${Font_Suffix}"
         echo -e "${Font_SkyBlue}输入数字 [99]: [   体育直播平台    ]检测${Font_Suffix}"
         echo -e "${Font_Purple}输入数字 [69]: [   广告推广投放    ]咨询${Font_Suffix}"
@@ -4207,6 +4259,21 @@ function RunScript() {
             if [[ "$isv6" -eq 1 ]]; then
                 Global_UnlockTest 6
                 IN_UnlockTest 6
+            fi
+            Goodbye
+
+            elif [[ "$num" -eq 11 ]]; then
+            clear
+            ScriptTitle
+            CheckV4
+            if [[ "$isv4" -eq 1 ]]; then
+                Global_UnlockTest 4
+                AF_UnlockTest 4
+            fi
+            CheckV6
+            if [[ "$isv6" -eq 1 ]]; then
+                Global_UnlockTest 6
+                AF_UnlockTest 6
             fi
             Goodbye
 
