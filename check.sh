@@ -622,24 +622,6 @@ function MediaUnlockTest_unext() {
 
 }
 
-function MediaUnlockTest_Paravi() {
-    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} -Ss --max-time 10 -H "Content-Type: application/json" -d '{"meta_id":17414,"vuid":"3b64a775a4e38d90cc43ea4c7214702b","device_code":1,"app_id":1}' "https://api.paravi.jp/api/v1/playback/auth" 2>&1)
-
-    if [[ "$tmpresult" == "curl"* ]]; then
-        echo -n -e "\r Paravi:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        return
-    fi
-
-    local result=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep type | awk '{print $2}' | cut -f2 -d'"')
-    if [[ "$result" == "Forbidden" ]]; then
-        echo -n -e "\r Paravi:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-        return
-    elif [[ "$result" == "Unauthorized" ]]; then
-        echo -n -e "\r Paravi:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-        return
-    fi
-}
-
 function MediaUnlockTest_wowow() {
     local timestamp=$[$(date +%s%N)/1000000]
     # 取原创剧集列表
@@ -3737,12 +3719,11 @@ function JP_UnlockTest() {
         MediaUnlockTest_AbemaTV_IPTest ${1} &
         MediaUnlockTest_Niconico ${1} &
         MediaUnlockTest_Telasa ${1} &
-        MediaUnlockTest_Paravi ${1} &
         MediaUnlockTest_unext ${1} &
         MediaUnlockTest_HuluJP ${1} &
     )
     wait
-    local array=("DMM:" "DMM TV:" "Abema.TV:" "Niconico:" "Telasa:" "Paravi:" "U-NEXT:" "Hulu Japan:")
+    local array=("DMM:" "DMM TV:" "Abema.TV:" "Niconico:" "Telasa:" "U-NEXT:" "Hulu Japan:")
     echo_Result ${result} ${array}
     local result=$(
         MediaUnlockTest_TVer ${1} &
