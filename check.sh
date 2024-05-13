@@ -641,24 +641,51 @@ function MediaUnlockTest_Paravi() {
 }
 
 function MediaUnlockTest_wowow() {
-    local tmpresult=$(curl $useNIC $usePROXY $xForward -s --max-time 10 'https://mapi.wowow.co.jp/api/v1/playback/auth' --user-agent "${UA_Browser}" -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6' -H 'Connection: keep-alive' -H 'Content-Type: application/json;charset=UTF-8' -H 'Origin: https://wod.wowow.co.jp' -H 'Referer: https://wod.wowow.co.jp/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H 'X-Requested-With: XMLHttpRequest' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --data-raw '{"meta_id":118554,"vuid":"95bfe55055264594a399035ad4fc7e5b","device_code":1,"app_id":1,"ua":"'${UA_Browser}'"}')
-    local isBlocked=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep 'VPN')
-    local isOK=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep 'playback_session_id')
+    local timestamp=$[$(date +%s%N)/1000000]
+    # 取原创剧集列表
+    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --max-time 10 -s "https://www.wowow.co.jp/drama/original/json/lineup.json?_=${timestamp}" -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Referer: https://www.wowow.co.jp/drama/original/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-origin' -H 'X-Requested-With: XMLHttpRequest' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --user-agent "${UA_Browser}")
+    if [ -z "$tmpresult" ]; then
+        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+    # 取第一个剧集来播放 example: https://www.wowow.co.jp/drama/original/hakubo/
+    local playUrl=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep '"link"' | awk '{print $2}' | cut -f2 -d'"' | head -n 1)
+    # 访问并获取真实链接
+    local tmpresult2=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --max-time 10 -s "${playUrl}" --user-agent "${UA_Browser}")
+    if [ -z "$tmpresult2" ]; then
+        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+    # 取得真实链接
+    local wodUrl=$(echo $tmpresult2 | grep -o '"https://wod.wowow.co.jp/content/.*"' | cut -f2 -d'"')
+    # 访问并获取 meta_id
+    local tmpresult3=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --max-time 10 -s "${wodUrl}" --user-agent "${UA_Browser}")
+    local metaId=$(echo $tmpresult3 | grep -o '"https://wod.wowow.co.jp/watch/.*"' | cut -f2 -d'"' | sed 's/https:\/\/wod.wowow.co.jp\/watch\///')
+    # Fake Vistor UID
+    local vUid=$(echo -n $timestamp | md5sum | cut -f1 -d' ')
+    # 最终测试
+    local tmpresult4=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --max-time 10 -s 'https://mapi.wowow.co.jp/api/v1/playback/auth' -H 'accept: application/json, text/plain, */*' -H 'content-type: application/json;charset=UTF-8' -H 'origin: https://wod.wowow.co.jp' -H 'referer: https://wod.wowow.co.jp/' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H 'x-requested-with: XMLHttpRequest' --data-raw "{\"meta_id\":${metaId},\"vuid\":\"${vUid}\",\"device_code\":1,\"app_id\":1,\"ua\":\"${UA_Browser}\"}" --user-agent "${UA_Browser}")
+    if [ -z "$tmpresult4" ]; then
+        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+    local isBlocked=$(echo $tmpresult4 | python -m json.tool 2>/dev/null | grep 'VPN')
+    local isOK=$(echo $tmpresult4 | python -m json.tool 2>/dev/null | grep 'playback_session_id')
     if [ -n "$isBlocked" ]; then
         echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
-    elif [ -n "$isOK" ]; then
+    fi
+    if [ -n "$isOK" ]; then
         echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     else
         echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
         return
     fi
-
 }
 
 function MediaUnlockTest_TVer() {
-    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} -s --max-time 10 'https://platform-api.tver.jp/v2/api/platform_users/browser/create' -H 'content-type: application/x-www-form-urlencoded' -H 'origin: https://s.tver.jp' -H 'referer: https://s.tver.jp/' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --data-raw 'device_type=pc' --user-agent "${UA_Browser}")
+    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --max-time 10 -s 'https://platform-api.tver.jp/v2/api/platform_users/browser/create' -H 'content-type: application/x-www-form-urlencoded' -H 'origin: https://s.tver.jp' -H 'referer: https://s.tver.jp/' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --data-raw 'device_type=pc' --user-agent "${UA_Browser}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -667,7 +694,7 @@ function MediaUnlockTest_TVer() {
     local platformUid=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep '"platform_uid"' | cut -f4 -d'"')
     local platformToken=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep '"platform_token"' | cut -f4 -d'"')
     # 根据 UID 和 TOKEN 取得当前正在播放的剧集
-    local tmpresult2=$(curl $useNIC $usePROXY $xForward -${1} -s --max-time 10 "https://platform-api.tver.jp/service/api/v1/callHome?platform_uid=${platformUid}&platform_token=${platformToken}&require_data=mylist%2Cresume%2Clater" -H 'origin: https://tver.jp' -H 'referer: https://tver.jp/' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H 'x-tver-platform-type: web' --user-agent "${UA_Browser}")
+    local tmpresult2=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --max-time 10 -s "https://platform-api.tver.jp/service/api/v1/callHome?platform_uid=${platformUid}&platform_token=${platformToken}&require_data=mylist%2Cresume%2Clater" -H 'origin: https://tver.jp' -H 'referer: https://tver.jp/' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H 'x-tver-platform-type: web' --user-agent "${UA_Browser}")
     if [ -z "$tmpresult2" ]; then
         echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -676,7 +703,7 @@ function MediaUnlockTest_TVer() {
     # echo $tmpresult2 | jq  -r '.result.components.[] | select(.componentID | contains("newer-drama")) | limit(1; .contents.[].content.id)'
     local episodeId=$(echo $tmpresult2 | sed 's/.*"newer-drama"//' | sed 's/"componentID".*//' | sed 's/"id"/_TAG_/;s/.*_TAG_//' | cut -f2 -d'"')
     # 取得该剧集信息
-    local tmpresult3=$(curl $useNIC $usePROXY $xForward -${1} -s --max-time 10 "https://statics.tver.jp/content/episode/${episodeId}.json" -H 'origin: https://tver.jp' -H 'referer: https://tver.jp/' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --user-agent "${UA_Browser}")
+    local tmpresult3=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --max-time 10 -s "https://statics.tver.jp/content/episode/${episodeId}.json" -H 'origin: https://tver.jp' -H 'referer: https://tver.jp/' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --user-agent "${UA_Browser}")
     if [ -z "$tmpresult3" ]; then
         echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -687,7 +714,7 @@ function MediaUnlockTest_TVer() {
     local videoID=$(echo $tmpresult3 | python -m json.tool 2>/dev/null | grep '"videoID"' | cut -f4 -d'"')
     local videoRefID=$(echo $tmpresult3 | python -m json.tool 2>/dev/null | grep '"videoRefID"' | cut -f4 -d'"')
     # 取得 brightcove 播放器信息
-    local tmpresult4=$(curl $useNIC $usePROXY $xForward -${1} -s --max-time 10 "https://players.brightcove.net/${accountID}/${playerID}_default/index.min.js" -H 'Referer: https://tver.jp/' -H 'Sec-Fetch-Dest: script' -H 'Sec-Fetch-Mode: no-cors' -H 'Sec-Fetch-Site: cross-site' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --user-agent "${UA_Browser}")
+    local tmpresult4=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --max-time 10 -s "https://players.brightcove.net/${accountID}/${playerID}_default/index.min.js" -H 'Referer: https://tver.jp/' -H 'Sec-Fetch-Dest: script' -H 'Sec-Fetch-Mode: no-cors' -H 'Sec-Fetch-Site: cross-site' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --user-agent "${UA_Browser}")
     if [ -z "$tmpresult4" ]; then
         echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -699,10 +726,10 @@ function MediaUnlockTest_TVer() {
         # 取 deliveryConfigId
         local deliveryConfigId=$(echo $tmpresult4 | sed 's/.*deliveryConfigId:"//' | awk -F'"' '{print $1}')
         # 最终检查
-        local tmpresult5=$(curl $useNIC $usePROXY $xForward -${1} -s --max-time 10 "https://edge.api.brightcove.com/playback/v1/accounts/${accountID}/videos/${videoID}?config_id=${deliveryConfigId}" -H "accept: application/json;pk=${policyKey}" -H 'origin: https://tver.jp' -H 'referer: https://tver.jp/' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: cross-site' --user-agent "${UA_Browser}")
+        local tmpresult5=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --max-time 10 -s "https://edge.api.brightcove.com/playback/v1/accounts/${accountID}/videos/${videoID}?config_id=${deliveryConfigId}" -H "accept: application/json;pk=${policyKey}" -H 'origin: https://tver.jp' -H 'referer: https://tver.jp/' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: cross-site' --user-agent "${UA_Browser}")
     else
         # 最终检查
-        local tmpresult5=$(curl $useNIC $usePROXY $xForward -${1} -s --max-time 10 "https://edge.api.brightcove.com/playback/v1/accounts/${accountID}/videos/ref%3A${videoRefID}" -H "accept: application/json;pk=${policyKey}" -H 'origin: https://tver.jp' -H 'referer: https://tver.jp/' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: cross-site' --user-agent "${UA_Browser}")
+        local tmpresult5=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} --max-time 10 -s "https://edge.api.brightcove.com/playback/v1/accounts/${accountID}/videos/ref%3A${videoRefID}" -H "accept: application/json;pk=${policyKey}" -H 'origin: https://tver.jp' -H 'referer: https://tver.jp/' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: cross-site' --user-agent "${UA_Browser}")
     fi
 
     if [ -z "$tmpresult5" ]; then
