@@ -2970,9 +2970,9 @@ function MediaUnlockTest_NaverTV() {
     local playable=$(echo "$tmpresult" | python -m json.tool 2>/dev/null | grep -o '"playable": *"[^"]*"' | cut -d'"' -f4)
 
     if [[ "$playable" == "NOT_COUNTRY_AVAILABLE" ]]; then
-        echo -n -e "\r Naver TV:\t\t\t\t${Font_Green}No${Font_Suffix}\n"
+        echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     else
-        echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}Yes${Font_Suffix}\n"
+        echo -n -e "\r Naver TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
     fi
     # local result=$(echo "$tmpresult" | python -m json.tool 2>/dev/null | grep ctry | cut -f4 -d'"')
     # if [[ "$result" == "KR" ]]; then
