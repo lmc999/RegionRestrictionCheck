@@ -3511,6 +3511,17 @@ function MediaUnlockTest_DAnimeStore(){
     fi
 }
 
+function MediaUnlockTest_NETRIDE(){
+    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -s -X POST -I --max-time 10 "http://trial.net-ride.com/free/free_dl.php?R_sm_code=456&R_km_url=cabb" 2>/dev/null)
+    if [[ $tmpresult =~ "302 Found" ]]; then
+        echo -n -e "\r NETRIDE:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    elif [[ $tmpresult =~ "403 Forbidden" ]]; then
+        echo -n -e "\r NETRIDE:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    else
+        echo -n -e "\r NETRIDE:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+    fi
+}
+
 function echo_Result() {
     for ((i=0;i<${#array[@]};i++)); do
         echo "$result" | grep "${array[i]}"
@@ -3748,9 +3759,10 @@ function JP_UnlockTest() {
         MediaUnlockTest_Radiko ${1} &
         MediaUnlockTest_DAM ${1} &
         MediaUnlockTest_J:COM_ON_DEMAND ${1} &
+        MediaUnlockTest_NETRIDE ${1} &
     )
     wait
-    local array=("TVer:" "Lemino:" "WOWOW:" "VideoMarket:" "D Anime Store:" "FOD(Fuji TV):" "Radiko:" "Karaoke@DAM:" "J:com On Demand:")
+    local array=("TVer:" "Lemino:" "WOWOW:" "VideoMarket:" "D Anime Store:" "FOD(Fuji TV):" "Radiko:" "Karaoke@DAM:" "J:com On Demand:" "NETRIDE:")
     echo_Result ${result} ${array}
     ShowRegion Game
     local result=$(
