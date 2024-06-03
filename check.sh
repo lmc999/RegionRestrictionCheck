@@ -1456,7 +1456,7 @@ function RegionTest_YouTubeCDN() {
 function WebTest_GoogleSearchCAPTCHA() {
     local tmpresult=$(curl -sL 'https://www.google.com/search?q=curl&oq=curl&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBBzg1MmowajGoAgCwAgE&sourceid=chrome&ie=UTF-8' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-model: ""' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-ch-ua-platform-version: "15.0.0"' -H 'sec-ch-ua-wow64: ?0' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r Google Search CAPTCHA Free:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
 
@@ -1464,19 +1464,19 @@ function WebTest_GoogleSearchCAPTCHA() {
     local isOK=$(echo "$tmpresult" | grep -i 'curl')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Google Search CAPTCHA Free:\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
-        echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Red}No${Font_Suffix}\n"
+        echo -n -e "\r Google Search CAPTCHA Free:\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
     if [ -n "$isOK" ]; then
-        echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Green}Yes${Font_Suffix}\n"
+        echo -n -e "\r Google Search CAPTCHA Free:\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     fi
 
-    echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Google Search CAPTCHA Free:\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_BritBox() {
@@ -4292,7 +4292,7 @@ function Global_UnlockTest() {
         GameTest_Steam &
     )
     wait
-    local array=("Bing Region:" "YouTube CDN:" "Netflix Preferred CDN:" "ChatGPT:" "Wikipedia Editability:" "Google Search No CAPTCHA:" "Steam Currency:")
+    local array=("Bing Region:" "YouTube CDN:" "Netflix Preferred CDN:" "ChatGPT:" "Wikipedia Editability:" "Google Search CAPTCHA Free:" "Steam Currency:")
     echo_result ${result} ${array}
     show_region Forum
     WebTest_Reddit
