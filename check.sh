@@ -396,7 +396,7 @@ function GameTest_Steam() {
 
     local result=$(echo "$tmpresult" | grep 'priceCurrency' | cut -d '"' -f4)
     if [ -z "$result" ]; then
-        echo -n -e "\r Steam Currency:\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Steam Currency:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -441,7 +441,7 @@ function MediaUnlockTest_BilibiliChinaMainland() {
     case "$result" in
         '0') echo -n -e "\r BiliBili China Mainland Only:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '-10403') echo -n -e "\r BiliBili China Mainland Only:\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r BiliBili China Mainland Only:\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r BiliBili China Mainland Only:\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -459,7 +459,7 @@ function MediaUnlockTest_BilibiliHKMCTW() {
     case "$result" in
         '0') echo -n -e "\r BiliBili Hongkong/Macau/Taiwan:\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '-10403') echo -n -e "\r BiliBili Hongkong/Macau/Taiwan:\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r BiliBili Hongkong/Macau/Taiwan:\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r BiliBili Hongkong/Macau/Taiwan:\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -477,7 +477,7 @@ function MediaUnlockTest_BilibiliTW() {
     case "$result" in
         '0') echo -n -e "\r Bilibili Taiwan Only:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '-10403') echo -n -e "\r Bilibili Taiwan Only:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Bilibili Taiwan Only:\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Bilibili Taiwan Only:\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -508,7 +508,7 @@ function GameTest_PCRJP() {
         '000') echo -n -e "\r Princess Connect Re:Dive Japan:\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '404') echo -n -e "\r Princess Connect Re:Dive Japan:\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Princess Connect Re:Dive Japan:\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Princess Connect Re:Dive Japan:\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Princess Connect Re:Dive Japan:\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -520,7 +520,7 @@ function GameTest_UMAJP() {
         '000') echo -n -e "\r Pretty Derby Japan:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '404') echo -n -e "\r Pretty Derby Japan:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Pretty Derby Japan:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Pretty Derby Japan:\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Pretty Derby Japan:\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -532,7 +532,7 @@ function GameTest_WFJP() {
         '000') echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r World Flipper Japan:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -554,7 +554,7 @@ function GameTest_Kancolle() {
         '000') echo -n -e "\r Kancolle Japan:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Kancolle Japan:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Kancolle Japan:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Kancolle Japan:\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Kancolle Japan:\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -565,7 +565,7 @@ function MediaUnlockTest_Lemino() {
         '000') echo -n -e "\r Lemino:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Lemino:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Lemino:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Lemino:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Lemino:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -577,7 +577,7 @@ function MediaUnlockTest_mora() {
         '200') echo -n -e "\r Mora:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Mora:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '500') echo -n -e "\r Mora:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Mora:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Mora:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -592,7 +592,7 @@ function MediaUnlockTest_BBCiPLAYER() {
     local isOK=$(echo "$tmpresult" | grep -i 'vs-hls-push-uk')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
@@ -604,7 +604,7 @@ function MediaUnlockTest_BBCiPLAYER() {
         return
     fi
 
-    echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Netflix() {
@@ -630,7 +630,7 @@ function MediaUnlockTest_Netflix() {
         return
     fi
 
-    echo -n -e "\r Netflix:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result1}_${result2})${Font_Suffix}\n"
+    echo -n -e "\r Netflix:\t\t\t\t\t${Font_Red}Failed (Error: ${result1}_${result2})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_DisneyPlus() {
@@ -652,7 +652,7 @@ function MediaUnlockTest_DisneyPlus() {
 
     local assertion=$(echo "$tempresult" | grep -oP '"assertion"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$assertion" ]; then
-        echo -n -e "\r Disney+:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Disney+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -699,7 +699,7 @@ function MediaUnlockTest_DisneyPlus() {
         return
     fi
 
-    echo -n -e "\r Disney+:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${inSupportedLocation}_${region})${Font_Suffix}\n"
+    echo -n -e "\r Disney+:\t\t\t\t${Font_Red}Failed (Error: ${inSupportedLocation}_${region})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Dazn() {
@@ -714,7 +714,7 @@ function MediaUnlockTest_Dazn() {
     case "$result" in
         'false') echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'true') echo -n -e "\r Dazn:\t\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -743,7 +743,7 @@ function MediaUnlockTest_HuluJP() {
         return
     fi
 
-    echo -n -e "\r Hulu Japan:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r Hulu Japan:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_MyTVSuper() {
@@ -762,7 +762,7 @@ function MediaUnlockTest_MyTVSuper() {
         return
     fi
 
-    echo -n -e "\r MyTVSuper:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n"
+    echo -n -e "\r MyTVSuper:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_NowE() {
@@ -776,7 +776,7 @@ function MediaUnlockTest_NowE() {
     case "$result" in
         'GEO_CHECK_FAIL') echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'SUCCESS') echo -n -e "\r Now E:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -791,7 +791,7 @@ function MediaUnlockTest_ViuTV() {
     case "$result" in
         'GEO_CHECK_FAIL') echo -n -e "\r Viu.TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'SUCCESS') echo -n -e "\r Viu.TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Viu.TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Viu.TV:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -807,7 +807,7 @@ function MediaUnlockTest_unext() {
         '475') echo -n -e "\r U-NEXT:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '200') echo -n -e "\r U-NEXT:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '467') echo -n -e "\r U-NEXT:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r U-NEXT:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r U-NEXT:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -822,7 +822,7 @@ function MediaUnlockTest_wowow() {
     # 取无料剧集来播放 example: https://www.wowow.co.jp/drama/original/hakubo/
     local playUrlList=$(echo "$tmpresult" | grep -oP '"link"\s{0,}:\s{0,}"\K[^"]+' | grep 'drama/original' | head -n 4 | xargs)
     if [ -z "$playUrlList" ]; then
-        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -842,7 +842,7 @@ function MediaUnlockTest_wowow() {
     done
 
     if [ -z "$wodUrl" ]; then
-        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -867,7 +867,7 @@ function MediaUnlockTest_wowow() {
     local isOK=$(echo "$tmpresult4" | grep 'playback_session_id')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -880,7 +880,7 @@ function MediaUnlockTest_wowow() {
         return
     fi
 
-    echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_TVer() {
@@ -939,7 +939,7 @@ function MediaUnlockTest_TVer() {
     case "$result" in
         'CLIENT_GEO') echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '') echo -n -e "\r TVer:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -954,7 +954,7 @@ function MediaUnlockTest_HamiVideo() {
     case "$result" in
         '06001-106') echo -n -e "\r Hami Video:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '06001-107') echo -n -e "\r Hami Video:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Hami Video:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Hami Video:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -969,7 +969,7 @@ function MediaUnlockTest_4GTV() {
     case "$result" in
         'N') echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'Y') echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -994,7 +994,7 @@ function MediaUnlockTest_SlingTV() {
         return
     fi
 
-    echo -n -e "\r Sling TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r Sling TV:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_PlutoTV() {
@@ -1018,7 +1018,7 @@ function MediaUnlockTest_PlutoTV() {
         return
     fi
 
-    echo -n -e "\r Pluto TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r Pluto TV:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_HBOMax() {
@@ -1035,7 +1035,7 @@ function MediaUnlockTest_HBOMax() {
     local isUnavailable=$(echo "$countryList" | grep "$region")
 
     if [ -z "$region" ]; then
-        echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}Failed (Unexpected Result: Country Code Not Found)${Font_Suffix}\n"
+        echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}Failed (Error: Country Code Not Found)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isUnavailable" ]; then
@@ -1060,7 +1060,7 @@ function MediaUnlockTest_Showmax() {
     local region=$(echo "$tmpresult" | grep -oP 'activeTerritory=[A-Z]+' | head -n 1)
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r Showmax:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Showmax:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
@@ -1072,7 +1072,7 @@ function MediaUnlockTest_Showmax() {
         return
     fi
 
-    echo -n -e "\r Showmax:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Showmax:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Channel4() {
@@ -1082,7 +1082,7 @@ function MediaUnlockTest_Channel4() {
         '000') echo -n -e "\r Channel 4:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Channel 4:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Channel 4:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Channel 4:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Channel 4:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1097,7 +1097,7 @@ function MediaUnlockTest_ITVHUB() {
     local isOK=$(echo "$tmpresult" | grep -i 'Playlist')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
     fi
     if [ -n "$isBlocked" ]; then
         echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -1108,7 +1108,7 @@ function MediaUnlockTest_ITVHUB() {
         return
     fi
 
-    echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_DSTV() {
@@ -1118,7 +1118,7 @@ function MediaUnlockTest_DSTV() {
         '000') echo -n -e "\r DSTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '403'|'451') echo -n -e "\r DSTV:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '404') echo -n -e "\r DSTV:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r DSTV:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r DSTV:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1133,7 +1133,7 @@ function RegionTest_iQYI() {
 
     local region=$(echo "${tmpresult}" | grep -oP 'mod=\K[a-z]+' | tr [:lower:] [:upper:])
     if [ -z "$region" ]; then
-        echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}Failed (Unexpected Result: Country Code Not Found)${Font_Suffix}\n"
+        echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}Failed (Error: Country Code Not Found)${Font_Suffix}\n"
         return
     fi
 
@@ -1155,8 +1155,8 @@ function MediaUnlockTest_HuluUS() {
     case "$result" in
         'LOGIN_FORBIDDEN') echo -n -e "\r Hulu:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         'GEO_BLOCKED') echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        '' ) echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        '' ) echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1171,7 +1171,7 @@ function MediaUnlockTest_encoreTVB() {
     case "$result" in
         'CLIENT_GEO') echo -n -e "\r encoreTVB:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '') echo -n -e "\r encoreTVB:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r encoreTVB:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r encoreTVB:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1187,8 +1187,8 @@ function MediaUnlockTest_Molotov() {
     case "$result" in
         'false') echo -n -e "\r Molotov:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'true') echo -n -e "\r Molotov:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        '') echo -n -e "\r Molotov:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Molotov:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        '') echo -n -e "\r Molotov:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Molotov:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1218,7 +1218,7 @@ function MediaUnlockTest_LineTVTW() {
     local result=$(echo "$tmpresult3" | grep -oP '"countryCode"\s{0,}:\s{0,}\K\d+')
     case "$result" in
         '228') echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        '') echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}Failed (Unexpected Result: Country Code Not Found)${Font_Suffix}\n" ;;
+        '') echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}Failed (Error: Country Code Not Found)${Font_Suffix}\n" ;;
         *) echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
     esac
 }
@@ -1234,7 +1234,7 @@ function MediaUnlockTest_ViuCom() {
     local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
     local region=$(echo "$urlEffective" | cut -f5 -d'/' | tr [:lower:] [:upper:])
     if [ -z "$region" ]; then
-        echo -n -e "\r Viu.com:\t\t\t\t${Font_Red}Failed (Unexpected Result: Country Code Not Found)${Font_Suffix}\n"
+        echo -n -e "\r Viu.com:\t\t\t\t${Font_Red}Failed (Error: Country Code Not Found)${Font_Suffix}\n"
         return
     fi
     if [ "$region" == "NO-SERVICE" ]; then
@@ -1246,7 +1246,7 @@ function MediaUnlockTest_ViuCom() {
         return
     fi
 
-    echo -n -e "\r Viu.com:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r Viu.com:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Niconico() {
@@ -1268,7 +1268,7 @@ function MediaUnlockTest_Niconico() {
     # jq -r '.props.view.popularBeforeOpenBroadcastStatusProgramListSectionState.programList.[] | select(.isOfficialChannelMemberFree == false) | .id' | head -n 1
     local liveID=$(echo $tmpresult2 | sed 's/&quot;isOfficialChannelMemberFree&quot;:false/&quot;isOfficialChannelMemberFree&quot;:false\r\n/g' | grep -v '&quot;isOfficialChannelMemberFree&quot;:true' | grep -v -E 'playerProgram|&quot;ON_AIR&quot;' | grep '話' | grep -oP '&quot;id&quot;:&quot;\Klv[0-9]+' | head -n 1)
     if [ -z "$liveID" ]; then
-        echo -n -e "\r Niconico:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Niconico:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -1296,7 +1296,7 @@ function MediaUnlockTest_Niconico() {
         return
     fi
 
-    echo -n -e "\r Niconico:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Niconico:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_ParamountPlus() {
@@ -1322,7 +1322,7 @@ function MediaUnlockTest_ParamountPlus() {
         return
     fi
 
-    echo -n -e "\r Paramount+:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r Paramount+:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_KKTV() {
@@ -1361,7 +1361,7 @@ function MediaUnlockTest_PeacockTV() {
         return
     fi
 
-    echo -n -e "\r Peacock TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r Peacock TV:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_FOD() {
@@ -1375,8 +1375,8 @@ function MediaUnlockTest_FOD() {
     case "$result" in
         'true') echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         'false') echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        '') echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n" ;;
-        *) echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        '') echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1410,7 +1410,7 @@ function MediaUnlockTest_YouTube_Premium() {
         return
     fi
 
-    echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+    echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
 }
 
 function RegionTest_YouTubeCDN() {
@@ -1426,11 +1426,11 @@ function RegionTest_YouTubeCDN() {
     local isIataFound2=$(echo "$IATACODE2" | grep -w "$iata")
 
     if [ -z "$iata" ]; then
-        echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Failed (Unexpected Result: Location Unknown)${Font_Suffix}\n"
+        echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Failed (Error: Location Unknown)${Font_Suffix}\n"
         return
     fi
     if [ -z "$isIataFound1" ] && [ -z "$isIataFound2" ]; then
-        echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Failed (Unexpected Result: IATA: ${iata} Location Not Detectable)${Font_Suffix}\n"
+        echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Failed (Error: IATA: ${iata} Not Found)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isIataFound1" ]; then
@@ -1450,7 +1450,7 @@ function RegionTest_YouTubeCDN() {
         return
     fi
 
-    echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function WebTest_GoogleSearchCAPTCHA() {
@@ -1464,7 +1464,7 @@ function WebTest_GoogleSearchCAPTCHA() {
     local isOK=$(echo "$tmpresult" | grep -i 'curl')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
@@ -1476,7 +1476,7 @@ function WebTest_GoogleSearchCAPTCHA() {
         return
     fi
 
-    echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_BritBox() {
@@ -1499,7 +1499,7 @@ function MediaUnlockTest_BritBox() {
         return
     fi
 
-    echo -n -e "\r BritBox:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r BritBox:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_PrimeVideo() {
@@ -1513,7 +1513,7 @@ function MediaUnlockTest_PrimeVideo() {
     local region=$(echo "$tmpresult" | grep -oP '"currentTerritory":"\K[^"]+' | head -n 1)
 
     if [ -z "$isBlocked" ] && [ -z "$region" ]; then
-        echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
@@ -1525,7 +1525,7 @@ function MediaUnlockTest_PrimeVideo() {
         return
     fi
 
-    echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}Failed (Unexpected Result: Unknown Region)${Font_Suffix}\n"
+    echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}Failed (Error: Unknown Region)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Radiko() {
@@ -1539,7 +1539,7 @@ function MediaUnlockTest_Radiko() {
     local isOK=$(echo "$tmpresult" | grep 'JAPAN')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r Radiko:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Radiko:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
     fi
     if [ -n "$isBlocked" ]; then
         echo -n -e "\r Radiko:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -1551,7 +1551,7 @@ function MediaUnlockTest_Radiko() {
         return
     fi
 
-    echo -n -e "\r Radiko:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Radiko:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_DMM() {
@@ -1566,7 +1566,7 @@ function MediaUnlockTest_DMM() {
 
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
     fi
     if [ -n "$isBlocked" ]; then
         echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -1577,7 +1577,7 @@ function MediaUnlockTest_DMM() {
         return
     fi
 
-    echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_DMMTV() {
@@ -1591,7 +1591,7 @@ function MediaUnlockTest_DMMTV() {
     local isOK=$(echo "$tmpresult" | grep 'UNAUTHORIZED')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r DMM TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r DMM TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
     fi
     if [ -n "$isBlocked" ]; then
         echo -n -e "\r DMM TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -1602,7 +1602,7 @@ function MediaUnlockTest_DMMTV() {
         return
     fi
 
-    echo -n -e "\r DMM TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r DMM TV:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Catchplay() {
@@ -1614,13 +1614,13 @@ function MediaUnlockTest_Catchplay() {
 
     local result=$(echo "$tmpresult"  | grep -oP '"code"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$result" ]; then
-        echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     case "$result" in
         '0') echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '100016') echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1647,7 +1647,7 @@ function MediaUnlockTest_HotStar() {
     local siteRegion=$(echo "$urlEffective" | sed 's@.*com/@@' | tr [:lower:] [:upper:])
 
     if [ -z "$region" ]; then
-        echo -n -e "\r HotStar:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r HotStar:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if  [ "$region" == "$siteRegion" ]; then
@@ -1655,7 +1655,7 @@ function MediaUnlockTest_HotStar() {
         return
     fi
 
-    echo -n -e "\r HotStar:\t\t\t\t${Font_Red}Failed (Unexpected Result: REGION ERROR ${region}_${siteRegion})${Font_Suffix}\n"
+    echo -n -e "\r HotStar:\t\t\t\t${Font_Red}Failed (Error: REGION ERROR ${region}_${siteRegion})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_LiTV() {
@@ -1677,8 +1677,8 @@ function MediaUnlockTest_LiTV() {
     case "$result" in
         '42000087') echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '42000075') echo -n -e "\r LiTV:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;; # 剧集不存在
-        '') echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n" ;;
-        *) echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        '') echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1709,7 +1709,7 @@ function MediaUnlockTest_Fox() {
         '000') echo -n -e "\r FOX:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r FOX:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r FOX:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r FOX:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r FOX:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1723,7 +1723,7 @@ function MediaUnlockTest_Joyn() {
     local auth=$(echo "$tmpauth" | grep -oP '"access_token"\s{0,}:\s{0,}"\K[^"]+')
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.joyn.de/content/entitlement-token' -H "x-api-key: 36lp1t4wto5uu2i2nk57ywy9on1ns5yg" -H "content-type: application/json" -d '{"content_id":"daserste-de-hd","content_type":"LIVE"}' -H "authorization: Bearer ${auth}" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        echo -n -e "\r Joyn:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Joyn:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -1736,7 +1736,7 @@ function MediaUnlockTest_Joyn() {
         return
     fi
 
-    echo -n -e "\r Joyn:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Joyn:\t\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_SpotvNow() {
@@ -1751,7 +1751,7 @@ function MediaUnlockTest_SpotvNow() {
     case "$result" in
         'CLIENT_GEO') echo -n -e "\r SPOTV NOW:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '') echo -n -e "\r SPOTV NOW:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r SPOTV NOW:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r SPOTV NOW:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1767,7 +1767,7 @@ function MediaUnlockTest_SKY_DE() {
     case "$result" in
         'CLIENT_GEO') echo -n -e "\r SKY DE:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '') echo -n -e "\r SKY DE:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r SKY DE:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r SKY DE:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1778,7 +1778,7 @@ function MediaUnlockTest_ZDF() {
         '000') echo -n -e "\r ZDF: \t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '404') echo -n -e "\r ZDF: \t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r ZDF: \t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r ZDF: \t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r ZDF: \t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1801,7 +1801,7 @@ function MediaUnlockTest_HBOGO_ASIA() {
         return
     fi
 
-    echo -n -e "\r HBO GO Asia:\t\t\t\t${Font_Red}Failed (Unexpected Result: Country Code Not Found)${Font_Suffix}\n"
+    echo -n -e "\r HBO GO Asia:\t\t\t\t${Font_Red}Failed (Error: Country Code Not Found)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_EPIX() {
@@ -1819,7 +1819,7 @@ function MediaUnlockTest_EPIX() {
 
     local epixToken=$(echo "$tmpToken" | grep -oP '"session_token"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$epixToken" ]; then
-        echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -1829,7 +1829,7 @@ function MediaUnlockTest_EPIX() {
     local isOK=$(echo "$tmpresult" | grep 'StartBilling')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
@@ -1841,7 +1841,7 @@ function MediaUnlockTest_EPIX() {
         return
     fi
 
-    echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_NLZIET() {
@@ -1855,7 +1855,7 @@ function MediaUnlockTest_NLZIET() {
     local isOK=$(echo "$tmpresult" | grep -i 'streamSessionId')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r NLZIET:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r NLZIET:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
@@ -1867,7 +1867,7 @@ function MediaUnlockTest_NLZIET() {
         return
     fi
 
-    echo -n -e "\r NLZIET:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r NLZIET:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_videoland() {
@@ -1881,8 +1881,8 @@ function MediaUnlockTest_videoland() {
     case "$result" in
         'false') echo -n -e "\r videoland:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         'true') echo -n -e "\r videoland:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        '') echo -n -e "\r videoland:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n" ;;
-        *) echo -n -e "\r videoland:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        '') echo -n -e "\r videoland:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r videoland:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1900,7 +1900,7 @@ function MediaUnlockTest_NPO_Start_Plus() {
         '000') echo -n -e "\r NPO Start Plus:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r NPO Start Plus:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '451') echo -n -e "\r NPO Start Plus:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r NPO Start Plus:\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r NPO Start Plus:\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1922,7 +1922,7 @@ function MediaUnlockTest_RakutenTV() {
 
     local region=$(echo "$tmpresult" | grep -oP '"iso3166_code"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$region" ]; then
-        echo -n -e "\r Rakuten TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Rakuten TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -1932,7 +1932,7 @@ function MediaUnlockTest_RakutenTV() {
         return
     fi
 
-    echo -n -e "\r Rakuten TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Rakuten TV:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_MoviStarPlus() {
@@ -1942,7 +1942,7 @@ function MediaUnlockTest_MoviStarPlus() {
         '000') echo -n -e "\r Movistar+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Movistar+:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Movistar+:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Movistar+:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Movistar+:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -1963,7 +1963,7 @@ function MediaUnlockTest_Starz() {
     local isKnownProxy=$(echo "$tmpresult" | grep -oP '"isKnownProxy"\s{0,}:\s{0,}\K(false|true)')
 
     if [ -z "$isAllowedAccess" ] || [ -z "$isAllowedCountry" ] || [ -z "$isKnownProxy" ]; then
-        echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ "$isAllowedAccess" == 'true' ] && [ "$isAllowedCountry" == 'true' ] && [ "$isKnownProxy" == 'false' ]; then
@@ -1979,7 +1979,7 @@ function MediaUnlockTest_Starz() {
         return
     fi
 
-    echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_CanalPlus() {
@@ -2001,7 +2001,7 @@ function MediaUnlockTest_CanalPlus() {
         return
     fi
 
-    echo -n -e "\r Canal+:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r Canal+:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Sky_CH() {
@@ -2029,7 +2029,7 @@ function MediaUnlockTest_Sky_CH() {
         return
     fi
 
-    echo -n -e "\r SKY CH:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r SKY CH:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_CBCGem() {
@@ -2041,7 +2041,7 @@ function MediaUnlockTest_CBCGem() {
 
     local result=$(echo "$tmpresult" | grep -oP '"country"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "${result}" ]; then
-        echo -n -e "\r CBC Gem:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r CBC Gem:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -2064,7 +2064,7 @@ function MediaUnlockTest_AcornTV() {
     local isOK=$(echo "$tmpresult" | grep -i 'signup.acorn.tv')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r Acorn TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Acorn TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
@@ -2076,7 +2076,7 @@ function MediaUnlockTest_AcornTV() {
         return
     fi
 
-    echo -n -e "\r Acorn TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Acorn TV:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Crave() {
@@ -2090,7 +2090,7 @@ function MediaUnlockTest_Crave() {
     local isBlocked=$(echo "$tmpresult" | grep -i 'Geo Constraint Restrictions')
 
     if [ -z "$isOK" ] && [ -z "$isBlocked" ]; then
-        echo -n -e "\r Crave:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Crave:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
@@ -2102,7 +2102,7 @@ function MediaUnlockTest_Crave() {
         return
     fi
 
-    echo -n -e "\r Crave:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Crave:\t\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Amediateka() {
@@ -2124,7 +2124,7 @@ function MediaUnlockTest_Amediateka() {
         return
     fi
 
-    echo -n -e "\r Amediateka:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r Amediateka:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_MegogoTV() {
@@ -2154,7 +2154,7 @@ function MediaUnlockTest_RaiPlay() {
     local isBlocked=$(echo "$tmpresult" | grep 'video_no_available')
 
     if [ -z "$result" ]; then
-        echo -n -e "\r Rai Play:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Rai Play:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
@@ -2165,7 +2165,7 @@ function MediaUnlockTest_RaiPlay() {
     case "$result" in
         'Y') echo -n -e "\r Rai Play:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         'N') echo -n -e "\r Rai Play:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Rai Play:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Rai Play:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2178,14 +2178,14 @@ function MediaUnlockTest_TVBAnywhere() {
 
     local result=$(echo "$tmpresult" | grep -oP '"allow_in_this_country"\s{0,}:\s{0,}\K(false|true)')
     if [ -z "$result" ]; then
-        echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
     case "$result" in
         'true') echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         'false') echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2196,7 +2196,7 @@ function GameTest_ProjectSekai() {
         '000') echo -n -e "\r Project Sekai: Colorful Stage:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Project Sekai: Colorful Stage:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Project Sekai: Colorful Stage:\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Project Sekai: Colorful Stage:\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Project Sekai: Colorful Stage:\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2207,7 +2207,7 @@ function GameTest_KonosubaFD() {
         '000') echo -n -e "\r Konosuba Fantastic Days:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Konosuba Fantastic Days:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Konosuba Fantastic Days:\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Konosuba Fantastic Days:\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Konosuba Fantastic Days:\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2235,7 +2235,7 @@ function MediaUnlockTest_Directv() {
         '000') echo -n -e "\r Directv Stream:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Directv Stream:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Directv Stream:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Directv Stream:\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Directv Stream:\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2254,7 +2254,7 @@ function RegionTest_NetflixCDN() {
 
     local cdnDomain=$(echo "$respContent" | grep -oP '"url":"\K[^"]+' | awk -F'[/:]' '{print $4}')
     if [ -z "$cdnDomain" ]; then
-        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -2278,7 +2278,7 @@ function RegionTest_NetflixCDN() {
 
         local cdnISP=$(echo "$tmpresult1" | grep -oP '"isp"\s{0,}:\s{0,}"\K[^"]+')
         if [ -z "$cdnISP" ]; then
-            echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Unexpected Result: No ISP Info Found)${Font_Suffix}\n"
+            echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Error: No ISP Info Found)${Font_Suffix}\n"
             return
         fi
     else
@@ -2299,7 +2299,7 @@ function RegionTest_NetflixCDN() {
     fi
 
     if [ -z "$location" ]; then
-        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Unexpected Result: IATA CODE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Error: IATA CODE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -2311,7 +2311,7 @@ function RegionTest_NetflixCDN() {
         return
     fi
 
-    echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_SkyGo() {
@@ -2352,7 +2352,7 @@ function MediaUnlockTest_StarPlus() {
         return
     fi
     if [ -z "$inSupportedLocation" ]; then
-        echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ "$inSupportedLocation" == 'false' ]; then
@@ -2364,7 +2364,7 @@ function MediaUnlockTest_StarPlus() {
         return
     fi
 
-    echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_DirecTVGO() {
@@ -2392,7 +2392,7 @@ function MediaUnlockTest_DirecTVGO() {
         return
     fi
 
-    echo -n -e "\r DirecTV Go:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r DirecTV Go:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_DAM() {
@@ -2402,7 +2402,7 @@ function MediaUnlockTest_DAM() {
         '000') echo -n -e "\r Karaoke@DAM:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Karaoke@DAM:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Karaoke@DAM:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Karaoke@DAM:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Karaoke@DAM:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2428,7 +2428,7 @@ function MediaUnlockTest_DiscoveryPlus() {
     local result=$(echo "$tmpresult" | grep -oP '"currentLocationTerritory"\s{0,}:\s{0,}"\K[^"]+')
 
     if [ -z "$result" ]; then
-        echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ "$result" == "us" ]; then
@@ -2458,7 +2458,7 @@ function MediaUnlockTest_ESPNPlus() {
     local fakeContent=$(echo "$MEDIA_COOKIE" | sed -n '10p')
     local refreshToken=$(echo "$tokenContent" | grep -oP '"refresh_token"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$refreshToken" ]; then
-        echo -n -e "\r ESPN+:${Font_SkyBlue}[Sponsored by Jam]${Font_Suffix}\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r ESPN+:${Font_SkyBlue}[Sponsored by Jam]${Font_Suffix}\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -2473,7 +2473,7 @@ function MediaUnlockTest_ESPNPlus() {
     local inSupportedLocation=$(echo "$tmpresult" | grep -oP '"inSupportedLocation"\s{0,}:\s{0,}\K(false|true)')
 
     if [ -z "$region" ] || [ -z "$inSupportedLocation" ]; then
-        echo -n -e "\r ESPN+:${Font_SkyBlue}[Sponsored by Jam]${Font_Suffix}\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r ESPN+:${Font_SkyBlue}[Sponsored by Jam]${Font_Suffix}\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -2494,16 +2494,16 @@ function MediaUnlockTest_Stan() {
         return
     fi
     if [ "$httpCode" == '403' ]; then
-        echo -n -e "\r Stan:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Stan:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ "$httpCode" == "411" ]; then
-        echo -n -e "\r Stan:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Stan:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
     if [ -z "$respContent" ]; then
-        echo -n -e "\r Stan:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Stan:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -2523,7 +2523,7 @@ function MediaUnlockTest_Binge() {
         '000') echo -n -e "\r Binge:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Binge:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Binge:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Binge:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Binge:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2551,7 +2551,7 @@ function MediaUnlockTest_Docplay() {
         return
     fi
 
-    echo -n -e "\r Docplay:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r Docplay:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_OptusSports() {
@@ -2561,7 +2561,7 @@ function MediaUnlockTest_OptusSports() {
         '000') echo -n -e "\r Optus Sports:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Optus Sports:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Optus Sports:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Optus Sports:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Optus Sports:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2572,7 +2572,7 @@ function MediaUnlockTest_KayoSports() {
         '000') echo -n -e "\r Kayo Sports:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Kayo Sports:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Kayo Sports:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Kayo Sports:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Kayo Sports:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2593,7 +2593,7 @@ function MediaUnlockTest_NeonTV() {
     fi
 
     if [ -z "$respContent" ]; then
-        echo -n -e "\r Neon TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Neon TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -2613,7 +2613,7 @@ function MediaUnlockTest_SkyGONZ() {
         '000') echo -n -e "\r SkyGo NZ:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r SkyGo NZ:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r SkyGo NZ:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r SkyGo NZ:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r SkyGo NZ:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2624,7 +2624,7 @@ function MediaUnlockTest_ThreeNow() {
         '000') echo -n -e "\r ThreeNow:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r ThreeNow:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r ThreeNow:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r ThreeNow:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r ThreeNow:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2638,7 +2638,7 @@ function MediaUnlockTest_MaoriTV() {
     # 找出 index-*.js
     local indexJsPath=$(echo "$tmpresult" | grep -oP 'src="\K/assets/index-[a-z0-9]{8}[^"]+')
     if [ -z "$indexJsPath" ]; then
-        echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     # 下载 index-*.js
@@ -2651,7 +2651,7 @@ function MediaUnlockTest_MaoriTV() {
     local playerJsUrl=$(echo "$tmpresult2" | grep -oP 'players.brightcove.net/[0-9]{13}/\w{9}_default/index.min.js')
     local accountId=$(echo "$playerJsUrl" | grep -oP 'players.brightcove.net/\K[0-9]{13}')
     if [ -z "$playerJsUrl" ]; then
-        echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -2680,8 +2680,8 @@ function MediaUnlockTest_MaoriTV() {
     case "$result" in
         'CLIENT_GEO') echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'SUCCESS') echo -n -e "\r Maori TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        '') echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        '') echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2694,7 +2694,7 @@ function MediaUnlockTest_SBSonDemand() {
 
     local result=$(echo "$tmpresult" | grep -oP '"country_code"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$result" ]; then
-        echo -n -e "\r SBS on Demand:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r SBS on Demand:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -2717,7 +2717,7 @@ function MediaUnlockTest_ABCiView() {
     local isOK=$(echo "$tmpresult" | grep -oP '"playable"\s{0,}:\s{0,}\K(false|true)')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r ABC iView:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r ABC iView:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -2731,7 +2731,7 @@ function MediaUnlockTest_ABCiView() {
         return
     fi
 
-    echo -n -e "\r ABC iView:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r ABC iView:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Channel9() {
@@ -2745,7 +2745,7 @@ function MediaUnlockTest_Channel9() {
     local isOK=$(echo "$tmpresult" | grep -i 'Log in to')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r Channel 9:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Channel 9:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
@@ -2757,7 +2757,7 @@ function MediaUnlockTest_Channel9() {
         return
     fi
 
-    echo -n -e "\r Channel 9:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Channel 9:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Telasa() {
@@ -2771,7 +2771,7 @@ function MediaUnlockTest_Telasa() {
     local isAllowed=$(echo "$tmpresult" | grep -oP '"type"\s{0,}:\s{0,}"\K[^"]+')
 
     if [ -z "$isAllowed" ] && [ -z "$isForbidden" ]; then
-        echo -n -e "\r Telasa:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Telasa:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isForbidden" ]; then
@@ -2783,7 +2783,7 @@ function MediaUnlockTest_Telasa() {
         return
     fi
 
-    echo -n -e "\r Telasa:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Telasa:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_SetantaSports() {
@@ -2799,7 +2799,7 @@ function MediaUnlockTest_SetantaSports() {
 
     local result=$(echo "$tmpresult" | grep -oP '"outsideAllowedTerritories"\s{0,}:\s{0,}\K(false|true)')
     if [ -z "$result" ]; then
-        echo -n -e "\r Setanta Sports:\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Setanta Sports:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -2812,7 +2812,7 @@ function MediaUnlockTest_SetantaSports() {
         return
     fi
 
-    echo -n -e "\r Setanta Sports:\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Setanta Sports:\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_MolaTV() {
@@ -2828,7 +2828,7 @@ function MediaUnlockTest_MolaTV() {
 
     local result=$(echo "$tmpresult" | grep -oP '"isAllowed"\s{0,}:\s{0,}\K(false|true)')
     if [ -z "$result" ]; then
-        echo -n -e "\r Mola TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Mola TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -2841,7 +2841,7 @@ function MediaUnlockTest_MolaTV() {
         return
     fi
 
-    echo -n -e "\r Mola TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Mola TV:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_BeinConnect() {
@@ -2855,7 +2855,7 @@ function MediaUnlockTest_BeinConnect() {
         '000') echo -n -e "\r Bein Sports Connect:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '500') echo -n -e "\r Bein Sports Connect:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '451') echo -n -e "\r Bein Sports Connect:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Bein Sports Connect:\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Bein Sports Connect:\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2874,7 +2874,7 @@ function MediaUnlockTest_EurosportRO() {
 
     local token=$(echo "$tmpresult" | grep -oP '"token"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$token" ]; then
-        echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGER ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}Failed (Error: PAGER ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -2886,7 +2886,7 @@ function MediaUnlockTest_EurosportRO() {
     local isOK=$(echo "$tmpresult1" | grep 'eurosport-vod')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
@@ -2898,7 +2898,7 @@ function MediaUnlockTest_EurosportRO() {
         return
     fi
 
-    echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_DiscoveryPlusUK() {
@@ -2923,7 +2923,7 @@ function MediaUnlockTest_DiscoveryPlusUK() {
     local result=$(echo "$tmpresult1" | grep -oP '"currentLocationTerritory"\s{0,}:\s{0,}"\K[^"]+')
 
     if [ -z "$result" ]; then
-        echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ "$result" == "gb" ]; then
@@ -2951,8 +2951,8 @@ function MediaUnlockTest_Channel5() {
     case "$result" in
         '3000') echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '4003') echo -n -e "\r Channel 5:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        '') echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        '') echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -2985,7 +2985,7 @@ function MediaUnlockTest_MyVideo() {
         return
     fi
 
-    echo -n -e "\r MyVideo:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r MyVideo:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_7plus() {
@@ -3022,7 +3022,7 @@ function MediaUnlockTest_Channel10() {
 
     local result=$(echo "$tmpresult" | grep -oP '"allow"\s{0,}:\s{0,}\K(false|true)')
     if [ -z "$result" ]; then
-        echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3035,7 +3035,7 @@ function MediaUnlockTest_Channel10() {
         return
     fi
 
-    echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Spotify() {
@@ -3050,7 +3050,7 @@ function MediaUnlockTest_Spotify() {
     local isLaunched=$(echo "$tmpresult" | grep -oP '"is_country_launched"\s{0,}:\s{0,}\K(false|true)')
 
     if [ -z "$statusCode" ]; then
-        echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ "$statusCode" == '320' ] || [ "$statusCode" == '120' ]; then
@@ -3058,7 +3058,7 @@ function MediaUnlockTest_Spotify() {
         return
     fi
     if [ -z "$isLaunched" ] || [ -z "$region" ]; then
-        echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ "$isLaunched" == 'false' ]; then
@@ -3070,7 +3070,7 @@ function MediaUnlockTest_Spotify() {
         return
     fi
 
-    echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}Failed (Unexpected Result: $statusCode)${Font_Suffix}\n"
+    echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}Failed (Error: $statusCode)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_VideoMarket() {
@@ -3085,7 +3085,7 @@ function MediaUnlockTest_VideoMarket() {
     local isOK=$(echo "$tmpresult" | grep '292072')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r VideoMarket:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r VideoMarket:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
@@ -3097,7 +3097,7 @@ function MediaUnlockTest_VideoMarket() {
         return
     fi
 
-    echo -n -e "\r VideoMarket:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+    echo -n -e "\r VideoMarket:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_JCOM_ON_DEMAND() {
@@ -3107,7 +3107,7 @@ function MediaUnlockTest_JCOM_ON_DEMAND() {
         '000') echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '502') echo -n -e "\r J:com On Demand:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3135,7 +3135,7 @@ function MediaUnlockTest_musicjp() {
         return
     fi
 
-    echo -n -e "\r music.jp:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+    echo -n -e "\r music.jp:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_InstagramMusic() {
@@ -3149,8 +3149,8 @@ function MediaUnlockTest_InstagramMusic() {
     case "$result" in
         'false') echo -n -e "\r Instagram Licensed Audio:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         'true') echo -n -e "\r Instagram Licensed Audio:\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        '') echo -n -e "\r Instagram Licensed Audio:\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Instagram Licensed Audio:\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        '') echo -n -e "\r Instagram Licensed Audio:\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Instagram Licensed Audio:\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3160,7 +3160,7 @@ function WebTest_Reddit() {
         '000') echo -n -e "\r Reddit:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Reddit:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Reddit:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Reddit:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Reddit:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3178,7 +3178,7 @@ function MediaUnlockTest_Popcornflix() {
     case "$result" in
         '403') echo -n -e "\r Popcornflix:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Popcornflix:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Popcornflix:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Popcornflix:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3193,7 +3193,7 @@ function MediaUnlockTest_TubiTV() {
     local isOK=$(echo "$tmpresult" | grep -i 'manifest')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r Tubi TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Tubi TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3206,7 +3206,7 @@ function MediaUnlockTest_TubiTV() {
         return
     fi
 
-    echo -n -e "\r Tubi TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Tubi TV:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Philo() {
@@ -3222,14 +3222,14 @@ function MediaUnlockTest_Philo() {
 
     local result=$(echo "$tmpresult" | grep -oP '"status"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$result" ]; then
-        echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
     case "$result" in
         'FAIL') echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'SUCCESS') echo -n -e "\r Philo:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3248,7 +3248,7 @@ function MediaUnlockTest_FXNOW() {
     local isOK=$(echo "$tmpresult" | grep -i "FX Movies")
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r FXNOW:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r FXNOW:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3261,7 +3261,7 @@ function MediaUnlockTest_FXNOW() {
         return
     fi
 
-    echo -n -e "\r FXNOW:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r FXNOW:\t\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Crunchyroll() {
@@ -3291,7 +3291,7 @@ function MediaUnlockTest_CWTV() {
         '000') echo -n -e "\r CW TV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '403'|'451') echo -n -e "\r CW TV:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '200') echo -n -e "\r CW TV:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r CW TV:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r CW TV:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3306,7 +3306,7 @@ function MediaUnlockTest_Shudder() {
     local isOK=$(echo "$tmpresult" | grep -i 'movies')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r Shudder:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Shudder:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3319,7 +3319,7 @@ function MediaUnlockTest_Shudder() {
         return
     fi
 
-    echo -n -e "\r Shudder:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Shudder:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_TLCGO() {
@@ -3336,7 +3336,7 @@ function MediaUnlockTest_TLCGO() {
 
     local token=$(echo "$tmpresult" | grep -oP '"token"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$token" ]; then
-        echo -n -e "\r TLC GO:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r TLC GO:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3347,7 +3347,7 @@ function MediaUnlockTest_TLCGO() {
     local region=$(echo "$tmpresult1" | grep -oP '"mainTerritoryCode"\s{0,}:\s{0,}"\K[^"]+' | tr [:lower:] [:upper:])
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r TLC GO:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r TLC GO:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3360,7 +3360,7 @@ function MediaUnlockTest_TLCGO() {
         return
     fi
 
-    echo -n -e "\r TLC GO:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r TLC GO:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function RegionTest_oneTrust() {
@@ -3373,7 +3373,7 @@ function RegionTest_oneTrust() {
     local region=$(echo "$tmpresult" | grep -oP '"country"\s{0,}:\s{0,}"\K[^"]+')
     local stateName=$(echo "$tmpresult" | grep -oP '"stateName"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$region" ]; then
-        echo -n -e "\r OneTrust Region:\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r OneTrust Region:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ -z "$stateName" ]; then
@@ -3397,7 +3397,7 @@ function MediaUnlockTest_Wavve() {
     case "$result" in
         '403'|'550') echo -n -e "\r Wavve:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '200') echo -n -e "\r Wavve:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Wavve:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Wavve:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3416,7 +3416,7 @@ function MediaUnlockTest_Tving() {
     local isOK=$(echo "$tmpresult" | grep 'vod_type')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r Tving:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Tving:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3429,7 +3429,7 @@ function MediaUnlockTest_Tving() {
         return
     fi
 
-    echo -n -e "\r Tving:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Tving:\t\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_CoupangPlay() {
@@ -3461,7 +3461,7 @@ function MediaUnlockTest_CoupangPlay() {
         return
     fi
 
-    echo -n -e "\r Coupang Play:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r Coupang Play:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_NaverTV() {
@@ -3488,8 +3488,8 @@ function MediaUnlockTest_NaverTV() {
     case "$result" in
         'NOT_COUNTRY_AVAILABLE') echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'PLAYABLE') echo -n -e "\r Naver TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        '') echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        '') echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3526,7 +3526,7 @@ function MediaUnlockTest_KBSDomestic() {
     local result=$(echo "$tmpresult" | grep 'ipck' | grep -oP 'Domestic\\\"\s{0,}:\s{0,}\K(false|true)')
 
     if [ -z "$result" ]; then
-        echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ "$result" == 'true' ]; then
@@ -3538,7 +3538,7 @@ function MediaUnlockTest_KBSDomestic() {
         return
     fi
 
-    echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_KBSAmerican() {
@@ -3555,7 +3555,7 @@ function MediaUnlockTest_KBSAmerican() {
     local result=$(echo "$tmpresult" | grep 'ipck' | grep -oP 'Domestic\\\"\s{0,}:\s{0,}\K(false|true)')
 
     if [ -z "$result" ]; then
-        echo -n -e "\r KBS American:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r KBS American:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ "$result" == 'true' ]; then
@@ -3567,7 +3567,7 @@ function MediaUnlockTest_KBSAmerican() {
         return
     fi
 
-    echo -n -e "\r KBS American:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r KBS American:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Watcha() {
@@ -3577,7 +3577,7 @@ function MediaUnlockTest_Watcha() {
         '000') echo -n -e "\r WATCHA:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
         '200') echo -n -e "\r WATCHA:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '451') echo -n -e "\r WATCHA:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r WATCHA:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r WATCHA:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3596,7 +3596,7 @@ function MediaUnlockTest_KOCOWA() {
     case "$result" in
         '200') echo -n -e "\r KOCOWA:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r KOCOWA:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r KOCOWA:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r KOCOWA:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3613,8 +3613,8 @@ function MediaUnlockTest_NBCTV() {
     case "$result" in
         'false') echo -n -e "\r NBC TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         'true') echo -n -e "\r NBC TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        '') echo -n -e "\r NBC TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n" ;;
-        *) echo -n -e "\r NBC TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        '') echo -n -e "\r NBC TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r NBC TV:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3630,7 +3630,7 @@ function MediaUnlockTest_Crackle() {
     local region=$(echo "$tmpresult" | grep -oP 'x-crackle-region:\s{0,}\K[A-Z]+')
 
     if [ -z "$region" ]; then
-        echo -n -e "\r Crackle:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Crackle:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ "$region" == 'US' ]; then
@@ -3661,7 +3661,7 @@ function MediaUnlockTest_AETV() {
 
     local region=$(echo "$tmpresult1" | grep -oP 'AETN-Country-Code=\K[A-Z]+' | head -n 1)
     if [ -z "$region" ]; then
-        echo -n -e "\r A&E TV:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r A&E TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3695,7 +3695,7 @@ function MediaUnlockTest_NFLPlus() {
         return
     fi
 
-    echo -n -e "\r NFL+:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r NFL+:\t\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_SkyShowTime() {
@@ -3720,7 +3720,7 @@ function MediaUnlockTest_SkyShowTime() {
 
     local region=$(echo "$tmpresult" | grep -oP 'activeTerritory=\K[A-Z]+' | head -n 1)
     if [ -z "$region" ]; then
-        echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3729,7 +3729,7 @@ function MediaUnlockTest_SkyShowTime() {
         return
     fi
 
-    echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Red}Faild (Unexpected Result: ${httpCode})${Font_Suffix}\n"
+    echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Red}Faild (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function GameTest_MathsSpot() {
@@ -3752,7 +3752,7 @@ function GameTest_MathsSpot() {
     local region=$(echo "$tmpresult" | grep -oP '"countryCode"\s{0,}:\s{0,}"\K[^"]+')
     local nggFeVersion=$(echo "$tmpresult" | grep -oP '"NEXT_PUBLIC_FE_VERSION"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$nggFeVersion" ] || [ -z "$region" ]; then
-        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3768,7 +3768,7 @@ function GameTest_MathsSpot() {
 
     local status=$(echo "$tmpresult1" |  grep -oP '"status"\s{0,}:\s{0,}"\K[^"]+' | head -n 1)
     if [ -z "$status" ]; then
-        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3776,7 +3776,7 @@ function GameTest_MathsSpot() {
         'FailureServiceNotInRegion') echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'FailureProxyUserLimitExceeded') echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}No (Proxy/VPN Detected)${Font_Suffix}\n" ;;
         'Success') echo -n -e "\r Maths Spot:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Unexpected Result: $status)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Error: $status)${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3796,7 +3796,7 @@ function MediaUnblockTest_BGlobalSEA() {
     case "$result" in
         '0') echo -n -e "\r B-Global SouthEastAsia:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '10003003'|'10004001') echo -n -e "\r B-Global SouthEastAsia:\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r B-Global SouthEastAsia:\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r B-Global SouthEastAsia:\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3816,7 +3816,7 @@ function MediaUnblockTest_BGlobalTH() {
     case "$result" in
         '0') echo -n -e "\r B-Global Thailand Only:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '10003003'|'10004001') echo -n -e "\r B-Global Thailand Only:\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r B-Global Thailand Only:\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r B-Global Thailand Only:\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3836,7 +3836,7 @@ function MediaUnblockTest_BGlobalID() {
     case "$result" in
         '0') echo -n -e "\r B-Global Indonesia Only:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '10003003'|'10004001') echo -n -e "\r B-Global Indonesia Only:\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r B-Global Indonesia Only:\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r B-Global Indonesia Only:\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3856,7 +3856,7 @@ function MediaUnblockTest_BGlobalVN() {
     case "$result" in
         '0') echo -n -e "\r B-Global Việt Nam Only:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '10003003'|'10004001') echo -n -e "\r B-Global Việt Nam Only:\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r B-Global Việt Nam Only:\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r B-Global Việt Nam Only:\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3889,7 +3889,7 @@ function MediaUnlockTest_AISPlay() {
 
     local tmpLiveUrl=$(echo "$tmpresult1" | grep -oP '"live"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$tmpLiveUrl" ]; then
-        echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3904,7 +3904,7 @@ function MediaUnlockTest_AISPlay() {
     # 取第一优先级播放地址
     local playUrl=$(echo "$tmpresult2" | grep -oP '"url"\s{0,}:\s{0,}"\K[^"]+' | grep 'rewriter' | head -n 1)
     if [ -z "$playUrl" ]; then
-        echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3913,11 +3913,11 @@ function MediaUnlockTest_AISPlay() {
     # X-Base-Request-Check-Status: INCORRECT X-Geo-Protection-System-Status: BLOCK
     local baseRequstCheckStatus=$(echo "$tmpresult3" | grep -oP 'X-Base-Request-Check-Status:\s{0,}\K\w+')
     if [ -z "$baseRequstCheckStatus" ]; then
-        echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
     if [ "$baseRequstCheckStatus" == 'INCORRECT' ]; then
-        echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3926,8 +3926,8 @@ function MediaUnlockTest_AISPlay() {
     case "$result" in
         'BLOCK') echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'SUCCESS') echo -n -e "\r AIS Play:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        '') echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n" ;;
-        *) echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        '') echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -3962,7 +3962,7 @@ function WebTest_OpenAI() {
         return
     fi
 
-    echo -n -e "\r ChatGPT:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r ChatGPT:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function WebTest_MetaAI() {
@@ -3976,7 +3976,7 @@ function WebTest_MetaAI() {
     local isOK=$(echo "$tmpresult" | grep -i 'AbraHomeRootConversationQuery')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r Meta AI:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r Meta AI:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -3991,7 +3991,7 @@ function WebTest_MetaAI() {
         return
     fi
 
-    echo -n -e "\r Meta AI:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Meta AI:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function RegionTest_Bing() {
@@ -4065,7 +4065,7 @@ function MediaUnlockTest_TV360() {
     case "$result" in
         '310') echo -n -e "\r TV360:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '200') echo -n -e "\r TV360:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r TV360:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r TV360:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -4084,7 +4084,7 @@ function MediaUnlockTest_MeWatch() {
     local isOK=$(echo "$tmpresult" | grep -i 'Stream')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r MeWatch:\t\t\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r MeWatch:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -4097,7 +4097,7 @@ function MediaUnlockTest_MeWatch() {
         return
     fi
 
-    echo -n -e "\r MeWatch:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r MeWatch:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_trueID() {
@@ -4115,7 +4115,7 @@ function MediaUnlockTest_trueID() {
     case "$result" in
         "GEO_BLOCK") echo -n -e "\r trueID:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         "LOADING") echo -n -e "\r trueID:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        *) echo -n -e "\r trueID:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r trueID:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -4151,7 +4151,7 @@ function MediaUnlockTest_SonyLiv() {
     case "$result" in
         "KO") echo -n -e "\r SonyLiv:\t\t\t\t${Font_Red}No (${reason})${Font_Suffix}\n" ;;
         "OK") echo -n -e "\r SonyLiv:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n" ;;
-        *) echo -n -e "\r SonyLiv:\t\t\t\t${Font_Red}Failed (Unexpected Result: ${result})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r SonyLiv:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -4182,7 +4182,7 @@ function MediaUnlockTest_JioCinema() {
         return
     fi
 
-    echo -n -e "\r Jio Cinema:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Jio Cinema:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_MXPlayer() {
@@ -4205,7 +4205,7 @@ function MediaUnlockTest_MXPlayer() {
         return
     fi
 
-    echo -n -e "\r MX Player:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r MX Player:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Zee5() {
@@ -4222,7 +4222,7 @@ function MediaUnlockTest_Zee5() {
         return
     fi
 
-    echo -n -e "\r Zee5:\t\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+    echo -n -e "\r Zee5:\t\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function WebTest_EroGameSpace() {
