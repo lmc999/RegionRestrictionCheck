@@ -72,6 +72,10 @@ resolve_ip_address() {
     if command_exists dig; then
         local digExists=1
     fi
+    if [ "$OS_IOS" == '1' ]; then
+        local nslookupExists=0
+        local digExists=0
+    fi
 
     if [ "$nslookupExists" == 1 ]; then
         if [ "$recordType" == 'AAAA' ]; then
@@ -97,11 +101,15 @@ resolve_ip_address() {
     fi
 
     if [ "$recordType" == 'AAAA' ]; then
-        local result=$(ping "${domain}" -6 -c 1 -w 1 -W 1 2>/dev/null | head -n 1 | grep -oP '\s\(\K[\d:a-f]+')
+        local pingArgs='-6 -c 1 -w 1 -W 1'
+        [ "$OS_ANDROID" == '1' ] && pingArgs='-c 1 -w 1 -W 1'
+        local result=$(ping6 ${pingArgs} "${domain}" 2>/dev/null | head -n 1 | grep -oP '\s\(\K[\d:a-f]+')
         echo "${result}"
         return
     else
-        local result=$(ping "${domain}" -4 -c 1 -w 1 -W 1 2>/dev/null | head -n 1 | grep -oP '\s\(\K[\d.]+')
+        local pingArgs='-4 -c 1 -w 1 -W 1'
+        [ "$OS_ANDROID" == '1' ] && pingArgs='-c 1 -w 1 -W 1'
+        local result=$(ping ${pingArgs} "${domain}" 2>/dev/null | head -n 1 | grep -oP '\s\(\K[\d.]+')
         echo "${result}"
         return
     fi
@@ -119,6 +127,15 @@ validate_proxy() {
         echo -e "${Font_Red}Proxy Port invalid.${Font_Suffix}"
         exit 1
     fi
+}
+
+validate_intranet() {
+   local tmpresult=$(echo "$1" | grep -E '(^|\s)(10\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|172\.(1[6-9]|2[0-9]|3[01])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|192\.168\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|198\.18\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9]))(\s|$)')
+   if [ -z "$tmpresult" ]; then
+        return 0
+    fi
+
+    return 1
 }
 
 check_proxy_connectivity() {
@@ -1425,7 +1442,7 @@ function RegionTest_YouTubeCDN() {
 
     if [ -z "$isIDC" ]; then
         local cdnISP=$(echo "$tmpresult" | awk 'NR==1' | awk '{print $3}' | cut -f1 -d'-' | tr [:lower:] [:upper:])
-        echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Yellow}Associated with [${cdnISP}] in [${location}]${Font_Suffix}\n"
+        echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Yellow}[${cdnISP}] in [${location}]${Font_Suffix}\n"
         return
     fi
     if [ -n "$isIDC" ]; then
@@ -1434,6 +1451,32 @@ function RegionTest_YouTubeCDN() {
     fi
 
     echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
+}
+
+function WebTest_GoogleSearchCAPTCHA() {
+    local tmpresult=$(curl -sL 'https://www.google.com/search?q=curl&oq=curl&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBBzg1MmowajGoAgCwAgE&sourceid=chrome&ie=UTF-8' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-model: ""' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-ch-ua-platform-version: "15.0.0"' -H 'sec-ch-ua-wow64: ?0' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+    if [ -z "$tmpresult" ]; then
+        echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+
+    local isBlocked=$(echo "$tmpresult" | grep -i 'unusual traffic from')
+    local isOK=$(echo "$tmpresult" | grep -i 'curl')
+
+    if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
+        echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Red}Failed (Unexpected Result: PAGE ERROR)${Font_Suffix}\n"
+        return
+    fi
+    if [ -n "$isBlocked" ]; then
+        echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+    if [ -n "$isOK" ]; then
+        echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Green}Yes${Font_Suffix}\n"
+        return
+    fi
+
+    echo -n -e "\r Google Search No CAPTCHA:\t\t${Font_Red}Failed (Unexpected Result: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_BritBox() {
@@ -2226,13 +2269,22 @@ function RegionTest_NetflixCDN() {
         return
     fi
 
-    local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -s "https://api.ip.sb/geoip/${cdnIP}" -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'cache-control: no-cache' -H 'pragma: no-cache' -H 'priority: u=0, i' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
-    if [ -z "$tmpresult1" ]; then
-        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
-        return
+    if ! validate_intranet "$cdnIP"; then
+        local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -s "https://api.ip.sb/geoip/${cdnIP}" -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'cache-control: no-cache' -H 'pragma: no-cache' -H 'priority: u=0, i' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+        if [ -z "$tmpresult1" ]; then
+            echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
+            return
+        fi
+
+        local cdnISP=$(echo "$tmpresult1" | grep -oP '"isp"\s{0,}:\s{0,}"\K[^"]+')
+        if [ -z "$cdnISP" ]; then
+            echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Unexpected Result: No ISP Info Found)${Font_Suffix}\n"
+            return
+        fi
+    else
+        cdnISP='Hidden by a VPN'
     fi
 
-    local cdnISP=$(echo "$tmpresult1" | grep -oP '"isp"\s{0,}:\s{0,}"\K[^"]+')
     local iata=$(echo "$cdnDomain" | cut -f3 -d'-' | sed 's/.\{3\}$//' | tr [:lower:] [:upper:])
 
     # local IATACODE2=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACODE2.txt" 2>&1)
@@ -2250,15 +2302,12 @@ function RegionTest_NetflixCDN() {
         echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Unexpected Result: IATA CODE ERROR)${Font_Suffix}\n"
         return
     fi
-    if [ -z "$cdnISP" ]; then
-        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Unexpected Result: No ISP Info Found)${Font_Suffix}\n"
-        return
-    fi
+
     if [ "$cdnISP" == "Netflix Streaming Services" ]; then
         echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Green}${location}${Font_Suffix}\n"
         return
     else
-        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Yellow}Associated with [$cdnISP] in [$location]${Font_Suffix}\n"
+        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Yellow}[${cdnISP}] in [${location}]${Font_Suffix}\n"
         return
     fi
 
@@ -4239,10 +4288,11 @@ function Global_UnlockTest() {
         RegionTest_NetflixCDN &
         WebTest_OpenAI &
         WebTest_Wikipedia_Editable &
+        WebTest_GoogleSearchCAPTCHA &
         GameTest_Steam &
     )
     wait
-    local array=("Bing Region:" "YouTube CDN:" "Netflix Preferred CDN:" "ChatGPT:" "Wikipedia Editability:" "Steam Currency:")
+    local array=("Bing Region:" "YouTube CDN:" "Netflix Preferred CDN:" "ChatGPT:" "Wikipedia Editability:" "Google Search No CAPTCHA:" "Steam Currency:")
     echo_result ${result} ${array}
     show_region Forum
     WebTest_Reddit
