@@ -300,6 +300,10 @@ check_dependencies() {
             CURL_SSL_CIPHERS_OPT='-k --ciphers DEFAULT@SECLEVEL=1'
         fi
     fi
+
+    if command_exists usleep; then
+        USE_USLEEP=1
+    fi
 }
 
 process() {
@@ -366,6 +370,19 @@ process() {
     fi
 
     CURL_OPTS="$USE_NIC $USE_PROXY $X_FORWARD ${CURL_SSL_CIPHERS_OPT} --max-time 10"
+}
+
+delay() {
+    if [ -z $1 ]; then
+        exit 1
+    fi
+    local val=$1
+    if [ "$USE_USLEEP" == 1 ]; then
+        usleep $(awk 'BEGIN{print '$val' * 1000000}')
+        return 0
+    fi
+    sleep $val
+    return 0
 }
 
 count_run_times() {
@@ -712,7 +729,7 @@ function MediaUnlockTest_Dazn() {
     fi
 
     local result=$(echo "$tmpresult" | grep -oP '"isAllowed"\s{0,}:\s{0,}\K(false|true)')
-    local region=$(echo "$tmpresult" | grep -oP '"GeolocatedCountry"\s{0,}:\s{0,}"\K[^"]+' | tr [:lower:] [:upper:])
+    local region=$(echo "$tmpresult" | grep -oP '"GeolocatedCountry"\s{0,}:\s{0,}"\K[^"]+' | tr a-z A-Z)
     case "$result" in
         'false') echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'true') echo -n -e "\r Dazn:\t\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n" ;;
@@ -1031,7 +1048,7 @@ function MediaUnlockTest_HBOMax() {
         return
     fi
 
-    local countryList=$(echo "$tmpresult" | grep -oP '"url":"/[a-z]{2}/[a-z]{2}"' | cut -f4 -d'"' | cut -f2 -d'/' | sort -n | uniq | xargs | tr [:lower:] [:upper:])
+    local countryList=$(echo "$tmpresult" | grep -oP '"url":"/[a-z]{2}/[a-z]{2}"' | cut -f4 -d'"' | cut -f2 -d'/' | sort -n | uniq | xargs | tr a-z A-Z)
     local countryList="${countryList} US"
     local region=$(echo "$tmpresult" | grep -oP 'countryCode=\K[A-Z]{2}' | head -n 1)
     local isUnavailable=$(echo "$countryList" | grep "$region")
@@ -1133,7 +1150,7 @@ function RegionTest_iQYI() {
         return
     fi
 
-    local region=$(echo "${tmpresult}" | grep -oP 'mod=\K[a-z]+' | tr [:lower:] [:upper:])
+    local region=$(echo "${tmpresult}" | grep -oP 'mod=\K[a-z]+' | tr a-z A-Z)
     if [ -z "$region" ]; then
         echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}Failed (Error: Country Code Not Found)${Font_Suffix}\n"
         return
@@ -1234,7 +1251,7 @@ function MediaUnlockTest_ViuCom() {
     fi
 
     local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
-    local region=$(echo "$urlEffective" | cut -f5 -d'/' | tr [:lower:] [:upper:])
+    local region=$(echo "$urlEffective" | cut -f5 -d'/' | tr a-z A-Z)
     if [ -z "$region" ]; then
         echo -n -e "\r Viu.com:\t\t\t\t${Font_Red}Failed (Error: Country Code Not Found)${Font_Suffix}\n"
         return
@@ -1310,7 +1327,7 @@ function MediaUnlockTest_ParamountPlus() {
     fi
 
     local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
-    local region=$(echo "$urlEffective" | cut -f4 -d'/' | tr [:lower:] [:upper:])
+    local region=$(echo "$urlEffective" | cut -f4 -d'/' | tr a-z A-Z)
 
     if [ "$region" == "INTL" ]; then
         echo -n -e "\r Paramount+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -1422,7 +1439,7 @@ function RegionTest_YouTubeCDN() {
         return
     fi
 
-    local iata=$(echo "$tmpresult" | grep '=>' | awk "NR==1" | awk '{print $3}' | cut -f2 -d'-' | cut -c 1-3 | tr [:lower:] [:upper:])
+    local iata=$(echo "$tmpresult" | grep '=>' | awk "NR==1" | awk '{print $3}' | cut -f2 -d'-' | cut -c 1-3 | tr a-z A-Z)
     local isIDC=$(echo "$tmpresult" | grep 'router')
     local isIataFound1=$(echo "$IATACODE" | grep -w "$iata")
     local isIataFound2=$(echo "$IATACODE2" | grep -w "$iata")
@@ -1439,11 +1456,11 @@ function RegionTest_YouTubeCDN() {
         local location=$(echo "$IATACODE" | grep -w "$iata" | awk -F'|' '{print $1}' | awk '$1=$1')
     fi
     if [ -z "$isIataFound1" ] && [ -n "$isIataFound2" ]; then
-        local location=$(echo "$IATACODE2" | grep -w "$iata" | awk -F',' '{print $2}' | awk '$1=$1' | tr [:upper:] [:lower:] | sed 's/\b[a-z]/\U&/g')
+        local location=$(echo "$IATACODE2" | grep -w "$iata" | awk -F',' '{print $2}' | awk '$1=$1' | tr A-Z a-z | sed 's/\b[a-z]/\U&/g')
     fi
 
     if [ -z "$isIDC" ]; then
-        local cdnISP=$(echo "$tmpresult" | awk 'NR==1' | awk '{print $3}' | cut -f1 -d'-' | tr [:lower:] [:upper:])
+        local cdnISP=$(echo "$tmpresult" | awk 'NR==1' | awk '{print $3}' | cut -f1 -d'-' | tr a-z A-Z)
         echo -n -e "\r YouTube CDN:\t\t\t\t${Font_Yellow}[${cdnISP}] in [${location}]${Font_Suffix}\n"
         return
     fi
@@ -1646,7 +1663,7 @@ function MediaUnlockTest_HotStar() {
 
     local urlEffective=$(echo "$tmpresult" | grep -o '_TAG_.*_TAG_' | awk -F'_TAG_' '{print $3}')
     local region=$(echo "$tmpresult" | grep -oP 'geo=\K[A-Z]+' | head -n 1)
-    local siteRegion=$(echo "$urlEffective" | sed 's@.*com/@@' | tr [:lower:] [:upper:])
+    local siteRegion=$(echo "$urlEffective" | sed 's@.*com/@@' | tr a-z A-Z)
 
     if [ -z "$region" ]; then
         echo -n -e "\r HotStar:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -2287,7 +2304,7 @@ function RegionTest_NetflixCDN() {
         cdnISP='Hidden by a VPN'
     fi
 
-    local iata=$(echo "$cdnDomain" | cut -f3 -d'-' | sed 's/.\{3\}$//' | tr [:lower:] [:upper:])
+    local iata=$(echo "$cdnDomain" | cut -f3 -d'-' | sed 's/.\{3\}$//' | tr a-z A-Z)
 
     # local IATACODE2=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACODE2.txt" 2>&1)
     local isIataFound1=$(echo "$IATACODE" | grep -w "$iata")
@@ -2297,7 +2314,7 @@ function RegionTest_NetflixCDN() {
         local location=$(echo "$IATACODE" | grep -w "$iata" | awk -F'|' '{print $1}' | awk '$1=$1')
     fi
     if [ -z "$isIataFound1" ] && [ -n "$isIataFound2" ]; then
-        local location=$(echo "$IATACODE2" | grep -w "$iata" | awk -F',' '{print $2}' | awk '$1=$1' | tr [:upper:] [:lower:] | sed 's/\b[a-z]/\U&/g')
+        local location=$(echo "$IATACODE2" | grep -w "$iata" | awk -F',' '{print $2}' | awk '$1=$1' | tr A-Z a-z | sed 's/\b[a-z]/\U&/g')
     fi
 
     if [ -z "$location" ]; then
@@ -2379,7 +2396,7 @@ function MediaUnlockTest_DirecTVGO() {
 
     local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
     local isForbidden=$(echo "$urlEffective" | grep 'proximamente')
-    local region=$(echo "$urlEffective" | cut -f4 -d'/' | tr [:lower:] [:upper:])
+    local region=$(echo "$urlEffective" | cut -f4 -d'/' | tr a-z A-Z)
 
     if [ -n "$isForbidden" ]; then
         echo -n -e "\r DirecTV Go:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -3346,7 +3363,7 @@ function MediaUnlockTest_TLCGO() {
 
     local isBlocked=$(echo "$tmpresult1" | grep -i 'is not yet available')
     local isOK=$(echo "$tmpresult1" | grep -i 'Episodes')
-    local region=$(echo "$tmpresult1" | grep -oP '"mainTerritoryCode"\s{0,}:\s{0,}"\K[^"]+' | tr [:lower:] [:upper:])
+    local region=$(echo "$tmpresult1" | grep -oP '"mainTerritoryCode"\s{0,}:\s{0,}"\K[^"]+' | tr a-z A-Z)
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
         echo -n -e "\r TLC GO:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -3603,7 +3620,7 @@ function MediaUnlockTest_KOCOWA() {
 }
 
 function MediaUnlockTest_NBCTV() {
-    local fakeUuid=$(gen_uuid | tr [:lower:] [:upper:])
+    local fakeUuid=$(gen_uuid | tr a-z A-Z)
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://geolocation.digitalsvc.apps.nbcuni.com/geolocation/live/usa' -H 'accept: application/media.geo-v2+json' -H 'accept-language: en-US,en;q=0.9' -H "app-session-id: ${fakeUuid}" -H 'authorization: NBC-Basic key="usa_live", version="3.0", type="cpc"' -H 'client: oneapp' -H 'content-type: application/json' -H 'origin: https://www.nbc.com' -H 'referer: https://www.nbc.com/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: cross-site' --data-raw '{"adobeMvpdId":null,"serviceZip":null,"device":"web"}' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r NBC TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -4262,7 +4279,7 @@ function MediaUnlockTest_DAnimeStore() {
 function echo_result() {
     for ((i=0;i<${#array[@]};i++)); do
         echo "$result" | grep "${array[i]}"
-        sleep 0.03
+        delay 0.03
     done
 }
 
@@ -4791,7 +4808,7 @@ function inputOptions() {
 }
 
 function checkPROXY() {
-    local proxyType=$(echo "$USE_PROXY" | awk -F'://' '{print $1}' | tr [:lower:] [:upper:])
+    local proxyType=$(echo "$USE_PROXY" | awk -F'://' '{print $1}' | tr a-z A-Z)
 
     if [ "$LANGUAGE" == "en" ]; then
         echo -e " ${Font_SkyBlue}** Checking Results Under Proxy${Font_Suffix}"
