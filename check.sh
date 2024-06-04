@@ -4477,9 +4477,10 @@ function HK_UnlockTest() {
         MediaUnlockTest_HBOGO_ASIA &
         MediaUnlockTest_SonyLiv &
         MediaUnlockTest_BilibiliHKMCTW &
+        MediaUnlockTest_BahamutAnime &
     )
     wait
-    local array=("Now E:" "Viu.com:" "Viu.TV:" "MyTVSuper:" "HBO GO Asia:" "SonyLiv:" "BiliBili Hongkong/Macau/Taiwan:")
+    local array=("Now E:" "Viu.com:" "Viu.TV:" "MyTVSuper:" "HBO GO Asia:" "SonyLiv:" "BiliBili Hongkong/Macau/Taiwan:" "Bahamut Anime:")
     echo_result ${result} ${array}
     echo "======================================="
 }
