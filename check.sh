@@ -422,26 +422,38 @@ function GameTest_Steam() {
 
 # 流媒体解锁测试-动画疯
 function MediaUnlockTest_BahamutAnime() {
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://ani.gamer.com.tw/ajax/getdeviceid.php' --cookie-jar bahamut_cookie.txt --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://ani.gamer.com.tw/ajax/getdeviceid.php' --cookie-jar bahamut_cookie.txt --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        rm -f bahamut_cookie.txt
         return
     fi
 
     local tempdeviceid=$(echo "$tmpresult" | grep -oP '"deviceid"\s{0,}:\s{0,}"\K[^"]+')
-    local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -fsL "https://ani.gamer.com.tw/ajax/token.php?adID=89422&sn=14667&device=${tempdeviceid}" -b bahamut_cookie.txt --user-agent "${UA_BROWSER}")
+    # I Was Reincarnated as the 7th Prince
+    local sn='37783'
+    local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -sL "https://ani.gamer.com.tw/ajax/token.php?adID=89422&sn=${sn}&device=${tempdeviceid}" -b bahamut_cookie.txt --user-agent "${UA_BROWSER}")
+    local tmpresult2=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://ani.gamer.com.tw/' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: zh-CN,zh;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-model: ""' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-ch-ua-platform-version: "15.0.0"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -b bahamut_cookie.txt --user-agent "${UA_BROWSER}")
     rm -f bahamut_cookie.txt
-    if [ -z "$tmpresult1" ]; then
-        echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+    if [ -z "$tmpresult1" ] || [ -z "$tmpresult2" ]; then
+        echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
         return
     fi
 
     local result=$(echo "$tmpresult1" | grep 'animeSn')
-    if [ -n "$result" ]; then
-        echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-    else
+
+    if [ -z "$result" ]; then
         echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
     fi
+
+    local region=$(echo "$tmpresult2" | grep -oP 'data-geo="\K[^"]+')
+    if [ -n "$region" ]; then
+        echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
+        return
+    fi
+
+    echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 # 流媒体解锁测试-哔哩哔哩大陆限定
