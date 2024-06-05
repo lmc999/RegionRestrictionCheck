@@ -405,6 +405,11 @@ show_region() {
 }
 
 function GameTest_Steam() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Steam Currency:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://store.steampowered.com/app/761830' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Steam Currency:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -422,6 +427,11 @@ function GameTest_Steam() {
 
 # 流媒体解锁测试-动画疯
 function MediaUnlockTest_BahamutAnime() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://ani.gamer.com.tw/ajax/getdeviceid.php' --cookie-jar bahamut_cookie.txt --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -458,6 +468,11 @@ function MediaUnlockTest_BahamutAnime() {
 
 # 流媒体解锁测试-哔哩哔哩大陆限定
 function MediaUnlockTest_BilibiliChinaMainland() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r BiliBili China Mainland Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local randsession=$(gen_uuid | md5sum | head -c 32)
     # 尝试获取成功的结果
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL "https://api.bilibili.com/pgc/player/web/playurl?avid=82846771&qn=0&type=&otype=json&ep_id=307247&fourk=1&fnver=0&fnval=16&session=${randsession}&module=bangumi" --user-agent "${UA_BROWSER}")
@@ -476,6 +491,11 @@ function MediaUnlockTest_BilibiliChinaMainland() {
 
 # 流媒体解锁测试-哔哩哔哩港澳台限定
 function MediaUnlockTest_BilibiliHKMCTW() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r BiliBili Hongkong/Macau/Taiwan:\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local randsession=$(gen_uuid | md5sum | head -c 32)
     # 尝试获取成功的结果
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL "https://api.bilibili.com/pgc/player/web/playurl?avid=18281381&cid=29892777&qn=0&type=&otype=json&ep_id=183799&fourk=1&fnver=0&fnval=16&session=${randsession}&module=bangumi" --user-agent "${UA_BROWSER}")
@@ -494,6 +514,11 @@ function MediaUnlockTest_BilibiliHKMCTW() {
 
 # 流媒体解锁测试-哔哩哔哩台湾限定
 function MediaUnlockTest_BilibiliTW() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Bilibili Taiwan Only:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local randsession=$(gen_uuid | md5sum | head -c 32)
     # 尝试获取成功的结果
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL "https://api.bilibili.com/pgc/player/web/playurl?avid=50762638&cid=100279344&qn=0&type=&otype=json&ep_id=268176&fourk=1&fnver=0&fnval=16&session=${randsession}&module=bangumi" --user-agent "${UA_BROWSER}")
@@ -511,6 +536,11 @@ function MediaUnlockTest_BilibiliTW() {
 }
 
 function MediaUnlockTest_AbemaTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Abema.TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://api.abema.io/v1/ip/check?device=android' --user-agent "${UA_ANDROID}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Abema.TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -530,7 +560,11 @@ function MediaUnlockTest_AbemaTV() {
 }
 
 function GameTest_PCRJP() {
-    # 测试，连续请求两次 (单独请求一次可能会返回35, 第二次开始变成0)
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Princess Connect Re:Dive Japan:\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://api-priconne-redive.cygames.jp/' -w %{http_code} -o /dev/null --user-agent "${UA_ANDROID}")
 
     case "$result" in
@@ -542,7 +576,6 @@ function GameTest_PCRJP() {
 }
 
 function GameTest_UMAJP() {
-    # 测试，连续请求两次 (单独请求一次可能会返回35, 第二次开始变成0)
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://api-umamusume.cygames.jp/' -w %{http_code} -o /dev/null --user-agent "${UA_ANDROID}")
 
     case "$result" in
@@ -554,7 +587,11 @@ function GameTest_UMAJP() {
 }
 
 function GameTest_WFJP() {
-    # 测试，连续请求两次 (单独请求一次可能会返回35, 第二次开始变成0)
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://api.worldflipper.jp/' -w %{http_code} -o /dev/null --user-agent "${UA_ANDROID}")
 
     case "$result" in
@@ -566,7 +603,11 @@ function GameTest_WFJP() {
 }
 
 function GameTest_Kancolle() {
-    # 测试，连续请求两次 (单独请求一次可能会返回35, 第二次开始变成0)
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Kancolle Japan:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'http://203.104.209.7/kcscontents/twitter/maintenance_info.html' -w %{http_code} -o /dev/null --user-agent "${UA_ANDROID}")
     # curl 'http://203.104.209.7/kcscontents/twitter/maintenance_info.html' \
     # -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
@@ -599,6 +640,11 @@ function MediaUnlockTest_Lemino() {
 }
 
 function MediaUnlockTest_mora() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Mora:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://mora.jp/buy?__requestToken=1713764407153&returnUrl=https%3A%2F%2Fmora.jp%2Fpackage%2F43000087%2FTFDS01006B00Z%2F%3Ffmid%3DTOPRNKS%26trackMaterialNo%3D31168909&fromMoraUx=false&deleteMaterial=' -w %{http_code} -o /dev/null -H 'host: mora.jp' --user-agent "${UA_BROWSER}")
 
     case "$result" in
@@ -611,6 +657,11 @@ function MediaUnlockTest_mora() {
 }
 
 function MediaUnlockTest_BBCiPLAYER() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://open.live.bbc.co.uk/mediaselector/6/select/version/2.0/mediaset/pc/vpid/bbc_one_london/format/json/jsfunc/JS_callbacks0' --user-agent "${UA_BROWSER}")
     if [ -z "${tmpresult}" ]; then
         echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -665,12 +716,13 @@ function MediaUnlockTest_Netflix() {
 }
 
 function MediaUnlockTest_DisneyPlus() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Disney+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tempresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://disney.api.edge.bamgrid.com/devices' -X POST -H "authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -H "content-type: application/json; charset=UTF-8" -d '{"deviceFamily":"browser","applicationRuntime":"chrome","deviceProfile":"windows","attributes":{}}' --user-agent "${UA_BROWSER}")
     if [ -z "$tempresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Disney+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Disney+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -734,6 +786,11 @@ function MediaUnlockTest_DisneyPlus() {
 }
 
 function MediaUnlockTest_Dazn() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://startup.core.indazn.com/misl/v5/Startup' -X POST -H "Content-Type: application/json" -d '{"LandingPageKey":"generic","languages":"en-US,en","Platform":"web","PlatformAttributes":{},"Manufacturer":"","PromoCode":"","Version":"2"}' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -750,6 +807,11 @@ function MediaUnlockTest_Dazn() {
 }
 
 function MediaUnlockTest_HuluJP() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Hulu Japan:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl --max-time 10 -fsL 'https://id.hulu.jp/' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' -H 'Accept-Encoding: none' -H 'DNT: 1' -H 'Sec-GPC: 1' -H 'Upgrade-Insecure-Requests: 1' -H 'Connection: keep-alive' -H 'Sec-Fetch-Dest: document' -H 'Sec-Fetch-Mode: navigate' -H 'Sec-Fetch-Site: none' -H 'Sec-Fetch-User: ?1' -H 'Priority: u=1' --user-agent "${UA_BROWSER}")
 
     local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
@@ -778,6 +840,11 @@ function MediaUnlockTest_HuluJP() {
 }
 
 function MediaUnlockTest_MyTVSuper() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r MyTVSuper:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.mytvsuper.com/api/auth/getSession/self/' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r MyTVSuper:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -797,6 +864,11 @@ function MediaUnlockTest_MyTVSuper() {
 }
 
 function MediaUnlockTest_NowE() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://webtvapi.nowe.com/16/1/getVodURL' -X POST -H "Content-Type: application/json" -d '{"contentId":"202403181904703","contentType":"Vod","pin":"","deviceName":"Browser","deviceId":"w-663bcc51-913c-913c-913c-913c913c","deviceType":"WEB","secureCookie":null,"callerReferenceNo":"W17151951620081575","profileId":null,"mupId":null}' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -812,6 +884,11 @@ function MediaUnlockTest_NowE() {
 }
 
 function MediaUnlockTest_ViuTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Viu.TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.viu.now.com/p8/3/getLiveURL' -X POST -H "Content-Type: application/json" -d '{"callerReferenceNo":"20210726112323","contentId":"099","contentType":"Channel","channelno":"099","mode":"prod","deviceId":"29b3cb117a635d5b56","deviceType":"ANDROID_WEB"}' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Viu.TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -843,6 +920,11 @@ function MediaUnlockTest_unext() {
 }
 
 function MediaUnlockTest_wowow() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local timestamp=$[$(date +%s%N)/1000000]
     # 取原创剧集列表
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s "https://www.wowow.co.jp/drama/original/json/lineup.json?_=${timestamp}" -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Referer: https://www.wowow.co.jp/drama/original/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-origin' -H 'X-Requested-With: XMLHttpRequest' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --user-agent "${UA_BROWSER}")
@@ -915,6 +997,11 @@ function MediaUnlockTest_wowow() {
 }
 
 function MediaUnlockTest_TVer() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://platform-api.tver.jp/v2/api/platform_users/browser/create' -H 'content-type: application/x-www-form-urlencoded' -H 'origin: https://s.tver.jp' -H 'referer: https://s.tver.jp/' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --data-raw 'device_type=pc' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -975,6 +1062,11 @@ function MediaUnlockTest_TVer() {
 }
 
 function MediaUnlockTest_HamiVideo() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Hami Video:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://hamivideo.hinet.net/api/play.do?id=OTT_VOD_0000249064&freeProduct=1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Hami Video:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -990,6 +1082,11 @@ function MediaUnlockTest_HamiVideo() {
 }
 
 function MediaUnlockTest_4GTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} --tlsv1.3 -s 'https://api2.4gtv.tv/Web/IsTaiwanArea' -H 'origin: https://www.4gtv.tv' -H 'referer: https://www.4gtv.tv/' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1029,6 +1126,11 @@ function MediaUnlockTest_SlingTV() {
 }
 
 function MediaUnlockTest_PlutoTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Pluto TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://pluto.tv/' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null --user-agent "${UA_BROWSER}")
 
     local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
@@ -1107,6 +1209,11 @@ function MediaUnlockTest_Showmax() {
 }
 
 function MediaUnlockTest_Channel4() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Channel 4:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://www.channel4.com/simulcast/channels/C4' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
     case "$result" in
@@ -1118,6 +1225,11 @@ function MediaUnlockTest_Channel4() {
 }
 
 function MediaUnlockTest_ITVHUB() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://magni.itv.com/playlist/itvonline/ITV/10_4782_0001.001' -H 'Accept: application/vnd.itv.vod.playlist.v2+json' -H 'Accept-Language: en-US,en;q=0.9' -H 'Content-Type: application/json' -H 'Origin: https://www.itv.com' -H 'Referer: https://www.itv.com/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --data-raw '{"user":{"entitlements":[]},"device":{"manufacturer":"Chrome","model":"125.0.0.0","os":{"name":"Windows","version":"10","type":"desktop"}},"client":{"version":"4.1","id":"browser","supportsAdPods":true,"service":"itv.x","appversion":"2.237.0"},"variantAvailability":{"player":"dash","featureset":{"min":["mpeg-dash","widevine","outband-webvtt","hd","single-track"],"max":["mpeg-dash","widevine","outband-webvtt","hd","single-track"]},"platformTag":"dotcom"}}' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1143,6 +1255,11 @@ function MediaUnlockTest_ITVHUB() {
 }
 
 function MediaUnlockTest_DSTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r DSTV:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://authentication.dstv.com/favicon.ico' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
     case "$result" in
@@ -1154,6 +1271,11 @@ function MediaUnlockTest_DSTV() {
 }
 
 function RegionTest_iQYI() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.iq.com/' -w "_TAG_%{http_code}_TAG_" -o /dev/null --user-agent "${UA_BROWSER}" -D -)
 
     local httpCode=$(echo "${tmpresult}" | grep -oP '_TAG_\K[^_TAG_]+')
@@ -1192,6 +1314,11 @@ function MediaUnlockTest_HuluUS() {
 }
 
 function MediaUnlockTest_encoreTVB() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r encoreTVB:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://edge.api.brightcove.com/playback/v1/accounts/5324042807001/videos/6005570109001' -H "Accept: application/json;pk=BCpkADawqM2Gpjj8SlY2mj4FgJJMfUpxTNtHWXOItY1PvamzxGstJbsgc-zFOHkCVcKeeOhPUd9MNHEGJoVy1By1Hrlh9rOXArC5M5MTcChJGU6maC8qhQ4Y8W-QYtvi8Nq34bUb9IOvoKBLeNF4D9Avskfe9rtMoEjj6ImXu_i4oIhYS0dx7x1AgHvtAaZFFhq3LBGtR-ZcsSqxNzVg-4PRUI9zcytQkk_YJXndNSfhVdmYmnxkgx1XXisGv1FG5GOmEK4jZ_Ih0riX5icFnHrgniADr4bA2G7TYh4OeGBrYLyFN_BDOvq3nFGrXVWrTLhaYyjxOr4rZqJPKK2ybmMsq466Ke1ZtE-wNQ" -H "Origin: https://www.encoretvb.com" -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r encoreTVB:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1224,6 +1351,11 @@ function MediaUnlockTest_Molotov() {
 }
 
 function MediaUnlockTest_LineTVTW() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.linetv.tw/' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1255,6 +1387,11 @@ function MediaUnlockTest_LineTVTW() {
 }
 
 function MediaUnlockTest_ViuCom() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Viu.com:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://www.viu.com/' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null --user-agent "${UA_BROWSER}")
     local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
     if [ "$httpCode" == '000' ]; then
@@ -1281,7 +1418,12 @@ function MediaUnlockTest_ViuCom() {
 }
 
 function MediaUnlockTest_Niconico() {
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.nicovideo.jp/watch/so23017073' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Niconico:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.nicovideo.jp/watch/so23017073' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Niconico:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -1357,6 +1499,11 @@ function MediaUnlockTest_ParamountPlus() {
 }
 
 function MediaUnlockTest_KKTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r KKTV:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.kktv.me/v3/ipcheck' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r KKTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1396,6 +1543,11 @@ function MediaUnlockTest_PeacockTV() {
 }
 
 function MediaUnlockTest_FOD() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://geocontrol1.stream.ne.jp/fod-geo/check.xml?time=1624504256' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1560,6 +1712,11 @@ function MediaUnlockTest_PrimeVideo() {
 }
 
 function MediaUnlockTest_Radiko() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Radiko:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://radiko.jp/area?_=1625406539531' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Radiko:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1586,6 +1743,11 @@ function MediaUnlockTest_Radiko() {
 }
 
 function MediaUnlockTest_DMM() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://bitcoin.dmm.com/' --user-agent "${UA_BROWSER}")
     if [ -z  "$tmpresult" ]; then
         echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1612,6 +1774,11 @@ function MediaUnlockTest_DMM() {
 }
 
 function MediaUnlockTest_DMMTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r DMM TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.beacon.dmm.com/v1/streaming/start' -X POST -d '{"player_name":"dmmtv_browser","player_version":"0.0.0","content_type_detail":"VOD_SVOD","content_id":"11uvjcm4fw2wdu7drtd1epnvz","purchase_product_id":null}' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r DMM TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1637,6 +1804,11 @@ function MediaUnlockTest_DMMTV() {
 }
 
 function MediaUnlockTest_Catchplay() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://sunapi.catchplay.com/geo' -H "authorization: Basic NTQ3MzM0NDgtYTU3Yi00MjU2LWE4MTEtMzdlYzNkNjJmM2E0Ok90QzR3elJRR2hLQ01sSDc2VEoy" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1690,6 +1862,11 @@ function MediaUnlockTest_HotStar() {
 }
 
 function MediaUnlockTest_LiTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local fakePUid=$(gen_uuid)
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.litv.tv/api/get-urls-no-auth' -H 'accept: application/json, text/plain, */*' -H 'content-type: application/json' -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://www.litv.tv' -H 'referer: https://www.litv.tv/drama/watch/VOD00328856' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-origin' --data-raw "{\"AssetId\":\"vod70810-000001M001_1500K\",\"MediaType\":\"vod\",\"puid\":\"${fakePUid}\"}" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
@@ -1714,13 +1891,14 @@ function MediaUnlockTest_LiTV() {
 }
 
 function MediaUnlockTest_FuboTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local radom_num=${RANDOM:0-1}
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL "https://api.fubo.tv/appconfig/v1/homepage?platform=web&client_version=R20230310.${radom_num}&nav=v0" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -1745,6 +1923,11 @@ function MediaUnlockTest_Fox() {
 }
 
 function MediaUnlockTest_Joyn() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Joyn:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpauth=$(curl ${CURL_DEFAULT_OPTS} -s 'https://auth.joyn.de/auth/anonymous' -X POST -H "Content-Type: application/json" -d '{"client_id":"b74b9f27-a994-4c45-b7eb-5b81b1c856e7","client_name":"web","anon_device_id":"b74b9f27-a994-4c45-b7eb-5b81b1c856e7"}' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpauth" ]; then
         echo -n -e "\r Joyn:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1771,6 +1954,11 @@ function MediaUnlockTest_Joyn() {
 }
 
 function MediaUnlockTest_SpotvNow() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r SPOTV NOW:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://edge.api.brightcove.com/playback/v1/accounts/5764318566001/videos/6349973203112' -H 'accept: application/json;pk=BCpkADawqM0U3mi_PT566m5lvtapzMq3Uy7ICGGjGB6v4Ske7ZX_ynzj8ePedQJhH36nym_5mbvSYeyyHOOdUsZovyg2XlhV6rRspyYPw_USVNLaR0fB_AAL2HSQlfuetIPiEzbUs1tpNF9NtQxt3BAPvXdOAsvy1ltLPWMVzJHiw9slpLRgI2NUufc' -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://www.spotvnow.co.kr' -H 'referer: https://www.spotvnow.co.kr/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: cross-site' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r SPOTV NOW:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1787,6 +1975,11 @@ function MediaUnlockTest_SpotvNow() {
 }
 
 function MediaUnlockTest_SKY_DE() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r SKY DE:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://edge.api.brightcove.com/playback/v1/accounts/1050888051001/videos/6247131490001' -H "Accept: application/json;pk=BCpkADawqM0OXCLe4eIkpyuir8Ssf3kIQAM62a1KMa4-1_vTOWQIxoHHD4-oL-dPmlp-rLoS-WIAcaAMKuZVMR57QY4uLAmP4Ov3V416hHbqr0GNNtzVXamJ6d4-rA3Xi98W-8wtypdEyjGEZNepUCt3D7UdMthbsG-Ean3V4cafT4nZX03st5HlyK1chp51SfA-vKcAOhHZ4_Oa9TTN61tEH6YqML9PWGyKrbuN5myICcGsFzP3R2aOF8c5rPCHT2ZAiG7MoavHx8WMjhfB0QdBr2fphX24CSpUKlcjEnQJnBiA1AdLg9iyReWrAdQylX4Eyhw5OwKiCGJznfgY6BDtbUmeq1I9r9RfmhP5bfxVGjILSEFZgXbMqGOvYdrdare0aW2fTCxeHdHt0vyKOWTC6CS1lrGJF2sFPKn1T1csjVR8s4MODqCBY1PTbHY4A9aZ-2MDJUVJDkOK52hGej6aXE5b9N9_xOT2B9wbXL1B1ZB4JLjeAdBuVtaUOJ44N0aCd8Ns0o02E1APxucQqrjnEociLFNB0Bobe1nkGt3PS74IQcs-eBvWYSpolldMH6TKLu8JqgdnM4WIp3FZtTWJRADgAmvF9tVDUG9pcJoRx_CZ4im-rn-AzN3FeOQrM4rTlU3Q8YhSmyEIoxYYqsFDwbFlhsAcvqQkgaElYtuciCL5i3U8N4W9rIhPhQJzsPafmLdWxBP_FXicyek25GHFdQzCiT8nf1o860Jv2cHQ4xUNcnP-9blIkLy9JmuB2RgUXOHzWsrLGGW6hq9wLUtqwEoxcEAAcNJgmoC0k8HE-Ga-NHXng6EFWnqiOg_mZ_MDd7gmHrrKLkQV" -H "Origin: https://www.sky.de" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r SKY DE:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1803,6 +1996,11 @@ function MediaUnlockTest_SKY_DE() {
 }
 
 function MediaUnlockTest_ZDF() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r ZDF: \t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://ssl.zdf.de/geo/de/geo.txt/' -w %{http_code} -o /dev/null --user-agent "${UA_ANDROID}")
 
     case "$result" in
@@ -1814,6 +2012,11 @@ function MediaUnlockTest_ZDF() {
 }
 
 function MediaUnlockTest_HBOGO_ASIA() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r HBO GO Asia:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api2.hbogoasia.com/v1/geog?lang=undefined&version=0&bundleId=www.hbogoasia.com' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r HBO GO Asia:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1836,6 +2039,11 @@ function MediaUnlockTest_HBOGO_ASIA() {
 }
 
 function MediaUnlockTest_EPIX() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpToken=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.epix.com/v2/sessions' -X POST -H 'host: api.epix.com' -H 'connection: keep-alive' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'traceparent: 00-000000000000000015b7efdb572b7bf2-4aefaea90903bd1f-01' -H 'sec-ch-ua-mobile: ?0' -H 'x-datadog-origin: rum' -H 'x-datadog-sampling-priority: 1' -H 'accept: application/json' -H 'x-datadog-trace-id: 1564983120873880562' -H 'x-datadog-parent-id: 5399726519264460063' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://www.mgmplus.com' -H 'sec-fetch-site: cross-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://www.mgmplus.com/' -H 'accept-language: en-US,en;q=0.9' -H 'content-type: application/json' -d '{"device":{"guid":"7a0baaaf-384c-45cd-a21d-310ca5d3002a","format":"console","os":"web","display_width":1865,"display_height":942,"app_version":"1.0.2","model":"browser","manufacturer":"google"},"apikey":"53e208a9bbaee479903f43b39d7301f7"}' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpToken" ]; then
         echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1876,6 +2084,11 @@ function MediaUnlockTest_EPIX() {
 }
 
 function MediaUnlockTest_NLZIET() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r NLZIET:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.nlziet.nl/v7/stream/handshake/Widevine/Dash/VOD/rzIL9rb-TkSn-ek_wBmvaw?playerName=BitmovinWeb' -H 'accept: application/json, text/plain, */*' -H 'accept-language: en-US,en;q=0.9' -H 'authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkM4M0YzQUFGOTRCOTM0ODA2NkQwRjZDRTNEODhGQkREIiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE3MTIxMjY0NTMsImV4cCI6MTcxMjE1NTI0OCwiaXNzIjoiaHR0cHM6Ly9pZC5ubHppZXQubmwiLCJhdWQiOiJhcGkiLCJjbGllbnRfaWQiOiJ0cmlwbGUtd2ViIiwic3ViIjoiMDAzMTZiNGEtMDAwMC0wMDAwLWNhZmUtZjFkZTA1ZGVlZmVlIiwiYXV0aF90aW1lIjoxNzEyMTI2NDUzLCJpZHAiOiJsb2NhbCIsImVtYWlsIjoibXVsdGkuZG5zMUBvdXRsb29rLmNvbSIsInVzZXJJZCI6IjMyMzg3MzAiLCJjdXN0b21lcklkIjoiMCIsImRldmljZUlkZW50aWZpZXIiOiJJZGVudGl6aWV0LTI0NWJiNmYzLWM2ZjktNDNjZS05ODhmLTgxNDc2OTcwM2E5OCIsImV4dGVybmFsVXNlcklkIjoiZTM1ZjdkMzktMjQ0ZC00ZTkzLWFkOTItNGFjYzVjNGY0NGNlIiwicHJvZmlsZUlkIjoiMjdDMzM3RjktOTRDRS00NjBDLTlBNjktMTlDNjlCRTYwQUIzIiwicHJvZmlsZUNvbG9yIjoiRkY0MjdDIiwicHJvZmlsZVR5cGUiOiJBZHVsdCIsIm5hbWUiOiJTdHJlYW1pbmciLCJqdGkiOiI4Q0M1QzYzNkJGRjg3MEE2REJBOERBNUMwQTk0RUZDRiIsImlhdCI6MTcxMjEyNjQ1Mywic2NvcGUiOlsiYXBpIiwib3BlbmlkIl0sImFtciI6WyJwcm9maWxlIiwicHdkIl19.bk-ziFPJM00bpE7TcgPmIYFFx-2Q5N3BkUzEvQ_dDMK9O1F9f7DEe-Qzmnb5ym7ChlnXwrCV3QyOOA24hu_gCrlNlD7-vI3XGZR-54zFD-F7cRDOoL-1-iO_10tmgwb5Io-svY0bn0EDYKeRxYYBi0w_3bFVFDM2CxxA6tWeBYIfN5rCSzBHd3RPPjYtqX-sogyh_5W_7KJ83GK5kpsywT3mz8q7Cs1mtKs9QA1-o01N0RvTxZAcfzsHg3-qGgLnvaAuZ_XqRK9kLWqJWeJTWKWtUI6OlPex22sY3keKFpfZnUtFv-BvkCM6tvbIlMZAClk3lhI8rMFAWDpUcbcS3w' -H 'nlziet-appname: WebApp' -H 'nlziet-appversion: 5.43.24' -H 'origin: https://app.nlziet.nl' -H 'referer: https://app.nlziet.nl/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r NLZIET:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1936,6 +2149,11 @@ function MediaUnlockTest_NPO_Start_Plus() {
 }
 
 function MediaUnlockTest_RakutenTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Rakuten TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local fakeUuid=$(gen_uuid)
     local fakeIfaId=$(gen_uuid)
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://gizmo.rakuten.tv/v3/me/start?device_identifier=web&device_stream_audio_quality=2.0&device_stream_hdr_type=NONE&device_stream_video_quality=FHD' -H 'accept: application/json, text/plain, */*' -H 'accept-language: en-US,en;q=0.9' -H 'content-type: application/json' -H 'origin: https://www.rakuten.tv' -H 'referer: https://www.rakuten.tv/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --data-raw '{"device_identifier":"web","device_metadata":{"app_version":"v5.5.30","audio_quality":"2.0","brand":"chrome","firmware":"XX.XX.XX","hdr":false,"model":"GENERIC","os":"Windows 10","sdk":"125.0.0","serial_number":"not implemented","trusted_uid":false,"uid":"824b3fe9-e080-4c33-912b-3f67d96f5f99","video_quality":"FHD","year":1970},"ifa_id":"4ac8a156-b857-4335-96c1-fa8930430092"}' --user-agent "${UA_BROWSER}")
@@ -1967,6 +2185,11 @@ function MediaUnlockTest_RakutenTV() {
 }
 
 function MediaUnlockTest_MoviStarPlus() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Movistar+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -s 'https://contratar.movistarplus.es/' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
     case "$result" in
@@ -1978,6 +2201,11 @@ function MediaUnlockTest_MoviStarPlus() {
 }
 
 function MediaUnlockTest_Starz() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local authorization=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.starz.com/sapi/header/v1/starz/us/09b397fc9eb64d5080687fc8a218775b' -H "Referer: https://www.starz.com/us/en/" --user-agent "${UA_BROWSER}")
     if [ -z "$authorization" ]; then
         echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2014,6 +2242,11 @@ function MediaUnlockTest_Starz() {
 }
 
 function MediaUnlockTest_CanalPlus() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Canal+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://boutique-tunnel.canalplus.com/' -w '%{http_code}_TAG_%{url_effective}\n' -o dev/null --user-agent "${UA_BROWSER}")
     local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
     if [ "$httpCode" == '000' ]; then
@@ -2064,6 +2297,11 @@ function MediaUnlockTest_Sky_CH() {
 }
 
 function MediaUnlockTest_CBCGem() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r CBC Gem:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.cbc.ca/g/stats/js/cbc-stats-top.js' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r CBC Gem:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2085,6 +2323,11 @@ function MediaUnlockTest_CBCGem() {
 }
 
 function MediaUnlockTest_AcornTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Acorn TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://acorn.tv/' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Acorn TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2111,6 +2354,11 @@ function MediaUnlockTest_AcornTV() {
 }
 
 function MediaUnlockTest_Crave() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Crave:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://capi.9c9media.com/destinations/crave_atexace/platforms/desktop/playback/contents/2917721/contentPackages/6642701/manifest.mpd?action=reference&ssl=true&filter=fe&mca=false&uhd=false&mcv=false&hd=true&tpt=true&mta=true&stt=true&multilang=true' -H 'Content-Type: application/json' -H 'Origin: https://www.crave.ca' -H 'Referer: https://www.crave.ca/' -H 'accept-language: en-US,en;q=0.9' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: cross-site'  -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Crave:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2137,6 +2385,11 @@ function MediaUnlockTest_Crave() {
 }
 
 function MediaUnlockTest_Amediateka() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Amediateka:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://www.amediateka.ru/' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null --user-agent "${UA_BROWSER}")
     local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
     if [ "$httpCode" == '000' ]; then
@@ -2159,6 +2412,11 @@ function MediaUnlockTest_Amediateka() {
 }
 
 function MediaUnlockTest_MegogoTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Megogo TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://megogo.net/en' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Megogo TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2175,6 +2433,11 @@ function MediaUnlockTest_MegogoTV() {
 }
 
 function MediaUnlockTest_RaiPlay() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Rai Play:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://mediapolisvod.rai.it/relinker/relinkerServlet.htm?cont=VxXwi7UcqjApssSlashbjsAghviAeeqqEEqualeeqqEEqual&output=64' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Rai Play:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2201,6 +2464,11 @@ function MediaUnlockTest_RaiPlay() {
 }
 
 function MediaUnlockTest_TVBAnywhere() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://uapisfm.tvbanywhere.com.sg/geoip/check/platform/android' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2221,6 +2489,11 @@ function MediaUnlockTest_TVBAnywhere() {
 }
 
 function GameTest_ProjectSekai() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Project Sekai: Colorful Stage:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://game-version.sekai.colorfulpalette.org/1.8.1/3ed70b6a-8352-4532-b819-108837926ff5' -w %{http_code} -o /dev/null -H "User-Agent: pjsekai/48 CFNetwork/1240.0.4 Darwin/20.6.0")
 
     case "$result" in
@@ -2232,6 +2505,11 @@ function GameTest_ProjectSekai() {
 }
 
 function GameTest_KonosubaFD() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Konosuba Fantastic Days:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://api.konosubafd.jp/api/masterlist' -X POST -w %{http_code} -o /dev/null -H "User-Agent: pj0007/212 CFNetwork/1240.0.4 Darwin/20.6.0")
 
     case "$result" in
@@ -2346,6 +2624,11 @@ function RegionTest_NetflixCDN() {
 }
 
 function MediaUnlockTest_SkyGo() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Sky Go:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://skyid.sky.com/authorise/skygo?response_type=token&client_id=sky&appearance=compact&redirect_uri=skygo://auth' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Sky Go:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2399,6 +2682,11 @@ function MediaUnlockTest_StarPlus() {
 }
 
 function MediaUnlockTest_DirecTVGO() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r DirecTV Go:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.directvgo.com/registrarse' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null --user-agent "${UA_BROWSER}")
     local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
     if [ "$httpCode" == '000' ]; then
@@ -2438,13 +2726,14 @@ function MediaUnlockTest_DAM() {
 }
 
 function MediaUnlockTest_DiscoveryPlus() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local fakeDeviceId=$(gen_uuid | md5sum | cut -f1 -d' ')
     local getToken=$(curl ${CURL_DEFAULT_OPTS} -s "https://us1-prod-direct.discoveryplus.com/token?deviceId=${fakeDeviceId}&realm=go&shortlived=true" --user-agent "${UA_BROWSER}")
     if [ -z "$getToken" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -2517,6 +2806,11 @@ function MediaUnlockTest_ESPNPlus() {
 }
 
 function MediaUnlockTest_Stan() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Stan:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.stan.com.au/login/v1/sessions/web/account' -X POST -w '_TAG_%{http_code}' --user-agent "${UA_BROWSER}")
     local httpCode=$(echo "$tmpresult" | grep '_TAG_' | awk -F'_TAG_' '{print $2}')
     local respContent=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
@@ -2559,6 +2853,11 @@ function MediaUnlockTest_Binge() {
 }
 
 function MediaUnlockTest_Docplay() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Docplay:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://www.docplay.com/subscribe' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null --user-agent "${UA_BROWSER}")
     local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
     if [ "$httpCode" == '000' ]; then
@@ -2608,6 +2907,11 @@ function MediaUnlockTest_KayoSports() {
 }
 
 function MediaUnlockTest_NeonTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Neon TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local neonHeader=$(echo "$MEDIA_COOKIE" | sed -n '12p')
     local neonContent=$(echo "$MEDIA_COOKIE" | sed -n '13p')
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.neontv.co.nz/api/client/gql?' -X POST -H "content-type: application/json" -H "$neonHeader" -d "$neonContent" -w '_TAG_%{http_code}' --user-agent "${UA_BROWSER}")
@@ -2638,6 +2942,11 @@ function MediaUnlockTest_NeonTV() {
 }
 
 function MediaUnlockTest_SkyGONZ() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r SkyGo NZ:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://login.sky.co.nz/authorize?audience=https%3A%2F%2Fapi.sky.co.nz&client_id=dXhXjmK9G90mOX3B02R1kV7gsC4bp8yx&redirect_uri=https%3A%2F%2Fwww.skygo.co.nz&connection=Sky-Internal-Connection&scope=openid%20profile%20email%20offline_access&response_type=code&response_mode=query&state=OXg3QjBGTHpoczVvdG1fRnJFZXVoNDlPc01vNzZjWjZsT3VES2VhN1dDWA%3D%3D&nonce=OEdvci4xZHBHU3VLb1M0T1JRbTZ6WDZJVGQ3R3J0TTdpTndvWjNMZDM5ZA%3D%3D&code_challenge=My5fiXIl-cX79KOUe1yDFzA6o2EOGpJeb6w1_qeNkpI&code_challenge_method=S256&auth0Client=eyJuYW1lIjoiYXV0aDAtcmVhY3QiLCJ2ZXJzaW9uIjoiMS4zLjAifQ%3D%3D' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
     case "$result" in
@@ -2649,6 +2958,11 @@ function MediaUnlockTest_SkyGONZ() {
 }
 
 function MediaUnlockTest_ThreeNow() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r ThreeNow:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://bravo-livestream.fullscreen.nz/index.m3u8' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
     case "$result" in
@@ -2717,6 +3031,11 @@ function MediaUnlockTest_MaoriTV() {
 }
 
 function MediaUnlockTest_SBSonDemand() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r SBS on Demand:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.sbs.com.au/api/v3/network?context=odwebsite' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r SBS on Demand:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2738,6 +3057,11 @@ function MediaUnlockTest_SBSonDemand() {
 }
 
 function MediaUnlockTest_ABCiView() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r ABC iView:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.iview.abc.net.au/v2/show/abc-kids-live-stream/video/LS1604H001S00?embed=highlightVideo,selectedSeries' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r ABC iView:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2818,12 +3142,13 @@ function MediaUnlockTest_Telasa() {
 }
 
 function MediaUnlockTest_SetantaSports() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Setanta Sports:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://dce-frontoffice.imggaming.com/api/v2/consent-prompt' -H 'Realm: dce.adjara' -H 'x-api-key: 857a1e5d-e35e-4fdf-805b-a87b6f8364bf' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Setanta Sports:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Setanta Sports:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -2847,12 +3172,13 @@ function MediaUnlockTest_SetantaSports() {
 }
 
 function MediaUnlockTest_MolaTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Mola TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://mola.tv/api/v2/videos/geoguard/check/vd30491025' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Mola TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Mola TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -2876,11 +3202,12 @@ function MediaUnlockTest_MolaTV() {
 }
 
 function MediaUnlockTest_BeinConnect() {
-    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://proxies.bein-mena-production.eu-west-2.tuc.red/proxy/availableOffers' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
     if [ "${IS_IPV6}" == '1' ]; then
         echo -n -e "\r Bein Sports Connect:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
+
+    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://proxies.bein-mena-production.eu-west-2.tuc.red/proxy/availableOffers' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
     case "$result" in
         '000') echo -n -e "\r Bein Sports Connect:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
@@ -2891,14 +3218,16 @@ function MediaUnlockTest_BeinConnect() {
 }
 
 function MediaUnlockTest_EurosportRO() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local fakeUuid=$(gen_uuid)
     # 取得 Bearer 认证 token
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://eu3-prod-direct.eurosport.ro/token?realm=eurosport' -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://www.eurosport.ro' -H 'referer: https://www.eurosport.ro/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H "x-device-info: escom/0.295.1 (unknown/unknown; Windows/10; ${fakeUuid})" -H 'x-disco-client: WEB:UNKNOWN:escom:0.295.1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
+
         echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -2933,13 +3262,15 @@ function MediaUnlockTest_EurosportRO() {
 }
 
 function MediaUnlockTest_DiscoveryPlusUK() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local fakeDeviceId=$(gen_uuid | sha256sum | cut -f1 -d' ')
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s "https://disco-api.discoveryplus.co.uk/token?realm=questuk&deviceId=${fakeDeviceId}&shortlived=true" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
+
         echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -2966,13 +3297,15 @@ function MediaUnlockTest_DiscoveryPlusUK() {
 }
 
 function MediaUnlockTest_Channel5() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local timestamp=$(date +%s)
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL "https://cassie.channel5.com/api/v2/live_media/my5desktopng/C5.json?timestamp=${timestamp}&auth=0_rZDiY0hp_TNcDyk2uD-Kl40HqDbXs7hOawxyqPnbI" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
+
         echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -2988,14 +3321,15 @@ function MediaUnlockTest_Channel5() {
 }
 
 function MediaUnlockTest_MyVideo() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r MyVideo:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://www.myvideo.net.tw/login.do' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null --user-agent "${UA_BROWSER}")
     local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
 
     if [ "$httpCode" == '000' ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r MyVideo:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r MyVideo:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3020,13 +3354,14 @@ function MediaUnlockTest_MyVideo() {
 }
 
 function MediaUnlockTest_7plus() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r 7plus:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result1=$(curl ${CURL_DEFAULT_OPTS} -fsL "https://7plus-sevennetwork.akamaized.net/media/v1/dash/live/cenc/5303576322001/68dca38b-85d7-4dae-b1c5-c88acc58d51c/f4ea4711-514e-4cad-824f-e0c87db0a614/225ec0a0-ef18-4b7c-8fd6-8dcdd16cf03a/1x/segment0.m4f?akamai_token=exp=1672500385~acl=/media/v1/dash/live/cenc/5303576322001/68dca38b-85d7-4dae-b1c5-c88acc58d51c/f4ea4711-514e-4cad-824f-e0c87db0a614/*~hmac=800e1e1d1943addf12b71339277c637c7211582fe12d148e486ae40d6549dbde" -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
     if [ "$result1" == '000' ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r 7plus:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r 7plus:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3041,12 +3376,13 @@ function MediaUnlockTest_7plus() {
 }
 
 function MediaUnlockTest_Channel10() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://e410fasadvz.global.ssl.fastly.net/geo' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3105,6 +3441,11 @@ function MediaUnlockTest_Spotify() {
 }
 
 function MediaUnlockTest_VideoMarket() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r VideoMarket:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.videomarket.jp/graphql' -H 'authority: www.videomarket.jp' -H 'accept: */*' -H 'accept-language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6' -H 'authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ4MTkxNTkyMDIsImlhdCI6MTY2NTU1OTIwMiwiaXNzIjoiaHR0cHM6Ly9hdXRoLnZpZGVvbWFya2V0LmpwIiwic3ViIjoiY2ZjZDIwODQ5NWQ1NjVlZjY2ZTdkZmY5Zjk4NzY0ZGEiLCJ1c2VyX3R5cGUiOjAsInNpdGVfdHlwZSI6MiwiY2xpZW50X2lkIjoiYmVkNDdkOTFiMDVhYjgzMGM4YzBhYmFiYjQwNTg5MTFhY2E5NTdkMDBkMTUzNjA2MjI3NzNhOTQ0Y2RlNzRhNSIsInZtaWQiOjB9.Tq18RCxpVz1oV1lja52uRmF0nT6Oa0QsZMTVlPfANwb-RrcSn7PwE9vh7GdNIBc0ydDxRoUMuhStz_Kbu8KxvAh25eafFh7hf0DDqWKKU4ayPMueaR12t74SjFIRC7Cla1NR4uRn3_mgJfZFqOkIf6L5OR9LOVIBhrQPkhbMyqwZyh_kxTH7ToJIQoINb036ftqcF1KfR8ndtBlkrrWWnDpfkmE7-fJQHh92oKKd9l98W5awuEQo0MFspIdSNgt3gLi9t1RRKPDISGlzJkwMLPkHIUlWWZaAmnEkwSeZCPj_WJaqUqBATYKhi3yJZNGlHsScQ_KgAopxlsI6-c88Gps8i6yHvPVYw3hQ9XYq9gVL_SpyW9dKKSPE9MY6I19JHLBXuFXi5OJccqtQzTnKm_ZQM3EcKt5s0cNlXm9RMt0fNdRTQdJ53noD9o-b6hUIxDcHScJ_-30Emiv-55g5Sq9t5KPWO6o0Ggokkj42zin69MxCiUSHXk5FgeY8rX76yGBeLPLPIaaRPXEC1Jeo1VO56xNnQpyX_WHqHWDKhmOh1qSzaxiAiC5POMsTfwGr19TwXHUldYXxuNMIfeAaPZmNTzR5J6XdenFkLnrssVzXdThdlqHpfguLFvHnXTCAm0ZhFIJmacMNw1IxGmCQfkM4HtgKB9ZnWm6P0jIISdg' -H 'content-type: application/json' -H 'cookie: _gid=GA1.2.1853799793.1706147718; VM_REGIST_BANNER_REF_LINK=%2Ftitle%2F292072; __ulfpc=202401250957239984; _im_vid=01HMZ5C5GNNC6VWSPKD3E4W7YP; __td_signed=true; _td_global=0d11678b-5151-473e-b3a8-4f4d780f26a6; __juicer_sesid_9i3nsdfP_=d36a2e17-0117-47ce-95de-fbd5ffcda2d9; __juicer_session_referrer_9i3nsdfP_=d36a2e17-0117-47ce-95de-fbd5ffcda2d9___https%253A%252F%252Fwww.videomarket.jp%252Fplayer%252F292072%252FA292072001999H01; _gat_UA-221872486-2=1; _ga=GA1.2.777206008.1706147718; _ga_8HZQ9F8HV0=GS1.1.1706147717.1.1.1706147941.0.0.0; _td=3317738c-2329-4b61-ad5a-4e0ad230841d; dc_cl_id=ab38GzrmoV7muvtI' -H 'origin: https://www.videomarket.jp' -H 'referer: https://www.videomarket.jp/player/292072/A292072001999H01' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-origin' -H 'x-videomarket-requested: spa' --data-raw $'{"operationName":"repPacks","variables":{"repFullPackIds":["A292072001999H01"],"isOnSale":false,"isOnlyLatest":true},"query":"query repPacks($repFullPackIds: [String], $fullPacksIds: [String], $isOnSale: Boolean\u0021, $isOnlyLatest: Boolean\u0021) {\\n  repPacks(\\n    repFullPackIds: $repFullPackIds\\n    fullPackIds: $fullPacksIds\\n    onSale: $isOnSale\\n    onlyLatest: $isOnlyLatest\\n  ) {\\n    repFullPackId\\n    groupType\\n    packName\\n    fullTitleId\\n    titleName\\n    storyImageUrl16x9\\n    playTime\\n    subtitleDubType\\n    outlines\\n    courseIds\\n    price\\n    discountRate\\n    couponPrice\\n    couponDiscountRate\\n    rentalDays\\n    viewDays\\n    deliveryExpiredAt\\n    salesType\\n    counter {\\n      currentPage\\n      currentResult\\n      totalPages\\n      totalResults\\n      __typename\\n    }\\n    undiscountedPrice\\n    packs {\\n      undiscountedPrice\\n      canPurchase\\n      fullPackId\\n      subGroupType\\n      fullTitleId\\n      qualityConsentType\\n      courseIds\\n      price\\n      discountRate\\n      couponPrice\\n      couponDiscountRate\\n      rentalDays\\n      viewDays\\n      deliveryExpiredAt\\n      salesType\\n      extId\\n      stories {\\n        fullStoryId\\n        subtitleDubType\\n        encodeVersion\\n        isDownloadable\\n        isBonusMaterial\\n        fileSize\\n        __typename\\n      }\\n      __typename\\n    }\\n    status {\\n      hasBeenPlayed\\n      isCourseRegistered\\n      isEstPurchased\\n      isNowPlaying\\n      isPlayable\\n      isRented\\n      playExpiredAt\\n      playableQualityType\\n      rentalExpiredAt\\n      __typename\\n    }\\n    __typename\\n  }\\n}\\n"}'  --user-agent "${UA_BROWSER}")
 
     if [ -z "$tmpresult" ]; then
@@ -3143,6 +3484,11 @@ function MediaUnlockTest_JCOM_ON_DEMAND() {
 }
 
 function MediaUnlockTest_musicjp() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r music.jp:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
      local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://overseaauth.music-book.jp/globalIpcheck.js' -w '_TAG_%{http_code}' --user-agent "${UA_BROWSER}")
 
     local httpCode=$(echo "$tmpresult" | grep '_TAG_' | awk -F'_TAG_' '{print $2}')
@@ -3186,6 +3532,11 @@ function MediaUnlockTest_InstagramMusic() {
 }
 
 function WebTest_Reddit() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Reddit:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://www.reddit.com/' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
     case "$result" in
         '000') echo -n -e "\r Reddit:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
@@ -3196,12 +3547,13 @@ function WebTest_Reddit() {
 }
 
 function MediaUnlockTest_Popcornflix() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Popcornflix:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -s 'https://popcornflix-prod.cloud.seachange.com/cms/popcornflix/clientconfiguration/versions/2' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
     if [ "$result" == '000' ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Popcornflix:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Popcornflix:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3241,12 +3593,13 @@ function MediaUnlockTest_TubiTV() {
 }
 
 function MediaUnlockTest_Philo() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://content-us-east-2-fastly-b.www.philo.com/geo' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3265,12 +3618,13 @@ function MediaUnlockTest_Philo() {
 }
 
 function MediaUnlockTest_FXNOW() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r FXNOW:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://fxnow.fxnetworks.com/' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r FXNOW:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r FXNOW:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3296,12 +3650,13 @@ function MediaUnlockTest_FXNOW() {
 }
 
 function MediaUnlockTest_Crunchyroll() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Crunchyroll:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://c.evidon.com/geo/country.js' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Crunchyroll:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Crunchyroll:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3354,13 +3709,14 @@ function MediaUnlockTest_Shudder() {
 }
 
 function MediaUnlockTest_TLCGO() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r TLC GO:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local fakeDeviceId=$(gen_uuid)
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s "https://us1-prod-direct.tlc.com/token?deviceId=${fakeDeviceId}&realm=go&shortlived=true" -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://go.tlc.com' -H 'referer: https://go.tlc.com/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H 'x-device-info: tlc/3.17.0 (desktop/desktop; Windows/NT 10.0; ${fakeDeviceId})' -H 'x-disco-client: WEB:UNKNOWN:tlc:3.17.0' -H 'x-disco-params: realm=go,siteLookupKey=tlc,bid=tlc,hn=go.tlc.com,hth=us,features=ar' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r TLC GO:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r TLC GO:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3415,12 +3771,13 @@ function RegionTest_oneTrust() {
 }
 
 function MediaUnlockTest_Wavve() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Wavve:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://apis.wavve.com/fz/streaming?device=pc&partner=pooq&apikey=E5F3E0D30947AA5440556471321BB6D9&credential=none&service=wavve&pooqzone=none&region=kor&drm=pr&targetage=all&contentid=MV_C3001_C300000012559&contenttype=movie&hdr=sdr&videocodec=avc&audiocodec=ac3&issurround=n&format=normal&withinsubtitle=n&action=dash&protocol=dash&quality=auto&deviceModelId=Windows%2010&guid=1a8e9c88-6a3b-11ed-8584-eed06ef80652&lastplayid=none&authtype=cookie&isabr=y&ishevc=n' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
     if [ "$result" == '000' ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Wavve:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Wavve:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3433,12 +3790,13 @@ function MediaUnlockTest_Wavve() {
 }
 
 function MediaUnlockTest_Tving() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Tving:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://api.tving.com/v2a/media/stream/info?apiKey=1e7952d0917d6aab1f0293a063697610&mediaCode=RV60891248' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Tving:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Tving:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3464,14 +3822,15 @@ function MediaUnlockTest_Tving() {
 }
 
 function MediaUnlockTest_CoupangPlay() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Coupang Play:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.coupangplay.com/' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null  --user-agent "${UA_BROWSER}")
     local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
 
     if [ "$httpCode" == '000' ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Coupang Play:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Coupang Play:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3496,6 +3855,11 @@ function MediaUnlockTest_CoupangPlay() {
 }
 
 function MediaUnlockTest_NaverTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local ts=$(date +%s%3N)
     local base_url='https://apis.naver.com/'
     local key='nbxvs5nwNG9QKEWK0ADjYA4JZoujF4gHcIwvoCxFTPAeamq5eemvt5IWAYXxrbYM'
@@ -3506,10 +3870,6 @@ function MediaUnlockTest_NaverTV() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s "${req_url}" --user-agent "${UA_Browser}" -H 'host: apis.naver.com' -H 'connection: keep-alive' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'accept: application/json, text/plain, */*' -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://tv.naver.com' -H 'sec-fetch-site: same-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://tv.naver.com/v/31030608' -H 'accept-language: en-US,en;q=0.9')
 
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3525,12 +3885,13 @@ function MediaUnlockTest_NaverTV() {
 }
 
 function MediaUnlockTest_Afreeca() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Afreeca TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://vod.afreecatv.com/player/97464151' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Afreeca TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Afreeca TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3544,12 +3905,13 @@ function MediaUnlockTest_Afreeca() {
 }
 
 function MediaUnlockTest_KBSDomestic() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://vod.kbs.co.kr/index.html?source=episode&sname=vod&stype=vod&program_code=T2022-0690&program_id=PS-2022164275-01-000&broadcast_complete_yn=N&local_station_code=00&section_code=03' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3573,12 +3935,13 @@ function MediaUnlockTest_KBSDomestic() {
 }
 
 function MediaUnlockTest_KBSAmerican() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r KBS American:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://vod.kbs.co.kr/index.html?source=episode&sname=vod&stype=vod&program_code=T2022-0690&program_id=PS-2022164275-01-000&broadcast_complete_yn=N&local_station_code=00&section_code=03' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r KBS American:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r KBS American:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3602,6 +3965,11 @@ function MediaUnlockTest_KBSAmerican() {
 }
 
 function MediaUnlockTest_Watcha() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r WATCHA:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://watcha.com/' -w %{http_code} -o /dev/null -H 'host: watcha.com' -H 'connection: keep-alive' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'upgrade-insecure-requests: 1' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
 
     case "$result" in
@@ -3613,13 +3981,14 @@ function MediaUnlockTest_Watcha() {
 }
 
 function MediaUnlockTest_KOCOWA() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r KOCOWA:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://www.kocowa.com/' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
     if [ "$result" == '000' ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r KOCOWA:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r KOCOWA:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3672,12 +4041,13 @@ function MediaUnlockTest_Crackle() {
 }
 
 function MediaUnlockTest_AETV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r A&E TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://link.theplatform.com/s/xc6n8B/UR27JDU0bu2s/' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r A&E TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r A&E TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3703,13 +4073,14 @@ function MediaUnlockTest_AETV() {
 }
 
 function MediaUnlockTest_NFLPlus() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r NFL+:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://www.nfl.com/plus/' -w '%{http_code}_TAG_%{url_effective}\n' -o dev/null --user-agent "${UA_BROWSER}")
     local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
     if [ "$httpCode" == '000' ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r NFL+:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r NFL+:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3764,12 +4135,13 @@ function MediaUnlockTest_SkyShowTime() {
 }
 
 function GameTest_MathsSpot() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://mathsspot.com/' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3812,12 +4184,13 @@ function GameTest_MathsSpot() {
 }
 
 function MediaUnblockTest_BGlobalSEA() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r B-Global SouthEastAsia:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://api.bilibili.tv/intl/gateway/web/playurl?s_locale=en_US&platform=web&ep_id=347666' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r B-Global SouthEastAsia:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r B-Global SouthEastAsia:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3832,12 +4205,13 @@ function MediaUnblockTest_BGlobalSEA() {
 }
 
 function MediaUnblockTest_BGlobalTH() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r B-Global Thailand Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://api.bilibili.tv/intl/gateway/web/playurl?s_locale=en_US&platform=web&ep_id=10077726' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r B-Global Thailand Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r B-Global Thailand Only:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3852,12 +4226,13 @@ function MediaUnblockTest_BGlobalTH() {
 }
 
 function MediaUnblockTest_BGlobalID() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r B-Global Indonesia Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://api.bilibili.tv/intl/gateway/web/playurl?s_locale=en_US&platform=web&ep_id=11130043' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r B-Global Indonesia Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r B-Global Indonesia Only:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3872,12 +4247,13 @@ function MediaUnblockTest_BGlobalID() {
 }
 
 function MediaUnblockTest_BGlobalVN() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r B-Global Việt Nam Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://api.bilibili.tv/intl/gateway/web/playurl?s_locale=en_US&platform=web&ep_id=11405745' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r B-Global Việt Nam Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r B-Global Việt Nam Only:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3892,6 +4268,11 @@ function MediaUnblockTest_BGlobalVN() {
 }
 
 function MediaUnlockTest_AISPlay() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local userId='09e8b25510'
     local userPasswd='e49e9f9e7f'
     local fakeApiKey=$(gen_uuid | md5sum | cut -f1 -d' ')
@@ -3899,10 +4280,6 @@ function MediaUnlockTest_AISPlay() {
     local timestamp=$(date +%s)
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL "https://web-tls.ais-vidnt.com/device/login/?d=gstweb&gst=1&user=${userId}&pass=${userPasswd}" -H 'accept-language: th' -H 'api-version: 2.8.2' -H "api_key: ${fakeApiKey}" -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundaryBj2RhUIW7BtRvfK0' -H 'device-info: com.vimmi.ais.portal, Windows + Chrome, AppVersion: 4.9.97, 10, language: tha' -H 'origin: https://aisplay.ais.co.th' -H "privateid: ${userId}" -H 'referer: https://aisplay.ais.co.th/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: cross-site' -H "time: ${timestamp}" -H "udid: ${fakeUdid}" --data-raw $'------WebKitFormBoundaryBj2RhUIW7BtRvfK0--\r\n' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -4061,32 +4438,41 @@ function WebTest_Wikipedia_Editable() {
 }
 
 function MediaUnlockTest_K_PLUS() {
-    local token=$(curl ${CURL_DEFAULT_OPTS} -s -H "Origin: https://xem.kplus.vn" -H "Referer: https://xem.kplus.vn/" -X POST -d '{"osVersion":"Windows NT 10.0","appVersion":"114.0.0.0","deviceModel":"Chrome","deviceType":"PC","deviceSerial":"w39db81c0-a2e9-11ed-952a-49b91c9e6f09","deviceOem":"Chrome","devicePrettyName":"Chrome","ssoToken":"eyJrZXkiOiJ2c3R2IiwiZW5jIjoiQTEyOENCQy1IUzI1NiIsImFsZyI6ImRpciJ9..MWbBlLuci2KNLl9lvMe63g.IbBX7-dg3BWaXzzoxTQz-pJFulm_Y8axWLuG5DcJxQ9jTUPOhA2e6dzOP2hryAFVPFoIRs97ONGTHEYTFQgUtRlvqvx53jyTi3yegU6zWhJnhYZA2sdaj9khsNvVAth0zcWFoWA9GGwfNE5TZLOwczAexIxqC1Ee-tQDILC4XklFrJfvdzoCQBABRXpD_O4HHHIYFs0jBMtYSyD9Vq7dTD61sAVca_83lav7jvpP17PuAo3HHIFQtUdcugpgkB91mJbABIDTPdo0mqdzbgTA_FilwO1Z5qnpwqIZIXy0bhVXFFcwUZPIUxjLEVzP3SyHceFF5N-v7OeYhYZRLYuBKxWj1cRb3LAa3FGJvefqRsBadlsr0cZnOgx0TsL51a2SaIpNyyGtaq8KTTLULIZBb2Zsq2jmBkZtxjoPxUR8ku7J4sL0tfLDoMlWVZkrX4_1tls3E-l8Ael-wd0kbS1i2vpf-Vdh80lRClpDg3ibSSUFPsp3wYMFsuKfyY8vpHrCfYDJDDbYOSv20sfnU7q7gcmizTCFBuiszmXbFX9_aH8UOaCGeqkYDV1ZZ3mQ26TM7JEquuZTV09wdi81ABoM8RZcb2ua0cuocaO4-asMh8KQWNea9BCYlKK5NSPz--oGgGxSdvxZ63qQz1Lr4QZytA2buoQV5OlMoEP7k87fPcig5rPqsK7aeWUXJSmfiOBbSLztoiamvvHClMpds3frv0ud8NWUUoijmS_JUGfF7XYNxWWqEGJuDUoSllV5MVwtIb5wM069gR7zknrr5aRVDi3Nho16KHQ_iB3vxoIr-ExajWLNlvo44CopGhxhgOAKPkULV356uamZpB7twY_iEVrwGMQA1_hEH4usO-UbzuxL_pssLhJKD4NjVcTe86Z08Bfm0IyiNWESmFkA6FVfsxu57Yfd4bXT8mxnfXXmklb7u7vB0RVYRo4i26QGJbPknybHdfgQWEvRCMoAjEG-E2LymBAMwFneWEpPTwBMpfvlTHnGnUtfViA4Zy1xqF2q95g9AF9nF3sE4YpYuSFSkUQB4sZd8emDApIdP6Avqsq809Gg06_R2sUGrD9SQ-XbXhvtAYMcaUcSv54hJvRcSUkygqU8tdg4tJHR23UBb-I.UfpC5BKhvt8EE5gpIFMQoQ","brand":"vstv","environment":"p","language":"en_US","memberId":"0","featureLevel":4,"provisionData":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYyI6dHJ1ZSwiaWF0IjoxNjg2NTc4NzYyLCJ1cCI6ImNwaSIsImRlIjoiYnJhbmRNYXBwaW5nIiwiYnIiOiJ2c3R2IiwiZHMiOiJ3MzlkYjgxYzAtYTJlOS0xMWVkLTk1MmEtNDliOTFjOWU2ZjA5In0.3mbI7wnJKtRf3493yc_ZEMEvzUXldwDx0sSZdwQnlNk"}' "https://tvapi-sgn.solocoo.tv/v1/session" |  grep -oP '"token"\s{0,}:\s{0,}"\K[^"]+' | awk '{print $2}' | cut -f2 -d'"')
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s -X POST -d '{"player":{"name":"RxPlayer","version":"3.29.0","capabilities":{"mediaTypes":["DASH","DASH"],"drmSystems":["PlayReady","Widevine"],"smartLib":true}}}' -H "Content-Type: application/json" -H "Authorization: Bearer $token" "https://tvapi-sgn.solocoo.tv/v1/assets/BJO0h8jMwJWg5Id_4VLxIJ-VscUzRry_myp4aC21/play")
-    local result=$(echo "$tmpresult" | grep geoblock)
-    if [ -n "$tmpresult" ] && [ -z "$result" ]; then
-        echo -n -e "\r K+:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-        return
-    elif [ -n "$result" ]; then
-        echo -n -e "\r K+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-        return
-    elif [ -z "$tmpresult" ] && [ "${IS_IPV6}" == '1' ]; then
+    if [ "${IS_IPV6}" == '1' ]; then
         echo -n -e "\r K+:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-        return
-    else
-        echo -n -e "\r K+:\t\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
         return
     fi
 
+    local token=$(curl ${CURL_DEFAULT_OPTS} -s -H "Origin: https://xem.kplus.vn" -H "Referer: https://xem.kplus.vn/" -X POST -d '{"osVersion":"Windows NT 10.0","appVersion":"114.0.0.0","deviceModel":"Chrome","deviceType":"PC","deviceSerial":"w39db81c0-a2e9-11ed-952a-49b91c9e6f09","deviceOem":"Chrome","devicePrettyName":"Chrome","ssoToken":"eyJrZXkiOiJ2c3R2IiwiZW5jIjoiQTEyOENCQy1IUzI1NiIsImFsZyI6ImRpciJ9..MWbBlLuci2KNLl9lvMe63g.IbBX7-dg3BWaXzzoxTQz-pJFulm_Y8axWLuG5DcJxQ9jTUPOhA2e6dzOP2hryAFVPFoIRs97ONGTHEYTFQgUtRlvqvx53jyTi3yegU6zWhJnhYZA2sdaj9khsNvVAth0zcWFoWA9GGwfNE5TZLOwczAexIxqC1Ee-tQDILC4XklFrJfvdzoCQBABRXpD_O4HHHIYFs0jBMtYSyD9Vq7dTD61sAVca_83lav7jvpP17PuAo3HHIFQtUdcugpgkB91mJbABIDTPdo0mqdzbgTA_FilwO1Z5qnpwqIZIXy0bhVXFFcwUZPIUxjLEVzP3SyHceFF5N-v7OeYhYZRLYuBKxWj1cRb3LAa3FGJvefqRsBadlsr0cZnOgx0TsL51a2SaIpNyyGtaq8KTTLULIZBb2Zsq2jmBkZtxjoPxUR8ku7J4sL0tfLDoMlWVZkrX4_1tls3E-l8Ael-wd0kbS1i2vpf-Vdh80lRClpDg3ibSSUFPsp3wYMFsuKfyY8vpHrCfYDJDDbYOSv20sfnU7q7gcmizTCFBuiszmXbFX9_aH8UOaCGeqkYDV1ZZ3mQ26TM7JEquuZTV09wdi81ABoM8RZcb2ua0cuocaO4-asMh8KQWNea9BCYlKK5NSPz--oGgGxSdvxZ63qQz1Lr4QZytA2buoQV5OlMoEP7k87fPcig5rPqsK7aeWUXJSmfiOBbSLztoiamvvHClMpds3frv0ud8NWUUoijmS_JUGfF7XYNxWWqEGJuDUoSllV5MVwtIb5wM069gR7zknrr5aRVDi3Nho16KHQ_iB3vxoIr-ExajWLNlvo44CopGhxhgOAKPkULV356uamZpB7twY_iEVrwGMQA1_hEH4usO-UbzuxL_pssLhJKD4NjVcTe86Z08Bfm0IyiNWESmFkA6FVfsxu57Yfd4bXT8mxnfXXmklb7u7vB0RVYRo4i26QGJbPknybHdfgQWEvRCMoAjEG-E2LymBAMwFneWEpPTwBMpfvlTHnGnUtfViA4Zy1xqF2q95g9AF9nF3sE4YpYuSFSkUQB4sZd8emDApIdP6Avqsq809Gg06_R2sUGrD9SQ-XbXhvtAYMcaUcSv54hJvRcSUkygqU8tdg4tJHR23UBb-I.UfpC5BKhvt8EE5gpIFMQoQ","brand":"vstv","environment":"p","language":"en_US","memberId":"0","featureLevel":4,"provisionData":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYyI6dHJ1ZSwiaWF0IjoxNjg2NTc4NzYyLCJ1cCI6ImNwaSIsImRlIjoiYnJhbmRNYXBwaW5nIiwiYnIiOiJ2c3R2IiwiZHMiOiJ3MzlkYjgxYzAtYTJlOS0xMWVkLTk1MmEtNDliOTFjOWU2ZjA5In0.3mbI7wnJKtRf3493yc_ZEMEvzUXldwDx0sSZdwQnlNk"}' "https://tvapi-sgn.solocoo.tv/v1/session" |  grep -oP '"token"\s{0,}:\s{0,}"\K[^"]+' | awk '{print $2}' | cut -f2 -d'"')
+    if [ -z "$token" ]; then
+        echo -n -e "\r K+:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s -X POST -d '{"player":{"name":"RxPlayer","version":"3.29.0","capabilities":{"mediaTypes":["DASH","DASH"],"drmSystems":["PlayReady","Widevine"],"smartLib":true}}}' -H "Content-Type: application/json" -H "Authorization: Bearer $token" "https://tvapi-sgn.solocoo.tv/v1/assets/BJO0h8jMwJWg5Id_4VLxIJ-VscUzRry_myp4aC21/play")
+    if [ -z "$tmpresult" ]; then
+        echo -n -e "\r K+:\t\t\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
+        return
+    fi
+
+    local result=$(echo "$tmpresult" | grep 'geoblock')
+
+    if [ -n "$result" ]; then
+        echo -n -e "\r K+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+
+    echo -n -e "\r K+:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_TV360() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r TV360:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'http://api-v2.tv360.vn/public/v1/composite/get-link?childId=998335&device_type=WEB_IPHONE&id=19474&network_device_id=prIUMaumjI7dNWKSUxFkEViFygs%3D&t=1686572228&type=film' -H "userid: 182551343" -H "devicetype: WEB_IPHONE" -H "deviceName: iPad Air 5th Gen (WiFi)" -H "profileid: 182733455" -H "s: cSkV/vwUfX6tahDwe6xh9Bl0yhNs/TdWTaOJiWDt3gHekijGnNYh9i4YaUmdfBfI4oKOwvioKJ7PuKMH7ctWA6rEHeGXH/nUYOY1g7l4Umh6zoed5bBwWCgUuh5eMqdNNoptwaeCee58USTteOkbHQ==" -H "deviceid: 69FFABD6-F9D8-4C2E-8C44-7195CF0A2930" -H "devicedrmid: prIUMaumjI7dNWKSUxFkEViFygs=" -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODI1NTEzNDMiLCJ1c2VySWQiOjE4MjU1MTM0MywicHJvZmlsZUlkIjoxODI3MzM0NTUsImR2aSI6MjY5NDY3MTUzLCJjb250ZW50RmlsdGVyIjoiMTAwIiwiZ25hbWUiOiIiLCJpYXQiOjE2ODY1NzIyMDEsImV4cCI6MTY4NzE3NzAwMX0.oi0BKvATgBzPEkqR_liBrvMKXBUiWzp2BQme-biDnwiVhuta0qn_aZo6z3azLdjW5kH6PfEwEkc4K9jCfAK5rw" -H "osappversion: 1.9.27" -H "sessionid: C5017358-5327-4185-999A-CA3291CC66AC" -H "zoneid: 1" -H "Accept: application/json, text/html" -H "Content-Type: application/json" -H "osapptype: IPAD" -H "tv360transid: 1686572228_69FFABD6-F9D8-4C2E-8C44-7195CF0A2930" -H "User-Agent: TV360/31 CFNetwork/1402.0.8 Darwin/22.2.0")
     if [ -z "$tmpresult" ]; then
-        if [ "$1" == "6" ]; then
-            echo -n -e "\r TV360:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r TV360:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -4101,12 +4487,13 @@ function MediaUnlockTest_TV360() {
 }
 
 function MediaUnlockTest_MeWatch() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r MeWatch:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://cdn.mewatch.sg/api/items/97098/videos?delivery=stream%2Cprogressive&ff=idp%2Cldp%2Crpt%2Ccd&lang=en&resolution=External&segments=all' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        if [ "${IS_IPV6}" == '1' ]; then
-            echo -n -e "\r MeWatch:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-            return
-        fi
         echo -n -e "\r MeWatch:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -4132,6 +4519,11 @@ function MediaUnlockTest_MeWatch() {
 }
 
 function MediaUnlockTest_trueID() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r trueID:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL "https://tv.trueid.net/th-en/live/thairathtv-hd" -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: same-origin' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r trueID:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -4217,6 +4609,11 @@ function MediaUnlockTest_JioCinema() {
 }
 
 function MediaUnlockTest_MXPlayer() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r MX Player:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://www.mxplayer.in/' -w "_TAG_%{http_code}_TAG_" --user-agent "${UA_BROWSER}")
     local httpCode=$(echo "${tmpresult}" | grep -oP '_TAG_\K[^_TAG_]+')
     if [ "$httpCode" == '000' ]; then
@@ -4257,6 +4654,11 @@ function MediaUnlockTest_Zee5() {
 }
 
 function WebTest_EroGameSpace() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r EroGameSpace:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL "https://erogamescape.org" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r EroGameSpace:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -4273,6 +4675,11 @@ function WebTest_EroGameSpace() {
 }
 
 function MediaUnlockTest_DAnimeStore() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r D Anime Store:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://animestore.docomo.ne.jp/animestore/reg_pc' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r D Anime Store:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -4289,6 +4696,11 @@ function MediaUnlockTest_DAnimeStore() {
 }
 
 function MediaUnlockTest_RakutenTVJP() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Rakuten TV JP:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local contentId='387878'
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s "https://api-live.tv.rakuten.co.jp/v1/contents/${contentId}/playinfo?device_id=2" -H 'accept: application/json, text/plain, */*' -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://live.tv.rakuten.co.jp' -H 'referer: https://live.tv.rakuten.co.jp/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
