@@ -4288,6 +4288,43 @@ function MediaUnlockTest_DAnimeStore() {
     echo -n -e "\r D Anime Store:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
 }
 
+function MediaUnlockTest_RakutenTVJP() {
+    local contentId='387878'
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s "https://api-live.tv.rakuten.co.jp/v1/contents/${contentId}/playinfo?device_id=2" -H 'accept: application/json, text/plain, */*' -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://live.tv.rakuten.co.jp' -H 'referer: https://live.tv.rakuten.co.jp/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --user-agent "${UA_BROWSER}")
+    if [ -z "$tmpresult" ]; then
+        echo -n -e "\r Rakuten TV JP:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+
+    local isBlocked=$(echo "$tmpresult" | grep -i 'IS_FOREIGN')
+    if [ -n "$isBlocked" ];then
+        echo -n -e "\r Rakuten TV JP:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+
+    local isOK=$(echo "$tmpresult" | grep -i 'in_vod')
+
+    if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
+        echo -n -e "\r Rakuten TV JP:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+        return
+    fi
+
+    local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -s 'https://webapi.nba.rakuten.co.jp/api/v1/system/geofilter?os_type=web&os_version=2.38.13' -H 'accept: application/json, text/plain, */*' -H 'accept-language: ja' -H 'origin: https://nba.rakuten.co.jp' -H 'referer: https://nba.rakuten.co.jp/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --user-agent "${UA_BROWSER}")
+    if [ -z "$tmpresult" ]; then
+        echo -n -e "\r Rakuten TV JP:\t\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
+        return
+    fi
+
+    local isDomestic=$(echo "$tmpresult1" | grep -oP '"is_domestic"\s{0,}:\s{0,}\K(false|true)')
+
+    case "$isDomestic" in
+        'false') echo -n -e "\r Rakuten TV JP:\t\t\t\t${Font_Yellow}No (NBA Unavailable)${Font_Suffix}\n" ;;
+        'true') echo -n -e "\r Rakuten TV JP:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
+        '') echo -n -e "\r Rakuten TV JP:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR 1)${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Rakuten TV JP:\t\t\t\t${Font_Red}Failed (Error: $result)${Font_Suffix}\n" ;;
+    esac
+}
+
 function echo_result() {
     for ((i=0;i<${#array[@]};i++)); do
         echo "$result" | grep "${array[i]}"
@@ -4573,9 +4610,10 @@ function JP_UnlockTest() {
         MediaUnlockTest_DAM &
         MediaUnlockTest_JCOM_ON_DEMAND &
         MediaUnlockTest_Watcha &
+        MediaUnlockTest_RakutenTVJP &
     )
     wait
-    local array=("VideoMarket:" "D Anime Store:" "FOD(Fuji TV):" "Radiko:" "Karaoke@DAM:" "J:com On Demand:" "WATCHA:")
+    local array=("VideoMarket:" "D Anime Store:" "FOD(Fuji TV):" "Radiko:" "Karaoke@DAM:" "J:com On Demand:" "WATCHA:" "Rakuten TV JP:")
     echo_result ${result} ${array}
     show_region Game
     local result=$(
