@@ -1688,6 +1688,11 @@ function MediaUnlockTest_BritBox() {
 }
 
 function MediaUnlockTest_PrimeVideo() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.primevideo.com' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -2717,6 +2722,11 @@ function MediaUnlockTest_DirecTVGO() {
 }
 
 function MediaUnlockTest_DAM() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Karaoke@DAM:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'http://cds1.clubdam.com/vhls-cds1/site/xbox/sample_1.mp4.m3u8' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
     case "$result" in
@@ -2976,6 +2986,11 @@ function MediaUnlockTest_ThreeNow() {
 }
 
 function MediaUnlockTest_MaoriTV() {
+    if [ "${IS_IPV6}" == '1' ]; then
+        echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        return
+    fi
+
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.maoriplus.co.nz/live-tv/whakaata-maori' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
