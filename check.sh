@@ -2743,32 +2743,66 @@ function MediaUnlockTest_DiscoveryPlus() {
         return
     fi
 
-    local fakeDeviceId=$(gen_uuid | md5sum | cut -f1 -d' ')
-    local getToken=$(curl ${CURL_DEFAULT_OPTS} -s "https://us1-prod-direct.discoveryplus.com/token?deviceId=${fakeDeviceId}&realm=go&shortlived=true" --user-agent "${UA_BROWSER}")
-    if [ -z "$getToken" ]; then
+    # 取得 API 网址
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://global-prod.disco-api.com/bootstrapInfo' -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://www.discoveryplus.com' -H 'referer: https://www.discoveryplus.com/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: cross-site' -H 'x-disco-client: WEB:UNKNOWN:dplus_us:2.46.0' -H 'x-disco-params: bid=dplus,hn=www.discoveryplus.com' --user-agent "${UA_BROWSER}")
+    if [ -z "$tmpresult" ]; then
         echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
 
-    local token=$(echo "$getToken" | grep -oP '"token"\s{0,}:\s{0,}"\K[^"]+')
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://us1-prod-direct.discoveryplus.com/users/me' -b "_gcl_au=1.1.858579665.1632206782; _rdt_uuid=1632206782474.6a9ad4f2-8ef7-4a49-9d60-e071bce45e88; _scid=d154b864-8b7e-4f46-90e0-8b56cff67d05; _pin_unauth=dWlkPU1qWTRNR1ZoTlRBdE1tSXdNaTAwTW1Nd0xUbGxORFV0WWpZMU0yVXdPV1l6WldFeQ; _sctr=1|1632153600000; aam_fw=aam%3D9354365%3Baam%3D9040990; aam_uuid=24382050115125439381416006538140778858; st=${token}; gi_ls=0; _uetvid=a25161a01aa711ec92d47775379d5e4d; AMCV_BC501253513148ED0A490D45%40AdobeOrg=-1124106680%7CMCIDTS%7C18894%7CMCMID%7C24223296309793747161435877577673078228%7CMCAAMLH-1633011393%7C9%7CMCAAMB-1633011393%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCOPTOUT-1632413793s%7CNONE%7CvVersion%7C5.2.0; ass=19ef15da-95d6-4b1d-8fa2-e9e099c9cc38.1632408400.1632406594" --user-agent "${UA_BROWSER}")
-    if [ -z "$tmpresult" ]; then
+    local baseApiUrl=$(echo "$tmpresult" | grep -oP '"baseApiUrl"\s{0,}:\s{0,}"\K[^"]+')
+    local realm=$(echo "$tmpresult" | grep -oP '"realm"\s{0,}:\s{0,}"\K[^"]+')
+
+    if [ -z "$baseApiUrl" ] || [ -z "$realm" ]; then
+        echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+        return
+    fi
+
+    if [ "$realm" == 'dplusapac' ]; then
+        echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}No (Not Yet Available in Asia Pacific)${Font_Suffix}\n"
+        return
+    fi
+
+    local fakeDeviceId=$(gen_uuid | md5sum | cut -f1 -d' ')
+
+    local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -s "${baseApiUrl}/token?deviceId=${fakeDeviceId}&realm=${realm}&shortlived=true" -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://www.discoveryplus.com' -H 'referer: https://www.discoveryplus.com/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H "x-device-info: dplus_us/2.46.0 (desktop/desktop; Windows/NT 10.0; ${fakeDeviceId})" -H 'x-disco-client: WEB:UNKNOWN:dplus_us:2.46.0' -H "x-disco-params: realm=${realm},bid=dplus,hn=www.discoveryplus.com,hth=,features=ar" --user-agent "${UA_BROWSER}")
+    if [ -z "$tmpresult1" ]; then
         echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"currentLocationTerritory"\s{0,}:\s{0,}"\K[^"]+')
-
-    if [ -z "$result" ]; then
-        echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
-        return
-    fi
-    if [ "$result" == "us" ]; then
-        echo -n -e "\r Discovery+:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    local token=$(echo "$tmpresult1" | grep -oP '"token"\s{0,}:\s{0,}"\K[^"]+')
+    if [ -z "$token" ]; then
+        echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR 1)${Font_Suffix}\n"
         return
     fi
 
-    echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    local tmpresult2=$(curl ${CURL_DEFAULT_OPTS} -s "${baseApiUrl}/cms/routes/tabbed-home?include=default&decorators=viewingHistory,isFavorite,playbackAllowed,contentAction" -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://www.discoveryplus.com' -H 'referer: https://www.discoveryplus.com/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H 'x-disco-client: WEB:UNKNOWN:dplus_us:2.46.0' -H 'x-disco-params: realm=dplay,bid=dplus,hn=www.discoveryplus.com,hth=,features=ar' -b "st=${token}" --user-agent "${UA_BROWSER}")
+    if [ -z "$tmpresult2" ]; then
+        echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Network Connection 2)${Font_Suffix}\n"
+        return
+    fi
+
+    local isBlocked=$(echo "$tmpresult2" | grep -i 'is unavailable in your')
+    local isOK=$(echo "$tmpresult2" | grep -i 'relationships')
+    local region=$(echo "$tmpresult2" | grep -oP '"mainTerritoryCode"\s{0,}:\s{0,}"\K[^"]+' | tr a-z A-Z)
+
+    if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
+        echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR 2)${Font_Suffix}\n"
+        return
+    fi
+
+    if [ -n "$isBlocked" ]; then
+        echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+
+    if [ -n "$isOK" ]; then
+        echo -n -e "\r Discovery+:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
+        return
+    fi
+
+    echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_ESPNPlus() {
@@ -3276,41 +3310,6 @@ function MediaUnlockTest_EurosportRO() {
     fi
 
     echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
-}
-
-function MediaUnlockTest_DiscoveryPlusUK() {
-    if [ "${IS_IPV6}" == '1' ]; then
-        echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-        return
-    fi
-
-    local fakeDeviceId=$(gen_uuid | sha256sum | cut -f1 -d' ')
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s "https://disco-api.discoveryplus.co.uk/token?realm=questuk&deviceId=${fakeDeviceId}&shortlived=true" --user-agent "${UA_BROWSER}")
-    if [ -z "$tmpresult" ]; then
-
-        echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        return
-    fi
-
-    local token=$(echo "$tmpresult" | grep -oP '"token"\s{0,}:\s{0,}"\K[^"]+')
-    local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -s 'https://disco-api.discoveryplus.co.uk/users/me' -b "st=${token}" --user-agent "${UA_BROWSER}")
-    if [ -z "$tmpresult1" ]; then
-        echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
-        return
-    fi
-
-    local result=$(echo "$tmpresult1" | grep -oP '"currentLocationTerritory"\s{0,}:\s{0,}"\K[^"]+')
-
-    if [ -z "$result" ]; then
-        echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
-        return
-    fi
-    if [ "$result" == "gb" ]; then
-        echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-        return
-    fi
-
-    echo -n -e "\r Discovery+ UK:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Channel5() {
@@ -4807,6 +4806,7 @@ function NA_UnlockTest() {
     echo "===========[ North America ]==========="
     local result=$(
         MediaUnlockTest_ParamountPlus &
+        MediaUnlockTest_DiscoveryPlus &
         MediaUnlockTest_AcornTV &
         MediaUnlockTest_BritBox &
         MediaUnlockTest_SonyLiv &
@@ -4815,17 +4815,17 @@ function NA_UnlockTest() {
         MediaUnlockTest_Shudder &
         MediaUnlockTest_FuboTV &
         MediaUnlockTest_TubiTV &
-        MediaUnlockTest_PlutoTV &
     )
     wait
-    local array=("Paramount+:" "Acorn TV:" "BritBox:" "SonyLiv:" "NBA TV:" "TLC GO:" "Shudder:" "Fubo TV:" "Tubi TV:" "Pluto TV:")
+    local array=("Paramount+:" "Discovery+:" "Acorn TV:" "BritBox:" "SonyLiv:" "NBA TV:" "TLC GO:" "Shudder:" "Fubo TV:" "Tubi TV:")
     echo_result ${result} ${array}
     local result=$(
+        MediaUnlockTest_PlutoTV &
         MediaUnlockTest_KOCOWA &
         GameTest_MathsSpot &
     )
     wait
-    local array=("KOCOWA:" "Maths Spot:")
+    local array=("Pluto TV:" "KOCOWA:" "Maths Spot:")
     echo_result ${result} ${array}
     show_region US
     local result=$(
@@ -4854,17 +4854,15 @@ function NA_UnlockTest() {
     local array=("Crackle:" "CW TV:" "A&E TV:" "NBC TV:" "Sling TV:" "encoreTVB:")
     echo_result ${result} ${array}
     local result=$(
-        MediaUnlockTest_DiscoveryPlus &
         MediaUnlockTest_PeacockTV &
         MediaUnlockTest_Popcornflix &
         MediaUnlockTest_Crunchyroll &
         MediaUnlockTest_Directv &
         # MediaUnlockTest_KBSAmerican &
-
         WebTest_MetaAI &
     )
     wait
-    local array=("Discovery+:" "Peacock TV:" "Popcornflix:" "Crunchyroll:" "Directv Stream:" "Meta AI:")
+    local array=("Peacock TV:" "Popcornflix:" "Crunchyroll:" "Directv Stream:" "Meta AI:")
     echo_result ${result} ${array}
     show_region CA
     local result=$(
@@ -4884,6 +4882,7 @@ function EU_UnlockTest() {
         MediaUnlockTest_RakutenTV &
         MediaUnlockTest_SkyShowTime &
         MediaUnlockTest_HBOMax &
+        MediaUnlockTest_DiscoveryPlus &
         MediaUnlockTest_SetantaSports &
         MediaUnlockTest_SonyLiv &
         MediaUnlockTest_ParamountPlus &
@@ -4891,7 +4890,7 @@ function EU_UnlockTest() {
         GameTest_MathsSpot &
     )
     wait
-    local array=("Rakuten TV:" "SkyShowTime:" "HBO Max:" "Setanta Sports:" "SonyLiv:" "Paramount+:" "Megogo TV:" "Maths Spot:")
+    local array=("Rakuten TV:" "SkyShowTime:" "HBO Max:" "Discovery+:" "Setanta Sports:" "SonyLiv:" "Paramount+:" "Megogo TV:" "Maths Spot:")
     echo_result ${result} ${array}
     show_region GB
     local result=$(
@@ -4902,11 +4901,10 @@ function EU_UnlockTest() {
         MediaUnlockTest_Channel4 &
         MediaUnlockTest_Channel5 &
         MediaUnlockTest_BBCiPLAYER &
-        MediaUnlockTest_DiscoveryPlusUK &
         MediaUnlockTest_AcornTV &
     )
     wait
-    local array=("HotStar:" "Sky Go:" "BritBox:" "ITV Hub:" "Channel 4:" "Channel 5:" "BBC iPLAYER:" "Discovery+ UK:" "Acorn TV:")
+    local array=("HotStar:" "Sky Go:" "BritBox:" "ITV Hub:" "Channel 4:" "Channel 5:" "BBC iPLAYER:" "Acorn TV:")
     echo_result ${result} ${array}
     show_region FR
     local result=$(
