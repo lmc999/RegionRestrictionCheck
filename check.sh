@@ -1860,6 +1860,10 @@ function MediaUnlockTest_HotStar() {
         echo -n -e "\r HotStar:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
+    if  [ "$region" == 'US' ]; then
+        echo -n -e "\r HotStar:\t\t\t\t${Font_Yellow}No (Discontinued in the US)${Font_Suffix}\n"
+        return
+    fi
     if  [ "$region" == "$siteRegion" ]; then
         echo -n -e "\r HotStar:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
         return
