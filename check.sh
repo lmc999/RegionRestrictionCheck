@@ -4159,26 +4159,27 @@ function MediaUnlockTest_SkyShowTime() {
 
 function GameTest_MathsSpot() {
     if [ "${IS_IPV6}" == '1' ]; then
-        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
+        echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
 
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://mathsspot.com/' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
 
     local isBlocked=$(echo "$tmpresult" | grep -i 'FailureServiceNotInRegion')
     if [ -n "$isBlocked" ]; then
-        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
 
+    local apiPath=$(echo "$tmpresult" | grep -oP 'fetch\("\K[^"]+' | grep 'reportEvent' | sed 's/\/reportEvent//;s/^\///')
     local region=$(echo "$tmpresult" | grep -oP '"countryCode"\s{0,}:\s{0,}"\K[^"]+')
     local nggFeVersion=$(echo "$tmpresult" | grep -oP '"NEXT_PUBLIC_FE_VERSION"\s{0,}:\s{0,}"\K[^"]+')
-    if [ -z "$nggFeVersion" ] || [ -z "$region" ]; then
-        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+    if [ -z "$apiPath" ] || [ -z "$nggFeVersion" ] || [ -z "$region" ]; then
+        echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
 
@@ -4186,23 +4187,24 @@ function GameTest_MathsSpot() {
     local fakeSessId=$(gen_random_str 21)
     local fakeFesessId=$(gen_random_str 21)
     local fakeVisitId=$(gen_random_str 21)
-    local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -sL "https://mathsspot.com/3/api/play/v1/startSession?appId=5349&uaId=ua-${fakeUAId}&uaSessionId=uasess-${fakeSessId}&feSessionId=fesess-${fakeFesessId}&visitId=visitid-${fakeVisitId}&initialOrientation=landscape&utmSource=NA&utmMedium=NA&utmCampaign=NA&deepLinkUrl=&accessCode=&ngReferrer=NA&pageReferrer=NA&ngEntryPoint=https%3A%2F%2Fmathsspot.com%2F&ntmSource=NA&customData=&appLaunchExtraData=&feSessionTags=nowgg&sdpType=&eVar=&isIframe=false&feDeviceType=desktop&feOsName=window&userSource=direct&visitSource=direct&userCampaign=NA&visitCampaign=NA" -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'referer: https://mathsspot.com/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-origin' -H 'x-ngg-skip-evar-check: true' -H "x-ngg-fe-version: ${nggFeVersion}")
+
+    local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -sL "https://mathsspot.com/${apiPath}/startSession?appId=5349&uaId=ua-${fakeUAId}&uaSessionId=uasess-${fakeSessId}&feSessionId=fesess-${fakeFesessId}&visitId=visitid-${fakeVisitId}&initialOrientation=landscape&utmSource=NA&utmMedium=NA&utmCampaign=NA&deepLinkUrl=&accessCode=&ngReferrer=NA&pageReferrer=NA&ngEntryPoint=https%3A%2F%2Fmathsspot.com%2F&ntmSource=NA&customData=&appLaunchExtraData=&feSessionTags=nowgg&sdpType=&eVar=&isIframe=false&feDeviceType=desktop&feOsName=window&userSource=direct&visitSource=direct&userCampaign=NA&visitCampaign=NA" -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'referer: https://mathsspot.com/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-origin' -H 'x-ngg-skip-evar-check: true' -H "x-ngg-fe-version: ${nggFeVersion}")
     if [ -z "$tmpresult1" ]; then
-        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
+        echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
         return
     fi
 
     local status=$(echo "$tmpresult1" |  grep -oP '"status"\s{0,}:\s{0,}"\K[^"]+' | head -n 1)
     if [ -z "$status" ]; then
-        echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Red}Failed (Error: PAGE ERROR 1)${Font_Suffix}\n"
         return
     fi
 
     case "$status" in
-        'FailureServiceNotInRegion') echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        'FailureProxyUserLimitExceeded') echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}No (Proxy/VPN Detected)${Font_Suffix}\n" ;;
-        'Success') echo -n -e "\r Maths Spot:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Maths Spot:\t\t\t\t${Font_Red}Failed (Error: $status)${Font_Suffix}\n" ;;
+        'FailureServiceNotInRegion') echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
+        'FailureProxyUserLimitExceeded') echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Red}No (Proxy/VPN Detected)${Font_Suffix}\n" ;;
+        'Success') echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n" ;;
+        *) echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Red}Failed (Error: $status)${Font_Suffix}\n" ;;
     esac
 }
 
@@ -4825,7 +4827,7 @@ function NA_UnlockTest() {
         GameTest_MathsSpot &
     )
     wait
-    local array=("Pluto TV:" "KOCOWA:" "Maths Spot:")
+    local array=("Pluto TV:" "KOCOWA:" "MathsSpot Roblox:")
     echo_result ${result} ${array}
     show_region US
     local result=$(
