@@ -10,7 +10,7 @@ Font_SkyBlue="\033[36m"
 Font_White="\033[37m"
 Font_Suffix="\033[0m"
 
-while getopts ":I:M:EX:P:" optname; do
+while getopts ":I:M:EX:P:AT:" optname; do
     case "$optname" in
     "I")
         iface="$OPTARG"
@@ -34,6 +34,12 @@ while getopts ":I:M:EX:P:" optname; do
         proxy="$OPTARG"
         usePROXY="-x $proxy"
     	;;
+    "A")
+        checkAll=1
+        ;;
+    "T")
+        num="$OPTARG"
+        ;;
     ":")
         echo "Unknown error while processing options"
         exit 1
@@ -4190,7 +4196,12 @@ function Start() {
         read -p "请输入正确数字或直接按回车:" num
     fi
 }
-Start
+
+if [[ -n $checkAll ]]; then
+    unset num
+elif [[ -z "${num}" ]]; then
+    Start
+fi
 
 function RunScript() {
     if [[ -n "${num}" ]]; then
