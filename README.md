@@ -135,6 +135,17 @@ bash <(curl -L -s check.unlock.media) -I eth0
 bash <(curl -L -s check.unlock.media) -E
 ````
 
+##### 非交互模式执行：
+- 全区域检测
+````bash
+bash <(curl -L -s check.unlock.media) -A
+````
+- 指定检测项目
+````bash
+bash <(curl -L -s check.unlock.media) -T 0
+````
+具体选项可以执行`bash <(curl -L -s check.unlock.media)` 查看，并且`-A`会覆盖`-T`的选项
+
 **或者直接运行以下Docker命令** (兼容ARM架构)
 ````docker
 docker run --rm -ti --net=host lmc999/regioncheck && docker rmi lmc999/regioncheck > /dev/null 2>&1
