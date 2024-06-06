@@ -4212,7 +4212,7 @@ function GameTest_MathsSpot() {
     esac
 }
 
-function MediaUnblockTest_BGlobalSEA() {
+function MediaUnlockTest_BGlobalSEA() {
     if [ "${IS_IPV6}" == '1' ]; then
         echo -n -e "\r B-Global SouthEastAsia:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
@@ -4233,7 +4233,7 @@ function MediaUnblockTest_BGlobalSEA() {
     esac
 }
 
-function MediaUnblockTest_BGlobalTH() {
+function MediaUnlockTest_BGlobalTH() {
     if [ "${IS_IPV6}" == '1' ]; then
         echo -n -e "\r B-Global Thailand Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
@@ -4254,7 +4254,7 @@ function MediaUnblockTest_BGlobalTH() {
     esac
 }
 
-function MediaUnblockTest_BGlobalID() {
+function MediaUnlockTest_BGlobalID() {
     if [ "${IS_IPV6}" == '1' ]; then
         echo -n -e "\r B-Global Indonesia Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
@@ -4275,7 +4275,7 @@ function MediaUnblockTest_BGlobalID() {
     esac
 }
 
-function MediaUnblockTest_BGlobalVN() {
+function MediaUnlockTest_BGlobalVN() {
     if [ "${IS_IPV6}" == '1' ]; then
         echo -n -e "\r B-Global Việt Nam Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
@@ -5166,7 +5166,7 @@ function SEA_UnlockTest() {
         MediaUnlockTest_HotStar &
         MediaUnlockTest_HBOGO_ASIA &
         MediaUnlockTest_SonyLiv &
-        MediaUnblockTest_BGlobalSEA &
+        MediaUnlockTest_BGlobalSEA &
     )
     wait
     local array=("Viu.com:" "HotStar:" "HBO GO Asia:" "SonyLiv:" "B-Global SouthEastAsia:")
@@ -5184,7 +5184,7 @@ function SEA_UnlockTest() {
     local result=$(
         MediaUnlockTest_AISPlay &
         MediaUnlockTest_trueID &
-        MediaUnblockTest_BGlobalTH &
+        MediaUnlockTest_BGlobalTH &
     )
     wait
     local array=("AIS Play:" "trueID:" "B-Global Thailand Only:")
@@ -5192,7 +5192,7 @@ function SEA_UnlockTest() {
 
     show_region ID
     local result=$(
-        MediaUnblockTest_BGlobalID &
+        MediaUnlockTest_BGlobalID &
     )
     wait
     local array=("B-Global Indonesia Only:")
@@ -5201,7 +5201,7 @@ function SEA_UnlockTest() {
     local result=$(
         # MediaUnlockTest_K_PLUS &
         # MediaUnlockTest_TV360 &
-        MediaUnblockTest_BGlobalVN &
+        MediaUnlockTest_BGlobalVN &
     )
     wait
     local array=("B-Global Việt Nam Only:")
@@ -5277,6 +5277,7 @@ function inputOptions() {
         echo -e "${Font_SkyBlue}Input Number  [11]: [ Multination + Africa ]${Font_Suffix}"
         echo -e "${Font_SkyBlue}Input Number  [0]: [ Multination Only ]${Font_Suffix}"
         echo -e "${Font_SkyBlue}Input Number [99]: [ Sport Platforms ]${Font_Suffix}"
+        echo -e "${Font_SkyBlue}Input Number [66]: [ All Platfroms ]${Font_Suffix}"
         read -p "Please Input the Correct Number or Press ENTER:" NUM
     else
         echo -e "${Font_Blue}请选择检测项目，直接按回车将进行全区域检测${Font_Suffix}"
@@ -5293,8 +5294,13 @@ function inputOptions() {
         echo -e "${Font_SkyBlue}输入数字 [11]: [ 跨国平台+非洲平台 ]检测${Font_Suffix}"
         echo -e "${Font_SkyBlue}输入数字  [0]: [   只进行跨国平台  ]检测${Font_Suffix}"
         echo -e "${Font_SkyBlue}输入数字 [99]: [   体育直播平台    ]检测${Font_Suffix}"
+        echo -e "${Font_SkyBlue}输入数字 [66]: [     全部平台      ]检测${Font_Suffix}"
         echo -e "${Font_Purple}输入数字 [69]: [   广告推广投放    ]咨询${Font_Suffix}"
         read -p "请输入正确数字或直接按回车:" NUM
+    fi
+
+    if [ -z "$NUM" ]; then
+        NUM=66
     fi
 }
 
@@ -5435,162 +5441,178 @@ function checkIPV6() {
 function runScript() {
     showScriptTitle
 
-    if [ -n "${NUM}" ]; then
-        if [ "$NUM" -eq 1 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                TW_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                TW_UnlockTest
-            fi
-        elif [ "$NUM" -eq 2 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                HK_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                HK_UnlockTest
-            fi
-        elif [ "$NUM" -eq 3 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                JP_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                JP_UnlockTest
-            fi
-        elif [ "$NUM" -eq 4 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                NA_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                NA_UnlockTest
-            fi
-        elif [ "$NUM" -eq 5 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                SA_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                SA_UnlockTest
-            fi
-        elif [ "$NUM" -eq 6 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                EU_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                EU_UnlockTest
-            fi
-        elif [ "$NUM" -eq 7 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                OA_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                OA_UnlockTest
-            fi
-        elif [ "$NUM" -eq 8 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                KR_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                KR_UnlockTest
-            fi
-        elif [ "$NUM" -eq 9 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                SEA_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                SEA_UnlockTest
-            fi
-        elif [ "$NUM" -eq 10 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                IN_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                IN_UnlockTest
-            fi
-        elif [ "$NUM" -eq 11 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                AF_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                AF_UnlockTest
-            fi
-        elif [ "$NUM" -eq 99 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Sport_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Sport_UnlockTest
-            fi
-        elif [ "$NUM" -eq 0 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-            fi
-        elif [ "$NUM" -eq 69 ]; then
-            echo ''
-            echo ''
-            echo -e "${Font_Red}**************************${Font_Suffix}"
-            echo -e "${Font_Red}*                        *${Font_Suffix}"
-            echo -e "${Font_Red}*${Font_Suffix} 广告招租               ${Font_Red}*${Font_Suffix}"
-            echo -e "${Font_Red}*${Font_Suffix} 请联系：@reidschat_bot ${Font_Red}*${Font_Suffix}"
-            echo -e "${Font_Red}*                        *${Font_Suffix}"
-            echo -e "${Font_Red}**************************${Font_Suffix}"
+    if [ -z "${NUM}" ]; then
+        echo -e "${Font_Red}请重新执行脚本并输入正确号码${Font_Suffix}"
+        echo -e "${Font_Red}Please Re-run the Script with Correct Number Input${Font_Suffix}"
+        return
+    fi
 
-        else
-            echo -e "${Font_Red}请重新执行脚本并输入正确号码${Font_Suffix}"
-            echo -e "${Font_Red}Please Re-run the Script with Correct Number Input${Font_Suffix}"
-            return
+    if [ "$NUM" -eq 1 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            TW_UnlockTest
         fi
-    else
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            TW_UnlockTest
+        fi
+        return
+    fi
+    if [ "$NUM" -eq 2 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            HK_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            HK_UnlockTest
+        fi
+        return
+    fi
+    if [ "$NUM" -eq 3 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            JP_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            JP_UnlockTest
+        fi
+        return
+    fi
+    if [ "$NUM" -eq 4 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            NA_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            NA_UnlockTest
+        fi
+        return
+    fi
+    if [ "$NUM" -eq 5 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            SA_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            SA_UnlockTest
+        fi
+        return
+    fi
+    if [ "$NUM" -eq 6 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            EU_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            EU_UnlockTest
+        fi
+        return
+    fi
+    if [ "$NUM" -eq 7 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            OA_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            OA_UnlockTest
+        fi
+        return
+    fi
+    if [ "$NUM" -eq 8 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            KR_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            KR_UnlockTest
+        fi
+        return
+    fi
+    if [ "$NUM" -eq 9 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            SEA_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            SEA_UnlockTest
+        fi
+        return
+    fi
+    if [ "$NUM" -eq 10 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            IN_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            IN_UnlockTest
+        fi
+        return
+    fi
+    if [ "$NUM" -eq 11 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            AF_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            AF_UnlockTest
+        fi
+        return
+    fi
+    if [ "$NUM" -eq 99 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Sport_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Sport_UnlockTest
+        fi
+        return
+    fi
+    if [ "$NUM" -eq 0 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+        fi
+        return
+    fi
+    if [ "$NUM" -eq 66 ]; then
         checkIPV4
         if [ "$IS_IPV4" -eq 1 ]; then
             Global_UnlockTest
@@ -5615,7 +5637,20 @@ function runScript() {
             OA_UnlockTest
             KR_UnlockTest
         fi
+        return
     fi
+    if [ "$NUM" -eq 69 ]; then
+        echo ''
+        echo ''
+        echo -e "${Font_Red}**************************${Font_Suffix}"
+        echo -e "${Font_Red}*                        *${Font_Suffix}"
+        echo -e "${Font_Red}*${Font_Suffix} 广告招租               ${Font_Red}*${Font_Suffix}"
+        echo -e "${Font_Red}*${Font_Suffix} 请联系：@reidschat_bot ${Font_Red}*${Font_Suffix}"
+        echo -e "${Font_Red}*                        *${Font_Suffix}"
+        echo -e "${Font_Red}**************************${Font_Suffix}"
+        return
+    fi
+
 }
 
 function showGoodbye() {
