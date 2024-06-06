@@ -85,6 +85,17 @@ bash <(curl -L -s https://git.io/JRw8R) -E -M 6
 bash <(curl -L -s https://git.io/JRw8R) -E -I eth0
 ````
 
+##### Non interactive mode
+- Check All Regions
+````bash
+bash <(curl -L -s check.unlock.media) -E -A
+````
+- Check Selected Region
+````bash
+bash <(curl -L -s check.unlock.media) -E -T 0
+````
+You could run the command `bash <(curl -L -s check.unlock.media) -E` to see more details of these options, and `-T` would be overwrited by `-A`
+
 **Or run in docker**
 ````docker
 docker run --rm -ti --net=host lmc999/regioncheck && docker rmi lmc999/regioncheck
