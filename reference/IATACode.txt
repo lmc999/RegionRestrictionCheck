@@ -520,6 +520,7 @@ Hefei | China | HFE
 Helena, MT | USA | HLN
 Helsingborg | Sweden | AGH
 Helsinki | Finland | HEL
+Helsinki | Finland | HEM
 Hemavan | Sweden | HMV
 Hengchun | Taiwan | HCN
 Heraklion, Crete | Greece | HER
