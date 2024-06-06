@@ -13,7 +13,7 @@
 ## 支持操作系统
 
 带有 bash 环境的任意 Unix 或类 Unix 操作系统。
-例如：Ubuntu 16+, Debian 10+, RHEL 7+, Arch Linux, Alpine Linux, FreeBSD, MacOS 10.13+, Android (Termux), iOS (iSH), Windows (MinGW/Cygwin) 等等。
+例如：Ubuntu 16+, Debian 10+, RHEL 7+, Arch Linux, Alpine Linux, FreeBSD, MacOS 10.13+, Android (Termux), iOS (iSH), Windows (MinGW/Cygwin), OpenWRT 23+ 等等。
 
 ## 使用方法
 
@@ -128,8 +128,11 @@ opkg install grep
 
 ## PR 须知
 
-1. 请勿滥用 curl 的参数。常用参数如下：
+### 1. 请勿滥用 curl 的参数。
 
+常用 CURL 参数如下：
+
+```
 -s (--silent): 静默模式。即不输出任何错误信息、URL 连接详情等
 -S (--show-error): 显示错误。当使用静默模式时，可输出错误消息。如果使用该参数可能会影响代码整洁性，不建议使用。
 -f (--fail): 当 URL 返回 400 错误或者 HTTP 无法传输时，不输出错误信息，并返回错误代码 22
@@ -140,10 +143,19 @@ opkg install grep
 -i (--include): 在输出结果中显示响应 header 信息。
 -c (--cookie-jar): 当 URL 访问完成后，将 cookie 信息写入到 Netscape 格式的文件中。
 -b (--cookie): 使用指定的数据或者文件作为 cookie。
+```
 
-2. 请勿使用双方括号
+### 2. 请勿使用双方括号
 
 双方括号只是 bash 的扩展功能。一是在某些不同平台可能会有兼容性问题，二是较为影响整洁性。
+
+### 3. 除非确实有必要，请尽量避免输出到文件
+
+逻辑部分的处理请尽量在 shell 中处理，避免输出到文件。
+
+### 4. 请勿添加额外的依赖
+
+能以 shell 方式解决的问题，请尽量以 shell 方式实现。
 
 ## 赞助
 
