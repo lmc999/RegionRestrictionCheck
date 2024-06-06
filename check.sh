@@ -598,22 +598,6 @@ function GameTest_UMAJP() {
     esac
 }
 
-function GameTest_WFJP() {
-    if [ "${IS_IPV6}" == '1' ]; then
-        echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-        return
-    fi
-
-    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://api.worldflipper.jp/' -w %{http_code} -o /dev/null --user-agent "${UA_ANDROID}")
-
-    case "$result" in
-        '000') echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
-        '200') echo -n -e "\r World Flipper Japan:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        '403') echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
-    esac
-}
-
 function GameTest_Kancolle() {
     if [ "${IS_IPV6}" == '1' ]; then
         echo -n -e "\r Kancolle Japan:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
@@ -5071,11 +5055,10 @@ function JP_UnlockTest() {
         GameTest_UMAJP &
         GameTest_KonosubaFD &
         GameTest_PCRJP &
-        GameTest_WFJP &
         GameTest_ProjectSekai &
     )
     wait
-    local array=("Kancolle Japan:" "Pretty Derby Japan:" "Konosuba Fantastic Days:" "Princess Connect Re:Dive Japan:" "World Flipper Japan:" "Project Sekai: Colorful Stage:")
+    local array=("Kancolle Japan:" "Pretty Derby Japan:" "Konosuba Fantastic Days:" "Princess Connect Re:Dive Japan:" "Project Sekai: Colorful Stage:")
     echo_result ${result} ${array}
     show_region Music
     local result=$(
