@@ -316,6 +316,7 @@ process() {
     LANGUAGE=''
     X_FORWARD=''
     USE_PROXY=''
+    CHECK_ALL=false
 
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -340,6 +341,14 @@ process() {
         -P | --proxy)
             local proxy="$2"
             USE_PROXY="-x $proxy"
+            shift
+            ;;
+        -A | --all)
+            CHECK_ALL=true
+            shift
+            ;;
+        -T | --check-type)
+            NUM="$2"
             shift
             ;;
         *)
@@ -5298,6 +5307,18 @@ function inputOptions() {
     fi
 }
 
+function inputOptionsWrap() {
+    if [[ $CHECK_ALL == true ]]; then
+        unset NUM
+        return
+    fi
+    if [[ -n "${NUM}" ]]; then
+        return
+    fi
+
+    inputOptions
+}
+
 function checkPROXY() {
     local proxyType=$(echo "$USE_PROXY" | awk -F'://' '{print $1}' | tr a-z A-Z)
 
@@ -5664,7 +5685,7 @@ showSupportOS
 
 showScriptTitle
 
-inputOptions
+inputOptionsWrap
 
 download_extra_data
 
