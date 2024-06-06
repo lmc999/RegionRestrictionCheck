@@ -5528,7 +5528,7 @@ function runScript() {
             checkIPV4
             if [ "$IS_IPV4" -eq 1 ]; then
                 Global_UnlockTest
-                SEA_UnlockTest 4
+                SEA_UnlockTest
             fi
             checkIPV6
             if [ "$IS_IPV6" -eq 1 ]; then
@@ -5543,8 +5543,8 @@ function runScript() {
             fi
             checkIPV6
             if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest 6
-                IN_UnlockTest 6
+                Global_UnlockTest
+                IN_UnlockTest
             fi
         elif [ "$NUM" -eq 11 ]; then
             checkIPV4
@@ -5573,7 +5573,7 @@ function runScript() {
             fi
             checkIPV6
             if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest 6
+                Global_UnlockTest
             fi
         elif [ "$NUM" -eq 69 ]; then
             echo ''
