@@ -4865,9 +4865,10 @@ function EU_UnlockTest() {
         MediaUnlockTest_Channel5 &
         MediaUnlockTest_BBCiPLAYER &
         MediaUnlockTest_AcornTV &
+        MediaUnlockTest_Shudder &
     )
     wait
-    local array=("HotStar:" "Sky Go:" "BritBox:" "ITV Hub:" "Channel 4:" "Channel 5:" "BBC iPLAYER:" "Acorn TV:")
+    local array=("HotStar:" "Sky Go:" "BritBox:" "ITV Hub:" "Channel 4:" "Channel 5:" "BBC iPLAYER:" "Acorn TV:" "Shudder:")
     echo_result ${result} ${array}
     show_region FR
     local result=$(
