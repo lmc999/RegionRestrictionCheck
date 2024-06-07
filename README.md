@@ -41,6 +41,14 @@ bash <(curl -L -s check.unlock.media) -M 6
 bash <(curl -L -s check.unlock.media) -I eth0
 ````
 
+##### 直接测试指定的区域编号：
+
+````bash
+bash <(curl -L -s check.unlock.media) -R 0
+````
+
+如果不指定区域编号或区域编号为空，则显示区域选择菜单
+
 ##### 选择脚本语言为英文：
 
 ````bash
