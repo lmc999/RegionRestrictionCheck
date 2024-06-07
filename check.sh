@@ -2649,43 +2649,6 @@ function MediaUnlockTest_SkyGo() {
     echo -n -e "\r Sky Go:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
 }
 
-function MediaUnlockTest_StarPlus() {
-    local starCookies=$(echo "$MEDIA_COOKIE" | sed -n '10p')
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://star.api.edge.bamgrid.com/graph/v1/device/graphql' -X POST -H "authorization: c3RhciZicm93c2VyJjEuMC4w.COknIGCR7I6N0M5PGnlcdbESHGkNv7POwhFNL-_vIdg" -d "$starCookies" --user-agent "${UA_BROWSER}")
-    local previewCheck=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.starplus.com/login' -w '%{url_effective}\n' -o /dev/null --user-agent "${UA_BROWSER}")
-    if [ -z "$tmpresult" ]; then
-        echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        return
-    fi
-
-    local isUnavailable=$(echo "$previewCheck" | grep 'unavailable')
-    local region=$(echo "$tmpresult" | grep -oP '"countryCode"\s{0,}:\s{0,}"\K[^"]+')
-    local inSupportedLocation=$(echo "$tmpresult" | grep -oP '"inSupportedLocation"\s{0,}:\s{0,}\K(false|true)')
-
-    if [ -z "$region" ]; then
-        echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-        return
-    fi
-    if [ -n "$isUnavailable" ]; then
-        echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-        return
-    fi
-    if [ -z "$inSupportedLocation" ]; then
-        echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
-        return
-    fi
-    if [ "$inSupportedLocation" == 'false' ]; then
-        echo -n -e "\r Star+:\t\t\t\t\t${Font_Yellow}CDN Relay Available${Font_Suffix}\n"
-        return
-    fi
-    if  [ "$inSupportedLocation" == 'true' ]; then
-        echo -n -e "\r Star+:\t\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
-        return
-    fi
-
-    echo -n -e "\r Star+:\t\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
-}
-
 function MediaUnlockTest_DirecTVGO() {
     if [ "${IS_IPV6}" == '1' ]; then
         echo -n -e "\r DirecTV Go:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
@@ -5077,7 +5040,6 @@ function JP_UnlockTest() {
 function SA_UnlockTest() {
     echo "===========[ South America ]==========="
     local result=$(
-        MediaUnlockTest_StarPlus &
         MediaUnlockTest_HBOMax &
         MediaUnlockTest_DirecTVGO &
         MediaUnlockTest_ParamountPlus &
@@ -5206,7 +5168,6 @@ function Sport_UnlockTest() {
     echo "===============[ Sport ]==============="
     local result=$(
         MediaUnlockTest_Dazn &
-        MediaUnlockTest_StarPlus &
         MediaUnlockTest_ESPNPlus &
         MediaUnlockTest_NBATV &
         MediaUnlockTest_FuboTV &
