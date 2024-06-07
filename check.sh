@@ -3653,7 +3653,6 @@ function MediaUnlockTest_Crunchyroll() {
     fi
 }
 
-
 function MediaUnlockTest_CWTV() {
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL --retry 3 "https://www.cwtv.com/" -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
@@ -3811,7 +3810,7 @@ function MediaUnlockTest_CoupangPlay() {
         return
     fi
 
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.coupangplay.com/' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null  --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.coupangplay.com/' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null --user-agent "${UA_BROWSER}")
     local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
 
     if [ "$httpCode" == '000' ]; then
@@ -4723,6 +4722,38 @@ function MediaUnlockTest_RakutenTVJP() {
     esac
 }
 
+function MediaUnlockTest_AMCPlus() {
+    tmpresult=$(curl -sL 'https://www.amcplus.com/' -w '%{http_code}_TAG_%{url_effective}\n' -o dev/null -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+
+    local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
+    if [ "$httpCode" == '000' ]; then
+        echo -n -e "\r AMC+:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+
+    local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
+    local isBlocked=$(echo "$urlEffective" | grep -i 'geographic-restriction')
+    local region=$(echo "$urlEffective" | awk -F'/' '{print $NF}' | tr A-Z a-z | sed 's/\b[a-z]/\U&/g')
+
+    if [ -n "$isBlocked" ]; then
+        echo -n -e "\r AMC+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+    if [ "$httpCode" == '403' ]; then
+        echo -n -e "\r AMC+:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+    if [ -z "$region" ]; then
+        local region='USA'
+    fi
+    if [ "$httpCode" == '200' ]; then
+        echo -n -e "\r AMC+:\t\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
+        return
+    fi
+
+    echo -n -e "\r AMC+:\t\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
+}
+
 function echo_result() {
     for ((i=0;i<${#array[@]};i++)); do
         echo "$result" | grep "${array[i]}"
@@ -4785,10 +4816,11 @@ function NA_UnlockTest() {
     local result=$(
         MediaUnlockTest_PlutoTV &
         MediaUnlockTest_KOCOWA &
+        MediaUnlockTest_AMCPlus &
         GameTest_MathsSpot &
     )
     wait
-    local array=("Pluto TV:" "KOCOWA:" "MathsSpot Roblox:")
+    local array=("Pluto TV:" "KOCOWA:" "AMC+" "MathsSpot Roblox:")
     echo_result ${result} ${array}
     show_region US
     local result=$(
@@ -5058,10 +5090,11 @@ function OA_UnlockTest() {
         MediaUnlockTest_AcornTV &
         MediaUnlockTest_BritBox &
         MediaUnlockTest_ParamountPlus &
+        MediaUnlockTest_AMCPlus &
         MediaUnlockTest_SonyLiv &
     )
     wait
-    local array=("NBA TV:" "Acorn TV:" "BritBox:" "Paramount+:" "SonyLiv:")
+    local array=("NBA TV:" "Acorn TV:" "BritBox:" "Paramount+:" "AMC+" "SonyLiv:")
     echo_result ${result} ${array}
     show_region AU
     local result=$(
