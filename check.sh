@@ -342,6 +342,10 @@ process() {
             USE_PROXY="-x $proxy"
             shift
             ;;
+        -R | --region)
+            local regionid="$2"
+            shift
+            ;;
         *)
             echo "Unknown error while processing options"
             exit 1
@@ -368,6 +372,12 @@ process() {
 
     if [ -z "$LANGUAGE" ]; then
         LANGUAGE='zh'
+    fi
+
+    if [ -n "$regionid" ]; then
+        if validate_region_id "$regionid"; then
+            REGION_ID="$regionid"
+        fi
     fi
 
     CURL_OPTS="$USE_NIC $USE_PROXY $X_FORWARD ${CURL_SSL_CIPHERS_OPT} --max-time 10"
@@ -585,22 +595,6 @@ function GameTest_UMAJP() {
         '404') echo -n -e "\r Pretty Derby Japan:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r Pretty Derby Japan:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         *) echo -n -e "\r Pretty Derby Japan:\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
-    esac
-}
-
-function GameTest_WFJP() {
-    if [ "${IS_IPV6}" == '1' ]; then
-        echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
-        return
-    fi
-
-    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://api.worldflipper.jp/' -w %{http_code} -o /dev/null --user-agent "${UA_ANDROID}")
-
-    case "$result" in
-        '000') echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
-        '200') echo -n -e "\r World Flipper Japan:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        '403') echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r World Flipper Japan:\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
 
@@ -4212,7 +4206,7 @@ function GameTest_MathsSpot() {
     esac
 }
 
-function MediaUnblockTest_BGlobalSEA() {
+function MediaUnlockTest_BGlobalSEA() {
     if [ "${IS_IPV6}" == '1' ]; then
         echo -n -e "\r B-Global SouthEastAsia:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
@@ -4233,7 +4227,7 @@ function MediaUnblockTest_BGlobalSEA() {
     esac
 }
 
-function MediaUnblockTest_BGlobalTH() {
+function MediaUnlockTest_BGlobalTH() {
     if [ "${IS_IPV6}" == '1' ]; then
         echo -n -e "\r B-Global Thailand Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
@@ -4254,7 +4248,7 @@ function MediaUnblockTest_BGlobalTH() {
     esac
 }
 
-function MediaUnblockTest_BGlobalID() {
+function MediaUnlockTest_BGlobalID() {
     if [ "${IS_IPV6}" == '1' ]; then
         echo -n -e "\r B-Global Indonesia Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
@@ -4275,7 +4269,7 @@ function MediaUnblockTest_BGlobalID() {
     esac
 }
 
-function MediaUnblockTest_BGlobalVN() {
+function MediaUnlockTest_BGlobalVN() {
     if [ "${IS_IPV6}" == '1' ]; then
         echo -n -e "\r B-Global Việt Nam Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
@@ -5061,11 +5055,10 @@ function JP_UnlockTest() {
         GameTest_UMAJP &
         GameTest_KonosubaFD &
         GameTest_PCRJP &
-        GameTest_WFJP &
         GameTest_ProjectSekai &
     )
     wait
-    local array=("Kancolle Japan:" "Pretty Derby Japan:" "Konosuba Fantastic Days:" "Princess Connect Re:Dive Japan:" "World Flipper Japan:" "Project Sekai: Colorful Stage:")
+    local array=("Kancolle Japan:" "Pretty Derby Japan:" "Konosuba Fantastic Days:" "Princess Connect Re:Dive Japan:" "Project Sekai: Colorful Stage:")
     echo_result ${result} ${array}
     show_region Music
     local result=$(
@@ -5166,7 +5159,7 @@ function SEA_UnlockTest() {
         MediaUnlockTest_HotStar &
         MediaUnlockTest_HBOGO_ASIA &
         MediaUnlockTest_SonyLiv &
-        MediaUnblockTest_BGlobalSEA &
+        MediaUnlockTest_BGlobalSEA &
     )
     wait
     local array=("Viu.com:" "HotStar:" "HBO GO Asia:" "SonyLiv:" "B-Global SouthEastAsia:")
@@ -5184,7 +5177,7 @@ function SEA_UnlockTest() {
     local result=$(
         MediaUnlockTest_AISPlay &
         MediaUnlockTest_trueID &
-        MediaUnblockTest_BGlobalTH &
+        MediaUnlockTest_BGlobalTH &
     )
     wait
     local array=("AIS Play:" "trueID:" "B-Global Thailand Only:")
@@ -5192,7 +5185,7 @@ function SEA_UnlockTest() {
 
     show_region ID
     local result=$(
-        MediaUnblockTest_BGlobalID &
+        MediaUnlockTest_BGlobalID &
     )
     wait
     local array=("B-Global Indonesia Only:")
@@ -5201,7 +5194,7 @@ function SEA_UnlockTest() {
     local result=$(
         # MediaUnlockTest_K_PLUS &
         # MediaUnlockTest_TV360 &
-        MediaUnblockTest_BGlobalVN &
+        MediaUnlockTest_BGlobalVN &
     )
     wait
     local array=("B-Global Việt Nam Only:")
@@ -5230,7 +5223,7 @@ function Sport_UnlockTest() {
 }
 
 function showSupportOS() {
-    if [ "$LANGUAGE" == "en" ]; then
+    if [ "$LANGUAGE" == 'en' ]; then
         echo -e "${Font_Purple}Supporting OS: Ubuntu 16+, Debian 10+, RHEL 7+, Arch Linux, Alpine Linux, FreeBSD, MacOS 10.13+, Android (Termux), iOS (iSH), Windows (MinGW/Cygwin) etc.${Font_Suffix}"
         echo ''
     else
@@ -5240,7 +5233,7 @@ function showSupportOS() {
 }
 
 function showScriptTitle() {
-    if [ "$LANGUAGE" == "en" ]; then
+    if [ "$LANGUAGE" == 'en' ]; then
         echo -e " [Stream Platform & Game Region Restriction Test]"
         echo ''
         echo -e "${Font_Green}Github Repository:${Font_Suffix} ${Font_Yellow} https://github.com/lmc999/RegionRestrictionCheck ${Font_Suffix}"
@@ -5261,47 +5254,82 @@ function showScriptTitle() {
     fi
 }
 
-function inputOptions() {
-    if [ "$LANGUAGE" == "en" ]; then
-        echo -e "${Font_Blue}Please Select Test Region or Press ENTER to Test All Regions${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [1]: [ Multination + Taiwan ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [2]: [ Multination + Hong Kong ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [3]: [ Multination + Japan ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [4]: [ Multination + North America ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [5]: [ Multination + South America ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [6]: [ Multination + Europe ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [7]: [ Multination + Oceania ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [8]: [ Multination + Korean ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [9]: [ Multination + SouthEast Asia ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [10]: [ Multination + India ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [11]: [ Multination + Africa ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [0]: [ Multination Only ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number [99]: [ Sport Platforms ]${Font_Suffix}"
-        read -p "Please Input the Correct Number or Press ENTER:" NUM
-    else
-        echo -e "${Font_Blue}请选择检测项目，直接按回车将进行全区域检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [1]: [ 跨国平台+台湾平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [2]: [ 跨国平台+香港平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [3]: [ 跨国平台+日本平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [4]: [ 跨国平台+北美平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [5]: [ 跨国平台+南美平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [6]: [ 跨国平台+欧洲平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [7]: [跨国平台+大洋洲平台]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [8]: [ 跨国平台+韩国平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [9]: [跨国平台+东南亚平台]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字 [10]: [ 跨国平台+印度平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字 [11]: [ 跨国平台+非洲平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [0]: [   只进行跨国平台  ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字 [99]: [   体育直播平台    ]检测${Font_Suffix}"
-        echo -e "${Font_Purple}输入数字 [69]: [   广告推广投放    ]咨询${Font_Suffix}"
-        read -p "请输入正确数字或直接按回车:" NUM
+validate_region_id() {
+    if [ -z "$1" ]; then
+        echo -e "${Font_Red}Param missing.${Font_Suffix}"
+        exit 1
     fi
+    local regionid=$1
+    local result=$(echo "$regionid" | grep -E '^[0-9]$|^1[0-1]$|^99$|^66$')
+    if [ -z "$result" ]; then
+        return 1
+    fi
+
+    return 0
+}
+
+function inputOptions() {
+
+    while :; do
+        if [ "$LANGUAGE" == 'en' ]; then
+            echo -e "${Font_Blue}Please Select Test Region or Press ENTER to Test All Regions${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number  [1]: [ Multination + Taiwan ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number  [2]: [ Multination + Hong Kong ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number  [3]: [ Multination + Japan ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number  [4]: [ Multination + North America ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number  [5]: [ Multination + South America ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number  [6]: [ Multination + Europe ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number  [7]: [ Multination + Oceania ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number  [8]: [ Multination + Korean ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number  [9]: [ Multination + SouthEast Asia ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number  [10]: [ Multination + India ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number  [11]: [ Multination + Africa ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number  [0]: [ Multination Only ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number [99]: [ Sport Platforms ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number [66]: [ All Platfroms ]${Font_Suffix}"
+            read -p "Please Input the Correct Number or Press ENTER:" num
+        else
+            echo -e "${Font_Blue}请选择检测项目，直接按回车将进行全区域检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字  [1]: [ 跨国平台+台湾平台 ]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字  [2]: [ 跨国平台+香港平台 ]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字  [3]: [ 跨国平台+日本平台 ]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字  [4]: [ 跨国平台+北美平台 ]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字  [5]: [ 跨国平台+南美平台 ]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字  [6]: [ 跨国平台+欧洲平台 ]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字  [7]: [跨国平台+大洋洲平台]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字  [8]: [ 跨国平台+韩国平台 ]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字  [9]: [跨国平台+东南亚平台]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字 [10]: [ 跨国平台+印度平台 ]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字 [11]: [ 跨国平台+非洲平台 ]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字  [0]: [   只进行跨国平台  ]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字 [99]: [   体育直播平台    ]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字 [66]: [     全部平台      ]检测${Font_Suffix}"
+            echo -e "${Font_Purple}输入数字 [69]: [   广告推广投放    ]咨询${Font_Suffix}"
+            read -p "请输入正确数字或直接按回车:" num
+        fi
+
+        if [ -z "$num" ]; then
+            REGION_ID=66
+            break
+        fi
+
+        if ! validate_region_id "$num"; then
+            echo -e "${Font_Red}请输入正确号码！${Font_Suffix}"
+            echo -e "${Font_Red}Please enter the correct number!${Font_Suffix}"
+            delay 3
+            clear
+            continue
+        fi
+
+        REGION_ID=$num
+        break
+    done
 }
 
 function checkPROXY() {
     local proxyType=$(echo "$USE_PROXY" | awk -F'://' '{print $1}' | tr a-z A-Z)
 
-    if [ "$LANGUAGE" == "en" ]; then
+    if [ "$LANGUAGE" == 'en' ]; then
         echo -e " ${Font_SkyBlue}** Checking Results Under Proxy${Font_Suffix}"
         if ! check_proxy_connectivity; then
             echo -e " ${Font_SkyBlue}** Unable to connect to this Proxy${Font_Suffix}"
@@ -5339,7 +5367,7 @@ function checkIPAddress() {
 }
 
 function checkIPV4() {
-    if [ "$LANGUAGE" == "en" ]; then
+    if [ "$LANGUAGE" == 'en' ]; then
         if [ "$NETWORK_TYPE" == "6" ]; then
             IS_IPV4=0
             echo -e "${Font_SkyBlue}The Script Will Only Test IPv6 Results, Skipping IPv4 Testing...${Font_Suffix}"
@@ -5385,7 +5413,7 @@ function checkIPV4() {
 }
 
 function checkIPV6() {
-    if [ "$LANGUAGE" == "en" ]; then
+    if [ "$LANGUAGE" == 'en' ]; then
         if [ "$NETWORK_TYPE" == "4" ]; then
             IS_IPV6=0
             echo -e "${Font_SkyBlue}The Script Will Only Test IPv4 Results, Skipping IPv6 Testing...${Font_Suffix}"
@@ -5435,162 +5463,172 @@ function checkIPV6() {
 function runScript() {
     showScriptTitle
 
-    if [ -n "${NUM}" ]; then
-        if [ "$NUM" -eq 1 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                TW_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                TW_UnlockTest
-            fi
-        elif [ "$NUM" -eq 2 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                HK_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                HK_UnlockTest
-            fi
-        elif [ "$NUM" -eq 3 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                JP_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                JP_UnlockTest
-            fi
-        elif [ "$NUM" -eq 4 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                NA_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                NA_UnlockTest
-            fi
-        elif [ "$NUM" -eq 5 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                SA_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                SA_UnlockTest
-            fi
-        elif [ "$NUM" -eq 6 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                EU_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                EU_UnlockTest
-            fi
-        elif [ "$NUM" -eq 7 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                OA_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                OA_UnlockTest
-            fi
-        elif [ "$NUM" -eq 8 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                KR_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                KR_UnlockTest
-            fi
-        elif [ "$NUM" -eq 9 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                SEA_UnlockTest 4
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                SEA_UnlockTest
-            fi
-        elif [ "$NUM" -eq 10 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                IN_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest 6
-                IN_UnlockTest 6
-            fi
-        elif [ "$NUM" -eq 11 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-                AF_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest
-                AF_UnlockTest
-            fi
-        elif [ "$NUM" -eq 99 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Sport_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Sport_UnlockTest
-            fi
-        elif [ "$NUM" -eq 0 ]; then
-            checkIPV4
-            if [ "$IS_IPV4" -eq 1 ]; then
-                Global_UnlockTest
-            fi
-            checkIPV6
-            if [ "$IS_IPV6" -eq 1 ]; then
-                Global_UnlockTest 6
-            fi
-        elif [ "$NUM" -eq 69 ]; then
-            echo ''
-            echo ''
-            echo -e "${Font_Red}**************************${Font_Suffix}"
-            echo -e "${Font_Red}*                        *${Font_Suffix}"
-            echo -e "${Font_Red}*${Font_Suffix} 广告招租               ${Font_Red}*${Font_Suffix}"
-            echo -e "${Font_Red}*${Font_Suffix} 请联系：@reidschat_bot ${Font_Red}*${Font_Suffix}"
-            echo -e "${Font_Red}*                        *${Font_Suffix}"
-            echo -e "${Font_Red}**************************${Font_Suffix}"
-
-        else
-            echo -e "${Font_Red}请重新执行脚本并输入正确号码${Font_Suffix}"
-            echo -e "${Font_Red}Please Re-run the Script with Correct Number Input${Font_Suffix}"
-            return
+    if [ "$REGION_ID" -eq 1 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            TW_UnlockTest
         fi
-    else
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            TW_UnlockTest
+        fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 2 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            HK_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            HK_UnlockTest
+        fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 3 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            JP_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            JP_UnlockTest
+        fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 4 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            NA_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            NA_UnlockTest
+        fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 5 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            SA_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            SA_UnlockTest
+        fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 6 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            EU_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            EU_UnlockTest
+        fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 7 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            OA_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            OA_UnlockTest
+        fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 8 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            KR_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            KR_UnlockTest
+        fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 9 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            SEA_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            SEA_UnlockTest
+        fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 10 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            IN_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            IN_UnlockTest
+        fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 11 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+            AF_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+            AF_UnlockTest
+        fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 99 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Sport_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Sport_UnlockTest
+        fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 0 ]; then
+        checkIPV4
+        if [ "$IS_IPV4" -eq 1 ]; then
+            Global_UnlockTest
+        fi
+        checkIPV6
+        if [ "$IS_IPV6" -eq 1 ]; then
+            Global_UnlockTest
+        fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 66 ]; then
         checkIPV4
         if [ "$IS_IPV4" -eq 1 ]; then
             Global_UnlockTest
@@ -5615,6 +5653,18 @@ function runScript() {
             OA_UnlockTest
             KR_UnlockTest
         fi
+        return
+    fi
+    if [ "$REGION_ID" -eq 69 ]; then
+        echo ''
+        echo ''
+        echo -e "${Font_Red}**************************${Font_Suffix}"
+        echo -e "${Font_Red}*                        *${Font_Suffix}"
+        echo -e "${Font_Red}*${Font_Suffix} 广告招租               ${Font_Red}*${Font_Suffix}"
+        echo -e "${Font_Red}*${Font_Suffix} 请联系：@reidschat_bot ${Font_Red}*${Font_Suffix}"
+        echo -e "${Font_Red}*                        *${Font_Suffix}"
+        echo -e "${Font_Red}**************************${Font_Suffix}"
+        return
     fi
 }
 
@@ -5627,7 +5677,7 @@ function showGoodbye() {
         *) ADN="$(echo $(($RANDOM % 2 + 1)))" ;;
     esac
 
-    if [ "$LANGUAGE" == "en" ]; then
+    if [ "$LANGUAGE" == 'en' ]; then
         echo -e "${Font_Green}Testing Done! Thanks for Using This Script!${Font_Suffix}"
         echo -e ''
         echo -e "${Font_Yellow}Number of Script Runs for Today: ${TODAY_RUN_TIMES}; Total Number of Script Runs: ${TOTAL_RUN_TIMES}${Font_Suffix}"
@@ -5664,7 +5714,9 @@ showSupportOS
 
 showScriptTitle
 
-inputOptions
+if [ -z "$REGION_ID" ]; then
+    inputOptions
+fi
 
 download_extra_data
 
