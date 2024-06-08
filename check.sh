@@ -224,7 +224,7 @@ check_os_type() {
         return
     fi
 
-    echo "${Font_Red}Unsupported OS Type.${Font_Suffix}"
+    echo -e "${Font_Red}Unsupported OS Type.${Font_Suffix}"
     exit 1
 }
 
@@ -234,7 +234,7 @@ check_dependencies() {
     if [ "$OS_TYPE" == 'linux' ]; then
         source /etc/os-release
         if [ -z "$ID" ]; then
-            echo "${Font_Red}Unsupported Linux OS Type.${Font_Suffix}"
+            echo -e "${Font_Red}Unsupported Linux OS Type.${Font_Suffix}"
             exit 1
         fi
 
@@ -289,9 +289,11 @@ check_dependencies() {
     if [ "$OS_MACOS" == 1 ]; then
         if ! command_exists md5sum; then
             echo -e "${Font_Red}command 'md5sum' is missing, please install it first.${Font_Suffix}"
+            exit 1
         fi
         if ! command_exists sha256sum; then
             echo -e "${Font_Red}command 'sha256sum' is missing, please install it first.${Font_Suffix}"
+            exit 1
         fi
     fi
 
@@ -347,7 +349,7 @@ process() {
             shift
             ;;
         *)
-            echo "Unknown error while processing options"
+            echo -e "${Font_Red}Unknown error while processing options.${Font_Suffix}"
             exit 1
             ;;
         esac
@@ -564,7 +566,7 @@ function MediaUnlockTest_AbemaTV() {
         echo -n -e "\r Abema.TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
-    if [ "$region" == "JP" ]; then
+    if [ "$region" == 'JP' ]; then
         echo -n -e "\r Abema.TV:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
     else
         echo -n -e "\r Abema.TV:\t\t\t\t${Font_Yellow}Oversea Only (Region: ${region})${Font_Suffix}\n"
@@ -761,7 +763,7 @@ function MediaUnlockTest_DisneyPlus() {
         echo -n -e "\r Disney+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
-    if [ "$region" == "JP" ]; then
+    if [ "$region" == 'JP' ]; then
         echo -n -e "\r Disney+:\t\t\t\t${Font_Green}Yes (Region: JP)${Font_Suffix}\n"
         return
     fi
@@ -848,7 +850,7 @@ function MediaUnlockTest_MyTVSuper() {
     fi
 
     local result=$(echo "$tmpresult" | grep -oP '"country_code"\s{0,}:\s{0,}"\K[^"]+')
-    if [ "$result" == "HK" ]; then
+    if [ "$result" == 'HK' ]; then
         echo -n -e "\r MyTVSuper:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     else
@@ -951,7 +953,7 @@ function MediaUnlockTest_wowow() {
     done
 
     if [ -z "$wodUrl" ]; then
-        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR 1)${Font_Suffix}\n"
         return
     fi
 
@@ -969,14 +971,14 @@ function MediaUnlockTest_wowow() {
     # 最终测试
     local tmpresult4=$(curl ${CURL_DEFAULT_OPTS} -s 'https://mapi.wowow.co.jp/api/v1/playback/auth' -H 'accept: application/json, text/plain, */*' -H 'content-type: application/json;charset=UTF-8' -H 'origin: https://wod.wowow.co.jp' -H 'referer: https://wod.wowow.co.jp/' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H 'x-requested-with: XMLHttpRequest' --data-raw "{\"meta_id\":${metaId},\"vuid\":\"${vUid}\",\"device_code\":1,\"app_id\":1,\"ua\":\"${UA_BROWSER}\"}" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult4" ]; then
-        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Network Connection 3)${Font_Suffix}\n"
         return
     fi
-    local isBlocked=$(echo "$tmpresult4" | grep 'VPN')
-    local isOK=$(echo "$tmpresult4" | grep 'playback_session_id')
+    local isBlocked=$(echo "$tmpresult4" | grep -i 'VPN')
+    local isOK=$(echo "$tmpresult4" | grep -i 'playback_session_id')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+        echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR 2)${Font_Suffix}\n"
         return
     fi
 
@@ -1009,7 +1011,7 @@ function MediaUnlockTest_TVer() {
     # 根据 UID 和 TOKEN 取得当前正在播放的剧集
     local tmpresult2=$(curl ${CURL_DEFAULT_OPTS} -s "https://platform-api.tver.jp/service/api/v1/callHome?platform_uid=${platformUid}&platform_token=${platformToken}&require_data=mylist%2Cresume%2Clater" -H 'origin: https://tver.jp' -H 'referer: https://tver.jp/' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H 'x-tver-platform-type: web' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult2" ]; then
-        echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
         return
     fi
     # 返回结果取新电视剧第一个值
@@ -1018,7 +1020,7 @@ function MediaUnlockTest_TVer() {
     # 取得该剧集信息
     local tmpresult3=$(curl ${CURL_DEFAULT_OPTS} -s "https://statics.tver.jp/content/episode/${episodeId}.json" -H 'origin: https://tver.jp' -H 'referer: https://tver.jp/' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult3" ]; then
-        echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection 2)${Font_Suffix}\n"
         return
     fi
     # 取 accountID / playerID / videoID / videoRefID
@@ -1029,7 +1031,7 @@ function MediaUnlockTest_TVer() {
     # 取得 brightcove 播放器信息
     local tmpresult4=$(curl ${CURL_DEFAULT_OPTS} -s "https://players.brightcove.net/${accountID}/${playerID}_default/index.min.js" -H 'Referer: https://tver.jp/' -H 'Sec-Fetch-Dest: script' -H 'Sec-Fetch-Mode: no-cors' -H 'Sec-Fetch-Site: cross-site' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult4" ]; then
-        echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection 3)${Font_Suffix}\n"
         return
     fi
     # 取 policy_key
@@ -1046,7 +1048,7 @@ function MediaUnlockTest_TVer() {
     fi
 
     if [ -z "$tmpresult5" ]; then
-        echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection 4)${Font_Suffix}\n"
         return
     fi
     local result=$(echo "$tmpresult5" | grep -oP '"error_subcode"\s{0,}:\s{0,}"\K[^"]+')
@@ -1107,7 +1109,7 @@ function MediaUnlockTest_SlingTV() {
     fi
 
     local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
-    local isBlocked=$(echo "$urlEffective" | grep 'geo-block')
+    local isBlocked=$(echo "$urlEffective" | grep -i 'geo-block')
 
     if [ -n "$isBlocked" ]; then
         echo -n -e "\r Sling TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -1237,6 +1239,7 @@ function MediaUnlockTest_ITVHUB() {
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
         echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+        return
     fi
     if [ -n "$isBlocked" ]; then
         echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -1286,7 +1289,7 @@ function RegionTest_iQYI() {
         return
     fi
 
-    if [ "$region" == "NTW" ]; then
+    if [ "$region" == 'NTW' ]; then
         region='TW'
     fi
 
@@ -1362,7 +1365,7 @@ function MediaUnlockTest_LineTVTW() {
     # 下载 main js
     local tmpresult2=$(curl ${CURL_DEFAULT_OPTS} -s "${mainJsUrl}" -H 'referer: https://www.linetv.tw/' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult2" ]; then
-        echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
         return
     fi
     # 从 main js 里找 appId
@@ -1370,7 +1373,7 @@ function MediaUnlockTest_LineTVTW() {
     # 正式测试
     local tmpresult3=$(curl ${CURL_DEFAULT_OPTS} -s "https://www.linetv.tw/api/part/11829/eps/1/part?appId=${appId}&productType=FAST&version=10.38.0" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult3" ]; then
-        echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}Failed (Network Connection 2)${Font_Suffix}\n"
         return
     fi
 
@@ -1401,7 +1404,7 @@ function MediaUnlockTest_ViuCom() {
         echo -n -e "\r Viu.com:\t\t\t\t${Font_Red}Failed (Error: Country Code Not Found)${Font_Suffix}\n"
         return
     fi
-    if [ "$region" == "NO-SERVICE" ]; then
+    if [ "$region" == 'NO-SERVICE' ]; then
         echo -n -e "\r Viu.com:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
@@ -1479,7 +1482,7 @@ function MediaUnlockTest_ParamountPlus() {
     local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
     local region=$(echo "$urlEffective" | cut -f4 -d'/' | tr a-z A-Z)
 
-    if [ "$region" == "INTL" ]; then
+    if [ "$region" == 'INTL' ]; then
         echo -n -e "\r Paramount+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
@@ -1507,7 +1510,7 @@ function MediaUnlockTest_KKTV() {
     fi
 
     result=$(echo "$tmpresult" | grep -oP '"country"\s{0,}:\s{0,}"\K[^"]+')
-    if [ "$result" == "TW" ]; then
+    if [ "$result" == 'TW' ]; then
         echo -n -e "\r KKTV:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     fi
@@ -1524,7 +1527,7 @@ function MediaUnlockTest_PeacockTV() {
     fi
 
     local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
-    local result=$(echo "$urlEffective" | grep 'unavailable')
+    local result=$(echo "$urlEffective" | grep -i 'unavailable')
 
     if [ -n "$result" ]; then
         echo -n -e "\r Peacock TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -1575,7 +1578,7 @@ function MediaUnlockTest_YouTube_Premium() {
 
     local isNotAvailable=$(echo "$tmpresult" | grep -i 'Premium is not available in your country')
     local region=$(echo "$tmpresult" | grep -oP '"INNERTUBE_CONTEXT_GL"\s{0,}:\s{0,}"\K[^"]+')
-    local isAvailable=$(echo "$tmpresult" | grep 'ad-free')
+    local isAvailable=$(echo "$tmpresult" | grep -i 'ad-free')
 
     if [ -n "$isNotAvailable" ]; then
         echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -1639,7 +1642,7 @@ function WebTest_GoogleSearchCAPTCHA() {
         return
     fi
 
-    local isBlocked=$(echo "$tmpresult" | grep -i 'unusual traffic from')
+    local isBlocked=$(echo "$tmpresult" | grep -iE 'unusual traffic from|is blocked|unaddressed abuse')
     local isOK=$(echo "$tmpresult" | grep -i 'curl')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
@@ -1693,7 +1696,7 @@ function MediaUnlockTest_PrimeVideo() {
         return
     fi
 
-    local isBlocked=$(echo "$tmpresult" | grep 'isServiceRestricted')
+    local isBlocked=$(echo "$tmpresult" | grep -i 'isServiceRestricted')
     local region=$(echo "$tmpresult" | grep -oP '"currentTerritory":"\K[^"]+' | head -n 1)
 
     if [ -z "$isBlocked" ] && [ -z "$region" ]; then
@@ -1725,10 +1728,11 @@ function MediaUnlockTest_Radiko() {
     fi
 
     local isBlocked=$(echo "$tmpresult" | grep 'class="OUT"')
-    local isOK=$(echo "$tmpresult" | grep 'JAPAN')
+    local isOK=$(echo "$tmpresult" | grep -i 'JAPAN')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
         echo -n -e "\r Radiko:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+        return
     fi
     if [ -n "$isBlocked" ]; then
         echo -n -e "\r Radiko:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -1761,6 +1765,7 @@ function MediaUnlockTest_DMM() {
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
         echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+        return
     fi
     if [ -n "$isBlocked" ]; then
         echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -1791,6 +1796,7 @@ function MediaUnlockTest_DMMTV() {
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
         echo -n -e "\r DMM TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+        return
     fi
     if [ -n "$isBlocked" ]; then
         echo -n -e "\r DMM TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -1841,7 +1847,7 @@ function MediaUnlockTest_HotStar() {
         echo -n -e "\r HotStar:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
-    if [ "$httpCode" == "475" ]; then
+    if [ "$httpCode" == '475' ]; then
         echo -n -e "\r HotStar:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
@@ -1901,19 +1907,29 @@ function MediaUnlockTest_FuboTV() {
         return
     fi
 
-    local radom_num=${RANDOM:0-1}
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL "https://api.fubo.tv/appconfig/v1/homepage?platform=web&client_version=R20230310.${radom_num}&nav=v0" --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fs "https://api.fubo.tv/appconfig/v1/homepage?platform=web&client_version=1.78.2&nav=v0" -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://www.fubo.tv' -H 'referer: https://www.fubo.tv/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep 'No Subscription')
-    if [ -n "$result" ]; then
-        echo -n -e "\r Fubo TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-    else
-        echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    local isOK=$(echo "$tmpresult" | grep -i 'No Subscription')
+    local isBlocked=$(echo "$tmpresult" | grep -i 'Forbidden IP')
+
+    if [ -z "$isOK" ] && [ -z "$isBlocked" ]; then
+        echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+        return
     fi
+    if [ -n "$isBlocked" ]; then
+        echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+    if [ -n "$isOK" ]; then
+        echo -n -e "\r Fubo TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        return
+    fi
+
+    echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Fox() {
@@ -1946,11 +1962,18 @@ function MediaUnlockTest_Joyn() {
         return
     fi
 
-    local isBlocked=$(echo "$tmpresult" | grep -oP '"code"\s{0,}:\s{0,}"\K[^"]+')
-    if [ "$isBlocked" == "ENT_AssetNotAvailableInCountry" ]; then
+    local isOK=$(echo "$tmpresult" | grep -i 'entitlement_token')
+    local isBlocked=$(echo "$tmpresult" | grep -i 'ENT_AssetNotAvailableInCountry')
+
+    if [ -z "$isOK" ] && [ -z "$isBlocked" ]; then
+        echo -n -e "\r Joyn:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+        return
+    fi
+    if [ -n "$isBlocked" ]; then
         echo -n -e "\r Joyn:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
-    else
+    fi
+    if [ -n "$isOK" ]; then
         echo -n -e "\r Joyn:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     fi
@@ -2069,8 +2092,8 @@ function MediaUnlockTest_EPIX() {
 
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.epix.com/graphql' -X POST -H 'host: api.epix.com' -H 'connection: keep-alive' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'traceparent: 00-0000000000000000603047c112148412-32d64f8c890631ef-01' -H 'sec-ch-ua-mobile: ?0' -H 'x-datadog-origin: rum' -H 'x-datadog-sampling-priority: 1' -H 'accept: application/json' -H "x-session-token: ${epixToken}" -H 'x-datadog-trace-id: 6931118721080787986' -H 'x-datadog-parent-id: 3663202811925377519' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://www.mgmplus.com' -H 'sec-fetch-site: cross-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://www.mgmplus.com/' -H 'accept-language: en-US,en;q=0.9' -H 'content-type: application/json' -d '{"operationName":"PlayFlow","variables":{"id":"c2VyaWVzOzEwMTc=","supportedActions":["open_url","show_notice","start_billing","play_content","log_in","noop","confirm_provider","unlinked_provider"],"streamTypes":[{"encryptionScheme":"CBCS","packagingSystem":"DASH"},{"encryptionScheme":"CENC","packagingSystem":"DASH"},{"encryptionScheme":"NONE","packagingSystem":"HLS"},{"encryptionScheme":"SAMPLE_AES","packagingSystem":"HLS"}]},"query":"fragment ShowNotice on ShowNotice {\n  type\n  actions {\n    continuationContext\n    text\n    __typename\n  }\n  description\n  title\n  __typename\n}\n\nfragment OpenUrl on OpenUrl {\n  type\n  url\n  __typename\n}\n\nfragment Content on Content {\n  title\n  __typename\n}\n\nfragment Movie on Movie {\n  id\n  shortName\n  __typename\n}\n\nfragment Episode on Episode {\n  id\n  series {\n    shortName\n    __typename\n  }\n  seasonNumber\n  number\n  __typename\n}\n\nfragment Preroll on Preroll {\n  id\n  __typename\n}\n\nfragment ContentUnion on ContentUnion {\n  ...Content\n  ...Movie\n  ...Episode\n  ...Preroll\n  __typename\n}\n\nfragment PlayContent on PlayContent {\n  type\n  continuationContext\n  heartbeatToken\n  currentItem {\n    content {\n      ...ContentUnion\n      __typename\n    }\n    __typename\n  }\n  nextItem {\n    content {\n      ...ContentUnion\n      __typename\n    }\n    showNotice {\n      ...ShowNotice\n      __typename\n    }\n    showNoticeAt\n    __typename\n  }\n  amazonPlaybackData {\n    pid\n    playbackToken\n    materialType\n    __typename\n  }\n  playheadPosition\n  vizbeeStreamInfo {\n    customStreamInfo\n    __typename\n  }\n  closedCaptions {\n    ttml {\n      location\n      __typename\n    }\n    vtt {\n      location\n      __typename\n    }\n    xml {\n      location\n      __typename\n    }\n    __typename\n  }\n  hints {\n    duration\n    seekAllowed\n    trackingEnabled\n    trackingId\n    __typename\n  }\n  streams(types: $streamTypes) {\n    playlistUrl\n    closedCaptionsEmbedded\n    packagingSystem\n    encryptionScheme\n    videoQuality {\n      height\n      width\n      __typename\n    }\n    widevine {\n      authenticationToken\n      licenseServerUrl\n      __typename\n    }\n    playready {\n      authenticationToken\n      licenseServerUrl\n      __typename\n    }\n    fairplay {\n      authenticationToken\n      certificateUrl\n      licenseServerUrl\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment StartBilling on StartBilling {\n  type\n  __typename\n}\n\nfragment LogIn on LogIn {\n  type\n  __typename\n}\n\nfragment Noop on Noop {\n  type\n  __typename\n}\n\nfragment PreviewContent on PreviewContent {\n  type\n  title\n  description\n  stream {\n    sources {\n      hls {\n        location\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ConfirmProvider on ConfirmProvider {\n  type\n  __typename\n}\n\nfragment UnlinkedProvider on UnlinkedProvider {\n  type\n  __typename\n}\n\nquery PlayFlow($id: String!, $supportedActions: [PlayFlowActionEnum!]!, $context: String, $behavior: BehaviorEnum = DEFAULT, $streamTypes: [StreamDefinition!]) {\n  playFlow(\n    id: $id\n    supportedActions: $supportedActions\n    context: $context\n    behavior: $behavior\n  ) {\n    ...ShowNotice\n    ...OpenUrl\n    ...PlayContent\n    ...StartBilling\n    ...LogIn\n    ...Noop\n    ...PreviewContent\n    ...ConfirmProvider\n    ...UnlinkedProvider\n    __typename\n  }\n}"}' --user-agent "${UA_BROWSER}")
 
-    local isBlocked=$(echo "$tmpresult" | grep 'MGM+ is only available in the United States')
-    local isOK=$(echo "$tmpresult" | grep 'StartBilling')
+    local isBlocked=$(echo "$tmpresult" | grep -i 'MGM+ is only available in the United States')
+    local isOK=$(echo "$tmpresult" | grep -i 'StartBilling')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
         echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -2260,7 +2283,7 @@ function MediaUnlockTest_CanalPlus() {
     fi
 
     local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
-    local result=$(echo "$urlEffective" | grep 'other-country-blocking')
+    local result=$(echo "$urlEffective" | grep -i 'other-country-blocking')
     if [ -n "$result" ]; then
         echo -n -e "\r Canal+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
@@ -2287,7 +2310,7 @@ function MediaUnlockTest_Sky_CH() {
     fi
 
     local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
-    local result=$(echo "$urlEffective" | grep 'out-of-country')
+    local result=$(echo "$urlEffective" | grep -i 'out-of-country')
     if [ -n "$result" ]; then
         echo -n -e "\r SKY CH:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
@@ -2319,7 +2342,7 @@ function MediaUnlockTest_CBCGem() {
         return
     fi
 
-    if [ "$result" == "CA" ]; then
+    if [ "$result" == 'CA' ]; then
         echo -n -e "\r CBC Gem:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     fi
@@ -2450,7 +2473,7 @@ function MediaUnlockTest_RaiPlay() {
     fi
 
     local result=$(echo "$tmpresult" | grep -oP '<geoprotection>\K[^<]+')
-    local isBlocked=$(echo "$tmpresult" | grep 'video_no_available')
+    local isBlocked=$(echo "$tmpresult" | grep -i 'video_no_available')
 
     if [ -z "$result" ]; then
         echo -n -e "\r Rai Play:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -2617,7 +2640,7 @@ function RegionTest_NetflixCDN() {
         return
     fi
 
-    if [ "$cdnISP" == "Netflix Streaming Services" ]; then
+    if [ "$cdnISP" == 'Netflix Streaming Services' ]; then
         echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Green}${location}${Font_Suffix}\n"
         return
     else
@@ -2744,7 +2767,7 @@ function MediaUnlockTest_DiscoveryPlus() {
         return
     fi
 
-    local isBlocked=$(echo "$tmpresult2" | grep -i 'is unavailable in your')
+    local isBlocked=$(echo "$tmpresult2" | grep -i 'is unavailable in your|not yet available')
     local isOK=$(echo "$tmpresult2" | grep -i 'relationships')
     local region=$(echo "$tmpresult2" | grep -oP '"mainTerritoryCode"\s{0,}:\s{0,}"\K[^"]+' | tr a-z A-Z)
 
@@ -2829,7 +2852,7 @@ function MediaUnlockTest_Stan() {
         echo -n -e "\r Stan:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
-    if [ "$httpCode" == "411" ]; then
+    if [ "$httpCode" == '411' ]; then
         echo -n -e "\r Stan:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
     fi
@@ -2939,7 +2962,7 @@ function MediaUnlockTest_NeonTV() {
         return
     fi
 
-    local result=$(echo "$respContent" | grep 'RESTRICTED_GEOLOCATION')
+    local result=$(echo "$respContent" | grep -i 'RESTRICTED_GEOLOCATION')
     if [ -z "$result" ]; then
         echo -n -e "\r Neon TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
@@ -3060,7 +3083,7 @@ function MediaUnlockTest_SBSonDemand() {
         return
     fi
 
-    if [ "$result" == "AU" ]; then
+    if [ "$result" == 'AU' ]; then
         echo -n -e "\r SBS on Demand:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     fi
@@ -3134,7 +3157,7 @@ function MediaUnlockTest_Telasa() {
         return
     fi
 
-    local isForbidden=$(echo "$tmpresult" | grep 'IPLocationNotAllowed')
+    local isForbidden=$(echo "$tmpresult" | grep -i 'IPLocationNotAllowed')
     local isAllowed=$(echo "$tmpresult" | grep -oP '"type"\s{0,}:\s{0,}"\K[^"]+')
 
     if [ -z "$isAllowed" ] && [ -z "$isForbidden" ]; then
@@ -3145,7 +3168,7 @@ function MediaUnlockTest_Telasa() {
         echo -n -e "\r Telasa:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
-    if [ "$isAllowed" == "OK" ]; then
+    if [ "$isAllowed" == 'OK' ]; then
         echo -n -e "\r Telasa:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     fi
@@ -3239,7 +3262,6 @@ function MediaUnlockTest_EurosportRO() {
     # 取得 Bearer 认证 token
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://eu3-prod-direct.eurosport.ro/token?realm=eurosport' -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://www.eurosport.ro' -H 'referer: https://www.eurosport.ro/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H "x-device-info: escom/0.295.1 (unknown/unknown; Windows/10; ${fakeUuid})" -H 'x-disco-client: WEB:UNKNOWN:escom:0.295.1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-
         echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -3282,7 +3304,6 @@ function MediaUnlockTest_Channel5() {
     local timestamp=$(date +%s)
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL "https://cassie.channel5.com/api/v2/live_media/my5desktopng/C5.json?timestamp=${timestamp}&auth=0_rZDiY0hp_TNcDyk2uD-Kl40HqDbXs7hOawxyqPnbI" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
-
         echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -4521,8 +4542,8 @@ function MediaUnlockTest_trueID() {
 
     local result=$(echo "$tmpresult2" | grep -oP '"billboardType"\s{0,}:\s{0,}"\K[^"]+')
     case "$result" in
-        "GEO_BLOCK") echo -n -e "\r trueID:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        "LOADING") echo -n -e "\r trueID:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
+        'GEO_BLOCK') echo -n -e "\r trueID:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
+        'LOADING') echo -n -e "\r trueID:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         *) echo -n -e "\r trueID:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
@@ -5219,10 +5240,10 @@ function Sport_UnlockTest() {
 
 function showSupportOS() {
     if [ "$LANGUAGE" == 'en' ]; then
-        echo -e "${Font_Purple}Supporting OS: Ubuntu 16+, Debian 10+, RHEL 7+, Arch Linux, Alpine Linux, FreeBSD, MacOS 10.13+, Android (Termux), iOS (iSH), Windows (MinGW/Cygwin) etc.${Font_Suffix}"
+        echo -e "${Font_Purple}Supporting OS: Ubuntu 16+, Debian 10+, RHEL 7+, Arch Linux, Alpine Linux, FreeBSD, MacOS 10.13+, Android (Termux), iOS (iSH), Windows (MinGW/Cygwin), OpenWRT 23+ etc.${Font_Suffix}"
         echo ''
     else
-        echo -e "${Font_Purple}脚本适配 OS: Ubuntu 16+, Debian 10+, RHEL 7+, Arch Linux, Alpine Linux, FreeBSD, MacOS 10.13+, Android (Termux), iOS (iSH), Windows (MinGW/Cygwin) 等。${Font_Suffix}"
+        echo -e "${Font_Purple}脚本适配 OS: Ubuntu 16+, Debian 10+, RHEL 7+, Arch Linux, Alpine Linux, FreeBSD, MacOS 10.13+, Android (Termux), iOS (iSH), Windows (MinGW/Cygwin), OpenWRT 23+ 等。${Font_Suffix}"
         echo ''
     fi
 }
@@ -5241,7 +5262,7 @@ function showScriptTitle() {
         echo -e " [流媒体平台及游戏区域限制测试]"
         echo ''
         echo -e "${Font_Green}项目地址${Font_Suffix} ${Font_Yellow}https://github.com/lmc999/RegionRestrictionCheck ${Font_Suffix}"
-        echo -e "${Font_Green}BUG 反馈或使用交流可加TG群组${Font_Suffix} ${Font_Yellow}https://t.me/gameaccelerate ${Font_Suffix}"
+        echo -e "${Font_Green}BUG 反馈或使用交流可加 TG 群组${Font_Suffix} ${Font_Yellow}https://t.me/gameaccelerate ${Font_Suffix}"
         echo ''
         echo -e " ** 测试时间: $(date)"
         echo -e " ** 版本: ${VER}"
@@ -5365,7 +5386,7 @@ function checkIPV4() {
     if [ "$LANGUAGE" == 'en' ]; then
         if [ "$NETWORK_TYPE" == "6" ]; then
             IS_IPV4=0
-            echo -e "${Font_SkyBlue}The Script Will Only Test IPv6 Results, Skipping IPv4 Testing...${Font_Suffix}"
+            echo -e "${Font_SkyBlue}The Script Only Tests IPv6 Results, IPv4 Testing has been Skipped...${Font_Suffix}"
             return
         fi
 
@@ -5386,7 +5407,7 @@ function checkIPV4() {
     else
         if [ "$NETWORK_TYPE" == "6" ]; then
             IS_IPV4=0
-            echo -e "${Font_SkyBlue}脚本将只检测 IPv6 结果，已跳过 IPv4 检测...${Font_Suffix}"
+            echo -e "${Font_SkyBlue}脚本只检测 IPv6 结果，已跳过 IPv4 检测...${Font_Suffix}"
             return
         fi
 
@@ -5411,7 +5432,7 @@ function checkIPV6() {
     if [ "$LANGUAGE" == 'en' ]; then
         if [ "$NETWORK_TYPE" == "4" ]; then
             IS_IPV6=0
-            echo -e "${Font_SkyBlue}The Script Will Only Test IPv4 Results, Skipping IPv6 Testing...${Font_Suffix}"
+            echo -e "${Font_SkyBlue}The Script Only Tests IPv4 Results, IPv6 Testing has been Skipped...${Font_Suffix}"
             return
         fi
 
@@ -5433,7 +5454,7 @@ function checkIPV6() {
     else
         if [ "$NETWORK_TYPE" == "4" ]; then
             IS_IPV6=0
-            echo -e "${Font_SkyBlue}脚本将只检测 IPv4 结果，已跳过 IPv6 检测...${Font_Suffix}"
+            echo -e "${Font_SkyBlue}脚本只检测 IPv4 结果，已跳过 IPv6 检测...${Font_Suffix}"
             return
         fi
 
