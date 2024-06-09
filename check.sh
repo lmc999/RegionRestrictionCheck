@@ -4902,6 +4902,7 @@ function EU_UnlockTest() {
     local result=$(
         MediaUnlockTest_RakutenTV &
         MediaUnlockTest_SkyShowTime &
+        MediaUnlockTest_BritBox &
         MediaUnlockTest_HBOMax &
         MediaUnlockTest_DiscoveryPlus &
         MediaUnlockTest_SetantaSports &
@@ -4911,13 +4912,12 @@ function EU_UnlockTest() {
         GameTest_MathsSpot &
     )
     wait
-    local array=("Rakuten TV:" "SkyShowTime:" "HBO Max:" "Discovery+:" "Setanta Sports:" "SonyLiv:" "Paramount+:" "Megogo TV:" "Maths Spot:")
+    local array=("Rakuten TV:" "SkyShowTime:" "BritBox:" "HBO Max:" "Discovery+:" "Setanta Sports:" "SonyLiv:" "Paramount+:" "Megogo TV:" "Maths Spot:")
     echo_result ${result} ${array}
     show_region GB
     local result=$(
         MediaUnlockTest_HotStar &
         MediaUnlockTest_SkyGo &
-        MediaUnlockTest_BritBox &
         MediaUnlockTest_ITVHUB &
         MediaUnlockTest_Channel4 &
         MediaUnlockTest_Channel5 &
@@ -4926,7 +4926,7 @@ function EU_UnlockTest() {
         MediaUnlockTest_Shudder &
     )
     wait
-    local array=("HotStar:" "Sky Go:" "BritBox:" "ITV Hub:" "Channel 4:" "Channel 5:" "BBC iPLAYER:" "Acorn TV:" "Shudder:")
+    local array=("HotStar:" "Sky Go:" "ITV Hub:" "Channel 4:" "Channel 5:" "BBC iPLAYER:" "Acorn TV:" "Shudder:")
     echo_result ${result} ${array}
     show_region FR
     local result=$(
