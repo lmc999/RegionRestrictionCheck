@@ -661,7 +661,7 @@ function MediaUnlockTest_BBCiPLAYER() {
     fi
 
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://open.live.bbc.co.uk/mediaselector/6/select/version/2.0/mediaset/pc/vpid/bbc_one_london/format/json/jsfunc/JS_callbacks0' --user-agent "${UA_BROWSER}")
-    if [ -z "${tmpresult}" ]; then
+    if [ -z "$tmpresult" ]; then
         echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
@@ -727,7 +727,7 @@ function MediaUnlockTest_DisneyPlus() {
 
     local is403=$(echo "$tempresult" | grep '403 ERROR')
     if [ -n "$is403" ]; then
-        echo -n -e "\r Disney+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        echo -n -e "\r Disney+:\t\t\t\t${Font_Red}No (IP Banned By Disney+)${Font_Suffix}\n"
         return
     fi
 
@@ -745,7 +745,7 @@ function MediaUnlockTest_DisneyPlus() {
     local is403=$(echo "$tokenContent" | grep -i '403 ERROR')
 
     if [ -n "$isBlocked" ] || [ -n "$is403" ]; then
-        echo -n -e "\r Disney+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        echo -n -e "\r Disney+:\t\t\t\t${Font_Red}No (IP Banned By Disney+ 1)${Font_Suffix}\n"
         return
     fi
 
@@ -1159,7 +1159,7 @@ function MediaUnlockTest_PlutoTV() {
 
 function MediaUnlockTest_HBOMax() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://www.max.com/' -w "_TAG_%{http_code}_TAG_" --user-agent "${UA_BROWSER}")
-    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "$tmpresult" | grep '_TAG_' | awk -F'_TAG_' '{print $2}')
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -1184,7 +1184,7 @@ function MediaUnlockTest_HBOMax() {
 
 function MediaUnlockTest_Showmax() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://www.showmax.com/' -w "_TAG_%{http_code}_TAG_" -H 'host: www.showmax.com' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'upgrade-insecure-requests: 1' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' --user-agent "${UA_BROWSER}")
-    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "$tmpresult" | grep '_TAG_' | awk -F'_TAG_' '{print $2}')
 
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r Showmax:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1282,13 +1282,13 @@ function RegionTest_iQYI() {
 
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.iq.com/' -w "_TAG_%{http_code}_TAG_" -o /dev/null --user-agent "${UA_BROWSER}" -D -)
 
-    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "$tmpresult" | grep '_TAG_' | awk -F'_TAG_' '{print $2}')
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
 
-    local region=$(echo "${tmpresult}" | grep -woP 'mod=\K[a-z]+' | tr a-z A-Z)
+    local region=$(echo "$tmpresult" | grep -woP 'mod=\K[a-z]+' | tr a-z A-Z)
     if [ -z "$region" ]; then
         echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Red}Failed (Error: Country Code Not Found)${Font_Suffix}\n"
         return
@@ -3697,7 +3697,7 @@ function MediaUnlockTest_Shudder() {
         return
     fi
 
-    local isBlocked=$(echo "$tmpresult" | grep -i 'not available')
+    local isBlocked=$(echo "$tmpresult" | grep -iE 'not available|403 ERROR')
     local isOK=$(echo "$tmpresult" | grep -i 'movies')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
@@ -4030,7 +4030,7 @@ function MediaUnlockTest_NBCTV() {
 function MediaUnlockTest_Crackle() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://prod-api.crackle.com/appconfig' -w "_TAG_%{http_code}_TAG_" -H 'Accept-Language: en-US,en;q=0.9' -H 'Content-Type: application/json' -H 'Origin: https://www.crackle.com' -H 'Referer: https://www.crackle.com/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'x-crackle-apiversion: v2.0.0' -H 'x-crackle-brand: crackle' -H 'x-crackle-platform: 5FE67CCA-069A-42C6-A20F-4B47A8054D46' --user-agent "${UA_BROWSER}")
 
-    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "$tmpresult" | grep '_TAG_' | awk -F'_TAG_' '{print $2}')
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r Crackle:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -4112,7 +4112,7 @@ function MediaUnlockTest_NFLPlus() {
 function MediaUnlockTest_SkyShowTime() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://www.skyshowtime.com/' -w "_TAG_%{http_code}_TAG_" -o /dev/null -D - -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
 
-    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "$tmpresult" | grep '_TAG_' | awk -F'_TAG_' '{print $2}')
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -4626,7 +4626,7 @@ function MediaUnlockTest_MXPlayer() {
     fi
 
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://www.mxplayer.in/' -w "_TAG_%{http_code}_TAG_" --user-agent "${UA_BROWSER}")
-    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "$tmpresult" | grep '_TAG_' | awk -F'_TAG_' '{print $2}')
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r MX Player:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -4649,7 +4649,7 @@ function MediaUnlockTest_MXPlayer() {
 
 function MediaUnlockTest_Zee5() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://www.zee5.com/' -w "_TAG_%{http_code}_TAG_" -H 'Upgrade-Insecure-Requests: 1' --user-agent "${UA_BROWSER}")
-    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "$tmpresult" | grep '_TAG_' | awk -F'_TAG_' '{print $2}')
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r Zee5:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
