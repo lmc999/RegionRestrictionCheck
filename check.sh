@@ -2431,8 +2431,12 @@ function MediaUnlockTest_Amediateka() {
     fi
 
     local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
-    local result=$(echo "$urlEffective" | grep 'unavailable')
+    local result=$(echo "$urlEffective" | grep -i 'unavailable')
     if [ -n "$result" ]; then
+        echo -n -e "\r Amediateka:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+    if [ "$httpCode" == '503' ]; then
         echo -n -e "\r Amediateka:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
@@ -2772,7 +2776,7 @@ function MediaUnlockTest_DiscoveryPlus() {
         return
     fi
 
-    local isBlocked=$(echo "$tmpresult2" | grep -i 'is unavailable in your|not yet available')
+    local isBlocked=$(echo "$tmpresult2" | grep -iE 'is unavailable in your|not yet available')
     local isOK=$(echo "$tmpresult2" | grep -i 'relationships')
     local region=$(echo "$tmpresult2" | grep -woP '"mainTerritoryCode"\s{0,}:\s{0,}"\K[^"]+' | tr a-z A-Z)
 
@@ -3691,13 +3695,13 @@ function MediaUnlockTest_CWTV() {
 }
 
 function MediaUnlockTest_Shudder() {
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.shudder.com/' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.shudder.com/' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Shudder:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
 
-    local isBlocked=$(echo "$tmpresult" | grep -iE 'not available|403 ERROR')
+    local isBlocked=$(echo "$tmpresult" | grep -iE 'not available|not yet available|403 ERROR')
     local isOK=$(echo "$tmpresult" | grep -i 'movies')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
@@ -4900,19 +4904,19 @@ function NA_UnlockTest() {
 function EU_UnlockTest() {
     echo "===============[ Europe ]=============="
     local result=$(
-        MediaUnlockTest_DiscoveryPlus &
         MediaUnlockTest_ParamountPlus &
-        MediaUnlockTest_RakutenTV &
-        MediaUnlockTest_SkyShowTime &
-        MediaUnlockTest_HBOMax &
-        MediaUnlockTest_BritBox &
+        MediaUnlockTest_DiscoveryPlus &
         MediaUnlockTest_SonyLiv &
+        MediaUnlockTest_HBOMax &
+        MediaUnlockTest_SkyShowTime &
+        MediaUnlockTest_BritBox &
+        MediaUnlockTest_RakutenTV &
         MediaUnlockTest_MegogoTV &
         MediaUnlockTest_SetantaSports &
         GameTest_MathsSpot &
     )
     wait
-    local array=("Discovery+:" "Paramount+:" "Rakuten TV:" "SkyShowTime:" "HBO Max:" "BritBox:" "SonyLiv:" "Megogo TV:" "Setanta Sports:" "MathsSpot Roblox:")
+    local array=("Paramount+:" "Discovery+:" "SonyLiv:" "HBO Max:" "SkyShowTime:" "BritBox:" "Rakuten TV:" "Megogo TV:" "Setanta Sports:" "MathsSpot Roblox:")
     echo_result ${result} ${array}
     show_region GB
     local result=$(
