@@ -1016,7 +1016,12 @@ function MediaUnlockTest_TVer() {
     fi
     # 返回结果取新电视剧第一个值
     # echo "$tmpresult2" | jq  -r '.result.components.[] | select(.componentID | contains("newer-drama")) | limit(1; .contents.[].content.id)'
-    local episodeId=$(echo "$tmpresult2" | sed 's/.*"newer-drama"//' | sed 's/"componentID".*//' | sed 's/"id"/_TAG_/;s/.*_TAG_//' | cut -f2 -d'"')
+    local episodeId=$(echo "$tmpresult2" | sed -E 's/.*"newer-drama([.]{0,})"//' | sed 's/"componentID".*//' | sed 's/"id"/_TAG_/;s/.*_TAG_//' | cut -f2 -d'"' | grep -E '[a-z0-9]{10}')
+    if [ -z "$episodeId" ]; then
+        echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+        return
+    fi
+
     # 取得该剧集信息
     local tmpresult3=$(curl ${CURL_DEFAULT_OPTS} -s "https://statics.tver.jp/content/episode/${episodeId}.json" -H 'origin: https://tver.jp' -H 'referer: https://tver.jp/' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult3" ]; then
