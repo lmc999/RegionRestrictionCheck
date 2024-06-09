@@ -4339,7 +4339,7 @@ function MediaUnlockTest_AISPlay() {
 
     case "$result" in
         'BLOCK') echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        'SUCCESS') echo -n -e "\r AIS Play:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
+        'ALLOW') echo -n -e "\r AIS Play:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '') echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n" ;;
         *) echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
