@@ -79,11 +79,11 @@ resolve_ip_address() {
 
     if [ "$nslookupExists" == 1 ]; then
         if [ "$recordType" == 'AAAA' ]; then
-            local result=$(nslookup -q=AAAA "${domain}" | grep -oP "Address: \K[\d:a-f]+")
+            local result=$(nslookup -q=AAAA "${domain}" | grep -woP "Address: \K[\d:a-f]+")
             echo "${result}"
             return
         else
-            local result=$(nslookup -q=A "${domain}" | grep -oP "Address: \K[\d.]+")
+            local result=$(nslookup -q=A "${domain}" | grep -woP "Address: \K[\d.]+")
             echo "${result}"
             return
         fi
@@ -103,13 +103,13 @@ resolve_ip_address() {
     if [ "$recordType" == 'AAAA' ]; then
         local pingArgs='-6 -c 1 -w 1 -W 1'
         [ "$OS_ANDROID" == '1' ] && pingArgs='-c 1 -w 1 -W 1'
-        local result=$(ping6 ${pingArgs} "${domain}" 2>/dev/null | head -n 1 | grep -oP '\s\(\K[\d:a-f]+')
+        local result=$(ping6 ${pingArgs} "${domain}" 2>/dev/null | head -n 1 | grep -woP '\s\(\K[\d:a-f]+')
         echo "${result}"
         return
     else
         local pingArgs='-4 -c 1 -w 1 -W 1'
         [ "$OS_ANDROID" == '1' ] && pingArgs='-c 1 -w 1 -W 1'
-        local result=$(ping ${pingArgs} "${domain}" 2>/dev/null | head -n 1 | grep -oP '\s\(\K[\d.]+')
+        local result=$(ping ${pingArgs} "${domain}" 2>/dev/null | head -n 1 | grep -woP '\s\(\K[\d.]+')
         echo "${result}"
         return
     fi
@@ -122,7 +122,7 @@ validate_proxy() {
         exit 1
     fi
 
-    local port=$(echo "$1" | grep -oP ':\K[0-9]+$')
+    local port=$(echo "$1" | grep -woP ':\K[0-9]+$')
     if [ "$port" -ge 65535 ]; then
         echo -e "${Font_Red}Proxy Port invalid.${Font_Suffix}"
         exit 1
@@ -453,7 +453,7 @@ function MediaUnlockTest_BahamutAnime() {
         return
     fi
 
-    local tempdeviceid=$(echo "$tmpresult" | grep -oP '"deviceid"\s{0,}:\s{0,}"\K[^"]+')
+    local tempdeviceid=$(echo "$tmpresult" | grep -woP '"deviceid"\s{0,}:\s{0,}"\K[^"]+')
     # I Was Reincarnated as the 7th Prince
     local sn='37783'
     local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -sL "https://ani.gamer.com.tw/ajax/token.php?adID=89422&sn=${sn}&device=${tempdeviceid}" -b bahamut_cookie.txt --user-agent "${UA_BROWSER}")
@@ -471,7 +471,7 @@ function MediaUnlockTest_BahamutAnime() {
         return
     fi
 
-    local region=$(echo "$tmpresult2" | grep -oP 'data-geo="\K[^"]+')
+    local region=$(echo "$tmpresult2" | grep -woP 'data-geo="\K[^"]+')
     if [ -n "$region" ]; then
         echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
         return
@@ -495,7 +495,7 @@ function MediaUnlockTest_BilibiliChinaMainland() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
+    local result=$(echo "$tmpresult" | grep -woP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
     case "$result" in
         '0') echo -n -e "\r BiliBili China Mainland Only:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '-10403') echo -n -e "\r BiliBili China Mainland Only:\t\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -518,7 +518,7 @@ function MediaUnlockTest_BilibiliHKMCTW() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
+    local result=$(echo "$tmpresult" | grep -woP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
     case "$result" in
         '0') echo -n -e "\r BiliBili Hongkong/Macau/Taiwan:\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '-10403') echo -n -e "\r BiliBili Hongkong/Macau/Taiwan:\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -541,7 +541,7 @@ function MediaUnlockTest_BilibiliTW() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
+    local result=$(echo "$tmpresult" | grep -woP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
     case "$result" in
         '0') echo -n -e "\r Bilibili Taiwan Only:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '-10403') echo -n -e "\r Bilibili Taiwan Only:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -561,7 +561,7 @@ function MediaUnlockTest_AbemaTV() {
         return
     fi
 
-    local region=$(echo "$tmpresult" | grep -oP '"isoCountryCode"\s{0,}:\s{0,}"\K[^"]+')
+    local region=$(echo "$tmpresult" | grep -woP '"isoCountryCode"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$region" ]; then
         echo -n -e "\r Abema.TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
@@ -705,7 +705,7 @@ function MediaUnlockTest_Netflix() {
     fi
     if [ "$result1" == '200' ] || [ "$result2" == '200' ]; then
         local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.netflix.com/' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' --user-agent "${UA_BROWSER}")
-        local region=$(echo "$tmpresult" | grep -oP '"requestCountry":{"id":"\K\w\w' | head -n 1)
+        local region=$(echo "$tmpresult" | grep -woP '"requestCountry":{"id":"\K\w\w' | head -n 1)
         echo -n -e "\r Netflix:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
         return
     fi
@@ -731,7 +731,7 @@ function MediaUnlockTest_DisneyPlus() {
         return
     fi
 
-    local assertion=$(echo "$tempresult" | grep -oP '"assertion"\s{0,}:\s{0,}"\K[^"]+')
+    local assertion=$(echo "$tempresult" | grep -woP '"assertion"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$assertion" ]; then
         echo -n -e "\r Disney+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -750,14 +750,14 @@ function MediaUnlockTest_DisneyPlus() {
     fi
 
     local fakeContent=$(echo "$MEDIA_COOKIE" | sed -n '8p')
-    local refreshToken=$(echo "$tokenContent" | grep -oP '"refresh_token"\s{0,}:\s{0,}"\K[^"]+')
+    local refreshToken=$(echo "$tokenContent" | grep -woP '"refresh_token"\s{0,}:\s{0,}"\K[^"]+')
     local disneyContent=$(echo "$fakeContent" | sed "s/ILOVEDISNEY/${refreshToken}/g")
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://disney.api.edge.bamgrid.com/graph/v1/device/graphql' -X POST -H "authorization: ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -d "${disneyContent}" --user-agent "${UA_BROWSER}")
 
     local previewcheck=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://disneyplus.com' -w '%{url_effective}\n' -o /dev/null --user-agent "${UA_BROWSER}")
     local isUnavailable=$(echo "$previewcheck" | grep -E 'preview|unavailable')
-    local region=$(echo "$tmpresult" | grep -oP '"countryCode"\s{0,}:\s{0,}"\K[^"]+')
-    local inSupportedLocation=$(echo "$tmpresult" | grep -oP '"inSupportedLocation"\s{0,}:\s{0,}\K(false|true)')
+    local region=$(echo "$tmpresult" | grep -woP '"countryCode"\s{0,}:\s{0,}"\K[^"]+')
+    local inSupportedLocation=$(echo "$tmpresult" | grep -woP '"inSupportedLocation"\s{0,}:\s{0,}\K(false|true)')
 
     if [ -z "$region" ]; then
         echo -n -e "\r Disney+:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -795,8 +795,8 @@ function MediaUnlockTest_Dazn() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"isAllowed"\s{0,}:\s{0,}\K(false|true)')
-    local region=$(echo "$tmpresult" | grep -oP '"GeolocatedCountry"\s{0,}:\s{0,}"\K[^"]+' | tr a-z A-Z)
+    local result=$(echo "$tmpresult" | grep -woP '"isAllowed"\s{0,}:\s{0,}\K(false|true)')
+    local region=$(echo "$tmpresult" | grep -woP '"GeolocatedCountry"\s{0,}:\s{0,}"\K[^"]+' | tr a-z A-Z)
     case "$result" in
         'false') echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'true') echo -n -e "\r Dazn:\t\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n" ;;
@@ -849,7 +849,7 @@ function MediaUnlockTest_MyTVSuper() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"country_code"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"country_code"\s{0,}:\s{0,}"\K[^"]+')
     if [ "$result" == 'HK' ]; then
         echo -n -e "\r MyTVSuper:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
@@ -873,7 +873,7 @@ function MediaUnlockTest_NowE() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"responseCode"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"responseCode"\s{0,}:\s{0,}"\K[^"]+')
     case "$result" in
         'GEO_CHECK_FAIL') echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'SUCCESS') echo -n -e "\r Now E:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -893,7 +893,7 @@ function MediaUnlockTest_ViuTV() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"responseCode"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"responseCode"\s{0,}:\s{0,}"\K[^"]+')
     case "$result" in
         'GEO_CHECK_FAIL') echo -n -e "\r Viu.TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'SUCCESS') echo -n -e "\r Viu.TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -908,7 +908,7 @@ function MediaUnlockTest_unext() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"resultStatus"\s{0,}:\s{0,}\K\d+')
+    local result=$(echo "$tmpresult" | grep -woP '"resultStatus"\s{0,}:\s{0,}\K\d+')
     case "$result" in
         '475') echo -n -e "\r U-NEXT:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '200') echo -n -e "\r U-NEXT:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -931,7 +931,7 @@ function MediaUnlockTest_wowow() {
         return
     fi
     # 取无料剧集来播放 example: https://www.wowow.co.jp/drama/original/hakubo/
-    local playUrlList=$(echo "$tmpresult" | grep -oP '"link"\s{0,}:\s{0,}"\K[^"]+' | grep 'drama/original' | head -n 4 | xargs)
+    local playUrlList=$(echo "$tmpresult" | grep -woP '"link"\s{0,}:\s{0,}"\K[^"]+' | grep 'drama/original' | head -n 4 | xargs)
     if [ -z "$playUrlList" ]; then
         echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -965,7 +965,7 @@ function MediaUnlockTest_wowow() {
         return
     fi
 
-    local metaId=$(echo "$tmpresult3" | grep -oP '"https://wod.wowow.co.jp/watch/\K\d{0,}[^"]+')
+    local metaId=$(echo "$tmpresult3" | grep -woP '"https://wod.wowow.co.jp/watch/\K\d{0,}[^"]+')
     # Fake Vistor UID
     local vUid=$(echo -n "$timestamp" | md5sum | cut -f1 -d' ')
     # 最终测试
@@ -1006,8 +1006,8 @@ function MediaUnlockTest_TVer() {
         return
     fi
     # 先取 UID 和 TOKEN
-    local platformUid=$(echo "$tmpresult" | grep -oP '"platform_uid"\s{0,}:\s{0,}"\K[^"]+')
-    local platformToken=$(echo "$tmpresult" | grep -oP '"platform_token"\s{0,}:\s{0,}"\K[^"]+')
+    local platformUid=$(echo "$tmpresult" | grep -woP '"platform_uid"\s{0,}:\s{0,}"\K[^"]+')
+    local platformToken=$(echo "$tmpresult" | grep -woP '"platform_token"\s{0,}:\s{0,}"\K[^"]+')
     # 根据 UID 和 TOKEN 取得当前正在播放的剧集
     local tmpresult2=$(curl ${CURL_DEFAULT_OPTS} -s "https://platform-api.tver.jp/service/api/v1/callHome?platform_uid=${platformUid}&platform_token=${platformToken}&require_data=mylist%2Cresume%2Clater" -H 'origin: https://tver.jp' -H 'referer: https://tver.jp/' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H 'x-tver-platform-type: web' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult2" ]; then
@@ -1029,10 +1029,10 @@ function MediaUnlockTest_TVer() {
         return
     fi
     # 取 accountID / playerID / videoID / videoRefID
-    local accountID=$(echo "$tmpresult3" | grep -oP '"accountID"\s{0,}:\s{0,}"\K[^"]+')
-    local playerID=$(echo "$tmpresult3" | grep -oP '"playerID"\s{0,}:\s{0,}"\K[^"]+')
-    local videoID=$(echo "$tmpresult3" | grep -oP '"videoID"\s{0,}:\s{0,}"\K[^"]+')
-    local videoRefID=$(echo "$tmpresult3" | grep -oP '"videoRefID"\s{0,}:\s{0,}"\K[^"]+')
+    local accountID=$(echo "$tmpresult3" | grep -woP '"accountID"\s{0,}:\s{0,}"\K[^"]+')
+    local playerID=$(echo "$tmpresult3" | grep -woP '"playerID"\s{0,}:\s{0,}"\K[^"]+')
+    local videoID=$(echo "$tmpresult3" | grep -woP '"videoID"\s{0,}:\s{0,}"\K[^"]+')
+    local videoRefID=$(echo "$tmpresult3" | grep -woP '"videoRefID"\s{0,}:\s{0,}"\K[^"]+')
     # 取得 brightcove 播放器信息
     local tmpresult4=$(curl ${CURL_DEFAULT_OPTS} -s "https://players.brightcove.net/${accountID}/${playerID}_default/index.min.js" -H 'Referer: https://tver.jp/' -H 'Sec-Fetch-Dest: script' -H 'Sec-Fetch-Mode: no-cors' -H 'Sec-Fetch-Site: cross-site' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult4" ]; then
@@ -1056,7 +1056,7 @@ function MediaUnlockTest_TVer() {
         echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Network Connection 4)${Font_Suffix}\n"
         return
     fi
-    local result=$(echo "$tmpresult5" | grep -oP '"error_subcode"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult5" | grep -woP '"error_subcode"\s{0,}:\s{0,}"\K[^"]+')
     case "$result" in
         'CLIENT_GEO') echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '') echo -n -e "\r TVer:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -1076,7 +1076,7 @@ function MediaUnlockTest_HamiVideo() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"code"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"code"\s{0,}:\s{0,}"\K[^"]+')
     case "$result" in
         '06001-106') echo -n -e "\r Hami Video:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '06001-107') echo -n -e "\r Hami Video:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -1096,7 +1096,7 @@ function MediaUnlockTest_4GTV() {
         return
     fi
 
-    result=$(echo "$tmpresult" | grep -oP '"Data"\s{0,}:\s{0,}"\K[^"]+')
+    result=$(echo "$tmpresult" | grep -woP '"Data"\s{0,}:\s{0,}"\K[^"]+')
     case "$result" in
         'N') echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'Y') echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -1159,15 +1159,15 @@ function MediaUnlockTest_PlutoTV() {
 
 function MediaUnlockTest_HBOMax() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://www.max.com/' -w "_TAG_%{http_code}_TAG_" --user-agent "${UA_BROWSER}")
-    local httpCode=$(echo "${tmpresult}" | grep -oP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r HBO Max:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
 
-    local countryList=$(echo "$tmpresult" | grep -oP '"url":"/[a-z]{2}/[a-z]{2}"' | cut -f4 -d'"' | cut -f2 -d'/' | sort -n | uniq | xargs | tr a-z A-Z)
+    local countryList=$(echo "$tmpresult" | grep -woP '"url":"/[a-z]{2}/[a-z]{2}"' | cut -f4 -d'"' | cut -f2 -d'/' | sort -n | uniq | xargs | tr a-z A-Z)
     local countryList="${countryList} US"
-    local region=$(echo "$tmpresult" | grep -oP 'countryCode=\K[A-Z]{2}' | head -n 1)
+    local region=$(echo "$tmpresult" | grep -woP 'countryCode=\K[A-Z]{2}' | head -n 1)
     local isUnavailable=$(echo "$countryList" | grep "$region")
 
     if [ -z "$region" ]; then
@@ -1184,7 +1184,7 @@ function MediaUnlockTest_HBOMax() {
 
 function MediaUnlockTest_Showmax() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://www.showmax.com/' -w "_TAG_%{http_code}_TAG_" -H 'host: www.showmax.com' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'upgrade-insecure-requests: 1' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' --user-agent "${UA_BROWSER}")
-    local httpCode=$(echo "${tmpresult}" | grep -oP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
 
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r Showmax:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -1193,7 +1193,7 @@ function MediaUnlockTest_Showmax() {
 
     local isBlocked=$(echo "$tmpresult" | grep 'is unavailable in this location')
     local isOK=$(echo "$tmpresult" | grep -i 'Streaming for Africa')
-    local region=$(echo "$tmpresult" | grep -oP 'activeTerritory=\K[A-Z]+' | head -n 1)
+    local region=$(echo "$tmpresult" | grep -woP 'activeTerritory=\K[A-Z]+' | head -n 1)
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
         echo -n -e "\r Showmax:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -1282,13 +1282,13 @@ function RegionTest_iQYI() {
 
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.iq.com/' -w "_TAG_%{http_code}_TAG_" -o /dev/null --user-agent "${UA_BROWSER}" -D -)
 
-    local httpCode=$(echo "${tmpresult}" | grep -oP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
 
-    local region=$(echo "${tmpresult}" | grep -oP 'mod=\K[a-z]+' | tr a-z A-Z)
+    local region=$(echo "${tmpresult}" | grep -woP 'mod=\K[a-z]+' | tr a-z A-Z)
     if [ -z "$region" ]; then
         echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Red}Failed (Error: Country Code Not Found)${Font_Suffix}\n"
         return
@@ -1308,7 +1308,7 @@ function MediaUnlockTest_HuluUS() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"name"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"name"\s{0,}:\s{0,}"\K[^"]+')
     case "$result" in
         'LOGIN_FORBIDDEN') echo -n -e "\r Hulu:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         'GEO_BLOCKED') echo -n -e "\r Hulu:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -1329,7 +1329,7 @@ function MediaUnlockTest_encoreTVB() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"error_subcode"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"error_subcode"\s{0,}:\s{0,}"\K[^"]+')
     case "$result" in
         'CLIENT_GEO') echo -n -e "\r encoreTVB:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         '') echo -n -e "\r encoreTVB:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -1344,7 +1344,7 @@ function MediaUnlockTest_Molotov() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"is_france"\s{0,}:\s{0,}\K(false|true)')
+    local result=$(echo "$tmpresult" | grep -woP '"is_france"\s{0,}:\s{0,}\K(false|true)')
 
     case "$result" in
         'false') echo -n -e "\r Molotov:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -1366,7 +1366,7 @@ function MediaUnlockTest_LineTVTW() {
         return
     fi
     # 找 main js 的链接
-    local mainJsUrl=$(echo "$tmpresult" | grep -oP 'src="\K[^"]+' | grep -E '/main-[a-z0-9]{8}')
+    local mainJsUrl=$(echo "$tmpresult" | grep -woP 'src="\K[^"]+' | grep -E '/main-[a-z0-9]{8}')
     # 下载 main js
     local tmpresult2=$(curl ${CURL_DEFAULT_OPTS} -s "${mainJsUrl}" -H 'referer: https://www.linetv.tw/' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult2" ]; then
@@ -1374,7 +1374,7 @@ function MediaUnlockTest_LineTVTW() {
         return
     fi
     # 从 main js 里找 appId
-    local appId=$(echo "$tmpresult2" | grep -oP 'appId:"\K[^"]+' | head -n 1)
+    local appId=$(echo "$tmpresult2" | grep -woP 'appId:"\K[^"]+' | head -n 1)
     # 正式测试
     local tmpresult3=$(curl ${CURL_DEFAULT_OPTS} -s "https://www.linetv.tw/api/part/11829/eps/1/part?appId=${appId}&productType=FAST&version=10.38.0" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult3" ]; then
@@ -1382,7 +1382,7 @@ function MediaUnlockTest_LineTVTW() {
         return
     fi
 
-    local result=$(echo "$tmpresult3" | grep -oP '"countryCode"\s{0,}:\s{0,}\K\d+')
+    local result=$(echo "$tmpresult3" | grep -woP '"countryCode"\s{0,}:\s{0,}\K\d+')
     case "$result" in
         '228') echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '') echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}Failed (Error: Country Code Not Found)${Font_Suffix}\n" ;;
@@ -1441,9 +1441,9 @@ function MediaUnlockTest_Niconico() {
     fi
 
     # 从直播网页中找到第一个官方直播剧
-    # echo "$tmpresult2" | grep -oP 'id="DAT-csr-data" data-value="[^"]+' | sed 's/id="DAT-csr-data" data-value="//;s/&quot;/"/g' | \
+    # echo "$tmpresult2" | grep -woP 'id="DAT-csr-data" data-value="[^"]+' | sed 's/id="DAT-csr-data" data-value="//;s/&quot;/"/g' | \
     # jq -r '.props.view.popularBeforeOpenBroadcastStatusProgramListSectionState.programList.[] | select(.isOfficialChannelMemberFree == false) | .id' | head -n 1
-    local liveID=$(echo "$tmpresult2" | sed 's/&quot;isOfficialChannelMemberFree&quot;:false/&quot;isOfficialChannelMemberFree&quot;:false\r\n/g' | grep -v '&quot;isOfficialChannelMemberFree&quot;:true' | grep -v -E 'playerProgram|&quot;ON_AIR&quot;' | grep '話' | grep -oP '&quot;id&quot;:&quot;\Klv[0-9]+' | head -n 1)
+    local liveID=$(echo "$tmpresult2" | sed 's/&quot;isOfficialChannelMemberFree&quot;:false/&quot;isOfficialChannelMemberFree&quot;:false\r\n/g' | grep -v '&quot;isOfficialChannelMemberFree&quot;:true' | grep -v -E 'playerProgram|&quot;ON_AIR&quot;' | grep '話' | grep -woP '&quot;id&quot;:&quot;\Klv[0-9]+' | head -n 1)
     if [ -z "$liveID" ]; then
         echo -n -e "\r Niconico:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -1514,7 +1514,7 @@ function MediaUnlockTest_KKTV() {
         return
     fi
 
-    result=$(echo "$tmpresult" | grep -oP '"country"\s{0,}:\s{0,}"\K[^"]+')
+    result=$(echo "$tmpresult" | grep -woP '"country"\s{0,}:\s{0,}"\K[^"]+')
     if [ "$result" == 'TW' ]; then
         echo -n -e "\r KKTV:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
@@ -1558,7 +1558,7 @@ function MediaUnlockTest_FOD() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '<FLAG\sTYPE="\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '<FLAG\sTYPE="\K[^"]+')
     case "$result" in
         'true') echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         'false') echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -1582,7 +1582,7 @@ function MediaUnlockTest_YouTube_Premium() {
     fi
 
     local isNotAvailable=$(echo "$tmpresult" | grep -i 'Premium is not available in your country')
-    local region=$(echo "$tmpresult" | grep -oP '"INNERTUBE_CONTEXT_GL"\s{0,}:\s{0,}"\K[^"]+')
+    local region=$(echo "$tmpresult" | grep -woP '"INNERTUBE_CONTEXT_GL"\s{0,}:\s{0,}"\K[^"]+')
     local isAvailable=$(echo "$tmpresult" | grep -i 'ad-free')
 
     if [ -n "$isNotAvailable" ]; then
@@ -1702,7 +1702,7 @@ function MediaUnlockTest_PrimeVideo() {
     fi
 
     local isBlocked=$(echo "$tmpresult" | grep -i 'isServiceRestricted')
-    local region=$(echo "$tmpresult" | grep -oP '"currentTerritory":"\K[^"]+' | head -n 1)
+    local region=$(echo "$tmpresult" | grep -woP '"currentTerritory":"\K[^"]+' | head -n 1)
 
     if [ -z "$isBlocked" ] && [ -z "$region" ]; then
         echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -1827,7 +1827,7 @@ function MediaUnlockTest_Catchplay() {
         return
     fi
 
-    local result=$(echo "$tmpresult"  | grep -oP '"code"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult"  | grep -woP '"code"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$result" ]; then
         echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -1858,7 +1858,7 @@ function MediaUnlockTest_HotStar() {
     fi
 
     local urlEffective=$(echo "$tmpresult" | grep -o '_TAG_.*_TAG_' | awk -F'_TAG_' '{print $3}')
-    local region=$(echo "$tmpresult" | grep -oP 'geo=\K[A-Z]+' | head -n 1)
+    local region=$(echo "$tmpresult" | grep -woP 'geo=\K[A-Z]+' | head -n 1)
     local siteRegion=$(echo "$urlEffective" | sed 's@.*com/@@' | tr a-z A-Z)
 
     if [ -z "$region" ]; then
@@ -1891,7 +1891,7 @@ function MediaUnlockTest_LiTV() {
     fi
 
     local isOK=$(echo "$tmpresult" | grep 'AssetURLs')
-    local result=$(echo "$tmpresult" | grep -oP '"code"\s{0,}:\s{0,}\K[^"][0-9]{0,}')
+    local result=$(echo "$tmpresult" | grep -woP '"code"\s{0,}:\s{0,}\K[^"][0-9]{0,}')
 
     if [ -n "$isOK" ]; then
         echo -n -e "\r LiTV:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
@@ -1960,7 +1960,7 @@ function MediaUnlockTest_Joyn() {
         return
     fi
 
-    local auth=$(echo "$tmpauth" | grep -oP '"access_token"\s{0,}:\s{0,}"\K[^"]+')
+    local auth=$(echo "$tmpauth" | grep -woP '"access_token"\s{0,}:\s{0,}"\K[^"]+')
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.joyn.de/content/entitlement-token' -H "x-api-key: 36lp1t4wto5uu2i2nk57ywy9on1ns5yg" -H "content-type: application/json" -d '{"content_id":"daserste-de-hd","content_type":"LIVE"}' -H "authorization: Bearer ${auth}" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Joyn:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -1998,7 +1998,7 @@ function MediaUnlockTest_SpotvNow() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"error_subcode"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"error_subcode"\s{0,}:\s{0,}"\K[^"]+')
 
     case "$result" in
         'CLIENT_GEO') echo -n -e "\r SPOTV NOW:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -2019,7 +2019,7 @@ function MediaUnlockTest_SKY_DE() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"error_subcode"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"error_subcode"\s{0,}:\s{0,}"\K[^"]+')
 
     case "$result" in
         'CLIENT_GEO') echo -n -e "\r SKY DE:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -2056,13 +2056,13 @@ function MediaUnlockTest_HBOGO_ASIA() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"territory"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"territory"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$result" ]; then
         echo -n -e "\r HBO GO Asia:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
 
-    local region=$(echo "$tmpresult" | grep -oP '"country"\s{0,}:\s{0,}"\K[^"]+')
+    local region=$(echo "$tmpresult" | grep -woP '"country"\s{0,}:\s{0,}"\K[^"]+')
     if [ -n "$region" ]; then
         echo -n -e "\r HBO GO Asia:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
         return
@@ -2089,7 +2089,7 @@ function MediaUnlockTest_EPIX() {
         return
     fi
 
-    local epixToken=$(echo "$tmpToken" | grep -oP '"session_token"\s{0,}:\s{0,}"\K[^"]+')
+    local epixToken=$(echo "$tmpToken" | grep -woP '"session_token"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$epixToken" ]; then
         echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -2154,7 +2154,7 @@ function MediaUnlockTest_videoland() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"isOnboardingGeoBlocked"\s{0,}:\s{0,}\K(false|true)')
+    local result=$(echo "$tmpresult" | grep -woP '"isOnboardingGeoBlocked"\s{0,}:\s{0,}\K(false|true)')
     case "$result" in
         'false') echo -n -e "\r videoland:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         'true') echo -n -e "\r videoland:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -2170,7 +2170,7 @@ function MediaUnlockTest_NPO_Start_Plus() {
         return
     fi
 
-    local token=$(echo "$tmpresult" | grep -oP '"token"\s{0,}:\s{0,}"\K[^"]+')
+    local token=$(echo "$tmpresult" | grep -woP '"token"\s{0,}:\s{0,}"\K[^"]+')
     local result=$(curl ${CURL_DEFAULT_OPTS} -s 'https://prod.npoplayer.nl/stream-link' -w %{http_code} -o /dev/null -H 'accept: */*' -H "authorization: ${token}" -H 'content-type: application/json' -H 'origin: https://npo.nl' -H 'referer: https://npo.nl/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: cross-site' --data-raw '{"profileName":"dash","drmType":"playready","referrerUrl":"https://npo.nl/start/live?channel=NPO1"}' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
 
     case "$result" in
@@ -2202,7 +2202,7 @@ function MediaUnlockTest_RakutenTV() {
         return
     fi
 
-    local region=$(echo "$tmpresult" | grep -oP '"iso3166_code"\s{0,}:\s{0,}"\K[^"]+')
+    local region=$(echo "$tmpresult" | grep -woP '"iso3166_code"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$region" ]; then
         echo -n -e "\r Rakuten TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -2250,9 +2250,9 @@ function MediaUnlockTest_Starz() {
         return
     fi
 
-    local isAllowedAccess=$(echo "$tmpresult" | grep -oP '"isAllowedAccess"\s{0,}:\s{0,}\K(false|true)')
-    local isAllowedCountry=$(echo "$tmpresult" | grep -oP '"isAllowedCountry"\s{0,}:\s{0,}\K(false|true)')
-    local isKnownProxy=$(echo "$tmpresult" | grep -oP '"isKnownProxy"\s{0,}:\s{0,}\K(false|true)')
+    local isAllowedAccess=$(echo "$tmpresult" | grep -woP '"isAllowedAccess"\s{0,}:\s{0,}\K(false|true)')
+    local isAllowedCountry=$(echo "$tmpresult" | grep -woP '"isAllowedCountry"\s{0,}:\s{0,}\K(false|true)')
+    local isKnownProxy=$(echo "$tmpresult" | grep -woP '"isKnownProxy"\s{0,}:\s{0,}\K(false|true)')
 
     if [ -z "$isAllowedAccess" ] || [ -z "$isAllowedCountry" ] || [ -z "$isKnownProxy" ]; then
         echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -2341,7 +2341,7 @@ function MediaUnlockTest_CBCGem() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"country"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"country"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "${result}" ]; then
         echo -n -e "\r CBC Gem:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -2477,7 +2477,7 @@ function MediaUnlockTest_RaiPlay() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '<geoprotection>\K[^<]+')
+    local result=$(echo "$tmpresult" | grep -woP '<geoprotection>\K[^<]+')
     local isBlocked=$(echo "$tmpresult" | grep -i 'video_no_available')
 
     if [ -z "$result" ]; then
@@ -2508,7 +2508,7 @@ function MediaUnlockTest_TVBAnywhere() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"allow_in_this_country"\s{0,}:\s{0,}\K(false|true)')
+    local result=$(echo "$tmpresult" | grep -woP '"allow_in_this_country"\s{0,}:\s{0,}\K(false|true)')
     if [ -z "$result" ]; then
         echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -2594,7 +2594,7 @@ function RegionTest_NetflixCDN() {
         return
     fi
 
-    local cdnDomain=$(echo "$respContent" | grep -oP '"url":"\K[^"]+' | awk -F'[/:]' '{print $4}')
+    local cdnDomain=$(echo "$respContent" | grep -woP '"url":"\K[^"]+' | awk -F'[/:]' '{print $4}')
     if [ -z "$cdnDomain" ]; then
         echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -2618,7 +2618,7 @@ function RegionTest_NetflixCDN() {
             return
         fi
 
-        local cdnISP=$(echo "$tmpresult1" | grep -oP '"isp"\s{0,}:\s{0,}"\K[^"]+')
+        local cdnISP=$(echo "$tmpresult1" | grep -woP '"isp"\s{0,}:\s{0,}"\K[^"]+')
         if [ -z "$cdnISP" ]; then
             echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Error: No ISP Info Found)${Font_Suffix}\n"
             return
@@ -2739,8 +2739,8 @@ function MediaUnlockTest_DiscoveryPlus() {
         return
     fi
 
-    local baseApiUrl=$(echo "$tmpresult" | grep -oP '"baseApiUrl"\s{0,}:\s{0,}"\K[^"]+')
-    local realm=$(echo "$tmpresult" | grep -oP '"realm"\s{0,}:\s{0,}"\K[^"]+')
+    local baseApiUrl=$(echo "$tmpresult" | grep -woP '"baseApiUrl"\s{0,}:\s{0,}"\K[^"]+')
+    local realm=$(echo "$tmpresult" | grep -woP '"realm"\s{0,}:\s{0,}"\K[^"]+')
 
     if [ -z "$baseApiUrl" ] || [ -z "$realm" ]; then
         echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -2760,7 +2760,7 @@ function MediaUnlockTest_DiscoveryPlus() {
         return
     fi
 
-    local token=$(echo "$tmpresult1" | grep -oP '"token"\s{0,}:\s{0,}"\K[^"]+')
+    local token=$(echo "$tmpresult1" | grep -woP '"token"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$token" ]; then
         echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR 1)${Font_Suffix}\n"
         return
@@ -2774,7 +2774,7 @@ function MediaUnlockTest_DiscoveryPlus() {
 
     local isBlocked=$(echo "$tmpresult2" | grep -i 'is unavailable in your|not yet available')
     local isOK=$(echo "$tmpresult2" | grep -i 'relationships')
-    local region=$(echo "$tmpresult2" | grep -oP '"mainTerritoryCode"\s{0,}:\s{0,}"\K[^"]+' | tr a-z A-Z)
+    local region=$(echo "$tmpresult2" | grep -woP '"mainTerritoryCode"\s{0,}:\s{0,}"\K[^"]+' | tr a-z A-Z)
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
         echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR 2)${Font_Suffix}\n"
@@ -2811,7 +2811,7 @@ function MediaUnlockTest_ESPNPlus() {
     fi
 
     local fakeContent=$(echo "$MEDIA_COOKIE" | sed -n '10p')
-    local refreshToken=$(echo "$tokenContent" | grep -oP '"refresh_token"\s{0,}:\s{0,}"\K[^"]+')
+    local refreshToken=$(echo "$tokenContent" | grep -woP '"refresh_token"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$refreshToken" ]; then
         echo -n -e "\r ESPN+:${Font_SkyBlue}[Sponsored by Jam]${Font_Suffix}\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -2824,8 +2824,8 @@ function MediaUnlockTest_ESPNPlus() {
         return
     fi
 
-    local region=$(echo "$tmpresult" | grep -oP '"countryCode"\s{0,}:\s{0,}"\K[^"]+')
-    local inSupportedLocation=$(echo "$tmpresult" | grep -oP '"inSupportedLocation"\s{0,}:\s{0,}\K(false|true)')
+    local region=$(echo "$tmpresult" | grep -woP '"countryCode"\s{0,}:\s{0,}"\K[^"]+')
+    local inSupportedLocation=$(echo "$tmpresult" | grep -woP '"inSupportedLocation"\s{0,}:\s{0,}\K(false|true)')
 
     if [ -z "$region" ] || [ -z "$inSupportedLocation" ]; then
         echo -n -e "\r ESPN+:${Font_SkyBlue}[Sponsored by Jam]${Font_Suffix}\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -3021,7 +3021,7 @@ function MediaUnlockTest_MaoriTV() {
     fi
 
     # 找出 index-*.js
-    local indexJsPath=$(echo "$tmpresult" | grep -oP 'src="\K/assets/index-[a-z0-9]{8}[^"]+')
+    local indexJsPath=$(echo "$tmpresult" | grep -woP 'src="\K/assets/index-[a-z0-9]{8}[^"]+')
     if [ -z "$indexJsPath" ]; then
         echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -3033,8 +3033,8 @@ function MediaUnlockTest_MaoriTV() {
         return
     fi
     # 取得 brightcove 播放器链接
-    local playerJsUrl=$(echo "$tmpresult2" | grep -oP 'players.brightcove.net/[0-9]{13}/\w{9}_default/index.min.js')
-    local accountId=$(echo "$playerJsUrl" | grep -oP 'players.brightcove.net/\K[0-9]{13}')
+    local playerJsUrl=$(echo "$tmpresult2" | grep -woP 'players.brightcove.net/[0-9]{13}/\w{9}_default/index.min.js')
+    local accountId=$(echo "$playerJsUrl" | grep -woP 'players.brightcove.net/\K[0-9]{13}')
     if [ -z "$playerJsUrl" ]; then
         echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -3048,7 +3048,7 @@ function MediaUnlockTest_MaoriTV() {
     fi
 
     # 取 policy_key
-    local policyKey=$(echo "$tmpresult3" | grep -oP 'policyKey\s{0,}:\s{0,}"\KBCpk[^"]+')
+    local policyKey=$(echo "$tmpresult3" | grep -woP 'policyKey\s{0,}:\s{0,}"\KBCpk[^"]+')
 
     # 由于频道 ID 换的不是特别勤，直接固定，少几个请求
     # 该值从该 API 获取：https://api.one.accedo.tv/content/entries?typeAlias=live-channels
@@ -3060,7 +3060,7 @@ function MediaUnlockTest_MaoriTV() {
         return
     fi
 
-    local result=$(echo "$tmpresult4" | grep -oP '"error_subcode"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult4" | grep -woP '"error_subcode"\s{0,}:\s{0,}"\K[^"]+')
 
     case "$result" in
         'CLIENT_GEO') echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -3082,7 +3082,7 @@ function MediaUnlockTest_SBSonDemand() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"country_code"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"country_code"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$result" ]; then
         echo -n -e "\r SBS on Demand:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -3109,7 +3109,7 @@ function MediaUnlockTest_ABCiView() {
     fi
 
     local isBlocked=$(echo "$tmpresult" | grep -i 'unavailable outside Australia')
-    local isOK=$(echo "$tmpresult" | grep -oP '"playable"\s{0,}:\s{0,}\K(false|true)')
+    local isOK=$(echo "$tmpresult" | grep -woP '"playable"\s{0,}:\s{0,}\K(false|true)')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
         echo -n -e "\r ABC iView:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -3163,7 +3163,7 @@ function MediaUnlockTest_Telasa() {
     fi
 
     local isForbidden=$(echo "$tmpresult" | grep -i 'IPLocationNotAllowed')
-    local isAllowed=$(echo "$tmpresult" | grep -oP '"type"\s{0,}:\s{0,}"\K[^"]+')
+    local isAllowed=$(echo "$tmpresult" | grep -woP '"type"\s{0,}:\s{0,}"\K[^"]+')
 
     if [ -z "$isAllowed" ] && [ -z "$isForbidden" ]; then
         echo -n -e "\r Telasa:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -3193,7 +3193,7 @@ function MediaUnlockTest_SetantaSports() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"outsideAllowedTerritories"\s{0,}:\s{0,}\K(false|true)')
+    local result=$(echo "$tmpresult" | grep -woP '"outsideAllowedTerritories"\s{0,}:\s{0,}\K(false|true)')
     if [ -z "$result" ]; then
         echo -n -e "\r Setanta Sports:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -3223,7 +3223,7 @@ function MediaUnlockTest_MolaTV() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"isAllowed"\s{0,}:\s{0,}\K(false|true)')
+    local result=$(echo "$tmpresult" | grep -woP '"isAllowed"\s{0,}:\s{0,}\K(false|true)')
     if [ -z "$result" ]; then
         echo -n -e "\r Mola TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -3271,7 +3271,7 @@ function MediaUnlockTest_EurosportRO() {
         return
     fi
 
-    local token=$(echo "$tmpresult" | grep -oP '"token"\s{0,}:\s{0,}"\K[^"]+')
+    local token=$(echo "$tmpresult" | grep -woP '"token"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$token" ]; then
         echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}Failed (Error: PAGER ERROR)${Font_Suffix}\n"
         return
@@ -3313,7 +3313,7 @@ function MediaUnlockTest_Channel5() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"code"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"code"\s{0,}:\s{0,}"\K[^"]+')
 
     case "$result" in
         '3000') echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -3390,7 +3390,7 @@ function MediaUnlockTest_Channel10() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"allow"\s{0,}:\s{0,}\K(false|true)')
+    local result=$(echo "$tmpresult" | grep -woP '"allow"\s{0,}:\s{0,}\K(false|true)')
     if [ -z "$result" ]; then
         echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -3415,9 +3415,9 @@ function MediaUnlockTest_Spotify() {
         return
     fi
 
-    local statusCode=$(echo "$tmpresult" | grep -oP '"status"\s{0,}:\s{0,}\K\d+')
-    local region=$(echo "$tmpresult" | grep -oP '"country"\s{0,}:\s{0,}"\K[^"]+')
-    local isLaunched=$(echo "$tmpresult" | grep -oP '"is_country_launched"\s{0,}:\s{0,}\K(false|true)')
+    local statusCode=$(echo "$tmpresult" | grep -woP '"status"\s{0,}:\s{0,}\K\d+')
+    local region=$(echo "$tmpresult" | grep -woP '"country"\s{0,}:\s{0,}"\K[^"]+')
+    local isLaunched=$(echo "$tmpresult" | grep -woP '"is_country_launched"\s{0,}:\s{0,}\K(false|true)')
 
     if [ -z "$statusCode" ]; then
         echo -n -e "\r Spotify Registration:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -3531,7 +3531,7 @@ function MediaUnlockTest_InstagramMusic() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"should_mute_audio"\s{0,}:\s{0,}\K(false|true)')
+    local result=$(echo "$tmpresult" | grep -woP '"should_mute_audio"\s{0,}:\s{0,}\K(false|true)')
 
     case "$result" in
         'false') echo -n -e "\r Instagram Licensed Audio:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -3614,7 +3614,7 @@ function MediaUnlockTest_Philo() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"status"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"status"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$result" ]; then
         echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -3730,7 +3730,7 @@ function MediaUnlockTest_TLCGO() {
         return
     fi
 
-    local token=$(echo "$tmpresult" | grep -oP '"token"\s{0,}:\s{0,}"\K[^"]+')
+    local token=$(echo "$tmpresult" | grep -woP '"token"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$token" ]; then
         echo -n -e "\r TLC GO:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -3740,7 +3740,7 @@ function MediaUnlockTest_TLCGO() {
 
     local isBlocked=$(echo "$tmpresult1" | grep -i 'is not yet available')
     local isOK=$(echo "$tmpresult1" | grep -i 'Episodes')
-    local region=$(echo "$tmpresult1" | grep -oP '"mainTerritoryCode"\s{0,}:\s{0,}"\K[^"]+' | tr a-z A-Z)
+    local region=$(echo "$tmpresult1" | grep -woP '"mainTerritoryCode"\s{0,}:\s{0,}"\K[^"]+' | tr a-z A-Z)
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
         echo -n -e "\r TLC GO:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -3766,8 +3766,8 @@ function RegionTest_oneTrust() {
         return
     fi
 
-    local region=$(echo "$tmpresult" | grep -oP '"country"\s{0,}:\s{0,}"\K[^"]+')
-    local stateName=$(echo "$tmpresult" | grep -oP '"stateName"\s{0,}:\s{0,}"\K[^"]+')
+    local region=$(echo "$tmpresult" | grep -woP '"country"\s{0,}:\s{0,}"\K[^"]+')
+    local stateName=$(echo "$tmpresult" | grep -woP '"stateName"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$region" ]; then
         echo -n -e "\r OneTrust Region:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -3883,7 +3883,7 @@ function MediaUnlockTest_NaverTV() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"playable"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"playable"\s{0,}:\s{0,}"\K[^"]+')
 
     case "$result" in
         'NOT_COUNTRY_AVAILABLE') echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -3925,7 +3925,7 @@ function MediaUnlockTest_KBSDomestic() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep 'ipck' | grep -oP 'Domestic\\\"\s{0,}:\s{0,}\K(false|true)')
+    local result=$(echo "$tmpresult" | grep 'ipck' | grep -woP 'Domestic\\\"\s{0,}:\s{0,}\K(false|true)')
 
     if [ -z "$result" ]; then
         echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -3955,7 +3955,7 @@ function MediaUnlockTest_KBSAmerican() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep 'ipck' | grep -oP 'Domestic\\\"\s{0,}:\s{0,}\K(false|true)')
+    local result=$(echo "$tmpresult" | grep 'ipck' | grep -woP 'Domestic\\\"\s{0,}:\s{0,}\K(false|true)')
 
     if [ -z "$result" ]; then
         echo -n -e "\r KBS American:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -4017,7 +4017,7 @@ function MediaUnlockTest_NBCTV() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"restricted"\s{0,}:\s{0,}\K(false|true)')
+    local result=$(echo "$tmpresult" | grep -woP '"restricted"\s{0,}:\s{0,}\K(false|true)')
 
     case "$result" in
         'false') echo -n -e "\r NBC TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -4030,13 +4030,13 @@ function MediaUnlockTest_NBCTV() {
 function MediaUnlockTest_Crackle() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://prod-api.crackle.com/appconfig' -w "_TAG_%{http_code}_TAG_" -H 'Accept-Language: en-US,en;q=0.9' -H 'Content-Type: application/json' -H 'Origin: https://www.crackle.com' -H 'Referer: https://www.crackle.com/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'x-crackle-apiversion: v2.0.0' -H 'x-crackle-brand: crackle' -H 'x-crackle-platform: 5FE67CCA-069A-42C6-A20F-4B47A8054D46' --user-agent "${UA_BROWSER}")
 
-    local httpCode=$(echo "${tmpresult}" | grep -oP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r Crackle:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
 
-    local region=$(echo "$tmpresult" | grep -oP 'x-crackle-region:\s{0,}\K[A-Z]+')
+    local region=$(echo "$tmpresult" | grep -woP 'x-crackle-region:\s{0,}\K[A-Z]+')
 
     if [ -z "$region" ]; then
         echo -n -e "\r Crackle:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
@@ -4069,7 +4069,7 @@ function MediaUnlockTest_AETV() {
 
     local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -s 'https://play.aetv.com/' -o /dev/null -D - --user-agent "${UA_BROWSER}")
 
-    local region=$(echo "$tmpresult1" | grep -oP 'AETN-Country-Code=\K[A-Z]+' | head -n 1)
+    local region=$(echo "$tmpresult1" | grep -woP 'AETN-Country-Code=\K[A-Z]+' | head -n 1)
     if [ -z "$region" ]; then
         echo -n -e "\r A&E TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -4112,7 +4112,7 @@ function MediaUnlockTest_NFLPlus() {
 function MediaUnlockTest_SkyShowTime() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://www.skyshowtime.com/' -w "_TAG_%{http_code}_TAG_" -o /dev/null -D - -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
 
-    local httpCode=$(echo "${tmpresult}" | grep -oP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -4129,7 +4129,7 @@ function MediaUnlockTest_SkyShowTime() {
         return
     fi
 
-    local region=$(echo "$tmpresult" | grep -oP 'activeTerritory=\K[A-Z]+' | head -n 1)
+    local region=$(echo "$tmpresult" | grep -woP 'activeTerritory=\K[A-Z]+' | head -n 1)
     if [ -z "$region" ]; then
         echo -n -e "\r SkyShowTime:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -4161,9 +4161,9 @@ function GameTest_MathsSpot() {
         return
     fi
 
-    local apiPath=$(echo "$tmpresult" | grep -oP 'fetch\("\K[^"]+' | grep 'reportEvent' | sed 's/\/reportEvent//;s/^\///')
-    local region=$(echo "$tmpresult" | grep -oP '"countryCode"\s{0,}:\s{0,}"\K[^"]+')
-    local nggFeVersion=$(echo "$tmpresult" | grep -oP '"NEXT_PUBLIC_FE_VERSION"\s{0,}:\s{0,}"\K[^"]+')
+    local apiPath=$(echo "$tmpresult" | grep -woP 'fetch\("\K[^"]+' | grep 'reportEvent' | sed 's/\/reportEvent//;s/^\///')
+    local region=$(echo "$tmpresult" | grep -woP '"countryCode"\s{0,}:\s{0,}"\K[^"]+')
+    local nggFeVersion=$(echo "$tmpresult" | grep -woP '"NEXT_PUBLIC_FE_VERSION"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$apiPath" ] || [ -z "$nggFeVersion" ] || [ -z "$region" ]; then
         echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -4180,7 +4180,7 @@ function GameTest_MathsSpot() {
         return
     fi
 
-    local status=$(echo "$tmpresult1" |  grep -oP '"status"\s{0,}:\s{0,}"\K[^"]+' | head -n 1)
+    local status=$(echo "$tmpresult1" |  grep -woP '"status"\s{0,}:\s{0,}"\K[^"]+' | head -n 1)
     if [ -z "$status" ]; then
         echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Red}Failed (Error: PAGE ERROR 1)${Font_Suffix}\n"
         return
@@ -4206,7 +4206,7 @@ function MediaUnlockTest_BGlobalSEA() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
+    local result=$(echo "$tmpresult" | grep -woP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
 
     case "$result" in
         '0') echo -n -e "\r B-Global SouthEastAsia:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -4227,7 +4227,7 @@ function MediaUnlockTest_BGlobalTH() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
+    local result=$(echo "$tmpresult" | grep -woP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
 
     case "$result" in
         '0') echo -n -e "\r B-Global Thailand Only:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -4248,7 +4248,7 @@ function MediaUnlockTest_BGlobalID() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
+    local result=$(echo "$tmpresult" | grep -woP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
 
     case "$result" in
         '0') echo -n -e "\r B-Global Indonesia Only:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -4269,7 +4269,7 @@ function MediaUnlockTest_BGlobalVN() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
+    local result=$(echo "$tmpresult" | grep -woP '"code"\s{0,}:\s{0,}\K[-\d]+' | head -n 1)
 
     case "$result" in
         '0') echo -n -e "\r B-Global Việt Nam Only:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -4295,8 +4295,8 @@ function MediaUnlockTest_AISPlay() {
         return
     fi
 
-    local sId=$(echo "$tmpresult" | grep -oP '"sid"\s{0,}:\s{0,}"\K[^"]+')
-    local datAuth=$(echo "$tmpresult" | grep -oP '"dat"\s{0,}:\s{0,}"\K[^"]+')
+    local sId=$(echo "$tmpresult" | grep -woP '"sid"\s{0,}:\s{0,}"\K[^"]+')
+    local datAuth=$(echo "$tmpresult" | grep -woP '"dat"\s{0,}:\s{0,}"\K[^"]+')
     # 新时间戳
     local timestamp=$(date +%s)
     # 取播放模板
@@ -4306,7 +4306,7 @@ function MediaUnlockTest_AISPlay() {
         return
     fi
 
-    local tmpLiveUrl=$(echo "$tmpresult1" | grep -oP '"live"\s{0,}:\s{0,}"\K[^"]+')
+    local tmpLiveUrl=$(echo "$tmpresult1" | grep -woP '"live"\s{0,}:\s{0,}"\K[^"]+')
     if [ -z "$tmpLiveUrl" ]; then
         echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -4321,7 +4321,7 @@ function MediaUnlockTest_AISPlay() {
     local tmpresult2=$(curl ${CURL_DEFAULT_OPTS} -sL "$realLiveUrl" -H 'Accept-Language: en-US,en;q=0.9' -H 'Origin: https://web-player.ais-vidnt.com' -H 'Referer: https://web-player.ais-vidnt.com/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --user-agent "${UA_BROWSER}")
 
     # 取第一优先级播放地址
-    local playUrl=$(echo "$tmpresult2" | grep -oP '"url"\s{0,}:\s{0,}"\K[^"]+' | grep 'rewriter' | head -n 1)
+    local playUrl=$(echo "$tmpresult2" | grep -woP '"url"\s{0,}:\s{0,}"\K[^"]+' | grep 'rewriter' | head -n 1)
     if [ -z "$playUrl" ]; then
         echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -4330,7 +4330,7 @@ function MediaUnlockTest_AISPlay() {
     local tmpresult3=$(curl ${CURL_DEFAULT_OPTS} -sLi "$playUrl" -H 'Accept-Language: en-US,en;q=0.9' -H 'Origin: https://web-player.ais-vidnt.com' -H 'Referer: https://web-player.ais-vidnt.com/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --user-agent "${UA_BROWSER}")
 
     # X-Base-Request-Check-Status: INCORRECT X-Geo-Protection-System-Status: BLOCK
-    local baseRequstCheckStatus=$(echo "$tmpresult3" | grep -oP 'X-Base-Request-Check-Status:\s{0,}\K\w+')
+    local baseRequstCheckStatus=$(echo "$tmpresult3" | grep -woP 'X-Base-Request-Check-Status:\s{0,}\K\w+')
     if [ -z "$baseRequstCheckStatus" ]; then
         echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -4340,7 +4340,7 @@ function MediaUnlockTest_AISPlay() {
         return
     fi
 
-    local result="$(echo "$tmpresult3" | grep -oP 'X-Geo-Protection-System-Status:\s{0,}\K\w+')"
+    local result="$(echo "$tmpresult3" | grep -woP 'X-Geo-Protection-System-Status:\s{0,}\K\w+')"
 
     case "$result" in
         'BLOCK') echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -4405,7 +4405,7 @@ function WebTest_MetaAI() {
     fi
 
     if [ -n "$isOK" ]; then
-        local region=$(echo "$tmpresult" | grep -oP '"code"\s{0,}:\s{0,}"\K[^"]+' | cut -d'_' -f2)
+        local region=$(echo "$tmpresult" | grep -woP '"code"\s{0,}:\s{0,}"\K[^"]+' | cut -d'_' -f2)
         echo -n -e "\r Meta AI:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
         return
     fi
@@ -4421,7 +4421,7 @@ function RegionTest_Bing() {
     fi
 
     local isCN=$(echo "$tmpresult" | grep 'cn.bing.com')
-    local region=$(echo "$tmpresult" | grep -oP 'Region\s{0,}:\s{0,}"\K[^"]+')
+    local region=$(echo "$tmpresult" | grep -woP 'Region\s{0,}:\s{0,}"\K[^"]+')
 
     if [ -n "$isCN" ]; then
         local region='CN'
@@ -4454,7 +4454,7 @@ function MediaUnlockTest_K_PLUS() {
         return
     fi
 
-    local token=$(curl ${CURL_DEFAULT_OPTS} -s -H "Origin: https://xem.kplus.vn" -H "Referer: https://xem.kplus.vn/" -X POST -d '{"osVersion":"Windows NT 10.0","appVersion":"114.0.0.0","deviceModel":"Chrome","deviceType":"PC","deviceSerial":"w39db81c0-a2e9-11ed-952a-49b91c9e6f09","deviceOem":"Chrome","devicePrettyName":"Chrome","ssoToken":"eyJrZXkiOiJ2c3R2IiwiZW5jIjoiQTEyOENCQy1IUzI1NiIsImFsZyI6ImRpciJ9..MWbBlLuci2KNLl9lvMe63g.IbBX7-dg3BWaXzzoxTQz-pJFulm_Y8axWLuG5DcJxQ9jTUPOhA2e6dzOP2hryAFVPFoIRs97ONGTHEYTFQgUtRlvqvx53jyTi3yegU6zWhJnhYZA2sdaj9khsNvVAth0zcWFoWA9GGwfNE5TZLOwczAexIxqC1Ee-tQDILC4XklFrJfvdzoCQBABRXpD_O4HHHIYFs0jBMtYSyD9Vq7dTD61sAVca_83lav7jvpP17PuAo3HHIFQtUdcugpgkB91mJbABIDTPdo0mqdzbgTA_FilwO1Z5qnpwqIZIXy0bhVXFFcwUZPIUxjLEVzP3SyHceFF5N-v7OeYhYZRLYuBKxWj1cRb3LAa3FGJvefqRsBadlsr0cZnOgx0TsL51a2SaIpNyyGtaq8KTTLULIZBb2Zsq2jmBkZtxjoPxUR8ku7J4sL0tfLDoMlWVZkrX4_1tls3E-l8Ael-wd0kbS1i2vpf-Vdh80lRClpDg3ibSSUFPsp3wYMFsuKfyY8vpHrCfYDJDDbYOSv20sfnU7q7gcmizTCFBuiszmXbFX9_aH8UOaCGeqkYDV1ZZ3mQ26TM7JEquuZTV09wdi81ABoM8RZcb2ua0cuocaO4-asMh8KQWNea9BCYlKK5NSPz--oGgGxSdvxZ63qQz1Lr4QZytA2buoQV5OlMoEP7k87fPcig5rPqsK7aeWUXJSmfiOBbSLztoiamvvHClMpds3frv0ud8NWUUoijmS_JUGfF7XYNxWWqEGJuDUoSllV5MVwtIb5wM069gR7zknrr5aRVDi3Nho16KHQ_iB3vxoIr-ExajWLNlvo44CopGhxhgOAKPkULV356uamZpB7twY_iEVrwGMQA1_hEH4usO-UbzuxL_pssLhJKD4NjVcTe86Z08Bfm0IyiNWESmFkA6FVfsxu57Yfd4bXT8mxnfXXmklb7u7vB0RVYRo4i26QGJbPknybHdfgQWEvRCMoAjEG-E2LymBAMwFneWEpPTwBMpfvlTHnGnUtfViA4Zy1xqF2q95g9AF9nF3sE4YpYuSFSkUQB4sZd8emDApIdP6Avqsq809Gg06_R2sUGrD9SQ-XbXhvtAYMcaUcSv54hJvRcSUkygqU8tdg4tJHR23UBb-I.UfpC5BKhvt8EE5gpIFMQoQ","brand":"vstv","environment":"p","language":"en_US","memberId":"0","featureLevel":4,"provisionData":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYyI6dHJ1ZSwiaWF0IjoxNjg2NTc4NzYyLCJ1cCI6ImNwaSIsImRlIjoiYnJhbmRNYXBwaW5nIiwiYnIiOiJ2c3R2IiwiZHMiOiJ3MzlkYjgxYzAtYTJlOS0xMWVkLTk1MmEtNDliOTFjOWU2ZjA5In0.3mbI7wnJKtRf3493yc_ZEMEvzUXldwDx0sSZdwQnlNk"}' "https://tvapi-sgn.solocoo.tv/v1/session" |  grep -oP '"token"\s{0,}:\s{0,}"\K[^"]+' | awk '{print $2}' | cut -f2 -d'"')
+    local token=$(curl ${CURL_DEFAULT_OPTS} -s -H "Origin: https://xem.kplus.vn" -H "Referer: https://xem.kplus.vn/" -X POST -d '{"osVersion":"Windows NT 10.0","appVersion":"114.0.0.0","deviceModel":"Chrome","deviceType":"PC","deviceSerial":"w39db81c0-a2e9-11ed-952a-49b91c9e6f09","deviceOem":"Chrome","devicePrettyName":"Chrome","ssoToken":"eyJrZXkiOiJ2c3R2IiwiZW5jIjoiQTEyOENCQy1IUzI1NiIsImFsZyI6ImRpciJ9..MWbBlLuci2KNLl9lvMe63g.IbBX7-dg3BWaXzzoxTQz-pJFulm_Y8axWLuG5DcJxQ9jTUPOhA2e6dzOP2hryAFVPFoIRs97ONGTHEYTFQgUtRlvqvx53jyTi3yegU6zWhJnhYZA2sdaj9khsNvVAth0zcWFoWA9GGwfNE5TZLOwczAexIxqC1Ee-tQDILC4XklFrJfvdzoCQBABRXpD_O4HHHIYFs0jBMtYSyD9Vq7dTD61sAVca_83lav7jvpP17PuAo3HHIFQtUdcugpgkB91mJbABIDTPdo0mqdzbgTA_FilwO1Z5qnpwqIZIXy0bhVXFFcwUZPIUxjLEVzP3SyHceFF5N-v7OeYhYZRLYuBKxWj1cRb3LAa3FGJvefqRsBadlsr0cZnOgx0TsL51a2SaIpNyyGtaq8KTTLULIZBb2Zsq2jmBkZtxjoPxUR8ku7J4sL0tfLDoMlWVZkrX4_1tls3E-l8Ael-wd0kbS1i2vpf-Vdh80lRClpDg3ibSSUFPsp3wYMFsuKfyY8vpHrCfYDJDDbYOSv20sfnU7q7gcmizTCFBuiszmXbFX9_aH8UOaCGeqkYDV1ZZ3mQ26TM7JEquuZTV09wdi81ABoM8RZcb2ua0cuocaO4-asMh8KQWNea9BCYlKK5NSPz--oGgGxSdvxZ63qQz1Lr4QZytA2buoQV5OlMoEP7k87fPcig5rPqsK7aeWUXJSmfiOBbSLztoiamvvHClMpds3frv0ud8NWUUoijmS_JUGfF7XYNxWWqEGJuDUoSllV5MVwtIb5wM069gR7zknrr5aRVDi3Nho16KHQ_iB3vxoIr-ExajWLNlvo44CopGhxhgOAKPkULV356uamZpB7twY_iEVrwGMQA1_hEH4usO-UbzuxL_pssLhJKD4NjVcTe86Z08Bfm0IyiNWESmFkA6FVfsxu57Yfd4bXT8mxnfXXmklb7u7vB0RVYRo4i26QGJbPknybHdfgQWEvRCMoAjEG-E2LymBAMwFneWEpPTwBMpfvlTHnGnUtfViA4Zy1xqF2q95g9AF9nF3sE4YpYuSFSkUQB4sZd8emDApIdP6Avqsq809Gg06_R2sUGrD9SQ-XbXhvtAYMcaUcSv54hJvRcSUkygqU8tdg4tJHR23UBb-I.UfpC5BKhvt8EE5gpIFMQoQ","brand":"vstv","environment":"p","language":"en_US","memberId":"0","featureLevel":4,"provisionData":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYyI6dHJ1ZSwiaWF0IjoxNjg2NTc4NzYyLCJ1cCI6ImNwaSIsImRlIjoiYnJhbmRNYXBwaW5nIiwiYnIiOiJ2c3R2IiwiZHMiOiJ3MzlkYjgxYzAtYTJlOS0xMWVkLTk1MmEtNDliOTFjOWU2ZjA5In0.3mbI7wnJKtRf3493yc_ZEMEvzUXldwDx0sSZdwQnlNk"}' "https://tvapi-sgn.solocoo.tv/v1/session" |  grep -woP '"token"\s{0,}:\s{0,}"\K[^"]+' | awk '{print $2}' | cut -f2 -d'"')
     if [ -z "$token" ]; then
         echo -n -e "\r K+:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -4488,7 +4488,7 @@ function MediaUnlockTest_TV360() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -oP '"errorCode"\s{0,}:\s{0,}\K\d+')
+    local result=$(echo "$tmpresult" | grep -woP '"errorCode"\s{0,}:\s{0,}\K\d+')
 
     case "$result" in
         '310') echo -n -e "\r TV360:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
@@ -4509,7 +4509,7 @@ function MediaUnlockTest_MeWatch() {
         return
     fi
 
-    local isBlocked=$(echo "$tmpresult" | grep -oP '"code"\s{0,}:\s{0,}\K\d+')
+    local isBlocked=$(echo "$tmpresult" | grep -woP '"code"\s{0,}:\s{0,}\K\d+')
     local isOK=$(echo "$tmpresult" | grep -i 'Stream')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
@@ -4540,12 +4540,12 @@ function MediaUnlockTest_trueID() {
         echo -n -e "\r trueID:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
-    local channelId=$(echo "$tmpresult" | grep -oP '"channelId"\s{0,}:\s{0,}"\K[^"]+' | head -n 1)
-    local authUser=$(echo "$tmpresult" | grep -oP '"buildId"\s{0,}:\s{0,}"\K[^"]+' | head -n 1)
+    local channelId=$(echo "$tmpresult" | grep -woP '"channelId"\s{0,}:\s{0,}"\K[^"]+' | head -n 1)
+    local authUser=$(echo "$tmpresult" | grep -woP '"buildId"\s{0,}:\s{0,}"\K[^"]+' | head -n 1)
     local authKey=${authUser:10}
     local tmpresult2=$(curl ${CURL_DEFAULT_OPTS} -s "https://tv.trueid.net/api/stream/checkedPlay?channelId=${channelId}&lang=en&country=th" -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: same-origin' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' -u ${authUser}:${authKey} -H 'accept: application/json, text/plain, */*' -H 'referer: https://tv.trueid.net/th-en/live/thairathtv-hd' --user-agent "${UA_BROWSER}")
 
-    local result=$(echo "$tmpresult2" | grep -oP '"billboardType"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult2" | grep -woP '"billboardType"\s{0,}:\s{0,}"\K[^"]+')
     case "$result" in
         'GEO_BLOCK') echo -n -e "\r trueID:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'LOADING') echo -n -e "\r trueID:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
@@ -4572,7 +4572,7 @@ function MediaUnlockTest_SonyLiv() {
         echo -n -e "\r SonyLiv:\t\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
         return
     fi
-    local region=$(echo "$tmpresult2" |  grep -oP '"country_code"\s{0,}:\s{0,}"\K[^"]+')
+    local region=$(echo "$tmpresult2" |  grep -woP '"country_code"\s{0,}:\s{0,}"\K[^"]+')
     # 取得播放详情
     local tmpresult3=$(curl ${CURL_DEFAULT_OPTS} -s "https://apiv2.sonyliv.com/AGL/3.8/A/ENG/WEB/${region}/ALL/CONTENT/VIDEOURL/VOD/1000045427/prefetch" -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: same-origin' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' -H 'accept: application/json, text/plain, */*' -H 'origin: https://www.sonyliv.com' -H 'referer: https://www.sonyliv.com/' -H 'device_id: 25a417c3b5f246a393fadb022adc82d5-1715309762699' -H "security_token: ${jwtToken}" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult3" ]; then
@@ -4580,8 +4580,8 @@ function MediaUnlockTest_SonyLiv() {
         return
     fi
 
-    local result=$(echo "$tmpresult3" | grep -oP '"resultCode"\s{0,}:\s{0,}"\K[^"]+')
-    local reason=$(echo "$tmpresult3" | grep -oP '"message"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult3" | grep -woP '"resultCode"\s{0,}:\s{0,}"\K[^"]+')
+    local reason=$(echo "$tmpresult3" | grep -woP '"message"\s{0,}:\s{0,}"\K[^"]+')
     case "$result" in
         "KO") echo -n -e "\r SonyLiv:\t\t\t\t${Font_Red}No (${reason})${Font_Suffix}\n" ;;
         "OK") echo -n -e "\r SonyLiv:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n" ;;
@@ -4626,7 +4626,7 @@ function MediaUnlockTest_MXPlayer() {
     fi
 
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://www.mxplayer.in/' -w "_TAG_%{http_code}_TAG_" --user-agent "${UA_BROWSER}")
-    local httpCode=$(echo "${tmpresult}" | grep -oP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r MX Player:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -4649,13 +4649,13 @@ function MediaUnlockTest_MXPlayer() {
 
 function MediaUnlockTest_Zee5() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://www.zee5.com/' -w "_TAG_%{http_code}_TAG_" -H 'Upgrade-Insecure-Requests: 1' --user-agent "${UA_BROWSER}")
-    local httpCode=$(echo "${tmpresult}" | grep -oP '_TAG_\K[^_TAG_]+')
+    local httpCode=$(echo "${tmpresult}" | grep -woP '_TAG_\K[^_TAG_]+')
     if [ "$httpCode" == '000' ]; then
         echo -n -e "\r Zee5:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
 
-    local region=$(echo "$tmpresult" | grep -oP 'country=\K[A-Z]{2}' | head -n 1)
+    local region=$(echo "$tmpresult" | grep -woP 'country=\K[A-Z]{2}' | head -n 1)
     if [ -n "$region" ]; then
         echo -n -e "\r Zee5:\t\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
         return
@@ -4738,7 +4738,7 @@ function MediaUnlockTest_RakutenTVJP() {
         return
     fi
 
-    local isDomestic=$(echo "$tmpresult1" | grep -oP '"is_domestic"\s{0,}:\s{0,}\K(false|true)')
+    local isDomestic=$(echo "$tmpresult1" | grep -woP '"is_domestic"\s{0,}:\s{0,}\K(false|true)')
 
     case "$isDomestic" in
         'false') echo -n -e "\r Rakuten TV JP:\t\t\t\t${Font_Yellow}No (NBA Unavailable)${Font_Suffix}\n" ;;
