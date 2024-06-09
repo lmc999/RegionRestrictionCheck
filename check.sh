@@ -1675,7 +1675,7 @@ function MediaUnlockTest_BritBox() {
     fi
 
     local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
-    local result=$(echo "$urlEffective" | grep -E 'locationnotsupported|locationnotvalidated')
+    local result=$(echo "$urlEffective" | grep -E 'locationnotsupported|locationnotvalidated|britbox.co.uk')
 
     if [ -n "$result" ]; then
         echo -n -e "\r BritBox:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
@@ -4900,19 +4900,19 @@ function NA_UnlockTest() {
 function EU_UnlockTest() {
     echo "===============[ Europe ]=============="
     local result=$(
+        MediaUnlockTest_DiscoveryPlus &
+        MediaUnlockTest_ParamountPlus &
         MediaUnlockTest_RakutenTV &
         MediaUnlockTest_SkyShowTime &
-        MediaUnlockTest_BritBox &
         MediaUnlockTest_HBOMax &
-        MediaUnlockTest_DiscoveryPlus &
-        MediaUnlockTest_SetantaSports &
+        MediaUnlockTest_BritBox &
         MediaUnlockTest_SonyLiv &
-        MediaUnlockTest_ParamountPlus &
         MediaUnlockTest_MegogoTV &
+        MediaUnlockTest_SetantaSports &
         GameTest_MathsSpot &
     )
     wait
-    local array=("Rakuten TV:" "SkyShowTime:" "BritBox:" "HBO Max:" "Discovery+:" "Setanta Sports:" "SonyLiv:" "Paramount+:" "Megogo TV:" "Maths Spot:")
+    local array=("Discovery+:" "Paramount+:" "Rakuten TV:" "SkyShowTime:" "HBO Max:" "BritBox:" "SonyLiv:" "Megogo TV:" "Setanta Sports:" "MathsSpot Roblox:")
     echo_result ${result} ${array}
     show_region GB
     local result=$(
