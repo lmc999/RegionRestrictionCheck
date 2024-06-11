@@ -450,7 +450,7 @@ process() {
         fi
     fi
 
-    CURL_OPTS="$USE_NIC $USE_PROXY $X_FORWARD ${CURL_SSL_CIPHERS_OPT} --max-time 10"
+    CURL_OPTS="$USE_NIC $USE_PROXY $X_FORWARD ${CURL_SSL_CIPHERS_OPT} --max-time 10 --retry 3 --retry-max-time 20"
 }
 
 delay() {
@@ -473,9 +473,9 @@ count_run_times() {
 }
 
 download_extra_data() {
-    MEDIA_COOKIE=$(curl ${CURL_OPTS} -s --retry 3 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies")
-    IATACODE=$(curl ${CURL_OPTS} -s --retry 3 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt")
-    IATACODE2=$(curl ${CURL_OPTS} -s --retry 3 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt")
+    MEDIA_COOKIE=$(curl ${CURL_OPTS} -s "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies")
+    IATACODE=$(curl ${CURL_OPTS} -s "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode.txt")
+    IATACODE2=$(curl ${CURL_OPTS} -s "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt")
     if [ -z "$MEDIA_COOKIE" ] || [ -z "$IATACODE" ] || [ -z "$IATACODE2" ]; then
         echo -e "${Font_Red}Extra data download failed.${Font_Suffix}"
         delay 3
@@ -2726,7 +2726,7 @@ function RegionTest_NetflixCDN() {
 
     local iata=$(echo "$cdnDomain" | cut -f3 -d'-' | sed 's/.\{3\}$//' | tr a-z A-Z)
 
-    # local IATACODE2=$(curl ${CURL_DEFAULT_OPTS} -s --retry 3 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACODE2.txt" 2>&1)
+    # local IATACODE2=$(curl ${CURL_DEFAULT_OPTS} -s "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACODE2.txt" 2>&1)
     local isIataFound1=$(echo "$IATACODE" | grep -w "$iata")
     local isIataFound2=$(echo "$IATACODE2" | grep -w "$iata")
 
@@ -3777,7 +3777,7 @@ function MediaUnlockTest_Crunchyroll() {
 }
 
 function MediaUnlockTest_CWTV() {
-    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL --retry 3 "https://www.cwtv.com/" -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
+    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL "https://www.cwtv.com/" -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
     case "$result" in
         '000') echo -n -e "\r CW TV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
