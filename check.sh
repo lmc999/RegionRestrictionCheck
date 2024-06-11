@@ -486,7 +486,7 @@ get_ip_info() {
     LOCAL_IP_ASTERISK=''
     LOCAL_ISP=''
     local local_ip=$(curl ${CURL_DEFAULT_OPTS} -s https://api64.ipify.org --user-agent "${UA_BROWSER}")
-    local get_local_isp=$(curl ${CURL_DEFAULT_OPTS} -s "https://api.ip.sb/geoip/${local_ipv4}" -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'cache-control: no-cache' -H 'pragma: no-cache' -H 'priority: u=0, i' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+    local get_local_isp=$(curl ${CURL_DEFAULT_OPTS} -s "https://api.ip.sb/geoip/${local_ipv4}" -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
 
     if [ -z "$local_ip" ]; then
         echo -e "${Font_Red}Failed to Query IP Address.${Font_Suffix}"
@@ -701,14 +701,9 @@ function GameTest_Kancolle() {
 
     local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'http://203.104.209.7/kcscontents/twitter/maintenance_info.html' -w %{http_code} -o /dev/null --user-agent "${UA_ANDROID}")
     # curl 'http://203.104.209.7/kcscontents/twitter/maintenance_info.html' \
-    # -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
-    # -H 'Accept-Language: zh-CN,zh;q=0.9' \
-    # -H 'Cache-Control: no-cache' \
-    # -H 'DNT: 1' \
-    # -H 'Pragma: no-cache' \
-    # -H 'Proxy-Connection: keep-alive' \
-    # -H 'Upgrade-Insecure-Requests: 1' \
-    # -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36' \
+    # -H 'Accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
+    # -H 'Accept-Language: en-US,en;q=0.9' \
+    # -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36' \
     # --insecure
 
     case "$result" in
@@ -818,7 +813,7 @@ function MediaUnlockTest_DisneyPlus() {
         return
     fi
 
-    local is403=$(echo "$tempresult" | grep '403 ERROR')
+    local is403=$(echo "$tempresult" | grep -i '403 ERROR')
     if [ -n "$is403" ]; then
         echo -n -e "\r Disney+:\t\t\t\t${Font_Red}No (IP Banned By Disney+)${Font_Suffix}\n"
         return
@@ -903,7 +898,7 @@ function MediaUnlockTest_HuluJP() {
         return
     fi
 
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://id.hulu.jp/' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' -H 'Accept-Encoding: none' -H 'DNT: 1' -H 'Sec-GPC: 1' -H 'Upgrade-Insecure-Requests: 1' -H 'Connection: keep-alive' -H 'Sec-Fetch-Dest: document' -H 'Sec-Fetch-Mode: navigate' -H 'Sec-Fetch-Site: none' -H 'Sec-Fetch-User: ?1' -H 'Priority: u=1' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://id.hulu.jp/' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null -H 'Accept: */*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' -H 'Accept-Encoding: none' -H 'Sec-GPC: 1' -H 'Upgrade-Insecure-Requests: 1' -H 'Sec-Fetch-Dest: document' -H 'Sec-Fetch-Mode: navigate' -H 'Sec-Fetch-Site: none' -H 'Sec-Fetch-User: ?1' -H 'Priority: u=1' --user-agent "${UA_BROWSER}")
 
     local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
     if [ "$httpCode" == '000' ]; then
@@ -1051,7 +1046,7 @@ function MediaUnlockTest_wowow() {
     fi
 
     # 访问并获取 meta_id
-    local tmpresult3=$(curl ${CURL_DEFAULT_OPTS} -s "$wodUrl" -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+    local tmpresult3=$(curl ${CURL_DEFAULT_OPTS} -s "$wodUrl" -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
 
     if [ -z "$tmpresult3" ]; then
         echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}Failed (Network Connection 2)${Font_Suffix}\n"
@@ -1276,7 +1271,7 @@ function MediaUnlockTest_HBOMax() {
 }
 
 function MediaUnlockTest_Showmax() {
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://www.showmax.com/' -w "_TAG_%{http_code}_TAG_" -H 'host: www.showmax.com' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'upgrade-insecure-requests: 1' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://www.showmax.com/' -w "_TAG_%{http_code}_TAG_" -H 'host: www.showmax.com' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'upgrade-insecure-requests: 1' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' --user-agent "${UA_BROWSER}")
     local httpCode=$(echo "$tmpresult" | grep '_TAG_' | awk -F'_TAG_' '{print $2}')
 
     if [ "$httpCode" == '000' ]; then
@@ -1734,7 +1729,7 @@ function RegionTest_YouTubeCDN() {
 }
 
 function WebTest_GoogleSearchCAPTCHA() {
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.google.com/search?q=curl&oq=curl&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBBzg1MmowajGoAgCwAgE&sourceid=chrome&ie=UTF-8' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-model: ""' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-ch-ua-platform-version: "15.0.0"' -H 'sec-ch-ua-wow64: ?0' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.google.com/search?q=curl&oq=curl&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBBzg1MmowajGoAgCwAgE&sourceid=chrome&ie=UTF-8' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-model: ""' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-ch-ua-platform-version: "15.0.0"' -H 'sec-ch-ua-wow64: ?0' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Google Search CAPTCHA Free:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -2170,7 +2165,7 @@ function MediaUnlockTest_EPIX() {
         return
     fi
 
-    local tmpToken=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.epix.com/v2/sessions' -X POST -H 'host: api.epix.com' -H 'connection: keep-alive' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'traceparent: 00-000000000000000015b7efdb572b7bf2-4aefaea90903bd1f-01' -H 'sec-ch-ua-mobile: ?0' -H 'x-datadog-origin: rum' -H 'x-datadog-sampling-priority: 1' -H 'accept: application/json' -H 'x-datadog-trace-id: 1564983120873880562' -H 'x-datadog-parent-id: 5399726519264460063' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://www.mgmplus.com' -H 'sec-fetch-site: cross-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://www.mgmplus.com/' -H 'accept-language: en-US,en;q=0.9' -H 'content-type: application/json' -d '{"device":{"guid":"7a0baaaf-384c-45cd-a21d-310ca5d3002a","format":"console","os":"web","display_width":1865,"display_height":942,"app_version":"1.0.2","model":"browser","manufacturer":"google"},"apikey":"53e208a9bbaee479903f43b39d7301f7"}' --user-agent "${UA_BROWSER}")
+    local tmpToken=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.epix.com/v2/sessions' -X POST -H 'host: api.epix.com' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'traceparent: 00-000000000000000015b7efdb572b7bf2-4aefaea90903bd1f-01' -H 'sec-ch-ua-mobile: ?0' -H 'x-datadog-origin: rum' -H 'x-datadog-sampling-priority: 1' -H 'accept: application/json' -H 'x-datadog-trace-id: 1564983120873880562' -H 'x-datadog-parent-id: 5399726519264460063' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://www.mgmplus.com' -H 'sec-fetch-site: cross-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://www.mgmplus.com/' -H 'accept-language: en-US,en;q=0.9' -H 'content-type: application/json' -d '{"device":{"guid":"7a0baaaf-384c-45cd-a21d-310ca5d3002a","format":"console","os":"web","display_width":1865,"display_height":942,"app_version":"1.0.2","model":"browser","manufacturer":"google"},"apikey":"53e208a9bbaee479903f43b39d7301f7"}' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpToken" ]; then
         echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -2188,7 +2183,7 @@ function MediaUnlockTest_EPIX() {
         return
     fi
 
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.epix.com/graphql' -X POST -H 'host: api.epix.com' -H 'connection: keep-alive' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'traceparent: 00-0000000000000000603047c112148412-32d64f8c890631ef-01' -H 'sec-ch-ua-mobile: ?0' -H 'x-datadog-origin: rum' -H 'x-datadog-sampling-priority: 1' -H 'accept: application/json' -H "x-session-token: ${epixToken}" -H 'x-datadog-trace-id: 6931118721080787986' -H 'x-datadog-parent-id: 3663202811925377519' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://www.mgmplus.com' -H 'sec-fetch-site: cross-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://www.mgmplus.com/' -H 'accept-language: en-US,en;q=0.9' -H 'content-type: application/json' -d '{"operationName":"PlayFlow","variables":{"id":"c2VyaWVzOzEwMTc=","supportedActions":["open_url","show_notice","start_billing","play_content","log_in","noop","confirm_provider","unlinked_provider"],"streamTypes":[{"encryptionScheme":"CBCS","packagingSystem":"DASH"},{"encryptionScheme":"CENC","packagingSystem":"DASH"},{"encryptionScheme":"NONE","packagingSystem":"HLS"},{"encryptionScheme":"SAMPLE_AES","packagingSystem":"HLS"}]},"query":"fragment ShowNotice on ShowNotice {\n  type\n  actions {\n    continuationContext\n    text\n    __typename\n  }\n  description\n  title\n  __typename\n}\n\nfragment OpenUrl on OpenUrl {\n  type\n  url\n  __typename\n}\n\nfragment Content on Content {\n  title\n  __typename\n}\n\nfragment Movie on Movie {\n  id\n  shortName\n  __typename\n}\n\nfragment Episode on Episode {\n  id\n  series {\n    shortName\n    __typename\n  }\n  seasonNumber\n  number\n  __typename\n}\n\nfragment Preroll on Preroll {\n  id\n  __typename\n}\n\nfragment ContentUnion on ContentUnion {\n  ...Content\n  ...Movie\n  ...Episode\n  ...Preroll\n  __typename\n}\n\nfragment PlayContent on PlayContent {\n  type\n  continuationContext\n  heartbeatToken\n  currentItem {\n    content {\n      ...ContentUnion\n      __typename\n    }\n    __typename\n  }\n  nextItem {\n    content {\n      ...ContentUnion\n      __typename\n    }\n    showNotice {\n      ...ShowNotice\n      __typename\n    }\n    showNoticeAt\n    __typename\n  }\n  amazonPlaybackData {\n    pid\n    playbackToken\n    materialType\n    __typename\n  }\n  playheadPosition\n  vizbeeStreamInfo {\n    customStreamInfo\n    __typename\n  }\n  closedCaptions {\n    ttml {\n      location\n      __typename\n    }\n    vtt {\n      location\n      __typename\n    }\n    xml {\n      location\n      __typename\n    }\n    __typename\n  }\n  hints {\n    duration\n    seekAllowed\n    trackingEnabled\n    trackingId\n    __typename\n  }\n  streams(types: $streamTypes) {\n    playlistUrl\n    closedCaptionsEmbedded\n    packagingSystem\n    encryptionScheme\n    videoQuality {\n      height\n      width\n      __typename\n    }\n    widevine {\n      authenticationToken\n      licenseServerUrl\n      __typename\n    }\n    playready {\n      authenticationToken\n      licenseServerUrl\n      __typename\n    }\n    fairplay {\n      authenticationToken\n      certificateUrl\n      licenseServerUrl\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment StartBilling on StartBilling {\n  type\n  __typename\n}\n\nfragment LogIn on LogIn {\n  type\n  __typename\n}\n\nfragment Noop on Noop {\n  type\n  __typename\n}\n\nfragment PreviewContent on PreviewContent {\n  type\n  title\n  description\n  stream {\n    sources {\n      hls {\n        location\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ConfirmProvider on ConfirmProvider {\n  type\n  __typename\n}\n\nfragment UnlinkedProvider on UnlinkedProvider {\n  type\n  __typename\n}\n\nquery PlayFlow($id: String!, $supportedActions: [PlayFlowActionEnum!]!, $context: String, $behavior: BehaviorEnum = DEFAULT, $streamTypes: [StreamDefinition!]) {\n  playFlow(\n    id: $id\n    supportedActions: $supportedActions\n    context: $context\n    behavior: $behavior\n  ) {\n    ...ShowNotice\n    ...OpenUrl\n    ...PlayContent\n    ...StartBilling\n    ...LogIn\n    ...Noop\n    ...PreviewContent\n    ...ConfirmProvider\n    ...UnlinkedProvider\n    __typename\n  }\n}"}' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.epix.com/graphql' -X POST -H 'host: api.epix.com' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'traceparent: 00-0000000000000000603047c112148412-32d64f8c890631ef-01' -H 'sec-ch-ua-mobile: ?0' -H 'x-datadog-origin: rum' -H 'x-datadog-sampling-priority: 1' -H 'accept: application/json' -H "x-session-token: ${epixToken}" -H 'x-datadog-trace-id: 6931118721080787986' -H 'x-datadog-parent-id: 3663202811925377519' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://www.mgmplus.com' -H 'sec-fetch-site: cross-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://www.mgmplus.com/' -H 'accept-language: en-US,en;q=0.9' -H 'content-type: application/json' -d '{"operationName":"PlayFlow","variables":{"id":"c2VyaWVzOzEwMTc=","supportedActions":["open_url","show_notice","start_billing","play_content","log_in","noop","confirm_provider","unlinked_provider"],"streamTypes":[{"encryptionScheme":"CBCS","packagingSystem":"DASH"},{"encryptionScheme":"CENC","packagingSystem":"DASH"},{"encryptionScheme":"NONE","packagingSystem":"HLS"},{"encryptionScheme":"SAMPLE_AES","packagingSystem":"HLS"}]},"query":"fragment ShowNotice on ShowNotice {\n  type\n  actions {\n    continuationContext\n    text\n    __typename\n  }\n  description\n  title\n  __typename\n}\n\nfragment OpenUrl on OpenUrl {\n  type\n  url\n  __typename\n}\n\nfragment Content on Content {\n  title\n  __typename\n}\n\nfragment Movie on Movie {\n  id\n  shortName\n  __typename\n}\n\nfragment Episode on Episode {\n  id\n  series {\n    shortName\n    __typename\n  }\n  seasonNumber\n  number\n  __typename\n}\n\nfragment Preroll on Preroll {\n  id\n  __typename\n}\n\nfragment ContentUnion on ContentUnion {\n  ...Content\n  ...Movie\n  ...Episode\n  ...Preroll\n  __typename\n}\n\nfragment PlayContent on PlayContent {\n  type\n  continuationContext\n  heartbeatToken\n  currentItem {\n    content {\n      ...ContentUnion\n      __typename\n    }\n    __typename\n  }\n  nextItem {\n    content {\n      ...ContentUnion\n      __typename\n    }\n    showNotice {\n      ...ShowNotice\n      __typename\n    }\n    showNoticeAt\n    __typename\n  }\n  amazonPlaybackData {\n    pid\n    playbackToken\n    materialType\n    __typename\n  }\n  playheadPosition\n  vizbeeStreamInfo {\n    customStreamInfo\n    __typename\n  }\n  closedCaptions {\n    ttml {\n      location\n      __typename\n    }\n    vtt {\n      location\n      __typename\n    }\n    xml {\n      location\n      __typename\n    }\n    __typename\n  }\n  hints {\n    duration\n    seekAllowed\n    trackingEnabled\n    trackingId\n    __typename\n  }\n  streams(types: $streamTypes) {\n    playlistUrl\n    closedCaptionsEmbedded\n    packagingSystem\n    encryptionScheme\n    videoQuality {\n      height\n      width\n      __typename\n    }\n    widevine {\n      authenticationToken\n      licenseServerUrl\n      __typename\n    }\n    playready {\n      authenticationToken\n      licenseServerUrl\n      __typename\n    }\n    fairplay {\n      authenticationToken\n      certificateUrl\n      licenseServerUrl\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment StartBilling on StartBilling {\n  type\n  __typename\n}\n\nfragment LogIn on LogIn {\n  type\n  __typename\n}\n\nfragment Noop on Noop {\n  type\n  __typename\n}\n\nfragment PreviewContent on PreviewContent {\n  type\n  title\n  description\n  stream {\n    sources {\n      hls {\n        location\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ConfirmProvider on ConfirmProvider {\n  type\n  __typename\n}\n\nfragment UnlinkedProvider on UnlinkedProvider {\n  type\n  __typename\n}\n\nquery PlayFlow($id: String!, $supportedActions: [PlayFlowActionEnum!]!, $context: String, $behavior: BehaviorEnum = DEFAULT, $streamTypes: [StreamDefinition!]) {\n  playFlow(\n    id: $id\n    supportedActions: $supportedActions\n    context: $context\n    behavior: $behavior\n  ) {\n    ...ShowNotice\n    ...OpenUrl\n    ...PlayContent\n    ...StartBilling\n    ...LogIn\n    ...Noop\n    ...PreviewContent\n    ...ConfirmProvider\n    ...UnlinkedProvider\n    __typename\n  }\n}"}' --user-agent "${UA_BROWSER}")
 
     local isBlocked=$(echo "$tmpresult" | grep -i 'MGM+ is only available in the United States')
     local isOK=$(echo "$tmpresult" | grep -i 'StartBilling')
@@ -2241,7 +2236,7 @@ function MediaUnlockTest_NLZIET() {
 }
 
 function MediaUnlockTest_videoland() {
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.videoland.com/subscribe/videoland-account/graphql' -X POST -H 'host: api.videoland.com' -H 'connection: keep-alive' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'apollographql-client-name: apollo_accounts_base' -H 'traceparent: 00-cab2dbd109bf1e003903ec43eb4c067d-623ef8e56174b85a-01' -H 'sec-ch-ua-mobile: ?0' -H 'accept: */*' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://www.videoland.com' -H 'sec-fetch-site: same-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://www.videoland.com/' -H 'accept-language: en-US,en;q=0.9' -H 'content-type: application/json' -d '{"operationName":"IsOnboardingGeoBlocked","variables":{},"query":"query IsOnboardingGeoBlocked {\n  isOnboardingGeoBlocked\n}\n"}' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.videoland.com/subscribe/videoland-account/graphql' -X POST -H 'host: api.videoland.com' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'apollographql-client-name: apollo_accounts_base' -H 'traceparent: 00-cab2dbd109bf1e003903ec43eb4c067d-623ef8e56174b85a-01' -H 'sec-ch-ua-mobile: ?0' -H 'accept: */*' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://www.videoland.com' -H 'sec-fetch-site: same-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://www.videoland.com/' -H 'accept-language: en-US,en;q=0.9' -H 'content-type: application/json' -d '{"operationName":"IsOnboardingGeoBlocked","variables":{},"query":"query IsOnboardingGeoBlocked {\n  isOnboardingGeoBlocked\n}\n"}' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r videoland:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -2257,7 +2252,7 @@ function MediaUnlockTest_videoland() {
 }
 
 function MediaUnlockTest_NPO_Start_Plus() {
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.npo.nl/start/api/domain/player-token?productId=LI_NL1_4188102' -H 'host: www.npo.nl' -H 'connection: keep-alive' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'accept: application/json, text/plain, */*' -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-site: same-origin' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://www.npo.nl/start/live?channel=NPO1' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.npo.nl/start/api/domain/player-token?productId=LI_NL1_4188102' -H 'host: www.npo.nl' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'accept: application/json, text/plain, */*' -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-site: same-origin' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://www.npo.nl/start/live?channel=NPO1' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r NPO Start Plus:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -2454,7 +2449,7 @@ function MediaUnlockTest_AcornTV() {
         return
     fi
 
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://acorn.tv/' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://acorn.tv/' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Acorn TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -2668,7 +2663,7 @@ function MediaUnlockTest_NBATV() {
 }
 
 function MediaUnlockTest_Directv() {
-    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://stream.directv.com/watchnow' -w %{http_code} -o /dev/null -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' --user-agent "${UA_BROWSER}")
+    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://stream.directv.com/watchnow' -w %{http_code} -o /dev/null -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' --user-agent "${UA_BROWSER}")
 
     case "$result" in
         '000') echo -n -e "\r Directv Stream:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
@@ -2709,7 +2704,7 @@ function RegionTest_NetflixCDN() {
     fi
 
     if ! validate_intranet "$cdnIP"; then
-        local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -s "https://api.ip.sb/geoip/${cdnIP}" -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'cache-control: no-cache' -H 'pragma: no-cache' -H 'priority: u=0, i' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+        local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -s "https://api.ip.sb/geoip/${cdnIP}" -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
         if [ -z "$tmpresult1" ]; then
             echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
             return
@@ -3111,7 +3106,7 @@ function MediaUnlockTest_MaoriTV() {
         return
     fi
 
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.maoriplus.co.nz/live-tv/whakaata-maori' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.maoriplus.co.nz/live-tv/whakaata-maori' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -3616,7 +3611,7 @@ function MediaUnlockTest_musicjp() {
 }
 
 function MediaUnlockTest_InstagramMusic() {
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.instagram.com/api/graphql' -H 'Accept: */*' -H 'Accept-Language: en-US,en;q=0.9' -H 'Connection: keep-alive' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Cookie: csrftoken=mmCtHhtfZRG-K3WgoYMemg; dpr=1.75; _js_ig_did=809EA442-22F7-4844-9470-ABC2AC4DE7AE; _js_datr=rb21ZbL7KR_5DN8m_43oEtgn; mid=ZbW9rgALAAECR590Ukv8bAlT8YQX; ig_did=809EA442-22F7-4844-9470-ABC2AC4DE7AE; ig_nrcb=1' -H 'Origin: https://www.instagram.com' -H 'Referer: https://www.instagram.com/p/C2YEAdOh9AB/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-origin' -H 'X-ASBD-ID: 129477' -H 'X-CSRFToken: mmCtHhtfZRG-K3WgoYMemg' -H 'X-FB-Friendly-Name: PolarisPostActionLoadPostQueryQuery' -H 'X-FB-LSD: AVrkL73GMdk' -H 'X-IG-App-ID: 936619743392459' -H 'dpr: 1.75' -H 'sec-ch-prefers-color-scheme: light' -H "sec-ch-ua: "${UA_SEC_CH_UA}"" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-model: ""' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-ch-ua-platform-version: "10.0.0"' -H 'viewport-width: 1640' --data-raw 'av=0&__d=www&__user=0&__a=1&__req=3&__hs=19750.HYP%3Ainstagram_web_pkg.2.1..0.0&dpr=1&__ccg=UNKNOWN&__rev=1011068636&__s=drshru%3Agu4p3s%3A0d8tzk&__hsi=7328972521009111950&__dyn=7xeUjG1mxu1syUbFp60DU98nwgU29zEdEc8co2qwJw5ux609vCwjE1xoswIwuo2awlU-cw5Mx62G3i1ywOwv89k2C1Fwc60AEC7U2czXwae4UaEW2G1NwwwNwKwHw8Xxm16wUwtEvw4JwJCwLyES1Twoob82ZwrUdUbGwmk1xwmo6O1FwlE6PhA6bxy4UjK5V8&__csr=gtneJ9lGF4HlRX-VHjmipBDGAhGuWV4uEyXyp22u6pU-mcx3BCGjHS-yabGq4rhoWBAAAKamtnBy8PJeUgUymlVF48AGGWxCiUC4E9HG78og01bZqx106Ag0clE0kVwdy0Nx4w2TU0iGDgChwmUrw2wVFQ9Bg3fw4uxfo2ow0asW&__comet_req=7&lsd=AVrkL73GMdk&jazoest=2909&__spin_r=1011068636&__spin_b=trunk&__spin_t=1706409389&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=PolarisPostActionLoadPostQueryQuery&variables=%7B%22shortcode%22%3A%22C2YEAdOh9AB%22%2C%22fetch_comment_count%22%3A40%2C%22fetch_related_profile_media_count%22%3A3%2C%22parent_comment_count%22%3A24%2C%22child_comment_count%22%3A3%2C%22fetch_like_count%22%3A10%2C%22fetch_tagged_user_count%22%3Anull%2C%22fetch_preview_comment_count%22%3A2%2C%22has_threaded_comments%22%3Atrue%2C%22hoisted_comment_id%22%3Anull%2C%22hoisted_reply_id%22%3Anull%7D&server_timestamps=true&doc_id=10015901848480474' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.instagram.com/api/graphql' -H 'Accept: */*' -H 'Accept-Language: en-US,en;q=0.9' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Cookie: csrftoken=mmCtHhtfZRG-K3WgoYMemg; dpr=1.75; _js_ig_did=809EA442-22F7-4844-9470-ABC2AC4DE7AE; _js_datr=rb21ZbL7KR_5DN8m_43oEtgn; mid=ZbW9rgALAAECR590Ukv8bAlT8YQX; ig_did=809EA442-22F7-4844-9470-ABC2AC4DE7AE; ig_nrcb=1' -H 'Origin: https://www.instagram.com' -H 'Referer: https://www.instagram.com/p/C2YEAdOh9AB/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-origin' -H 'X-ASBD-ID: 129477' -H 'X-CSRFToken: mmCtHhtfZRG-K3WgoYMemg' -H 'X-FB-Friendly-Name: PolarisPostActionLoadPostQueryQuery' -H 'X-FB-LSD: AVrkL73GMdk' -H 'X-IG-App-ID: 936619743392459' -H 'dpr: 1.75' -H 'sec-ch-prefers-color-scheme: light' -H "sec-ch-ua: "${UA_SEC_CH_UA}"" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-model: ""' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-ch-ua-platform-version: "10.0.0"' -H 'viewport-width: 1640' --data-raw 'av=0&__d=www&__user=0&__a=1&__req=3&__hs=19750.HYP%3Ainstagram_web_pkg.2.1..0.0&dpr=1&__ccg=UNKNOWN&__rev=1011068636&__s=drshru%3Agu4p3s%3A0d8tzk&__hsi=7328972521009111950&__dyn=7xeUjG1mxu1syUbFp60DU98nwgU29zEdEc8co2qwJw5ux609vCwjE1xoswIwuo2awlU-cw5Mx62G3i1ywOwv89k2C1Fwc60AEC7U2czXwae4UaEW2G1NwwwNwKwHw8Xxm16wUwtEvw4JwJCwLyES1Twoob82ZwrUdUbGwmk1xwmo6O1FwlE6PhA6bxy4UjK5V8&__csr=gtneJ9lGF4HlRX-VHjmipBDGAhGuWV4uEyXyp22u6pU-mcx3BCGjHS-yabGq4rhoWBAAAKamtnBy8PJeUgUymlVF48AGGWxCiUC4E9HG78og01bZqx106Ag0clE0kVwdy0Nx4w2TU0iGDgChwmUrw2wVFQ9Bg3fw4uxfo2ow0asW&__comet_req=7&lsd=AVrkL73GMdk&jazoest=2909&__spin_r=1011068636&__spin_b=trunk&__spin_t=1706409389&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=PolarisPostActionLoadPostQueryQuery&variables=%7B%22shortcode%22%3A%22C2YEAdOh9AB%22%2C%22fetch_comment_count%22%3A40%2C%22fetch_related_profile_media_count%22%3A3%2C%22parent_comment_count%22%3A24%2C%22child_comment_count%22%3A3%2C%22fetch_like_count%22%3A10%2C%22fetch_tagged_user_count%22%3Anull%2C%22fetch_preview_comment_count%22%3A2%2C%22has_threaded_comments%22%3Atrue%2C%22hoisted_comment_id%22%3Anull%2C%22hoisted_reply_id%22%3Anull%7D&server_timestamps=true&doc_id=10015901848480474' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Instagram Licensed Audio:\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -3973,7 +3968,7 @@ function MediaUnlockTest_NaverTV() {
     local signature=$(printf "%s" "${sign_text}" | openssl dgst -sha1 -hmac "${key}" -binary | openssl base64)
     local signature_encoded=$(printf "%s" "${signature}" | sed 's/ /%20/g;s/!/%21/g;s/"/%22/g;s/#/%23/g;s/\$/%24/g;s/\&/%26/g;s/'\''/%27/g;s/(/%28/g;s/)/%29/g;s/\*/%2a/g;s/+/%2b/g;s/,/%2c/g;s/\//%2f/g;s/:/%3a/g;s/;/%3b/g;s/=/%3d/g;s/?/%3f/g;s/@/%40/g;s/\[/%5b/g;s/\]/%5d/g')
     local req_url="${base_url}now_web2/now_web_api/v1/clips/31030608/play-info?msgpad=${ts}&md=${signature_encoded}"
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s "${req_url}" --user-agent "${UA_Browser}" -H 'host: apis.naver.com' -H 'connection: keep-alive' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'accept: application/json, text/plain, */*' -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://tv.naver.com' -H 'sec-fetch-site: same-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://tv.naver.com/v/31030608' -H 'accept-language: en-US,en;q=0.9')
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s "${req_url}" --user-agent "${UA_Browser}" -H 'host: apis.naver.com' -H "sec-ch-ua: ${UA_SecCHUA}" -H 'accept: application/json, text/plain, */*' -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'origin: https://tv.naver.com' -H 'sec-fetch-site: same-site' -H 'sec-fetch-mode: cors' -H 'sec-fetch-dest: empty' -H 'referer: https://tv.naver.com/v/31030608' -H 'accept-language: en-US,en;q=0.9')
 
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -4076,7 +4071,7 @@ function MediaUnlockTest_Watcha() {
         return
     fi
 
-    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://watcha.com/' -w %{http_code} -o /dev/null -H 'host: watcha.com' -H 'connection: keep-alive' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'upgrade-insecure-requests: 1' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
+    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://watcha.com/' -w %{http_code} -o /dev/null -H 'host: watcha.com' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'upgrade-insecure-requests: 1' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
 
     case "$result" in
         '000') echo -n -e "\r WATCHA:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
@@ -4207,7 +4202,7 @@ function MediaUnlockTest_NFLPlus() {
 }
 
 function MediaUnlockTest_SkyShowTime() {
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://www.skyshowtime.com/' -w "_TAG_%{http_code}_TAG_" -o /dev/null -D - -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://www.skyshowtime.com/' -w "_TAG_%{http_code}_TAG_" -o /dev/null -D - -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.9' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
 
     local httpCode=$(echo "$tmpresult" | grep '_TAG_' | awk -F'_TAG_' '{print $2}')
     if [ "$httpCode" == '000' ]; then
@@ -4246,7 +4241,7 @@ function GameTest_MathsSpot() {
         return
     fi
 
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://mathsspot.com/' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://mathsspot.com/' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -4449,7 +4444,7 @@ function MediaUnlockTest_AISPlay() {
 
 function WebTest_OpenAI() {
     local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -s 'https://api.openai.com/compliance/cookie_requirements' -H 'authority: api.openai.com' -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'authorization: Bearer null' -H 'content-type: application/json' -H 'origin: https://platform.openai.com' -H 'referer: https://platform.openai.com/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --user-agent "${UA_BROWSER}")
-    local tmpresult2=$(curl ${CURL_DEFAULT_OPTS} -s 'https://ios.chat.openai.com/' -H 'authority: ios.chat.openai.com' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+    local tmpresult2=$(curl ${CURL_DEFAULT_OPTS} -s 'https://ios.chat.openai.com/' -H 'authority: ios.chat.openai.com' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult1" ]; then
         echo -n -e "\r ChatGPT:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -4482,7 +4477,7 @@ function WebTest_OpenAI() {
 }
 
 function WebTest_MetaAI() {
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.meta.ai/' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.meta.ai/' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Meta AI:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -4687,13 +4682,13 @@ function MediaUnlockTest_SonyLiv() {
 }
 
 function MediaUnlockTest_JioCinema() {
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://apis-jiocinema.voot.com/location' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: en-US,en;q=0.9' -H 'Cache-Control: no-cache' -H 'Connection: keep-alive' -H 'Origin: https://www.jiocinema.com'   -H 'Pragma: no-cache' -H 'Referer: https://www.jiocinema.com/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: cross-site' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://apis-jiocinema.voot.com/location' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: en-US,en;q=0.9' -H 'Origin: https://www.jiocinema.com' -H 'Referer: https://www.jiocinema.com/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: cross-site' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Jio Cinema:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
 
-    local tmpresult2=$(curl ${CURL_DEFAULT_OPTS} -s 'https://content-jiovoot.voot.com/psapi/voot/v1/voot-web//view/show/3500210?subNavId=38fa57ba_1706064514668&excludeTray=player-tray,subnav&responseType=common&devicePlatformType=desktop&page=1&layoutCohort=default&supportedChips=comingsoon' -X 'OPTIONS' -H 'Accept: */*' -H 'Accept-Language: en-US,en;q=0.9' -H 'Access-Control-Request-Headers: app-version' -H 'Access-Control-Request-Method: GET' -H 'Connection: keep-alive' -H 'Origin: https://www.jiocinema.com' -H 'Referer: https://www.jiocinema.com/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: cross-site' --user-agent "${UA_BROWSER}")
+    local tmpresult2=$(curl ${CURL_DEFAULT_OPTS} -s 'https://content-jiovoot.voot.com/psapi/voot/v1/voot-web//view/show/3500210?subNavId=38fa57ba_1706064514668&excludeTray=player-tray,subnav&responseType=common&devicePlatformType=desktop&page=1&layoutCohort=default&supportedChips=comingsoon' -X 'OPTIONS' -H 'Accept: */*' -H 'Accept-Language: en-US,en;q=0.9' -H 'Access-Control-Request-Headers: app-version' -H 'Access-Control-Request-Method: GET' -H 'Origin: https://www.jiocinema.com' -H 'Referer: https://www.jiocinema.com/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: cross-site' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult2" ]; then
         echo -n -e "\r Jio Cinema:\t\t\t\t${Font_Red}Failed (Network Connection 1)${Font_Suffix}\n"
         return
