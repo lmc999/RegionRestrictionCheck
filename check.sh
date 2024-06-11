@@ -35,7 +35,7 @@ gen_uuid() {
         return 0
     fi
 
-    if command_exists powershell && [ "$OS_WINDOWS" == '1' ]; then
+    if command_exists powershell && [ "$OS_WINDOWS" == 1 ]; then
         local genuuid=$(powershell -c "[guid]::NewGuid().ToString()")
         echo "${genuuid}"
         return 0
@@ -66,13 +66,13 @@ resolve_ip_address() {
     local domain="$1"
     local recordType="$2"
 
-    if command_exists nslookup && [ "$OS_WINDOWS" != '1' ]; then
+    if command_exists nslookup && [ "$OS_WINDOWS" != 1 ]; then
         local nslookupExists=1
     fi
     if command_exists dig; then
         local digExists=1
     fi
-    if [ "$OS_IOS" == '1' ]; then
+    if [ "$OS_IOS" == 1 ]; then
         local nslookupExists=0
         local digExists=0
     fi
@@ -102,13 +102,13 @@ resolve_ip_address() {
 
     if [ "$recordType" == 'AAAA' ]; then
         local pingArgs='-6 -c 1 -w 1 -W 1'
-        [ "$OS_ANDROID" == '1' ] && pingArgs='-c 1 -w 1 -W 1'
+        [ "$OS_ANDROID" == 1 ] && pingArgs='-c 1 -w 1 -W 1'
         local result=$(ping6 ${pingArgs} "${domain}" 2>/dev/null | head -n 1 | grep -woP '\s\(\K[\d:a-f]+')
         echo "${result}"
         return
     else
         local pingArgs='-4 -c 1 -w 1 -W 1'
-        [ "$OS_ANDROID" == '1' ] && pingArgs='-c 1 -w 1 -W 1'
+        [ "$OS_ANDROID" == 1 ] && pingArgs='-c 1 -w 1 -W 1'
         local result=$(ping ${pingArgs} "${domain}" 2>/dev/null | head -n 1 | grep -woP '\s\(\K[\d.]+')
         echo "${result}"
         return
@@ -130,6 +130,9 @@ validate_proxy() {
 }
 
 validate_intranet() {
+    if [ -z "$1" ]; then
+        echo -e "${Font_Red}Param missing.${Font_Suffix}"
+    fi
     # See https://en.wikipedia.org/wiki/Reserved_IP_addresses
     local tmpresult=$(echo "$1" | grep -E '(^|\s)(10\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|172\.(1[6-9]|2[0-9]|3[01])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|192\.168\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|100\.([6-9][4-9]|1[0-2][0-7])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|169\.254\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|192\.88\.99\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|192\.0\.(0|2)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|198\.(1[89])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|198\.51\.100\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|203\.0\.113\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|2[23][4-9]\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|233\.252\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])|(24[0-9]|25[0-5])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9]))(\s|$)')
     if [ -z "$tmpresult" ]; then
@@ -152,16 +155,17 @@ check_proxy_connectivity() {
 check_net_connctivity() {
     if [ -z "$1" ]; then
         echo -e "${Font_Red}Param missing.${Font_Suffix}"
+        exit 1
     fi
 
-    if [ "$1" == '4' ]; then
+    if [ "$1" == 4 ]; then
         local result1=$(curl -4 ${CURL_OPTS} -fs 'http://www.msftconnecttest.com/connecttest.txt' -w '%{http_code}' -o /dev/null --user-agent "${UA_BROWSER}")
         if [ "$result1" == '200' ]; then
             return 0
         fi
     fi
 
-    if [ "$1" == '6' ]; then
+    if [ "$1" == 6 ]; then
         local result2=$(curl -6 ${CURL_OPTS} -fs 'http://ipv6.msftconnecttest.com/connecttest.txt' -w '%{http_code}' -o /dev/null --user-agent "${UA_BROWSER}")
         if [ "$result2" == '200' ]; then
             return 0
@@ -419,7 +423,7 @@ show_region() {
 }
 
 function GameTest_Steam() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Steam Currency:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -441,7 +445,7 @@ function GameTest_Steam() {
 
 # 流媒体解锁测试-动画疯
 function MediaUnlockTest_BahamutAnime() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -482,7 +486,7 @@ function MediaUnlockTest_BahamutAnime() {
 
 # 流媒体解锁测试-哔哩哔哩大陆限定
 function MediaUnlockTest_BilibiliChinaMainland() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r BiliBili China Mainland Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -505,7 +509,7 @@ function MediaUnlockTest_BilibiliChinaMainland() {
 
 # 流媒体解锁测试-哔哩哔哩港澳台限定
 function MediaUnlockTest_BilibiliHKMCTW() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r BiliBili Hongkong/Macau/Taiwan:\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -528,7 +532,7 @@ function MediaUnlockTest_BilibiliHKMCTW() {
 
 # 流媒体解锁测试-哔哩哔哩台湾限定
 function MediaUnlockTest_BilibiliTW() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Bilibili Taiwan Only:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -550,7 +554,7 @@ function MediaUnlockTest_BilibiliTW() {
 }
 
 function MediaUnlockTest_AbemaTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Abema.TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -574,7 +578,7 @@ function MediaUnlockTest_AbemaTV() {
 }
 
 function GameTest_PCRJP() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Princess Connect Re:Dive Japan:\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -601,7 +605,7 @@ function GameTest_UMAJP() {
 }
 
 function GameTest_Kancolle() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Kancolle Japan:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -638,7 +642,7 @@ function MediaUnlockTest_Lemino() {
 }
 
 function MediaUnlockTest_mora() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Mora:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -655,7 +659,7 @@ function MediaUnlockTest_mora() {
 }
 
 function MediaUnlockTest_BBCiPLAYER() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r BBC iPLAYER:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -714,7 +718,7 @@ function MediaUnlockTest_Netflix() {
 }
 
 function MediaUnlockTest_DisneyPlus() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Disney+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -784,7 +788,7 @@ function MediaUnlockTest_DisneyPlus() {
 }
 
 function MediaUnlockTest_Dazn() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -805,7 +809,7 @@ function MediaUnlockTest_Dazn() {
 }
 
 function MediaUnlockTest_HuluJP() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Hulu Japan:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -838,7 +842,7 @@ function MediaUnlockTest_HuluJP() {
 }
 
 function MediaUnlockTest_MyTVSuper() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r MyTVSuper:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -862,7 +866,7 @@ function MediaUnlockTest_MyTVSuper() {
 }
 
 function MediaUnlockTest_NowE() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -882,7 +886,7 @@ function MediaUnlockTest_NowE() {
 }
 
 function MediaUnlockTest_ViuTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Viu.TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -918,7 +922,7 @@ function MediaUnlockTest_unext() {
 }
 
 function MediaUnlockTest_wowow() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r WOWOW:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -995,7 +999,7 @@ function MediaUnlockTest_wowow() {
 }
 
 function MediaUnlockTest_TVer() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1065,7 +1069,7 @@ function MediaUnlockTest_TVer() {
 }
 
 function MediaUnlockTest_HamiVideo() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Hami Video:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1085,7 +1089,7 @@ function MediaUnlockTest_HamiVideo() {
 }
 
 function MediaUnlockTest_4GTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r 4GTV.TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1129,7 +1133,7 @@ function MediaUnlockTest_SlingTV() {
 }
 
 function MediaUnlockTest_PlutoTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Pluto TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1212,7 +1216,7 @@ function MediaUnlockTest_Showmax() {
 }
 
 function MediaUnlockTest_Channel4() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Channel 4:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1228,7 +1232,7 @@ function MediaUnlockTest_Channel4() {
 }
 
 function MediaUnlockTest_ITVHUB() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r ITV Hub:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1259,7 +1263,7 @@ function MediaUnlockTest_ITVHUB() {
 }
 
 function MediaUnlockTest_DSTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r DSTV:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1275,7 +1279,7 @@ function MediaUnlockTest_DSTV() {
 }
 
 function RegionTest_iQYI() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r iQyi Oversea Region:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1318,7 +1322,7 @@ function MediaUnlockTest_HuluUS() {
 }
 
 function MediaUnlockTest_encoreTVB() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r encoreTVB:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1355,7 +1359,7 @@ function MediaUnlockTest_Molotov() {
 }
 
 function MediaUnlockTest_LineTVTW() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r LineTV.TW:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1391,7 +1395,7 @@ function MediaUnlockTest_LineTVTW() {
 }
 
 function MediaUnlockTest_ViuCom() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Viu.com:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1422,7 +1426,7 @@ function MediaUnlockTest_ViuCom() {
 }
 
 function MediaUnlockTest_Niconico() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Niconico:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1503,7 +1507,7 @@ function MediaUnlockTest_ParamountPlus() {
 }
 
 function MediaUnlockTest_KKTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r KKTV:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1547,7 +1551,7 @@ function MediaUnlockTest_PeacockTV() {
 }
 
 function MediaUnlockTest_FOD() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r FOD(Fuji TV):\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1621,10 +1625,10 @@ function RegionTest_YouTubeCDN() {
         return
     fi
     if [ -n "$isIataFound1" ]; then
-        local location=$(echo "$IATACODE" | grep -w "$iata" | awk -F'|' '{print $1}' | awk '$1=$1')
+        local location=$(echo "$IATACODE" | grep -w "$iata" | awk -F'|' '{print $1}' | awk '{$1=$1; print}')
     fi
     if [ -z "$isIataFound1" ] && [ -n "$isIataFound2" ]; then
-        local location=$(echo "$IATACODE2" | grep -w "$iata" | awk -F',' '{print $2}' | awk '$1=$1' | tr A-Z a-z | sed 's/\b[a-z]/\U&/g')
+        local location=$(echo "$IATACODE2" | grep -w "$iata" | awk -F',' '{print $2}' | awk '{$1=$1; print}' | tr A-Z a-z | sed 's/\b[a-z]/\U&/g')
     fi
 
     if [ -z "$isIDC" ]; then
@@ -1690,7 +1694,7 @@ function MediaUnlockTest_BritBox() {
 }
 
 function MediaUnlockTest_PrimeVideo() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Amazon Prime Video:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1721,7 +1725,7 @@ function MediaUnlockTest_PrimeVideo() {
 }
 
 function MediaUnlockTest_Radiko() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Radiko:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1753,7 +1757,7 @@ function MediaUnlockTest_Radiko() {
 }
 
 function MediaUnlockTest_DMM() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r DMM:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1785,7 +1789,7 @@ function MediaUnlockTest_DMM() {
 }
 
 function MediaUnlockTest_DMMTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r DMM TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1816,7 +1820,7 @@ function MediaUnlockTest_DMMTV() {
 }
 
 function MediaUnlockTest_Catchplay() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r CatchPlay+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1878,7 +1882,7 @@ function MediaUnlockTest_HotStar() {
 }
 
 function MediaUnlockTest_LiTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r LiTV:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1907,7 +1911,7 @@ function MediaUnlockTest_LiTV() {
 }
 
 function MediaUnlockTest_FuboTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1949,7 +1953,7 @@ function MediaUnlockTest_Fox() {
 }
 
 function MediaUnlockTest_Joyn() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Joyn:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -1987,7 +1991,7 @@ function MediaUnlockTest_Joyn() {
 }
 
 function MediaUnlockTest_SpotvNow() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r SPOTV NOW:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2008,7 +2012,7 @@ function MediaUnlockTest_SpotvNow() {
 }
 
 function MediaUnlockTest_SKY_DE() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r SKY DE:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2029,7 +2033,7 @@ function MediaUnlockTest_SKY_DE() {
 }
 
 function MediaUnlockTest_ZDF() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r ZDF: \t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2045,7 +2049,7 @@ function MediaUnlockTest_ZDF() {
 }
 
 function MediaUnlockTest_HBOGO_ASIA() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r HBO GO Asia:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2072,7 +2076,7 @@ function MediaUnlockTest_HBOGO_ASIA() {
 }
 
 function MediaUnlockTest_EPIX() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r MGM+:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2117,7 +2121,7 @@ function MediaUnlockTest_EPIX() {
 }
 
 function MediaUnlockTest_NLZIET() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r NLZIET:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2182,7 +2186,7 @@ function MediaUnlockTest_NPO_Start_Plus() {
 }
 
 function MediaUnlockTest_RakutenTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Rakuten TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2218,7 +2222,7 @@ function MediaUnlockTest_RakutenTV() {
 }
 
 function MediaUnlockTest_MoviStarPlus() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Movistar+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2234,7 +2238,7 @@ function MediaUnlockTest_MoviStarPlus() {
 }
 
 function MediaUnlockTest_Starz() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2275,7 +2279,7 @@ function MediaUnlockTest_Starz() {
 }
 
 function MediaUnlockTest_CanalPlus() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Canal+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2330,7 +2334,7 @@ function MediaUnlockTest_Sky_CH() {
 }
 
 function MediaUnlockTest_CBCGem() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r CBC Gem:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2356,7 +2360,7 @@ function MediaUnlockTest_CBCGem() {
 }
 
 function MediaUnlockTest_AcornTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Acorn TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2387,7 +2391,7 @@ function MediaUnlockTest_AcornTV() {
 }
 
 function MediaUnlockTest_Crave() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Crave:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2418,7 +2422,7 @@ function MediaUnlockTest_Crave() {
 }
 
 function MediaUnlockTest_Amediateka() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Amediateka:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2449,7 +2453,7 @@ function MediaUnlockTest_Amediateka() {
 }
 
 function MediaUnlockTest_MegogoTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Megogo TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2470,7 +2474,7 @@ function MediaUnlockTest_MegogoTV() {
 }
 
 function MediaUnlockTest_RaiPlay() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Rai Play:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2501,7 +2505,7 @@ function MediaUnlockTest_RaiPlay() {
 }
 
 function MediaUnlockTest_TVBAnywhere() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r TVBAnywhere+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2526,7 +2530,7 @@ function MediaUnlockTest_TVBAnywhere() {
 }
 
 function GameTest_ProjectSekai() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Project Sekai: Colorful Stage:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2542,7 +2546,7 @@ function GameTest_ProjectSekai() {
 }
 
 function GameTest_KonosubaFD() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Konosuba Fantastic Days:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2604,7 +2608,7 @@ function RegionTest_NetflixCDN() {
         return
     fi
 
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         local cdnIP=$(resolve_ip_address "$cdnDomain" 'AAAA')
     else
         local cdnIP=$(resolve_ip_address "$cdnDomain" 'A')
@@ -2638,10 +2642,10 @@ function RegionTest_NetflixCDN() {
     local isIataFound2=$(echo "$IATACODE2" | grep -w "$iata")
 
     if [ -n "$isIataFound1" ]; then
-        local location=$(echo "$IATACODE" | grep -w "$iata" | awk -F'|' '{print $1}' | awk '$1=$1')
+        local location=$(echo "$IATACODE" | grep -w "$iata" | awk -F'|' '{print $1}' | awk '{$1=$1; print}')
     fi
     if [ -z "$isIataFound1" ] && [ -n "$isIataFound2" ]; then
-        local location=$(echo "$IATACODE2" | grep -w "$iata" | awk -F',' '{print $2}' | awk '$1=$1' | tr A-Z a-z | sed 's/\b[a-z]/\U&/g')
+        local location=$(echo "$IATACODE2" | grep -w "$iata" | awk -F',' '{print $2}' | awk '{$1=$1; print}' | tr A-Z a-z | sed 's/\b[a-z]/\U&/g')
     fi
 
     if [ -z "$location" ]; then
@@ -2661,7 +2665,7 @@ function RegionTest_NetflixCDN() {
 }
 
 function MediaUnlockTest_SkyGo() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Sky Go:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2682,7 +2686,7 @@ function MediaUnlockTest_SkyGo() {
 }
 
 function MediaUnlockTest_DirecTVGO() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r DirecTV Go:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2715,7 +2719,7 @@ function MediaUnlockTest_DirecTVGO() {
 }
 
 function MediaUnlockTest_DAM() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Karaoke@DAM:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2731,7 +2735,7 @@ function MediaUnlockTest_DAM() {
 }
 
 function MediaUnlockTest_DiscoveryPlus() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Discovery+:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2845,7 +2849,7 @@ function MediaUnlockTest_ESPNPlus() {
 }
 
 function MediaUnlockTest_Stan() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Stan:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2892,7 +2896,7 @@ function MediaUnlockTest_Binge() {
 }
 
 function MediaUnlockTest_Docplay() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Docplay:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2946,7 +2950,7 @@ function MediaUnlockTest_KayoSports() {
 }
 
 function MediaUnlockTest_NeonTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Neon TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2981,7 +2985,7 @@ function MediaUnlockTest_NeonTV() {
 }
 
 function MediaUnlockTest_SkyGONZ() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r SkyGo NZ:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -2997,7 +3001,7 @@ function MediaUnlockTest_SkyGONZ() {
 }
 
 function MediaUnlockTest_ThreeNow() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r ThreeNow:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3013,7 +3017,7 @@ function MediaUnlockTest_ThreeNow() {
 }
 
 function MediaUnlockTest_MaoriTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Maori TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3075,7 +3079,7 @@ function MediaUnlockTest_MaoriTV() {
 }
 
 function MediaUnlockTest_SBSonDemand() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r SBS on Demand:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3101,7 +3105,7 @@ function MediaUnlockTest_SBSonDemand() {
 }
 
 function MediaUnlockTest_ABCiView() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r ABC iView:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3186,7 +3190,7 @@ function MediaUnlockTest_Telasa() {
 }
 
 function MediaUnlockTest_SetantaSports() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Setanta Sports:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3216,7 +3220,7 @@ function MediaUnlockTest_SetantaSports() {
 }
 
 function MediaUnlockTest_MolaTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Mola TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3246,7 +3250,7 @@ function MediaUnlockTest_MolaTV() {
 }
 
 function MediaUnlockTest_BeinConnect() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Bein Sports Connect:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3262,7 +3266,7 @@ function MediaUnlockTest_BeinConnect() {
 }
 
 function MediaUnlockTest_EurosportRO() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Eurosport RO:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3305,7 +3309,7 @@ function MediaUnlockTest_EurosportRO() {
 }
 
 function MediaUnlockTest_Channel5() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Channel 5:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3328,7 +3332,7 @@ function MediaUnlockTest_Channel5() {
 }
 
 function MediaUnlockTest_MyVideo() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r MyVideo:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3361,7 +3365,7 @@ function MediaUnlockTest_MyVideo() {
 }
 
 function MediaUnlockTest_7plus() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r 7plus:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3383,7 +3387,7 @@ function MediaUnlockTest_7plus() {
 }
 
 function MediaUnlockTest_Channel10() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Channel 10:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3448,7 +3452,7 @@ function MediaUnlockTest_Spotify() {
 }
 
 function MediaUnlockTest_VideoMarket() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r VideoMarket:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3491,7 +3495,7 @@ function MediaUnlockTest_JCOM_ON_DEMAND() {
 }
 
 function MediaUnlockTest_musicjp() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r music.jp:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3546,7 +3550,7 @@ function MediaUnlockTest_InstagramMusic() {
 }
 
 function WebTest_Reddit() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Reddit:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3561,7 +3565,7 @@ function WebTest_Reddit() {
 }
 
 function MediaUnlockTest_Popcornflix() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Popcornflix:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3607,7 +3611,7 @@ function MediaUnlockTest_TubiTV() {
 }
 
 function MediaUnlockTest_Philo() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Philo:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3632,7 +3636,7 @@ function MediaUnlockTest_Philo() {
 }
 
 function MediaUnlockTest_FXNOW() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r FXNOW:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3664,7 +3668,7 @@ function MediaUnlockTest_FXNOW() {
 }
 
 function MediaUnlockTest_Crunchyroll() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Crunchyroll:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3722,7 +3726,7 @@ function MediaUnlockTest_Shudder() {
 }
 
 function MediaUnlockTest_TLCGO() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r TLC GO:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3784,7 +3788,7 @@ function RegionTest_oneTrust() {
 }
 
 function MediaUnlockTest_Wavve() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Wavve:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3803,7 +3807,7 @@ function MediaUnlockTest_Wavve() {
 }
 
 function MediaUnlockTest_Tving() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Tving:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3835,7 +3839,7 @@ function MediaUnlockTest_Tving() {
 }
 
 function MediaUnlockTest_CoupangPlay() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Coupang Play:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3868,7 +3872,7 @@ function MediaUnlockTest_CoupangPlay() {
 }
 
 function MediaUnlockTest_NaverTV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Naver TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3898,7 +3902,7 @@ function MediaUnlockTest_NaverTV() {
 }
 
 function MediaUnlockTest_Afreeca() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Afreeca TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3918,7 +3922,7 @@ function MediaUnlockTest_Afreeca() {
 }
 
 function MediaUnlockTest_KBSDomestic() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r KBS Domestic:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3948,7 +3952,7 @@ function MediaUnlockTest_KBSDomestic() {
 }
 
 function MediaUnlockTest_KBSAmerican() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r KBS American:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3978,7 +3982,7 @@ function MediaUnlockTest_KBSAmerican() {
 }
 
 function MediaUnlockTest_Watcha() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r WATCHA:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -3994,7 +3998,7 @@ function MediaUnlockTest_Watcha() {
 }
 
 function MediaUnlockTest_KOCOWA() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r KOCOWA:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4054,7 +4058,7 @@ function MediaUnlockTest_Crackle() {
 }
 
 function MediaUnlockTest_AETV() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r A&E TV:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4086,7 +4090,7 @@ function MediaUnlockTest_AETV() {
 }
 
 function MediaUnlockTest_NFLPlus() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r NFL+:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4148,7 +4152,7 @@ function MediaUnlockTest_SkyShowTime() {
 }
 
 function GameTest_MathsSpot() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r MathsSpot Roblox:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4199,7 +4203,7 @@ function GameTest_MathsSpot() {
 }
 
 function MediaUnlockTest_BGlobalSEA() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r B-Global SouthEastAsia:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4220,7 +4224,7 @@ function MediaUnlockTest_BGlobalSEA() {
 }
 
 function MediaUnlockTest_BGlobalTH() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r B-Global Thailand Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4241,7 +4245,7 @@ function MediaUnlockTest_BGlobalTH() {
 }
 
 function MediaUnlockTest_BGlobalID() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r B-Global Indonesia Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4262,7 +4266,7 @@ function MediaUnlockTest_BGlobalID() {
 }
 
 function MediaUnlockTest_BGlobalVN() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r B-Global Việt Nam Only:\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4283,7 +4287,7 @@ function MediaUnlockTest_BGlobalVN() {
 }
 
 function MediaUnlockTest_AISPlay() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r AIS Play:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4453,7 +4457,7 @@ function WebTest_Wikipedia_Editable() {
 }
 
 function MediaUnlockTest_K_PLUS() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r K+:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4481,7 +4485,7 @@ function MediaUnlockTest_K_PLUS() {
 }
 
 function MediaUnlockTest_TV360() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r TV360:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4502,7 +4506,7 @@ function MediaUnlockTest_TV360() {
 }
 
 function MediaUnlockTest_MeWatch() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r MeWatch:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4534,7 +4538,7 @@ function MediaUnlockTest_MeWatch() {
 }
 
 function MediaUnlockTest_trueID() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r trueID:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4624,7 +4628,7 @@ function MediaUnlockTest_JioCinema() {
 }
 
 function MediaUnlockTest_MXPlayer() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r MX Player:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4669,7 +4673,7 @@ function MediaUnlockTest_Zee5() {
 }
 
 function WebTest_EroGameSpace() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r EroGameSpace:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4690,7 +4694,7 @@ function WebTest_EroGameSpace() {
 }
 
 function MediaUnlockTest_DAnimeStore() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r D Anime Store:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -4711,7 +4715,7 @@ function MediaUnlockTest_DAnimeStore() {
 }
 
 function MediaUnlockTest_RakutenTVJP() {
-    if [ "${USE_IPV6}" == '1' ]; then
+    if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Rakuten TV JP:\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
         return
     fi
@@ -5284,7 +5288,7 @@ validate_region_id() {
         echo -e "${Font_Red}Param missing.${Font_Suffix}"
         exit 1
     fi
-    local regionid=$1
+    local regionid="$1"
     local result=$(echo "$regionid" | grep -E '^[0-9]$|^1[0-1]$|^99$|^66$')
     if [ -z "$result" ]; then
         return 1
@@ -5375,14 +5379,14 @@ function checkIPAddress() {
         echo -e " ${Font_Red}Param missing...${Font_Suffix}"
         exit 1
     fi
-    if [ "$1" == '4' ]; then
+    if [ "$1" == 4 ]; then
         local local_ipv4=$(curl ${CURL_DEFAULT_OPTS} -s https://api64.ipify.org --user-agent "${UA_BROWSER}")
         LOCAL_IPV4_ASTERISK=$(awk -F"." '{print $1"."$2".*.*"}' <<<"${local_ipv4}")
         local get_local_isp4=$(curl ${CURL_DEFAULT_OPTS} -s "https://api.ip.sb/geoip/${local_ipv4}" -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'cache-control: no-cache' -H 'pragma: no-cache' -H 'priority: u=0, i' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
         LOCAL_ISP4=$(echo "$get_local_isp4" | grep 'organization' | cut -f4 -d '"')
         return
     fi
-    if [ "$1" == '6' ]; then
+    if [ "$1" == 6 ]; then
         local local_ipv6=$(curl ${CURL_DEFAULT_OPTS} -s https://api64.ipify.org --user-agent "${UA_BROWSER}")
         LOCAL_IPV6_ASTERISK=$(awk -F":" '{print $1":"$2":"$3":*:*"}' <<<"${local_ipv6}")
         local get_local_isp6=$(curl ${CURL_DEFAULT_OPTS} -s "https://api.ip.sb/geoip/${local_ipv6}" -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'cache-control: no-cache' -H 'pragma: no-cache' -H 'priority: u=0, i' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
@@ -5393,7 +5397,7 @@ function checkIPAddress() {
 
 function checkIPV4() {
     if [ "$LANGUAGE" == 'en' ]; then
-        if [ "$NETWORK_TYPE" == "6" ]; then
+        if [ "$NETWORK_TYPE" == 6 ]; then
             USE_IPV4=0
             echo -e "${Font_SkyBlue}The Script Only Tests IPv6 Results, IPv4 Testing has been Skipped...${Font_Suffix}"
             return
@@ -5414,7 +5418,7 @@ function checkIPV4() {
         echo -e " ${Font_SkyBlue}** Your Network Provider: ${LOCAL_ISP4} (${LOCAL_IPV4_ASTERISK})${Font_Suffix} "
         echo ''
     else
-        if [ "$NETWORK_TYPE" == "6" ]; then
+        if [ "$NETWORK_TYPE" == 6 ]; then
             USE_IPV4=0
             echo -e "${Font_SkyBlue}脚本只检测 IPv6 结果，已跳过 IPv4 检测...${Font_Suffix}"
             return
@@ -5439,7 +5443,7 @@ function checkIPV4() {
 
 function checkIPV6() {
     if [ "$LANGUAGE" == 'en' ]; then
-        if [ "$NETWORK_TYPE" == "4" ]; then
+        if [ "$NETWORK_TYPE" == 4 ]; then
             USE_IPV6=0
             echo -e "${Font_SkyBlue}The Script Only Tests IPv4 Results, IPv6 Testing has been Skipped...${Font_Suffix}"
             return
@@ -5461,7 +5465,7 @@ function checkIPV6() {
         echo -e " ${Font_SkyBlue}** Your Network Provider: ${LOCAL_ISP6} (${LOCAL_IPV6_ASTERISK})${Font_Suffix} "
         echo ''
     else
-        if [ "$NETWORK_TYPE" == "4" ]; then
+        if [ "$NETWORK_TYPE" == 4 ]; then
             USE_IPV6=0
             echo -e "${Font_SkyBlue}脚本只检测 IPv4 结果，已跳过 IPv6 检测...${Font_Suffix}"
             return
@@ -5695,10 +5699,10 @@ function runScript() {
 
 function showGoodbye() {
     case "$NUM" in
-        '1') ADN='TW' ;;
-        '3') ADN='JP' ;;
-        '4') ADN='US' ;;
-        '8') ADN='KR' ;;
+        1) ADN='TW' ;;
+        3) ADN='JP' ;;
+        4) ADN='US' ;;
+        8) ADN='KR' ;;
         *) ADN="$(echo $(($RANDOM % 2 + 1)))" ;;
     esac
 
