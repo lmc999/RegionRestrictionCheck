@@ -5487,7 +5487,7 @@ function checkIPConn() {
     fi
 
     if [ "$LANGUAGE" == 'en' ]; then
-        if [ "$NETWORK_TYPE" == 4 ]; then
+        if [ "$netType" == 4 ]; then
             echo ''
             echo -e " ${Font_SkyBlue}** Checking Results Under IPv4${Font_Suffix}"
             if ! check_net_connctivity 4 ; then
@@ -5501,7 +5501,7 @@ function checkIPConn() {
             showNetworkInfo
             return
         fi
-        if [ "$NETWORK_TYPE" == 6 ]; then
+        if [ "$netType" == 6 ]; then
             echo ''
             echo -e " ${Font_SkyBlue}** Checking Results Under IPv6${Font_Suffix}"
             if ! check_net_connctivity 6 ; then
@@ -5579,16 +5579,26 @@ function checkIPConn() {
             echo ''
             echo -e " ${Font_SkyBlue}** 正在测试默认网络解锁情况${Font_Suffix}"
             if check_net_connctivity 4; then
-                USE_IPV4=1
+                local ipv4Support=1
             fi
             if check_net_connctivity 6; then
-                USE_IPV6=1
+                local ipv6Support=1
             fi
-            if [ "$USE_IPV4" == 0 ] && [ "$USE_IPV6" == 0 ]; then
+            if [ "$ipv4Support" == 0 ] && [ "$ipv6Support" == 0 ]; then
                 echo -e "${Font_Red}当前无网络，请检查您的网络。${Font_Suffix}"
                 USE_IPV4=0
                 USE_IPV6=0
                 exit 1
+            fi
+            # When IPv4 is supported, regardless IPv6 status
+            if [ "$ipv4Support" == 1 ]; then
+                USE_IPV4=1
+                USE_IPV6=0
+            fi
+            # When IPv4 is not available, Use IPv6
+            if [ "$ipv4Support" == 0 ] && [ "$ipv6Support" == 1 ]; then
+                USE_IPV6=1
+                USE_IPV4=0
             fi
 
             CURL_DEFAULT_OPTS="${CURL_OPTS}"
