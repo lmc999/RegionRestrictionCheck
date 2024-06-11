@@ -129,6 +129,22 @@ validate_proxy() {
     fi
 }
 
+validate_ip_address() {
+    if [ -z "$1" ]; then
+        echo -e "${Font_Red}Param missing.${Font_Suffix}"
+        exit 1
+    fi
+
+    if echo "$1" | awk '{$1=$1; print}' | grep -Eq '^([0-9]{1,3}\.){3}[0-9]{1,3}$'; then
+        return 4
+    fi
+    if echo "$1" | awk '{$1=$1; print}' | grep -Eq '^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$'; then
+        return 6
+    fi
+
+    return 1
+}
+
 validate_intranet() {
     if [ -z "$1" ]; then
         echo -e "${Font_Red}Param missing.${Font_Suffix}"
@@ -331,7 +347,7 @@ process() {
             shift
             ;;
         -M | --network-type)
-            NETWORK_TYPE="$2"
+            local netType="$2"
             shift
             ;;
         -E | --language)
@@ -340,12 +356,10 @@ process() {
             ;;
         -X | --x-forwarded-for)
             local xip="$2"
-            X_FORWARD="--header X-Forwarded-For:$xip"
             shift
             ;;
         -P | --proxy)
             local proxy="$2"
-            USE_PROXY="-x $proxy"
             shift
             ;;
         -R | --region)
@@ -368,12 +382,35 @@ process() {
         X_FORWARD=''
     fi
 
+    if [ -n "$xip" ]; then
+        local xip=$(echo "$xip" | awk '{$1=$1; print}')
+        validate_ip_address "$xip"
+        local result="$?"
+        if [ "$result" == 4 ] || [ "$result" == 6 ]; then
+            X_FORWARD="--header X-Forwarded-For:$xip"
+        fi
+    fi
+
     if [ -z "$proxy" ]; then
         USE_PROXY=''
     fi
 
     if [ -n "$proxy" ]; then
-        validate_proxy "$proxy"
+        local proxy=$(echo "$proxy" | awk '{$1=$1; print}')
+        if validate_proxy "$proxy"; then
+            USE_PROXY="-x $proxy"
+        fi
+    fi
+
+    if [ -z "$netType" ]; then
+        NETWORK_TYPE=''
+    fi
+
+    if [ -n "$netType" ]; then
+        local netType=$(echo "$netType" | awk '{$1=$1; print}')
+        if validate_net_type "$netType"; then
+            NETWORK_TYPE="$netType"
+        fi
     fi
 
     if [ -z "$LANGUAGE" ]; then
@@ -5293,7 +5330,20 @@ validate_region_id() {
     if [ -z "$result" ]; then
         return 1
     fi
+    return 0
+}
 
+validate_net_type() {
+    if [ -z "$1" ]; then
+        echo -e "${Font_Red}Param missing.${Font_Suffix}"
+        exit 1
+    fi
+    local netType="$1"
+    local result=$(echo "$netType" | grep -E '^4$|^6$')
+    if [ -z "$result" ]; then
+        echo -e "${Font_Red}Invalid Network Type.${Font_Suffix}"
+        exit 1
+    fi
     return 0
 }
 
