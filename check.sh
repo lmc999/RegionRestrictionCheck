@@ -158,6 +158,33 @@ validate_intranet() {
     return 0
 }
 
+validate_region_id() {
+    if [ -z "$1" ]; then
+        echo -e "${Font_Red}Param missing.${Font_Suffix}"
+        exit 1
+    fi
+    local regionid="$1"
+    local result=$(echo "$regionid" | grep -E '^[0-9]$|^1[0-1]$|^99$|^66$')
+    if [ -z "$result" ]; then
+        return 1
+    fi
+    return 0
+}
+
+validate_net_type() {
+    if [ -z "$1" ]; then
+        echo -e "${Font_Red}Param missing.${Font_Suffix}"
+        exit 1
+    fi
+    local netType="$1"
+    local result=$(echo "$netType" | grep -E '^4$|^6$|^0$')
+    if [ -z "$result" ]; then
+        echo -e "${Font_Red}Invalid Network Type.${Font_Suffix}"
+        exit 1
+    fi
+    return 0
+}
+
 check_proxy_connectivity() {
     local result1=$(curl $USE_NIC $USE_PROXY -s 'https://ip.sb' --user-agent "${UA_BROWSER}" )
     local result2=$(curl $USE_NIC $USE_PROXY -s 'https://1.0.0.1/cdn-cgi/trace' --user-agent "${UA_BROWSER}")
@@ -453,6 +480,31 @@ download_extra_data() {
         echo -e "${Font_Red}Extra data download failed.${Font_Suffix}"
         delay 3
     fi
+}
+
+get_ip_info() {
+    LOCAL_IP_ASTERISK=''
+    LOCAL_ISP=''
+    local local_ip=$(curl ${CURL_DEFAULT_OPTS} -s https://api64.ipify.org --user-agent "${UA_BROWSER}")
+    local get_local_isp=$(curl ${CURL_DEFAULT_OPTS} -s "https://api.ip.sb/geoip/${local_ipv4}" -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'cache-control: no-cache' -H 'pragma: no-cache' -H 'priority: u=0, i' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+
+    if [ -z "$local_ip" ]; then
+        echo -e "${Font_Red}Failed to Query IP Address.${Font_Suffix}"
+    fi
+    if [ -z "$get_local_isp" ]; then
+        echo -e "${Font_Red}Failed to Query IP Info.${Font_Suffix}"
+    fi
+
+    validate_ip_address "$local_ip"
+    local resp="$?"
+    if [ "$resp" == 4 ]; then
+        LOCAL_IP_ASTERISK=$(awk -F"." '{print $1"."$2".*.*"}' <<<"${local_ip}")
+    fi
+    if [ "$resp" == 6 ]; then
+        LOCAL_IP_ASTERISK=$(awk -F":" '{print $1":"$2":"$3":*:*"}' <<<"${local_ip}")
+    fi
+
+    LOCAL_ISP=$(echo "$get_local_isp" | grep 'organization' | cut -f4 -d '"')
 }
 
 show_region() {
@@ -5320,33 +5372,6 @@ function showScriptTitle() {
     fi
 }
 
-validate_region_id() {
-    if [ -z "$1" ]; then
-        echo -e "${Font_Red}Param missing.${Font_Suffix}"
-        exit 1
-    fi
-    local regionid="$1"
-    local result=$(echo "$regionid" | grep -E '^[0-9]$|^1[0-1]$|^99$|^66$')
-    if [ -z "$result" ]; then
-        return 1
-    fi
-    return 0
-}
-
-validate_net_type() {
-    if [ -z "$1" ]; then
-        echo -e "${Font_Red}Param missing.${Font_Suffix}"
-        exit 1
-    fi
-    local netType="$1"
-    local result=$(echo "$netType" | grep -E '^4$|^6$')
-    if [ -z "$result" ]; then
-        echo -e "${Font_Red}Invalid Network Type.${Font_Suffix}"
-        exit 1
-    fi
-    return 0
-}
-
 function inputOptions() {
 
     while :; do
@@ -5424,131 +5449,168 @@ function checkPROXY() {
     fi
 }
 
-function checkIPAddress() {
-    if [ -z $1 ]; then
-        echo -e " ${Font_Red}Param missing...${Font_Suffix}"
+function showNetworkInfo() {
+    echo '--------------------------------'
+    get_ip_info
+    if [ "$LANGUAGE" == 'en' ]; then
+        echo -e " ${Font_SkyBlue}** Your Network Provider: ${LOCAL_ISP} (${LOCAL_IP_ASTERISK})${Font_Suffix} "
+    else
+        echo -e " ${Font_SkyBlue}** 您的网络为: ${LOCAL_ISP} (${LOCAL_IP_ASTERISK})${Font_Suffix}"
+    fi
+    echo ''
+}
+
+function checkIPConn() {
+    if [ -z "$1" ]; then
+        echo -e "${Font_Red}Param missing.${Font_Suffix}"
         exit 1
     fi
-    if [ "$1" == 4 ]; then
-        local local_ipv4=$(curl ${CURL_DEFAULT_OPTS} -s https://api64.ipify.org --user-agent "${UA_BROWSER}")
-        LOCAL_IPV4_ASTERISK=$(awk -F"." '{print $1"."$2".*.*"}' <<<"${local_ipv4}")
-        local get_local_isp4=$(curl ${CURL_DEFAULT_OPTS} -s "https://api.ip.sb/geoip/${local_ipv4}" -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'cache-control: no-cache' -H 'pragma: no-cache' -H 'priority: u=0, i' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
-        LOCAL_ISP4=$(echo "$get_local_isp4" | grep 'organization' | cut -f4 -d '"')
+
+    if [ -z "$NETWORK_TYPE" ]; then
+        local netType="$1"
+    fi
+
+    if [ -n "$NETWORK_TYPE" ]; then
+        local netType="$NETWORK_TYPE"
+    fi
+
+    if [ "$1" == 4 ] && [ "$NETWORK_TYPE" == 6 ]; then
         return
     fi
-    if [ "$1" == 6 ]; then
-        local local_ipv6=$(curl ${CURL_DEFAULT_OPTS} -s https://api64.ipify.org --user-agent "${UA_BROWSER}")
-        LOCAL_IPV6_ASTERISK=$(awk -F":" '{print $1":"$2":"$3":*:*"}' <<<"${local_ipv6}")
-        local get_local_isp6=$(curl ${CURL_DEFAULT_OPTS} -s "https://api.ip.sb/geoip/${local_ipv6}" -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'cache-control: no-cache' -H 'pragma: no-cache' -H 'priority: u=0, i' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
-        LOCAL_ISP6=$(echo "$get_local_isp6" | grep 'organization' | cut -f4 -d '"')
+
+    if [ "$1" == 6 ] && [ "$NETWORK_TYPE" == 4 ] ; then
         return
     fi
-}
 
-function checkIPV4() {
-    if [ "$LANGUAGE" == 'en' ]; then
-        if [ "$NETWORK_TYPE" == 6 ]; then
-            USE_IPV4=0
-            echo -e "${Font_SkyBlue}The Script Only Tests IPv6 Results, IPv4 Testing has been Skipped...${Font_Suffix}"
-            return
-        fi
-
-        echo ''
-        echo -e " ${Font_SkyBlue}** Checking Results Under IPv4${Font_Suffix}"
-        if ! check_net_connctivity 4 ; then
-            echo -e "${Font_SkyBlue}No IPv4 Connectivity, IPv4 Test Skipped...${Font_Suffix}"
-            USE_IPV4=0
-            return
-        fi
-
-        USE_IPV4=1
-        CURL_DEFAULT_OPTS="-4 ${CURL_OPTS}"
-        echo '--------------------------------'
-        checkIPAddress 4
-        echo -e " ${Font_SkyBlue}** Your Network Provider: ${LOCAL_ISP4} (${LOCAL_IPV4_ASTERISK})${Font_Suffix} "
-        echo ''
-    else
-        if [ "$NETWORK_TYPE" == 6 ]; then
-            USE_IPV4=0
-            echo -e "${Font_SkyBlue}脚本只检测 IPv6 结果，已跳过 IPv4 检测...${Font_Suffix}"
-            return
-        fi
-
-        echo ''
-        echo -e " ${Font_SkyBlue}** 正在测试 IPv4 解锁情况${Font_Suffix}"
-        if ! check_net_connctivity 4 ; then
-            echo -e "${Font_SkyBlue}当前主机不支持 IPv4，跳过...${Font_Suffix}"
-            USE_IPV4=0
-            return
-        fi
-
-        USE_IPV4=1
-        CURL_DEFAULT_OPTS="-4 ${CURL_OPTS}"
-        echo '--------------------------------'
-        checkIPAddress 4
-        echo -e " ${Font_SkyBlue}** 您的网络为: ${LOCAL_ISP4} (${LOCAL_IPV4_ASTERISK})${Font_Suffix}"
-        echo ''
+    if [ "$1" == 6 ] && [ "$NETWORK_TYPE" == 0 ]; then
+        return
     fi
-}
 
-function checkIPV6() {
     if [ "$LANGUAGE" == 'en' ]; then
         if [ "$NETWORK_TYPE" == 4 ]; then
-            USE_IPV6=0
-            echo -e "${Font_SkyBlue}The Script Only Tests IPv4 Results, IPv6 Testing has been Skipped...${Font_Suffix}"
+            echo ''
+            echo -e " ${Font_SkyBlue}** Checking Results Under IPv4${Font_Suffix}"
+            if ! check_net_connctivity 4 ; then
+                echo -e "${Font_SkyBlue}No IPv4 Connectivity, IPv4 Test Skipped...${Font_Suffix}"
+                USE_IPV4=0
+                return
+            fi
+
+            USE_IPV4=1
+            CURL_DEFAULT_OPTS="-4 ${CURL_OPTS}"
+            showNetworkInfo
             return
         fi
+        if [ "$NETWORK_TYPE" == 6 ]; then
+            echo ''
+            echo -e " ${Font_SkyBlue}** Checking Results Under IPv6${Font_Suffix}"
+            if ! check_net_connctivity 6 ; then
+                echo -e "${Font_SkyBlue}No IPv4 Connectivity, IPv6 Test Skipped...${Font_Suffix}"
+                USE_IPV6=0
+                return
+            fi
 
-        echo ''
-        echo ''
-        echo -e " ${Font_SkyBlue}** Checking Results Under IPv6${Font_Suffix}"
-        if ! check_net_connctivity 6 ; then
-            echo -e "${Font_SkyBlue}No IPv6 Connectivity, IPv4 Test Skipped...${Font_Suffix}"
-            USE_IPV4=0
+            USE_IPV6=1
+            CURL_DEFAULT_OPTS="-6 ${CURL_OPTS}"
+            showNetworkInfo
             return
         fi
+        if [ "$netType" == 0 ]; then
+            echo ''
+            echo -e " ${Font_SkyBlue}** Checking Results Under Default Network${Font_Suffix}"
+            if check_net_connctivity 4; then
+                local ipv4Support=1
+            fi
+            if check_net_connctivity 6; then
+                local ipv6Support=1
+            fi
+            if [ "$ipv4Support" == 0 ] && [ "$ipv6Support" == 0 ]; then
+                echo -e "${Font_Red}No network available, please check your network.${Font_Suffix}"
+                USE_IPV4=0
+                USE_IPV6=0
+                exit 1
+            fi
+            # When IPv4 is supported, regardless IPv6 status
+            if [ "$ipv4Support" == 1 ]; then
+                USE_IPV4=1
+                USE_IPV6=0
+            fi
+            # When IPv4 is not available, Use IPv6
+            if [ "$ipv4Support" == 0 ] && [ "$ipv6Support" == 1 ]; then
+                USE_IPV6=1
+                USE_IPV4=0
+            fi
 
-        USE_IPV6=1
-        CURL_DEFAULT_OPTS="-6 ${CURL_OPTS}"
-        echo '--------------------------------'
-        checkIPAddress 6
-        echo -e " ${Font_SkyBlue}** Your Network Provider: ${LOCAL_ISP6} (${LOCAL_IPV6_ASTERISK})${Font_Suffix} "
-        echo ''
+
+            CURL_DEFAULT_OPTS="${CURL_OPTS}"
+            showNetworkInfo
+            return
+        fi
     else
-        if [ "$NETWORK_TYPE" == 4 ]; then
-            USE_IPV6=0
-            echo -e "${Font_SkyBlue}脚本只检测 IPv4 结果，已跳过 IPv6 检测...${Font_Suffix}"
+        if [ "$netType" == 4 ]; then
+            echo ''
+            echo -e " ${Font_SkyBlue}** 正在测试 IPv4 解锁情况${Font_Suffix}"
+            if ! check_net_connctivity 4 ; then
+                echo -e "${Font_SkyBlue}当前主机不支持 IPv4，跳过...${Font_Suffix}"
+                USE_IPV4=0
+                return
+            fi
+
+            USE_IPV4=1
+            CURL_DEFAULT_OPTS="-4 ${CURL_OPTS}"
+            showNetworkInfo
             return
         fi
+        if [ "$netType" == 6 ]; then
+            echo ''
+            echo -e " ${Font_SkyBlue}** 正在测试 IPv6 解锁情况${Font_Suffix}"
+            if ! check_net_connctivity 6 ; then
+                echo -e "${Font_SkyBlue}当前主机不支持 IPv6，跳过...${Font_Suffix}"
+                USE_IPV6=0
+                return
+            fi
 
-        echo ''
-        echo ''
-        echo -e " ${Font_SkyBlue}** 正在测试 IPv6 解锁情况${Font_Suffix} "
-        if ! check_net_connctivity 6 ; then
-            echo -e "${Font_SkyBlue}当前主机不支持 IPv6，跳过...${Font_Suffix}"
-            USE_IPV6=0
+            USE_IPV6=1
+            CURL_DEFAULT_OPTS="-6 ${CURL_OPTS}"
+            showNetworkInfo
             return
         fi
+        if [ "$netType" == 0 ]; then
+            echo ''
+            echo -e " ${Font_SkyBlue}** 正在测试默认网络解锁情况${Font_Suffix}"
+            if check_net_connctivity 4; then
+                USE_IPV4=1
+            fi
+            if check_net_connctivity 6; then
+                USE_IPV6=1
+            fi
+            if [ "$USE_IPV4" == 0 ] && [ "$USE_IPV6" == 0 ]; then
+                echo -e "${Font_Red}当前无网络，请检查您的网络。${Font_Suffix}"
+                USE_IPV4=0
+                USE_IPV6=0
+                exit 1
+            fi
 
-        USE_IPV6=1
-        CURL_DEFAULT_OPTS="-6 ${CURL_OPTS}"
-        echo '--------------------------------'
-        checkIPAddress 6
-        echo -e "${Font_SkyBlue}** 您的网络为: ${LOCAL_ISP6} (${LOCAL_IPV6_ASTERISK})${Font_Suffix}"
-        echo ''
+            CURL_DEFAULT_OPTS="${CURL_OPTS}"
+            showNetworkInfo
+            return
+        fi
     fi
 }
 
 function runScript() {
     showScriptTitle
 
+    USE_IPV4=0
+    USE_IPV6=0
+
     if [ "$REGION_ID" -eq 1 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Global_UnlockTest
             TW_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Global_UnlockTest
             TW_UnlockTest
@@ -5556,12 +5618,12 @@ function runScript() {
         return
     fi
     if [ "$REGION_ID" -eq 2 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Global_UnlockTest
             HK_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Global_UnlockTest
             HK_UnlockTest
@@ -5569,12 +5631,12 @@ function runScript() {
         return
     fi
     if [ "$REGION_ID" -eq 3 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Global_UnlockTest
             JP_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Global_UnlockTest
             JP_UnlockTest
@@ -5582,12 +5644,12 @@ function runScript() {
         return
     fi
     if [ "$REGION_ID" -eq 4 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Global_UnlockTest
             NA_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Global_UnlockTest
             NA_UnlockTest
@@ -5595,12 +5657,12 @@ function runScript() {
         return
     fi
     if [ "$REGION_ID" -eq 5 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Global_UnlockTest
             SA_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Global_UnlockTest
             SA_UnlockTest
@@ -5608,12 +5670,12 @@ function runScript() {
         return
     fi
     if [ "$REGION_ID" -eq 6 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Global_UnlockTest
             EU_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Global_UnlockTest
             EU_UnlockTest
@@ -5621,12 +5683,12 @@ function runScript() {
         return
     fi
     if [ "$REGION_ID" -eq 7 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Global_UnlockTest
             OA_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Global_UnlockTest
             OA_UnlockTest
@@ -5634,12 +5696,12 @@ function runScript() {
         return
     fi
     if [ "$REGION_ID" -eq 8 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Global_UnlockTest
             KR_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Global_UnlockTest
             KR_UnlockTest
@@ -5647,12 +5709,12 @@ function runScript() {
         return
     fi
     if [ "$REGION_ID" -eq 9 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Global_UnlockTest
             SEA_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Global_UnlockTest
             SEA_UnlockTest
@@ -5660,12 +5722,12 @@ function runScript() {
         return
     fi
     if [ "$REGION_ID" -eq 10 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Global_UnlockTest
             IN_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Global_UnlockTest
             IN_UnlockTest
@@ -5673,12 +5735,12 @@ function runScript() {
         return
     fi
     if [ "$REGION_ID" -eq 11 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Global_UnlockTest
             AF_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Global_UnlockTest
             AF_UnlockTest
@@ -5686,29 +5748,29 @@ function runScript() {
         return
     fi
     if [ "$REGION_ID" -eq 99 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Sport_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Sport_UnlockTest
         fi
         return
     fi
     if [ "$REGION_ID" -eq 0 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Global_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Global_UnlockTest
         fi
         return
     fi
     if [ "$REGION_ID" -eq 66 ]; then
-        checkIPV4
+        checkIPConn 4
         if [ "$USE_IPV4" -eq 1 ]; then
             Global_UnlockTest
             TW_UnlockTest
@@ -5720,7 +5782,7 @@ function runScript() {
             OA_UnlockTest
             KR_UnlockTest
         fi
-        checkIPV6
+        checkIPConn 6
         if [ "$USE_IPV6" -eq 1 ]; then
             Global_UnlockTest
             TW_UnlockTest
