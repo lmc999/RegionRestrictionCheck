@@ -116,6 +116,11 @@ resolve_ip_address() {
 }
 
 validate_proxy() {
+    if [ -z "$1" ]; then
+        echo -e "${Font_Red}Param Proxy Address is missing.${Font_Suffix}"
+        exit 1
+    fi
+
     local tmpresult=$(echo "$1" | grep -P '^(socks|socks4|socks5|http)://([^:]+:[^@]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|(\[[0-9a-fA-F:]+\]|([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|((([0-9a-fA-F]{1,4}:){1,6})|::(([0-9a-fA-F]{1,4}:){1,6}))([0-9a-fA-F]{1,4}))):(0|[1-9][0-9]{0,4})$')
     if [ -z "$tmpresult" ]; then
         echo -e "${Font_Red}Proxy IP invalid.${Font_Suffix}"
@@ -131,14 +136,15 @@ validate_proxy() {
 
 validate_ip_address() {
     if [ -z "$1" ]; then
-        echo -e "${Font_Red}Param missing.${Font_Suffix}"
+        echo -e "${Font_Red}Param IP Address is missing.${Font_Suffix}"
         exit 1
     fi
 
     if echo "$1" | awk '{$1=$1; print}' | grep -Eq '^([0-9]{1,3}\.){3}[0-9]{1,3}$'; then
         return 4
     fi
-    if echo "$1" | awk '{$1=$1; print}' | grep -Eq '^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$'; then
+    echo "$1" | awk '{$1=$1; print}' | grep -Eq '^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$|^(([0-9a-fA-F]{1,4}:){1,7}|:):([0-9a-fA-F]{1,4}:){1,7}|:$|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}$|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}$|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}$|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}$|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}$|([0-9a-fA-F]{1,4}:){1}(:[0-9a-fA-F]{1,4}){1,6}$|:(:[0-9a-fA-F]{1,4}){1,7}$|((([0-9a-fA-F]{1,4}:){1,4}:|:):(([0-9a-fA-F]{1,4}:){0,1}[0-9a-fA-F]{1,4}){1,4})$'
+    if [ "$?" == 0 ]; then
         return 6
     fi
 
@@ -5535,7 +5541,6 @@ function checkIPConn() {
                 USE_IPV6=1
                 USE_IPV4=0
             fi
-
 
             CURL_DEFAULT_OPTS="${CURL_OPTS}"
             showNetworkInfo
