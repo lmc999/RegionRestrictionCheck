@@ -3578,7 +3578,7 @@ function MediaUnlockTest_JCOM_ON_DEMAND() {
 
     case "$result" in
         '000') echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
-        '502') echo -n -e "\r J:com On Demand:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
+        '200') echo -n -e "\r J:com On Demand:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         *) echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
