@@ -3574,7 +3574,7 @@ function MediaUnlockTest_VideoMarket() {
 }
 
 function MediaUnlockTest_JCOM_ON_DEMAND() {
-    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://id.zaq.ne.jp' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
+    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://auth.id2.zaq.ne.jp/login' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
     case "$result" in
         '000') echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
