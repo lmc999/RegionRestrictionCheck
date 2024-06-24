@@ -2000,25 +2000,27 @@ function MediaUnlockTest_FuboTV() {
         return
     fi
 
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fs "https://api.fubo.tv/appconfig/v1/homepage?platform=web&client_version=1.78.2&nav=v0" -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://www.fubo.tv' -H 'referer: https://www.fubo.tv/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fs "https://api.fubo.tv/v3/location" -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://www.fubo.tv' -H 'referer: https://www.fubo.tv/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
 
-    local isOK=$(echo "$tmpresult" | grep -i 'No Subscription')
-    local isBlocked=$(echo "$tmpresult" | grep -i 'Forbidden IP')
+    local noService=$(echo "$tmpresult" | grep -i 'NO_SERVICE_IN_COUNTRY')
+    local isAllowed=$(echo "$tmpresult" | grep -o '"network_allowed":true')
+    local isBlocked=$(echo "$tmpresult" | grep -o '"network_allowed":false')
+    local countryCode=$(echo "$tmpresult" | grep -oP '"country_code2":"\K[^"]+')
 
-    if [ -z "$isOK" ] && [ -z "$isBlocked" ]; then
-        echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+    if [ -n "$noService" ]; then
+        echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
     if [ -n "$isBlocked" ]; then
         echo -n -e "\r Fubo TV:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
-    if [ -n "$isOK" ]; then
-        echo -n -e "\r Fubo TV:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    if [ -n "$isAllowed" ]; then
+        echo -n -e "\r Fubo TV:\t\t\t\t${Font_Green}Yes (Region:${countryCode})${Font_Suffix}\n"
         return
     fi
 
