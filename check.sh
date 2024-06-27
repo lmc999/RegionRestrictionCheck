@@ -116,6 +116,11 @@ resolve_ip_address() {
 }
 
 validate_proxy() {
+    if [ -z "$1" ]; then
+        echo -e "${Font_Red}Param Proxy Address is missing.${Font_Suffix}"
+        exit 1
+    fi
+
     local tmpresult=$(echo "$1" | grep -P '^(socks|socks4|socks5|http)://([^:]+:[^@]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|(\[[0-9a-fA-F:]+\]|([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|((([0-9a-fA-F]{1,4}:){1,6})|::(([0-9a-fA-F]{1,4}:){1,6}))([0-9a-fA-F]{1,4}))):(0|[1-9][0-9]{0,4})$')
     if [ -z "$tmpresult" ]; then
         echo -e "${Font_Red}Proxy IP invalid.${Font_Suffix}"
@@ -131,14 +136,15 @@ validate_proxy() {
 
 validate_ip_address() {
     if [ -z "$1" ]; then
-        echo -e "${Font_Red}Param missing.${Font_Suffix}"
+        echo -e "${Font_Red}Param IP Address is missing.${Font_Suffix}"
         exit 1
     fi
 
     if echo "$1" | awk '{$1=$1; print}' | grep -Eq '^([0-9]{1,3}\.){3}[0-9]{1,3}$'; then
         return 4
     fi
-    if echo "$1" | awk '{$1=$1; print}' | grep -Eq '^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$'; then
+    echo "$1" | awk '{$1=$1; print}' | grep -Eq '^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$|^(([0-9a-fA-F]{1,4}:){1,7}|:):([0-9a-fA-F]{1,4}:){1,7}|:$|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}$|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}$|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}$|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}$|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}$|([0-9a-fA-F]{1,4}:){1}(:[0-9a-fA-F]{1,4}){1,6}$|:(:[0-9a-fA-F]{1,4}){1,7}$|((([0-9a-fA-F]{1,4}:){1,4}:|:):(([0-9a-fA-F]{1,4}:){0,1}[0-9a-fA-F]{1,4}){1,4})$'
+    if [ "$?" == 0 ]; then
         return 6
     fi
 
@@ -486,7 +492,7 @@ get_ip_info() {
     LOCAL_IP_ASTERISK=''
     LOCAL_ISP=''
     local local_ip=$(curl ${CURL_DEFAULT_OPTS} -s https://api64.ipify.org --user-agent "${UA_BROWSER}")
-    local get_local_isp=$(curl ${CURL_DEFAULT_OPTS} -s "https://api.ip.sb/geoip/${local_ipv4}" -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+    local get_local_isp=$(curl ${CURL_DEFAULT_OPTS} -s "https://api.ip.sb/geoip/${local_ip}" -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
 
     if [ -z "$local_ip" ]; then
         echo -e "${Font_Red}Failed to Query IP Address.${Font_Suffix}"
@@ -3568,11 +3574,11 @@ function MediaUnlockTest_VideoMarket() {
 }
 
 function MediaUnlockTest_JCOM_ON_DEMAND() {
-    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://id.zaq.ne.jp' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
+    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://auth.id2.zaq.ne.jp/login' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
     case "$result" in
         '000') echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
-        '502') echo -n -e "\r J:com On Demand:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
+        '200') echo -n -e "\r J:com On Demand:\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         *) echo -n -e "\r J:com On Demand:\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
@@ -5535,7 +5541,6 @@ function checkIPConn() {
                 USE_IPV6=1
                 USE_IPV4=0
             fi
-
 
             CURL_DEFAULT_OPTS="${CURL_OPTS}"
             showNetworkInfo
