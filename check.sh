@@ -730,7 +730,7 @@ MediaUnlockTest_AnimeFesta() {
 
     case "$result" in
         '000') echo -n -e "\r AnimeFesta:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
-        '2000') echo -n -e "\r AnimeFesta:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
+        '200') echo -n -e "\r AnimeFesta:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
         '403') echo -n -e "\r AnimeFesta:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         *) echo -n -e "\r AnimeFesta:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
