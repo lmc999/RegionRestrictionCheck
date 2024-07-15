@@ -731,6 +731,17 @@ function MediaUnlockTest_Lemino() {
     esac
 }
 
+MediaUnlockTest_AnimeFesta() {
+    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://api-animefesta.iowl.jp/v1/titles/1305' -w %{http_code} -o /dev/null -H 'Origin: https://animefesta.iowl.jp' -H 'Priority: u=1, i' -H 'Referer: https://animefesta.iowl.jp/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H 'X-Requested-With: XMLHttpRequest' --user-agent "${UA_BROWSER}")
+
+    case "$result" in
+        '000') echo -n -e "\r AnimeFesta:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
+        '200') echo -n -e "\r AnimeFesta:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
+        '403') echo -n -e "\r AnimeFesta:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
+        *) echo -n -e "\r AnimeFesta:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
+    esac
+}
+
 function MediaUnlockTest_mora() {
     if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Mora:\t\t\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
@@ -5153,10 +5164,11 @@ function JP_UnlockTest() {
         MediaUnlockTest_HuluJP &
         MediaUnlockTest_TVer &
         MediaUnlockTest_Lemino &
+        MediaUnlockTest_AnimeFesta &
         MediaUnlockTest_wowow &
     )
     wait
-    local array=("DMM:" "DMM TV:" "Abema.TV:" "Niconico:" "Telasa:" "U-NEXT:" "Hulu Japan:" "TVer:" "Lemino:" "WOWOW:")
+    local array=("DMM:" "DMM TV:" "Abema.TV:" "Niconico:" "Telasa:" "U-NEXT:" "Hulu Japan:" "TVer:" "Lemino:" "AnimeFesta:" "WOWOW:")
     echo_result ${result} ${array}
     local result=$(
         MediaUnlockTest_VideoMarket &
