@@ -227,6 +227,7 @@ check_net_connctivity() {
 check_os_type() {
     OS_TYPE=''
     grep='grep'
+    md5sum='md5sum'
     local ifLinux=$(uname -a | grep -i 'linux')
     local ifFreeBSD=$(uname -a | grep -i 'freebsd')
     local ifTermux=$(echo "$PWD" | grep -i 'termux')
@@ -251,6 +252,7 @@ check_os_type() {
         OS_TYPE='macos'
         OS_MACOS=1
         grep='ggrep'
+        md5sum='md5 -r'
         return
     fi
     if [ -n "$ifMinGW" ]; then
@@ -340,17 +342,6 @@ check_dependencies() {
     if ! command_exists openssl; then
         echo -e "${Font_Red}command 'openssl' is missing, please install it first.${Font_Suffix}"
         exit 1
-    fi
-
-    if [ "$OS_MACOS" == 1 ]; then
-        if ! command_exists md5sum; then
-            echo -e "${Font_Red}command 'md5sum' is missing, please install it first.${Font_Suffix}"
-            exit 1
-        fi
-        if ! command_exists sha256sum; then
-            echo -e "${Font_Red}command 'sha256sum' is missing, please install it first.${Font_Suffix}"
-            exit 1
-        fi
     fi
 
     if [ "$OS_NAME" == 'debian' ] || [ "$OS_NAME" == 'ubuntu' ]; then
@@ -589,7 +580,7 @@ function MediaUnlockTest_BilibiliChinaMainland() {
         return
     fi
 
-    local randsession=$(gen_uuid | md5sum | head -c 32)
+    local randsession=$(gen_uuid | $md5sum | head -c 32)
     # 尝试获取成功的结果
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL "https://api.bilibili.com/pgc/player/web/playurl?avid=82846771&qn=0&type=&otype=json&ep_id=307247&fourk=1&fnver=0&fnval=16&session=${randsession}&module=bangumi" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
@@ -612,7 +603,7 @@ function MediaUnlockTest_BilibiliHKMCTW() {
         return
     fi
 
-    local randsession=$(gen_uuid | md5sum | head -c 32)
+    local randsession=$(gen_uuid | $md5sum | head -c 32)
     # 尝试获取成功的结果
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL "https://api.bilibili.com/pgc/player/web/playurl?avid=18281381&cid=29892777&qn=0&type=&otype=json&ep_id=183799&fourk=1&fnver=0&fnval=16&session=${randsession}&module=bangumi" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
@@ -635,7 +626,7 @@ function MediaUnlockTest_BilibiliTW() {
         return
     fi
 
-    local randsession=$(gen_uuid | md5sum | head -c 32)
+    local randsession=$(gen_uuid | $md5sum | head -c 32)
     # 尝试获取成功的结果
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -fsL "https://api.bilibili.com/pgc/player/web/playurl?avid=50762638&cid=100279344&qn=0&type=&otype=json&ep_id=268176&fourk=1&fnver=0&fnval=16&session=${randsession}&module=bangumi" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
@@ -1075,7 +1066,7 @@ function MediaUnlockTest_wowow() {
 
     local metaId=$(echo "$tmpresult3" | $grep -woP '"https://wod.wowow.co.jp/watch/\K\d{0,}[^"]+')
     # Fake Vistor UID
-    local vUid=$(echo -n "$timestamp" | md5sum | cut -f1 -d' ')
+    local vUid=$(echo -n "$timestamp" | $md5sum | cut -f1 -d' ')
     # 最终测试
     local tmpresult4=$(curl ${CURL_DEFAULT_OPTS} -s 'https://mapi.wowow.co.jp/api/v1/playback/auth' -H 'accept: application/json, text/plain, */*' -H 'content-type: application/json;charset=UTF-8' -H 'origin: https://wod.wowow.co.jp' -H 'referer: https://wod.wowow.co.jp/' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H 'x-requested-with: XMLHttpRequest' --data-raw "{\"meta_id\":${metaId},\"vuid\":\"${vUid}\",\"device_code\":1,\"app_id\":1,\"ua\":\"${UA_BROWSER}\"}" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult4" ]; then
@@ -2866,7 +2857,7 @@ function MediaUnlockTest_DiscoveryPlus() {
         return
     fi
 
-    local fakeDeviceId=$(gen_uuid | md5sum | cut -f1 -d' ')
+    local fakeDeviceId=$(gen_uuid | $md5sum | cut -f1 -d' ')
 
     local tmpresult1=$(curl ${CURL_DEFAULT_OPTS} -s "${baseApiUrl}/token?deviceId=${fakeDeviceId}&realm=${realm}&shortlived=true" -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'origin: https://www.discoveryplus.com' -H 'referer: https://www.discoveryplus.com/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H "x-device-info: dplus_us/2.46.0 (desktop/desktop; Windows/NT 10.0; ${fakeDeviceId})" -H 'x-disco-client: WEB:UNKNOWN:dplus_us:2.46.0' -H "x-disco-params: realm=${realm},bid=dplus,hn=www.discoveryplus.com,hth=,features=ar" --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult1" ]; then
@@ -4400,8 +4391,8 @@ function MediaUnlockTest_AISPlay() {
 
     local userId='09e8b25510'
     local userPasswd='e49e9f9e7f'
-    local fakeApiKey=$(gen_uuid | md5sum | cut -f1 -d' ')
-    local fakeUdid=$(gen_uuid | md5sum | cut -f1 -d' ')
+    local fakeApiKey=$(gen_uuid | $md5sum | cut -f1 -d' ')
+    local fakeUdid=$(gen_uuid | $md5sum | cut -f1 -d' ')
     local timestamp=$(date +%s)
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL "https://web-tls.ais-vidnt.com/device/login/?d=gstweb&gst=1&user=${userId}&pass=${userPasswd}" -H 'accept-language: th' -H 'api-version: 2.8.2' -H "api_key: ${fakeApiKey}" -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundaryBj2RhUIW7BtRvfK0' -H 'device-info: com.vimmi.ais.portal, Windows + Chrome, AppVersion: 4.9.97, 10, language: tha' -H 'origin: https://aisplay.ais.co.th' -H "privateid: ${userId}" -H 'referer: https://aisplay.ais.co.th/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: cross-site' -H "time: ${timestamp}" -H "udid: ${fakeUdid}" --data-raw $'------WebKitFormBoundaryBj2RhUIW7BtRvfK0--\r\n' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
