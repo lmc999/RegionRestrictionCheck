@@ -4495,6 +4495,26 @@ function WebTest_OpenAI() {
     echo -n -e "\r ChatGPT:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
+function WebTest_Gemini() {
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL "https://gemini.google.com" --user-agent "${UA_BROWSER}")
+    if [[ "$tmpresult" = "curl"* ]]; then
+        echo -n -e "\r Google Gemini:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+    result=$(echo "$tmpresult" | grep -q '45631641,null,true' && echo "Yes" || echo "")
+    countrycode=$(echo "$tmpresult" | grep -o ',2,1,200,"[A-Z]\{3\}"' | sed 's/,2,1,200,"//;s/"//' || echo "")
+    if [ -n "$result" ] && [ -n "$countrycode" ]; then
+        echo -n -e "\r Google Gemini:\t\t\t\t${Font_Green}Yes (Region: $countrycode)${Font_Suffix}\n"
+        return
+    elif [ -n "$result" ]; then
+        echo -n -e "\r Google Gemini:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        return
+    else
+        echo -n -e "\r Google Gemini:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+}
+
 function WebTest_MetaAI() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.meta.ai/' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
@@ -4921,12 +4941,13 @@ function Global_UnlockTest() {
         RegionTest_YouTubeCDN &
         RegionTest_NetflixCDN &
         WebTest_OpenAI &
+        WebTest_Gemini &
         WebTest_Wikipedia_Editable &
         WebTest_GoogleSearchCAPTCHA &
         GameTest_Steam &
     )
     wait
-    local array=("Bing Region:" "YouTube CDN:" "Netflix Preferred CDN:" "ChatGPT:" "Wikipedia Editability:" "Google Search CAPTCHA Free:" "Steam Currency:")
+    local array=("Bing Region:" "YouTube CDN:" "Netflix Preferred CDN:" "ChatGPT:" "Google Gemini:" "Wikipedia Editability:" "Google Search CAPTCHA Free:" "Steam Currency:")
     echo_result ${result} ${array}
     show_region Forum
     WebTest_Reddit
