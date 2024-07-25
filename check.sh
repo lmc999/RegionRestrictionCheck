@@ -4560,6 +4560,13 @@ function RegionTest_Bing() {
         return
     fi
 
+    local isRisky=$(echo "$tmpresult" | grep 'sj_cook.set("SRCHHPGUSR","HV"')
+
+    if [ -n "$isRisky" ]; then
+        echo -n -e "\r Bing Region:\t\t\t\t${Font_Yellow}${region} (Risky)${Font_Suffix}\n"
+        return
+    fi
+
     echo -n -e "\r Bing Region:\t\t\t\t${Font_Green}${region}${Font_Suffix}\n"
 }
 
