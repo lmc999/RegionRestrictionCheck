@@ -109,7 +109,7 @@ apk add curl bash grep openssl ca-certificates uuidgen
 ### macOS:
 
 ```
-brew install curl openssl md5sha1sum coreutils
+brew install curl openssl grep
 ```
 
 ### Windows:
