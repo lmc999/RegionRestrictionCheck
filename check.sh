@@ -1288,32 +1288,21 @@ function MediaUnlockTest_HBOMax() {
 }
 
 function MediaUnlockTest_Showmax() {
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sLi 'https://www.showmax.com/' -w "_TAG_%{http_code}_TAG_" -H 'host: www.showmax.com' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'upgrade-insecure-requests: 1' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' --user-agent "${UA_BROWSER}")
-    local httpCode=$(echo "$tmpresult" | grep '_TAG_' | awk -F'_TAG_' '{print $2}')
-
-    if [ "$httpCode" == '000' ]; then
+    local region=$(curl ${CURL_DEFAULT_OPTS} -si 'https://www.showmax.com/' -H 'host: www.showmax.com' -H 'connection: keep-alive' -H 'sec-ch-ua: "Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"' -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' -H 'accept-language: zh-CN,zh;q=0.9' 2>&1 | grep 'activeTerritory'| awk -F'[=;]' '{print $2}')
+    if [[ "$region" == "curl"* ]]; then
         echo -n -e "\r Showmax:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
-
-    local isBlocked=$(echo "$tmpresult" | grep 'is unavailable in this location')
-    local isOK=$(echo "$tmpresult" | grep -i 'Streaming for Africa')
-    local region=$(echo "$tmpresult" | grep -woP 'activeTerritory=\K[A-Z]+' | head -n 1)
-
-    if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
-        echo -n -e "\r Showmax:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
+    if [ -n "$region" ]; then
+        echo -n -e "\r Showmax:\t\t\t\t${Font_Green}Yes (Region: $region)${Font_Suffix}\n"
         return
-    fi
-    if [ -n "$isBlocked" ]; then
+    elif [ -z "$region" ]; then
+        echo -n -e "\r Showmax:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    else
         echo -n -e "\r Showmax:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
-    if [ -n "$region" ]; then
-        echo -n -e "\r Showmax:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
-        return
-    fi
-
-    echo -n -e "\r Showmax:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_Channel4() {
@@ -1369,7 +1358,7 @@ function MediaUnlockTest_DSTV() {
         return
     fi
 
-    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://authentication.dstv.com/favicon.ico' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
+    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL --tlsv1.3 'https://authentication.dstv.com/favicon.ico' -w %{http_code} -o /dev/null --user-agent "${UA_BROWSER}")
 
     case "$result" in
         '000') echo -n -e "\r DSTV:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
