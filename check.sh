@@ -4576,7 +4576,7 @@ function WebTest_MetaAI() {
     fi
 
     local isBlocked=$(echo "$tmpresult" | grep -i 'AbraGeoBlockedErrorRoot')
-    local isOK=$(echo "$tmpresult" | grep -i 'AbraHomeRootConversationQuery')
+    local isOK=$(echo "$tmpresult" | grep -i 'AbraHomeRoot.react')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
         echo -n -e "\r Meta AI:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
