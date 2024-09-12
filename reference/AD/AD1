@@ -9,7 +9,7 @@ Font_SkyBlue="\033[36m"
 Font_White="\033[37m"
 Font_Suffix="\033[0m"
 
-echo -e "${Font_Red}【广告推广】${Font_Suffix}"
+echo -e "${Font_SkyBlue}【推广壹】${Font_Suffix}"
 echo -e "================================================"
 echo -e "${Font_Yellow}双ISP原生住宅IP，原生全解锁流媒体，美国/日本/新加坡/台湾/香港/英国${Font_Suffix}"
 echo ""
