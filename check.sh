@@ -4818,7 +4818,16 @@ function MediaUnlockTest_DAnimeStore() {
         return
     fi
 
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://animestore.docomo.ne.jp/animestore/reg_pc' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(OPENSSL_CONF=<(cat <<EOF
+openssl_conf = openssl_init
+[openssl_init]
+ssl_conf = ssl_sect
+[ssl_sect]
+system_default = system_default_sect
+[system_default_sect]
+Options = UnsafeLegacyServerConnect
+EOF
+) curl ${CURL_DEFAULT_OPTS} -sL 'https://animestore.docomo.ne.jp/animestore/reg_pc' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r D Anime Store:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
