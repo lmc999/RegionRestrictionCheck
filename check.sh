@@ -5873,11 +5873,7 @@ function showGoodbye() {
         echo -e ''
         echo -e "${Font_Yellow}Number of Script Runs for Today: ${TODAY_RUN_TIMES}; Total Number of Script Runs: ${TOTAL_RUN_TIMES}${Font_Suffix}"
         echo -e ''
-        echo -e "========================================================="
-        echo -e "${Font_Red}If you found this script helpful, you can buy me a coffee${Font_Suffix}"
-        echo -e ''
-        echo -e "LTC: LQD4S6Y5bu3bHX6hx8ASsGHVfaqFGFNTbx"
-        echo -e "========================================================="
+        bash <(curl ${CURL_DEFAULT_OPTS} -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/AD/ADEN)
     else
         echo -e "${Font_Green}本次测试已结束，感谢使用此脚本${Font_Suffix}"
         echo -e ''
