@@ -1694,6 +1694,17 @@ function MediaUnlockTest_YouTube_Premium() {
     echo -n -e "\r YouTube Premium:\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
 }
 
+function WebTest_GooglePlayStore() {
+    local result=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://play.google.com/'   -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'   -H 'accept-language: en-US;q=0.9'   -H 'priority: u=0, i'   -H 'sec-ch-ua: "Chromium";v="131", "Not_A Brand";v="24", "Google Chrome";v="131"'   -H 'sec-ch-ua-mobile: ?0'   -H 'sec-ch-ua-platform: "Windows"'   -H 'sec-fetch-dest: document'   -H 'sec-fetch-mode: navigate'   -H 'sec-fetch-site: none'   -H 'sec-fetch-user: ?1'   -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36' | grep -oP '<div class="yVZQTb">\K[^<(]+')
+    if [ -z "$result" ]; then
+        echo -n -e "\r Google Play Store:\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+        return
+    else
+        echo -n -e "\r Google Play Store:\t\t\t${Font_Green}${result}${Font_Suffix}\n"
+        return
+    fi
+}
+
 function RegionTest_YouTubeCDN() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://redirector.googlevideo.com/report_mapping' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
@@ -4936,11 +4947,12 @@ function Global_UnlockTest() {
         WebTest_OpenAI &
         WebTest_Gemini &
         WebTest_Wikipedia_Editable &
+        WebTest_GooglePlayStore &
         WebTest_GoogleSearchCAPTCHA &
         GameTest_Steam &
     )
     wait
-    local array=("Bing Region:" "YouTube CDN:" "Netflix Preferred CDN:" "ChatGPT:" "Google Gemini:" "Wikipedia Editability:" "Google Search CAPTCHA Free:" "Steam Currency:")
+    local array=("Bing Region:" "YouTube CDN:" "Netflix Preferred CDN:" "ChatGPT:" "Google Gemini:" "Wikipedia Editability:" "Google Play Store:" "Google Search CAPTCHA Free:" "Steam Currency:")
     echo_result ${result} ${array}
     show_region Forum
     WebTest_Reddit
@@ -5104,13 +5116,13 @@ function HK_UnlockTest() {
         MediaUnlockTest_ViuCom &
         MediaUnlockTest_ViuTV &
         MediaUnlockTest_MyTVSuper &
-        MediaUnlockTest_HBOGO_ASIA &
+        MediaUnlockTest_HBOMax &
         MediaUnlockTest_SonyLiv &
         MediaUnlockTest_BilibiliHKMCTW &
         MediaUnlockTest_BahamutAnime &
     )
     wait
-    local array=("Now E:" "Viu.com:" "Viu.TV:" "MyTVSuper:" "HBO GO Asia:" "SonyLiv:" "BiliBili Hongkong/Macau/Taiwan:" "Bahamut Anime:")
+    local array=("Now E:" "Viu.com:" "Viu.TV:" "MyTVSuper:" "HBO Max:" "SonyLiv:" "BiliBili Hongkong/Macau/Taiwan:" "Bahamut Anime:")
     echo_result ${result} ${array}
     echo "======================================="
 }
@@ -5155,13 +5167,13 @@ function TW_UnlockTest() {
         MediaUnlockTest_LineTVTW &
         MediaUnlockTest_HamiVideo &
         MediaUnlockTest_Catchplay &
-        MediaUnlockTest_HBOGO_ASIA &
+        MediaUnlockTest_HBOMax &
         MediaUnlockTest_BahamutAnime &
         MediaUnlockTest_SonyLiv &
         MediaUnlockTest_BilibiliTW &
     )
     wait
-    local array=("KKTV:" "LiTV:" "MyVideo:" "4GTV.TV:" "LineTV.TW:" "Hami Video:" "CatchPlay+:" "HBO GO Asia:" "Bahamut Anime:" "SonyLiv:" "Bilibili Taiwan Only:")
+    local array=("KKTV:" "LiTV:" "MyVideo:" "4GTV.TV:" "LineTV.TW:" "Hami Video:" "CatchPlay+:" "HBO Max:" "Bahamut Anime:" "SonyLiv:" "Bilibili Taiwan Only:")
     echo_result ${result} ${array}
     echo "======================================="
 }
@@ -5305,12 +5317,12 @@ function SEA_UnlockTest() {
     local result=$(
         MediaUnlockTest_ViuCom &
         MediaUnlockTest_HotStar &
-        MediaUnlockTest_HBOGO_ASIA &
+        MediaUnlockTest_HBOMax &
         MediaUnlockTest_SonyLiv &
         MediaUnlockTest_BGlobalSEA &
     )
     wait
-    local array=("Viu.com:" "HotStar:" "HBO GO Asia:" "SonyLiv:" "B-Global SouthEastAsia:")
+    local array=("Viu.com:" "HotStar:" "HBO Max:" "SonyLiv:" "B-Global SouthEastAsia:")
     echo_result ${result} ${array}
 
     show_region SG
