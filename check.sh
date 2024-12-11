@@ -170,7 +170,7 @@ validate_region_id() {
         exit 1
     fi
     local regionid="$1"
-    local result=$(echo "$regionid" | grep -E '^[0-9]$|^1[0-1]$|^99$|^66$')
+    local result=$(echo "$regionid" | grep -E '^[0-9]$|^1[0-1]$|^99$|^88$|^66$')
     if [ -z "$result" ]; then
         return 1
     fi
@@ -3630,14 +3630,25 @@ function MediaUnlockTest_musicjp() {
 }
 
 function MediaUnlockTest_InstagramMusic() {
-    local result=$(curl ${CURL_DEFAULT_OPTS} -s -w '%{http_code}' -o /dev/null 'https://www.instagram.com/api/v1/clips/music/'   -H 'accept: */*'   -H 'accept-language: zh-CN,zh;q=0.9'   -H 'content-type: application/x-www-form-urlencoded'   -H 'cookie: csrftoken=O6tapkfyaFajJmHKyz-U26; dpr=1.25; ig_did=26A4F4FD-11C6-4AD2-8327-52F3190CE4FB; ig_nrcb=1; wd=1439x994; mid=ZwvcbAALAAEuc9krkqnJx_uGZGpr; datr=a9wLZw4dpN7wo2bPupSbT6eW'   -H 'origin: https://www.instagram.com'   -H 'priority: u=1, i'   -H 'referer: https://www.instagram.com/reels/audio/916215732724084/'   -H 'sec-ch-prefers-color-scheme: light'   -H 'sec-ch-ua: "Microsoft Edge";v="129", "Not=A?Brand";v="8", "Chromium";v="129"'   -H 'sec-ch-ua-full-version-list: "Microsoft Edge";v="129.0.2792.79", "Not=A?Brand";v="8.0.0.0", "Chromium";v="129.0.6668.90"'   -H 'sec-ch-ua-mobile: ?0'   -H 'sec-ch-ua-model: ""'   -H 'sec-ch-ua-platform: "Windows"'   -H 'sec-ch-ua-platform-version: "15.0.0"'   -H 'sec-fetch-dest: empty'   -H 'sec-fetch-mode: cors'   -H 'sec-fetch-site: same-origin'   -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0'   -H 'x-asbd-id: 129477'   -H 'x-csrftoken: O6tapkfyaFajJmHKyz-U26'   -H 'x-ig-app-id: 936619743392459'   -H 'x-ig-www-claim: 0'   -H 'x-instagram-ajax: 1017305577'   -H 'x-requested-with: XMLHttpRequest'   --data-raw 'audio_cluster_id=916215732724084&original_sound_audio_asset_id=916215732724084')
+    ARCH=$(uname -m)
 
-    case "$result" in
-        '200') echo -n -e "\r Instagram Licensed Audio:\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        '401') echo -n -e "\r Instagram Licensed Audio:\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        '000') echo -n -e "\r Instagram Licensed Audio:\t\t${Font_Red}Failed (NETWORK ERROR)${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Instagram Licensed Audio:\t\t${Font_Red}Failed (NETWORK ERROR)${Font_Suffix}\n" ;;
-    esac
+    if [ "$ARCH" = "x86_64" ]; then
+        curl -sL -o ./ins https://github.com/lmc999/RegionRestrictionCheck/raw/refs/heads/main/binary/ins_amd64
+        chmod +x ./ins
+        clear
+        ./ins
+    elif [ "$ARCH" = "aarch64" ]; then
+        curl -sL -o ./ins https://github.com/lmc999/RegionRestrictionCheck/raw/refs/heads/main/binary/ins_arm64
+        chmod +x ./ins
+        clear
+        ./ins
+    else
+        echo "Unsupported architecture: $ARCH"
+        exit 1
+    fi
+
+    rm ./ins
+    exit 0
 }
 
 function WebTest_Reddit() {
@@ -4933,12 +4944,11 @@ function Global_UnlockTest() {
         MediaUnlockTest_PrimeVideo &
         MediaUnlockTest_TVBAnywhere &
         MediaUnlockTest_Spotify &
-        MediaUnlockTest_InstagramMusic &
         RegionTest_oneTrust &
         RegionTest_iQYI &
     )
     wait
-    local array=("Dazn:" "Disney+:" "Netflix:" "YouTube Premium:" "Amazon Prime Video:" "TVBAnywhere+:" "Spotify Registration:" "Instagram Licensed Audio:" "OneTrust Region:" "iQyi Oversea Region:")
+    local array=("Dazn:" "Disney+:" "Netflix:" "YouTube Premium:" "Amazon Prime Video:" "TVBAnywhere+:" "Spotify Registration:" "OneTrust Region:" "iQyi Oversea Region:")
     echo_result ${result} ${array}
     local result=$(
         RegionTest_Bing &
@@ -5430,6 +5440,7 @@ function inputOptions() {
             echo -e "${Font_SkyBlue}Input Number  [10]: [ Multination + India ]${Font_Suffix}"
             echo -e "${Font_SkyBlue}Input Number  [11]: [ Multination + Africa ]${Font_Suffix}"
             echo -e "${Font_SkyBlue}Input Number  [0]: [ Multination Only ]${Font_Suffix}"
+            echo -e "${Font_SkyBlue}Input Number  [88]: [ Instagram Music ]${Font_Suffix}"
             echo -e "${Font_SkyBlue}Input Number [99]: [ Sport Platforms ]${Font_Suffix}"
             echo -e "${Font_SkyBlue}Input Number [66]: [ All Platfroms ]${Font_Suffix}"
             read -p "Please Input the Correct Number or Press ENTER:" num
@@ -5447,6 +5458,7 @@ function inputOptions() {
             echo -e "${Font_SkyBlue}输入数字 [10]: [ 跨国平台+印度平台 ]检测${Font_Suffix}"
             echo -e "${Font_SkyBlue}输入数字 [11]: [ 跨国平台+非洲平台 ]检测${Font_Suffix}"
             echo -e "${Font_SkyBlue}输入数字  [0]: [   只进行跨国平台  ]检测${Font_Suffix}"
+            echo -e "${Font_SkyBlue}输入数字 [88]: [   Instagram音乐   ]检测${Font_Suffix}"
             echo -e "${Font_SkyBlue}输入数字 [99]: [   体育直播平台    ]检测${Font_Suffix}"
             echo -e "${Font_SkyBlue}输入数字 [66]: [     全部平台      ]检测${Font_Suffix}"
             echo -e "${Font_Purple}输入数字 [69]: [   广告推广投放    ]咨询${Font_Suffix}"
@@ -5807,6 +5819,9 @@ function runScript() {
             Sport_UnlockTest
         fi
         return
+    fi
+    if [ "$REGION_ID" -eq 88 ]; then
+        MediaUnlockTest_InstagramMusic
     fi
     if [ "$REGION_ID" -eq 0 ]; then
         checkIPConn 4
