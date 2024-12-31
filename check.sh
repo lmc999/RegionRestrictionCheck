@@ -5558,7 +5558,7 @@ function checkIPConn() {
             echo ''
             echo -e " ${Font_SkyBlue}** Checking Results Under IPv6${Font_Suffix}"
             if ! check_net_connctivity 6 ; then
-                echo -e "${Font_SkyBlue}No IPv4 Connectivity, IPv6 Test Skipped...${Font_Suffix}"
+                echo -e "${Font_SkyBlue}No IPv6 Connectivity, IPv6 Test Skipped...${Font_Suffix}"
                 USE_IPV6=0
                 return
             fi
