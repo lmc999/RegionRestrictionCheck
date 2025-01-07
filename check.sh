@@ -2779,13 +2779,19 @@ function MediaUnlockTest_SkyGo() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -i "You don't have permission to access")
-    if [ -z "$result" ]; then
+    local isSignIn=$(echo "$tmpresult" | grep -E "Sign in</h3>|skygoSignin")
+    if [ -n "$isSignIn" ]; then
         echo -n -e "\r Sky Go:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
         return
     fi
 
-    echo -n -e "\r Sky Go:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+    local isBlocked=$(echo "$tmpresult" | grep -E "Access Denied.*You don't have permission to access")
+    if [ -n "$isBlocked" ]; then
+        echo -n -e "\r Sky Go:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+
+    echo -n -e "\r Sky Go:\t\t\t\t${Font_Red}Failed (Error: Unknown)${Font_Suffix}\n"
 }
 
 function MediaUnlockTest_DirecTVGO() {
