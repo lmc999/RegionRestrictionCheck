@@ -1121,7 +1121,7 @@ function MediaUnlockTest_TVer() {
     fi
     # 返回结果取新电视剧第一个值
     # echo "$tmpresult2" | jq  -r '.result.components.[] | select(.componentID | contains("newer-drama")) | limit(1; .contents.[].content.id)'
-    local episodeId=$(echo "$tmpresult2" | sed -E 's/.*"newer-drama([.]{0,})"//' | sed 's/"componentID".*//' | sed 's/"id"/_TAG_/;s/.*_TAG_//' | cut -f2 -d'"' | grep -E '[a-z0-9]{10}')
+    local episodeId=$(echo "$tmpresult2" | sed -E 's/.*"variety.catchup.recomend([.]{0,})"//' | sed 's/"componentID".*//' | sed 's/"id"/_TAG_/;s/.*_TAG_//' | cut -f2 -d'"' | grep -E '[a-z0-9]{10}')
     if [ -z "$episodeId" ]; then
         echo -n -e "\r TVer:\t\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
         return
@@ -1137,7 +1137,7 @@ function MediaUnlockTest_TVer() {
     local accountID=$(echo "$tmpresult3" | grep -woP '"accountID"\s{0,}:\s{0,}"\K[^"]+')
     local playerID=$(echo "$tmpresult3" | grep -woP '"playerID"\s{0,}:\s{0,}"\K[^"]+')
     local videoID=$(echo "$tmpresult3" | grep -woP '"videoID"\s{0,}:\s{0,}"\K[^"]+')
-    local videoRefID=$(echo "$tmpresult3" | grep -woP '"videoRefID"\s{0,}:\s{0,}"\K[^"]+')
+    local videoRefID=$(echo "$tmpresult3" | grep -woP '"videoRefID"\s{0,}:\s{0,}"\K[^"]+' | head -n 1)
     # 取得 brightcove 播放器信息
     local tmpresult4=$(curl ${CURL_DEFAULT_OPTS} -s "https://players.brightcove.net/${accountID}/${playerID}_default/index.min.js" -H 'Referer: https://tver.jp/' -H 'Sec-Fetch-Dest: script' -H 'Sec-Fetch-Mode: no-cors' -H 'Sec-Fetch-Site: cross-site' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult4" ]; then
