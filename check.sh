@@ -4520,6 +4520,35 @@ function WebTest_Gemini() {
     fi
 }
 
+function WebTest_Claude() {
+    local response=$(curl ${CURL_DEFAULT_OPTS} -s -o /dev/null -w "%{http_code}" -A "${UA_Browser}" "https://claude.ai/")
+    if [ -z "$response" ]; then
+        echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+    
+    if [ "$response" -ne 200 ]; then
+        echo -n -e "\r Claude:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+    
+    local api_response=$(curl ${CURL_DEFAULT_OPTS} -s -A "${UA_Browser}" "https://claude.ai/api/bootstrap")
+    
+    if [ -z "$api_response" ]; then
+        echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+    
+    local country=$(echo "$api_response" | grep -oP '"country"\s*:\s*"\K[^"]+')
+    
+    if [ -z "$country" ]; then
+        echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Error: Parse JSON)${Font_Suffix}\n"
+        return
+    fi
+    
+    echo -n -e "\r Claude:\t\t\t\t${Font_Green}Yes (Region: ${country})${Font_Suffix}\n"
+}
+
 function WebTest_MetaAI() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.meta.ai/' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
@@ -4962,6 +4991,7 @@ function Global_UnlockTest() {
         RegionTest_NetflixCDN &
         WebTest_OpenAI &
         WebTest_Gemini &
+        WebTest_Claude &
         WebTest_Wikipedia_Editable &
         WebTest_GooglePlayStore &
         WebTest_GoogleSearchCAPTCHA &
