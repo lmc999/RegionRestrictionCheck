@@ -2569,7 +2569,7 @@ function MediaUnlockTest_MegogoTV() {
 
     local vpnDetected=$(echo "$tmpresult" | grep -i 'VPN')
     if [ -n "$vpnDetected" ]; then
-        echo -n -e "\r Abema.TV:\t\t\t\t${Font_Yellow}Yes (VPN Detected)${Font_Suffix}\n"
+        echo -n -e "\r Megogo TV:\t\t\t\t${Font_Red}No (VPN Detected)${Font_Suffix}\n"
         return
     fi
 
