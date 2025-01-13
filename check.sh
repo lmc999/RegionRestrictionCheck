@@ -4521,32 +4521,17 @@ function WebTest_Gemini() {
 }
 
 function WebTest_Claude() {
+    local UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
     local response=$(curl ${CURL_DEFAULT_OPTS} -s -o /dev/null -w "%{http_code}" -A "${UA_Browser}" "https://claude.ai/")
     if [ -z "$response" ]; then
         echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
-    
-    if [ "$response" -ne 200 ]; then
+    if [ "$response" -eq 200 ]; then
+        echo -n -e "\r Claude:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    else
         echo -n -e "\r Claude:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-        return
     fi
-    
-    local api_response=$(curl ${CURL_DEFAULT_OPTS} -s -A "${UA_Browser}" "https://claude.ai/api/bootstrap")
-    
-    if [ -z "$api_response" ]; then
-        echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        return
-    fi
-    
-    local country=$(echo "$api_response" | grep -oP '"country"\s*:\s*"\K[^"]+')
-    
-    if [ -z "$country" ]; then
-        echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Error: Parse JSON)${Font_Suffix}\n"
-        return
-    fi
-    
-    echo -n -e "\r Claude:\t\t\t\t${Font_Green}Yes (Region: ${country})${Font_Suffix}\n"
 }
 
 function WebTest_MetaAI() {
