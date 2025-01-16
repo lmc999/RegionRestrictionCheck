@@ -972,7 +972,19 @@ function MediaUnlockTest_NowE() {
         return
     fi
 
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://webtvapi.nowe.com/16/1/getVodURL' -X POST -H "Content-Type: application/json" -d '{"contentId":"202403181904703","contentType":"Vod","pin":"","deviceName":"Browser","deviceId":"w-663bcc51-913c-913c-913c-913c913c","deviceType":"WEB","secureCookie":null,"callerReferenceNo":"W17151951620081575","profileId":null,"mupId":null}' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://webtvapi.nowe.com/16/1/getVodURL' \
+        -H 'accept: application/json, text/javascript, */*; q=0.01' \
+        -H 'accept-language: zh-CN,zh;q=0.9,en-GB;q=0.8,en;q=0.7,en-US;q=0.6' \
+        -H 'content-type: text/plain' \
+        -H 'origin: https://www.nowe.com' \
+        -H 'priority: u=1, i' \
+        -H 'referer: https://www.nowe.com/' \
+        -H 'sec-fetch-dest: empty' \
+        -H 'sec-fetch-mode: cors' \
+        -H 'sec-fetch-site: same-site' \
+        -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/131.0.0.0' \
+        --data-raw '{"contentId":"202310181863841","contentType":"Vod","pin":"","deviceName":"Browser","deviceId":"w-678913af-3998-3998-3998-39983998","deviceType":"WEB","secureCookie":null,"callerReferenceNo":"W17370372345461425","profileId":null,"mupId":null,"trackId":"738296446.226.1737037103860.2","sessionId":"c39f03e6-9e74-4d24-a82f-e0d0f328bb70"}')
+
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
