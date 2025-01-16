@@ -990,7 +990,7 @@ function MediaUnlockTest_NowE() {
         return
     fi
 
-    local result=$(echo "$tmpresult" | grep -woP '"responseCode"\s{0,}:\s{0,}"\K[^"]+')
+    local result=$(echo "$tmpresult" | grep -woP '"OTTAPI_ResponseCode"\s{0,}:\s{0,}"\K[^"]+')
     case "$result" in
         'GEO_CHECK_FAIL') echo -n -e "\r Now E:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
         'SUCCESS') echo -n -e "\r Now E:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
