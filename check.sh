@@ -732,7 +732,7 @@ function MediaUnlockTest_Lemino() {
 }
 
 MediaUnlockTest_AnimeFesta() {
-    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://api-animefesta.iowl.jp/v1/titles/1305' -w %{http_code} -o /dev/null -H 'Origin: https://animefesta.iowl.jp' -H 'Priority: u=1, i' -H 'Referer: https://animefesta.iowl.jp/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H 'X-Requested-With: XMLHttpRequest' --user-agent "${UA_BROWSER}")
+    local result=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://api-animefesta.iowl.jp/v1/titles/1560' -w %{http_code} -o /dev/null -H 'accept: application/json' -H 'accept-language: en-US,en;q=0.9' -H 'anime-user-tracking-id: yEZr4P_U7JEdBucZOkv1Y' -H 'authorization;' -H 'origin: https://animefesta.iowl.jp' -H 'referer: https://animefesta.iowl.jp/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty'  -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-site' -H 'sec-gpc: 1' -H 'x-requested-with: XMLHttpRequest' --user-agent "${UA_BROWSER}")
 
     case "$result" in
         '000') echo -n -e "\r AnimeFesta:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
