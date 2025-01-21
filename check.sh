@@ -5929,6 +5929,13 @@ function showGoodbye() {
         echo -e ''
         bash <(curl ${CURL_DEFAULT_OPTS} -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/AD/ADKR)
         echo -e ''
+    elif [[ "$REGION_ID" == "3" ]]; then
+        echo -e "${Font_Green}本次测试已结束，感谢使用此脚本${Font_Suffix}"
+        echo -e ''
+        echo -e "${Font_Yellow}检测脚本当天运行次数: ${TODAY_RUN_TIMES}; 共计运行次数: ${TOTAL_RUN_TIMES}${Font_Suffix}"
+        echo -e ''
+        bash <(curl ${CURL_DEFAULT_OPTS} -s https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/AD/ADJP)
+        echo -e ''
     else
         echo -e "${Font_Green}本次测试已结束，感谢使用此脚本${Font_Suffix}"
         echo -e ''
