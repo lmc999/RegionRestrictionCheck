@@ -1717,6 +1717,17 @@ function WebTest_GooglePlayStore() {
     fi
 }
 
+function RegionTest_Apple() {
+    local result=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://gspe1-ssl.ls.apple.com/pep/gcc')
+    if [ -z "$result" ]; then
+        echo -n -e "\r Apple Region:\t\t\t\t${Font_Red}Failed${Font_Suffix}\n"
+        return
+    else
+        echo -n -e "\r Apple Region:\t\t\t\t${Font_Green}${result}${Font_Suffix}\n"
+        return
+    fi
+}
+
 function RegionTest_YouTubeCDN() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://redirector.googlevideo.com/report_mapping' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
@@ -4984,6 +4995,7 @@ function Global_UnlockTest() {
     echo_result ${result} ${array}
     local result=$(
         RegionTest_Bing &
+        RegionTest_Apple &
         RegionTest_YouTubeCDN &
         RegionTest_NetflixCDN &
         WebTest_OpenAI &
@@ -4995,7 +5007,7 @@ function Global_UnlockTest() {
         GameTest_Steam &
     )
     wait
-    local array=("Bing Region:" "YouTube CDN:" "Netflix Preferred CDN:" "ChatGPT:" "Google Gemini:" "Claude:" "Wikipedia Editability:" "Google Play Store:" "Google Search CAPTCHA Free:" "Steam Currency:")
+    local array=("Bing Region:" "Apple Region:" "YouTube CDN:" "Netflix Preferred CDN:" "ChatGPT:" "Google Gemini:" "Claude:" "Wikipedia Editability:" "Google Play Store:" "Google Search CAPTCHA Free:" "Steam Currency:")
     echo_result ${result} ${array}
     show_region Forum
     WebTest_Reddit
