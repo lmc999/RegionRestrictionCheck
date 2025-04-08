@@ -473,9 +473,9 @@ delay() {
 }
 
 count_run_times() {
-    local tmpresult=$(curl ${CURL_OPTS} -s "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcheck.unclock.media&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visit&edge_flat=false")
-    TODAY_RUN_TIMES=$(echo "$tmpresult" | tail -3 | head -n 1 | awk '{print $5}')
-    TOTAL_RUN_TIMES=$(($(echo "$tmpresult" | tail -3 | head -n 1 | awk '{print $7}') + 2527395))
+    local tmpresult=$(curl ${CURL_OPTS} -s "https://polished-wildflower-aa1f.colorroom.workers.dev/")
+    TODAY_RUN_TIMES=$(echo "$tmpresult" | sed -n 's/.*"dailyCount":\([0-9]*\).*/\1/p')
+    TOTAL_RUN_TIMES=$(echo "$tmpresult" | sed -n 's/.*"totalCount":\([0-9]*\).*/\1/p')
 }
 
 download_extra_data() {
