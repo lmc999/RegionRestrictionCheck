@@ -5000,14 +5000,14 @@ function Global_UnlockTest() {
         RegionTest_NetflixCDN &
         WebTest_OpenAI &
         WebTest_Gemini &
-        WebTest_Claude &
+        # WebTest_Claude &
         WebTest_Wikipedia_Editable &
         WebTest_GooglePlayStore &
         WebTest_GoogleSearchCAPTCHA &
         GameTest_Steam &
     )
     wait
-    local array=("Bing Region:" "Apple Region:" "YouTube CDN:" "Netflix Preferred CDN:" "ChatGPT:" "Google Gemini:" "Claude:" "Wikipedia Editability:" "Google Play Store:" "Google Search CAPTCHA Free:" "Steam Currency:")
+    local array=("Bing Region:" "Apple Region:" "YouTube CDN:" "Netflix Preferred CDN:" "ChatGPT:" "Google Gemini:" "Wikipedia Editability:" "Google Play Store:" "Google Search CAPTCHA Free:" "Steam Currency:")
     echo_result ${result} ${array}
     show_region Forum
     WebTest_Reddit
