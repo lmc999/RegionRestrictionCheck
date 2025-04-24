@@ -699,6 +699,17 @@ function GameTest_UMAJP() {
     esac
 }
 
+function GameTest_SDGGGE() {
+    local result=$(echo -n "1CR6PntuLeI3yaCYAZdOPxn18bOFYJxUiYtcavqqAHDCjc3C/wozplHYwfhykUStp7Bb/LAhV8aWQkS9sLliHCIgXBvDsWe4pwXvV3cSXkoaBfL23/zytEHlAatOi/32UVYLJhyUsegCRMMGREr2fXqyx970imQ35hqWVj/MRTHS9Bi8iqo9nIqSDTcQqVn3BbuyhJcz52nhfSda2may3QVHkH9QDdFjW9S/2re2cxE3iaE/DUbjB9H8KUpihQB1Emf88I0241ea7CAI1jHel6aZ5Ul4XjTf8ug3Rl/T80A=" | base64 -d | curl ${CURL_DEFAULT_OPTS} -s  'https://api.gl.eternal.channel.or.jp/api/pvt/consent/view?user_id=649635267711712178' -X POST -H 'Host: api.gl.eternal.channel.or.jp' -H 'X-Content-Is-Encrypted: True' -H 'X-Language: hk' -H 'Accept: application/protobuf' -H 'X-Unity-Version: 2022.3.45f1' -H 'X-Master-Url: https://clientdata.gl.eternal.channel.or.jp/prd-gl/catalogs/hr0phpfWDVahMJGQIk2OSd6hy35YpQZVKYAo6lKeld-9scMGJw2KTnBDGbS04Gw-i25avFTH55K-yU9TCX2OkQ.json' -H 'X-Language-Master-Url: https://clientdata.gl.eternal.channel.or.jp/prd-gl/language_catalogs/hk/F-HORjFKHLai8nLXUdPyQRqzexZNPKIn2O36Hgd2Bxm2RysBNS0-PQHQwfHXEOONog0w5yULtewBaVk-Ndf6nQ.json' -H 'x-app-version-hash: 20928' -H 'x-token: e5df59f1-8588-4477-a887-5fe854895493Mj0jmtfbgIhQOUmHQE1W7sLq7G5eSBqcFWqldSPjy6s=' -H 'Accept-Language: zh-CN,zh-Hans;q=0.9' -H 'User-Agent: GETERNAL/25041500 CFNetwork/3826.400.120 Darwin/24.3.0' -H 'Connection: keep-alive' -H 'Content-Type: application/protobuf' --data-binary @- -w %{http_code} -o /dev/null)
+
+    case "$result" in
+        '000') echo -n -e "\r SD Gundam G Generation Eternal:\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
+        '200') echo -n -e "\r SD Gundam G Generation Eternal:\t${Font_Green}Yes${Font_Suffix}\n" ;;
+        '483') echo -n -e "\r SD Gundam G Generation Eternal:\t${Font_Red}No${Font_Suffix}\n" ;;
+        *) echo -n -e "\r SD Gundam G Generation Eternal:\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
+    esac
+}
+
 function GameTest_Kancolle() {
     if [ "${USE_IPV6}" == 1 ]; then
         echo -n -e "\r Kancolle Japan:\t\t\t${Font_Red}IPv6 Is Not Currently Supported${Font_Suffix}\n"
@@ -5011,6 +5022,8 @@ function Global_UnlockTest() {
     echo_result ${result} ${array}
     show_region Forum
     WebTest_Reddit
+    show_region Game
+    GameTest_SDGGGE
     echo "======================================="
 }
 
