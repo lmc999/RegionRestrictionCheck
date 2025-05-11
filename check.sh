@@ -209,14 +209,14 @@ check_net_connctivity() {
 
     if [ "$1" == 4 ]; then
         local result1=$(curl -4 ${CURL_OPTS} -fs 'https://www.google.com' -o /dev/null -s -w '%{http_code}\n')
-        if [ "$result1" == '200' ]; then
+        if [ "$result1" != '000' ]; then
             return 0
         fi
     fi
 
     if [ "$1" == 6 ]; then
         local result2=$(curl -6 ${CURL_OPTS} -fs 'https://www.google.com' -o /dev/null -s -w '%{http_code}\n')
-        if [ "$result2" == '200' ]; then
+        if [ "$result2" != '000' ]; then
             return 0
         fi
     fi
