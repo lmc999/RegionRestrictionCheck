@@ -2384,7 +2384,7 @@ function MediaUnlockTest_Starz() {
         return
     fi
 
-    local authorization=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.starz.com/sapi/header/v1/starz/us/09b397fc9eb64d5080687fc8a218775b' -H "Referer: https://www.starz.com/us/en/" --user-agent "${UA_BROWSER}")
+    local authorization=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.starz.com/sapi/header/v1/starz/us/e17d634364cc406d9dac700e4e1f911d' -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'referer: https://www.starz.com/us/en/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-origin' --user-agent "${UA_BROWSER}")
     if [ -z "$authorization" ]; then
         echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
