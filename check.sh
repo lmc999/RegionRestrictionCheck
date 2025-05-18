@@ -819,7 +819,7 @@ function MediaUnlockTest_Netflix() {
         echo -n -e "\r Netflix:\t\t\t\t${Font_Yellow}Originals Only${Font_Suffix}\n"
         return
     fi
-    
+
     if [ -z "${result1}" ] || [ -z "${result2}" ]; then
         local region=$(echo "$tmpresult1" | grep -o 'data-country="[A-Z]*"' | sed 's/.*="\([A-Z]*\)"/\1/' | head -n1)
         echo -n -e "\r Netflix:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
@@ -2006,6 +2006,10 @@ function MediaUnlockTest_HotStar() {
     fi
     if  [ "$region" == 'US' ]; then
         echo -n -e "\r HotStar:\t\t\t\t${Font_Yellow}No (Discontinued in the US)${Font_Suffix}\n"
+        return
+    fi
+    if [ -z "$siteRegion" ]; then
+        echo -n -e "\r HotStar:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
         return
     fi
     if  [ "$region" == "$siteRegion" ]; then
