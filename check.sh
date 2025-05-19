@@ -4559,14 +4559,28 @@ function WebTest_Gemini() {
 }
 
 function WebTest_Claude() {
-    local result=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://claude.ai/' -w %{http_code} -o /dev/null -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://claude.ai/' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
 
-    case "$result" in
-        '000') echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
-        '403') echo -n -e "\r Claude:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
-        '200') echo -n -e "\r Claude:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
-        *) echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
-    esac
+    local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
+    if [ "$httpCode" == '000' ]; then
+        echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+
+    local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
+    local isBlocked=$(echo "$urlEffective" | grep -i 'unavailable-in-region')
+
+    if [ -n "$isBlocked" ]; then
+        echo -n -e "\r Claude:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+
+    if [ "$httpCode" == '403' ]; then
+        echo -n -e "\r Claude:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        return
+    fi
+
+    echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function WebTest_MetaAI() {
