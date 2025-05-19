@@ -4559,17 +4559,14 @@ function WebTest_Gemini() {
 }
 
 function WebTest_Claude() {
-    local UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
-    local response=$(curl ${CURL_DEFAULT_OPTS} -s -o /dev/null -w "%{http_code}" -A "${UA_Browser}" "https://claude.ai/")
-    if [ -z "$response" ]; then
-        echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        return
-    fi
-    if [ "$response" -eq 200 ]; then
-        echo -n -e "\r Claude:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-    else
-        echo -n -e "\r Claude:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-    fi
+    local result=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://claude.ai/' -w %{http_code} -o /dev/null -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+
+    case "$result" in
+        '000') echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n" ;;
+        '403') echo -n -e "\r Claude:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n" ;;
+        '200') echo -n -e "\r Claude:\t\t\t\t${Font_Red}No${Font_Suffix}\n" ;;
+        *) echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
+    esac
 }
 
 function WebTest_MetaAI() {
