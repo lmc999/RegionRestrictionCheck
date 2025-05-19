@@ -2,9 +2,9 @@
 
 VER='1.0.0'
 
-UA_BROWSER="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
-UA_SEC_CH_UA='"Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"'
-UA_ANDROID="Mozilla/5.0 (Linux; Android 10; Pixel 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36"
+UA_BROWSER="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+UA_SEC_CH_UA='"Google Chrome";v="136", "Chromium";v="136", "Not.A/Brand";v="99"'
+UA_ANDROID="Mozilla/5.0 (Linux; Android 10; Pixel 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36"
 
 color_print() {
     Font_Black="\033[30m"
@@ -819,7 +819,7 @@ function MediaUnlockTest_Netflix() {
         echo -n -e "\r Netflix:\t\t\t\t${Font_Yellow}Originals Only${Font_Suffix}\n"
         return
     fi
-    
+
     if [ -z "${result1}" ] || [ -z "${result2}" ]; then
         local region=$(echo "$tmpresult1" | grep -o 'data-country="[A-Z]*"' | sed 's/.*="\([A-Z]*\)"/\1/' | head -n1)
         echo -n -e "\r Netflix:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
@@ -2008,6 +2008,10 @@ function MediaUnlockTest_HotStar() {
         echo -n -e "\r HotStar:\t\t\t\t${Font_Yellow}No (Discontinued in the US)${Font_Suffix}\n"
         return
     fi
+    if [ -z "$siteRegion" ]; then
+        echo -n -e "\r HotStar:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
     if  [ "$region" == "$siteRegion" ]; then
         echo -n -e "\r HotStar:\t\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
         return
@@ -2380,7 +2384,7 @@ function MediaUnlockTest_Starz() {
         return
     fi
 
-    local authorization=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.starz.com/sapi/header/v1/starz/us/09b397fc9eb64d5080687fc8a218775b' -H "Referer: https://www.starz.com/us/en/" --user-agent "${UA_BROWSER}")
+    local authorization=$(curl ${CURL_DEFAULT_OPTS} -s 'https://www.starz.com/sapi/header/v1/starz/us/e17d634364cc406d9dac700e4e1f911d' -H 'accept: */*' -H 'accept-language: en-US,en;q=0.9' -H 'referer: https://www.starz.com/us/en/' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: empty' -H 'sec-fetch-mode: cors' -H 'sec-fetch-site: same-origin' --user-agent "${UA_BROWSER}")
     if [ -z "$authorization" ]; then
         echo -n -e "\r Starz:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
@@ -4555,17 +4559,28 @@ function WebTest_Gemini() {
 }
 
 function WebTest_Claude() {
-    local UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
-    local response=$(curl ${CURL_DEFAULT_OPTS} -s -o /dev/null -w "%{http_code}" -A "${UA_Browser}" "https://claude.ai/")
-    if [ -z "$response" ]; then
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://claude.ai/' -w '%{http_code}_TAG_%{url_effective}\n' -o /dev/null -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
+
+    local httpCode=$(echo "$tmpresult" | awk -F'_TAG_' '{print $1}')
+    if [ "$httpCode" == '000' ]; then
         echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
-    if [ "$response" -eq 200 ]; then
-        echo -n -e "\r Claude:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-    else
+
+    local urlEffective=$(echo "$tmpresult" | awk -F'_TAG_' '{print $2}')
+    local isBlocked=$(echo "$urlEffective" | grep -i 'unavailable-in-region')
+
+    if [ -n "$isBlocked" ]; then
         echo -n -e "\r Claude:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        return
     fi
+
+    if [ "$httpCode" == '403' ]; then
+        echo -n -e "\r Claude:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+        return
+    fi
+
+    echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Error: ${httpCode})${Font_Suffix}\n"
 }
 
 function WebTest_MetaAI() {
@@ -4576,7 +4591,7 @@ function WebTest_MetaAI() {
     fi
 
     local isBlocked=$(echo "$tmpresult" | grep -i 'AbraGeoBlockedErrorRoot')
-    local isOK=$(echo "$tmpresult" | grep -i 'AbraHomeRootConversationQuery')
+    local isOK=$(echo "$tmpresult" | grep -i 'AbraHomeRoot.react')
 
     if [ -z "$isBlocked" ] && [ -z "$isOK" ]; then
         echo -n -e "\r Meta AI:\t\t\t\t${Font_Red}Failed (Error: PAGE ERROR)${Font_Suffix}\n"
