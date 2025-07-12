@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER='1.0.0'
+VER='1.0.1'
 
 UA_BROWSER="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
 UA_SEC_CH_UA='"Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"'
@@ -510,7 +510,7 @@ get_ip_info() {
         LOCAL_IP_ASTERISK=$(awk -F":" '{print $1":"$2":"$3":*:*"}' <<<"${local_ip}")
     fi
 
-    LOCAL_ISP=$(echo "$get_local_isp" | grep 'organization' | cut -f4 -d '"')
+    LOCAL_ISP=$(echo "$get_local_isp" | sed -n 's/.*"organization":"\([^"]*\)".*/\1/p')
 }
 
 show_region() {
@@ -905,9 +905,15 @@ function MediaUnlockTest_Dazn() {
         return
     fi
 
-    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://startup.core.indazn.com/misl/v5/Startup' -X POST -H "Content-Type: application/json" -d '{"LandingPageKey":"generic","languages":"en-US,en","Platform":"web","PlatformAttributes":{},"Manufacturer":"","PromoCode":"","Version":"2"}' --user-agent "${UA_BROWSER}")
+    local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -s 'https://startup.core.indazn.com/misl/v5/Startup'   -H 'accept: */*'   -H 'accept-language: zh-CN,zh;q=0.9'   -H 'content-type: application/json'   -H 'origin: https://www.dazn.com'   -H 'priority: u=1, i'   -H 'referer: https://www.dazn.com/'   -H 'sec-ch-ua: "Not)A;Brand";v="8", "Chromium";v="138", "Microsoft Edge";v="138"'   -H 'sec-ch-ua-mobile: ?0'   -H 'sec-ch-ua-platform: "Windows"'   -H 'sec-fetch-dest: empty'   -H 'sec-fetch-mode: cors'   -H 'sec-fetch-site: cross-site'   -H 'x-session-id: fd264e77-79d5-480c-a514-a275b649da14'   --data-raw '{"Version":"2","LandingPageKey":"generic","Languages":"zh-CN","Platform":"web","Manufacturer":"","PromoCode":"","PlatformAttributes":{}}' --user-agent "${UA_BROWSER}")
     if [ -z "$tmpresult" ]; then
         echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+
+    # 新增判断是否被封禁
+    if echo "$tmpresult" | grep -qi "Security policy has been breached"; then
+        echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}IP Banned by Dazn${Font_Suffix}\n"
         return
     fi
 
@@ -919,6 +925,7 @@ function MediaUnlockTest_Dazn() {
         *) echo -n -e "\r Dazn:\t\t\t\t\t${Font_Red}Failed (Error: ${result})${Font_Suffix}\n" ;;
     esac
 }
+
 
 function MediaUnlockTest_HuluJP() {
     if [ "${USE_IPV6}" == 1 ]; then
@@ -4556,17 +4563,20 @@ function WebTest_Gemini() {
 
 function WebTest_Claude() {
     local UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
-    local response=$(curl ${CURL_DEFAULT_OPTS} -s -o /dev/null -w "%{http_code}" -A "${UA_Browser}" "https://claude.ai/")
+    local response=$(curl ${CURL_DEFAULT_OPTS} -s -L -A "${UA_Browser}" -o /dev/null -w '%{url_effective}' "https://claude.ai/")
     if [ -z "$response" ]; then
-        echo -n -e "\r Claude:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -e "\r Claude:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
-    if [ "$response" -eq 200 ]; then
-        echo -n -e "\r Claude:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    if [[ "$response" == "https://claude.ai/" ]]; then
+        echo -e "\r Claude:\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
+    elif [[ "$response" == "https://www.anthropic.com/app-unavailable-in-region" ]]; then
+        echo -e "\r Claude:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
     else
-        echo -n -e "\r Claude:\t\t\t\t${Font_Red}No${Font_Suffix}\n"
+        echo -e "\r Claude:\t\t\t\t${Font_Yellow}Unknown (${response})${Font_Suffix}\n"
     fi
 }
+
 
 function WebTest_MetaAI() {
     local tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.meta.ai/' -H 'accept: */*;q=0.8,application/signed-exchange;v=b3;q=0.7' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-dest: document' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-site: none' -H 'sec-fetch-user: ?1' -H 'upgrade-insecure-requests: 1' --user-agent "${UA_BROWSER}")
