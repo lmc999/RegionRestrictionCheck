@@ -319,9 +319,17 @@ check_dependencies() {
         esac
     fi
 
-    if [ -z $(echo 'e' | grep -P 'e' 2>/dev/null) ]; then
-        echo -e "${Font_Red}command 'grep' function is incomplete, please install the full version first.${Font_Suffix}"
-        exit 1
+    if ! echo 'e' | grep -P 'e' >/dev/null 2>&1; then
+        if command_exists ggrep; then
+            grep() { command ggrep "$@"; }
+        else
+            if [ "$OS_MACOS" == 1 ]; then
+                echo -e "${Font_Red}GNU grep is required (Perl regex -P). Please install via:${Font_Suffix} ${Font_Yellow}brew install grep${Font_Suffix}"
+            else
+                echo -e "${Font_Red}command 'grep' lacks -P support. Please install GNU grep first.${Font_Suffix}"
+            fi
+            exit 1
+        fi
     fi
 
     if ! command_exists curl; then
