@@ -4547,8 +4547,12 @@ function WebTest_Gemini() {
         echo -n -e "\r Google Gemini:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
-    result=$(echo "$tmpresult" | grep -q '45631641,null,true' && echo "Yes" || echo "")
-    countrycode=$(echo "$tmpresult" | grep -o ',2,1,200,"[A-Z]\{3\}"' | sed 's/,2,1,200,"//;s/"//' || echo "")
+    countrycode=$(echo "$tmpresult" | grep -o ',2,1,200,"[A-Z]\{3\}"' | head -n 1 | sed 's/,2,1,200,"//;s/"//' || echo "")
+    if echo "$tmpresult" | grep -q '45631641,null,true' || [ -n "$countrycode" ]; then
+        result="Yes"
+    else
+        result=""
+    fi
     if [ -n "$result" ] && [ -n "$countrycode" ]; then
         echo -n -e "\r Google Gemini:\t\t\t\t${Font_Green}Yes (Region: $countrycode)${Font_Suffix}\n"
         return
